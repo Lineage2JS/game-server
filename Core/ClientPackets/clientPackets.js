@@ -37,6 +37,7 @@ const RequestDestroyQuest = require('./RequestDestroyQuest');
 const RequestTutorialQuestionMarkPressed = require('./RequestTutorialQuestionMarkPressed');
 const RequestTutorialLinkHtml = require('./RequestTutorialLinkHtml');
 const NetPing = require('./NetPing');
+const RequestCharacterRestore = require('./RequestCharacterRestore');
 
 module.exports = {
   SendProtocolVersion,
@@ -78,4 +79,5 @@ module.exports = {
   RequestTutorialQuestionMarkPressed,
   RequestTutorialLinkHtml,
   NetPing,
+  RequestCharacterRestore,
 }

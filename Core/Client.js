@@ -227,6 +227,10 @@ class Client {
         new clientPackets.NetPing(this, payloadPacket);
 
         break;
+      case 0x62:
+        new clientPackets.RequestCharacterRestore(this, payloadPacket);
+
+        break;
     }
   }
 
