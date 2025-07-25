@@ -6,6 +6,7 @@ const entitiesManager = require('./Core/Managers/EntitiesManager');
 const visibilityManager = require('./Core/Managers/VisibilityManager');
 const npcHtmlMessagesManager = require('./Core/Managers/NpcHtmlMessagesManager');
 const regenerationManager = require('./Core/Managers/RegenerationManager');
+const schedulerManager = require('./Core/Managers/SchedulerManager');
 const database = require('./Database');
 const config = require('./config');
 const serverStatus = require('./enums/serverStatus');
@@ -67,6 +68,16 @@ async function run() {
       visibilityManager.enable();
       npcHtmlMessagesManager.enable();
       regenerationManager.enable();
+      schedulerManager.enable();
+      // fix remove
+      schedulerManager.registerTask({
+        end: false,
+        date: Date.now() + 5000,
+        execute() {
+          console.log('work')
+        }
+      })
+      //
     });
   } catch {
 
