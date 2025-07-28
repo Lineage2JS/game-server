@@ -2,6 +2,7 @@ const serverPackets = require('./../ServerPackets/serverPackets');
 const ClientPacket = require("./ClientPacket");
 const database = require('./../../Database');
 const playersManager = require('./../Managers/PlayersManager');
+const characterDeletionManager = require('./../Managers/CharacterDeletionManager');
 
 class CharacterDelete {
   constructor(client, packet) {
@@ -22,11 +23,17 @@ class CharacterDelete {
     const characters = await database.getCharactersByLogin(player.login);
     const character = characters[this.characterSlot];
 
-    await database.deleteCharacter(character.objectId);
-    await database.deleteCharacterInventory(character.objectId);
+    characterDeletionManager.on('completed', async(taskId) => {
+      console.log('task completed', taskId);
+
+      await database.deleteCharacter(character.objectId);
+      await database.deleteCharacterInventory(character.objectId);
     
-    this._client.sendPacket(new serverPackets.CharacterDeleteOk());
-    this._client.sendPacket(new serverPackets.CharacterSelectInfo(player.login, await database.getCharactersByLogin(player.login))); // fix?
+      this._client.sendPacket(new serverPackets.CharacterDeleteOk());
+      this._client.sendPacket(new serverPackets.CharacterSelectInfo(player.login, await database.getCharactersByLogin(player.login))); // fix?
+    })
+
+    characterDeletionManager.addTask();
   }
 }
 

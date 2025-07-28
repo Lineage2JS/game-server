@@ -1,9 +1,18 @@
-class SchedulerManager {
+const EventEmmiter = require('events');
+
+class SchedulerManager extends EventEmmiter {
   constructor() {
+    super();
+
     this._tasks = [];
   }
 
-  registerTask(task) {
+  registerTask(payload) {
+    const task = {
+      id: payload.id,
+      isCompleted: false,
+      date: payload.date,
+    }
     this._tasks.push(task);
   }
 
@@ -12,15 +21,16 @@ class SchedulerManager {
   }
 
   _run() {
-    const tasks = this._tasks.filter(task => task.end === false);
+    const tasks = this._tasks.filter(task => task.isCompleted === false);
 
     if (tasks.length > 0) {
       for(let i = 0; i < tasks.length; i++) {
         const task = tasks[i];
 
         if (task.date < Date.now()) {
-          task.execute();
-          task.end = true;
+          task.isCompleted = true;
+
+          this.emit('completed', task.id)
         }
       }
     }
