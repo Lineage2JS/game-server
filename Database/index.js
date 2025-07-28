@@ -327,6 +327,19 @@ class Database {
       WHERE character_object_id = $1
     `, [objectId]);
   }
+
+  async createScheduledTask(taskId, taskType, payload, scheduledAt, status) {
+    await this._client.query(`
+      INSERT INTO scheduled_tasks(task_id, task_type, payload, scheduled_at, status)
+      VALUES($1, $2, $3, $4, $5)
+    `, [
+      taskId,
+      taskType,
+      payload,
+      scheduledAt,
+      status,
+    ]);
+  }
 }
 
 module.exports = new Database();
