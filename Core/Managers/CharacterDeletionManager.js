@@ -14,7 +14,7 @@ class CharacterDeletionManager extends EventEmmiter {
 
   addTask() {
     schedulerManager.registerTask({
-      id: 1234,
+      id: Date.now(),
       date: Date.now() + 5000,
     });
   }
