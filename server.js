@@ -68,7 +68,7 @@ async function run() {
       visibilityManager.enable();
       npcHtmlMessagesManager.enable();
       regenerationManager.enable();
-      schedulerManager.enable();
+      await schedulerManager.enable();
     });
   } catch {
 

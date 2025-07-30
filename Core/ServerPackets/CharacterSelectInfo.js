@@ -86,7 +86,7 @@ class CharacterSelectInfo {
           .writeF(characters[i].maximumHp)
           .writeF(characters[i].maximumMp)
 
-          .writeD(0); //writeD(charInfoPackage.getDeleteTimer());  // days left before delete .. if != 0 then char is inactive
+          .writeD(characters[i].scheduledDeletionAt !== null ? 1 : 0); //writeD(charInfoPackage.getDeleteTimer());  // days left before delete .. if != 0 then char is inactive
       }
     } else {
       this._packet.writeD(0x00);

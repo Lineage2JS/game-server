@@ -1,22 +1,32 @@
 const EventEmmiter = require('events');
 const schedulerManager = require('./SchedulerManager');
+const database = require('./../../Database');
 
 class CharacterDeletionManager extends EventEmmiter {
   constructor() {
     super();
 
-    this._tasks = [];
-
-    schedulerManager.on('completed', (taskId) => {
-      this.emit('completed', taskId);
+    schedulerManager.on('completed', async (task) => {
+      if (task.type === 'character-deletion') {
+        await database.deleteCharacter(task.payload.characterObjectId);
+        await database.deleteCharacterInventory(task.payload.characterObjectId);
+      }
     });
   }
 
-  addTask() {
-    schedulerManager.registerTask({
-      id: Date.now(),
-      date: Date.now() + 5000,
-    });
+  async createTask(playerLogin, characterObjectId) {
+    const task = {
+      type: 'character-deletion',
+      status: 'new',
+      payload: JSON.stringify({
+        characterObjectId: characterObjectId
+      }),
+      scheduledAt: Date.now() + 30000,
+      createdAccountId: playerLogin,
+      createdType: 'user'
+    }
+
+    await schedulerManager.createTask(task);
   }
 }
 

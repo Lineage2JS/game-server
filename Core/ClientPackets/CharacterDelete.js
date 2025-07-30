@@ -23,17 +23,20 @@ class CharacterDelete {
     const characters = await database.getCharactersByLogin(player.login);
     const character = characters[this.characterSlot];
 
-    characterDeletionManager.on('completed', async(taskId) => {
-      console.log('task completed', taskId);
+    // characterDeletionManager.on('completed', async(taskId) => {
+    //   console.log('task completed', taskId);
 
-      await database.deleteCharacter(character.objectId);
-      await database.deleteCharacterInventory(character.objectId);
+    //   await database.deleteCharacter(character.objectId);
+    //   await database.deleteCharacterInventory(character.objectId);
     
-      this._client.sendPacket(new serverPackets.CharacterDeleteOk());
-      this._client.sendPacket(new serverPackets.CharacterSelectInfo(player.login, await database.getCharactersByLogin(player.login))); // fix?
-    })
+    //   this._client.sendPacket(new serverPackets.CharacterDeleteOk());
+    //   this._client.sendPacket(new serverPackets.CharacterSelectInfo(player.login, await database.getCharactersByLogin(player.login))); // fix?
+    // });
 
-    characterDeletionManager.addTask();
+    await characterDeletionManager.createTask(player.login, character.objectId);
+
+    this._client.sendPacket(new serverPackets.CharacterDeleteOk());
+    this._client.sendPacket(new serverPackets.CharacterSelectInfo(player.login, await database.getCharactersByLogin(player.login)));
   }
 }
 

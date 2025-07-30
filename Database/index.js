@@ -128,8 +128,14 @@ class Database {
       z,
       attack_speed_multiplier AS "maleAttackSpeedMultiplier",
       collision_radius AS "maleCollisionRadius",
-      collision_height AS "maleCollisionHeight"
+      collision_height AS "maleCollisionHeight",
+      scheduled_task.scheduled_at AS "scheduledDeletionAt"
       FROM characters
+      LEFT JOIN scheduled_tasks scheduled_task ON
+        scheduled_task.created_type = 'user'
+        AND scheduled_task.type = 'character-deletion'
+        AND scheduled_task.created_account_id = $1
+        AND (scheduled_task.payload::json->>'characterObjectId')::INTEGER = object_id
       WHERE user_login = $1
     `, [userLogin]); // fix male
     const characters = result.rows;
@@ -307,12 +313,12 @@ class Database {
   async getCharacterInventoryItems(objectId) {
     const result = await this._client.query(`
       SELECT
-      item_object_id AS "objectId",
-      item_id AS "itemId",
-      consume_type AS "consumeType",
-      item_type AS "itemType",
-      item_name AS "itemName",
-      equip_slot AS "equipSlot"
+        item_object_id AS "objectId",
+        item_id AS "itemId",
+        consume_type AS "consumeType",
+        item_type AS "itemType",
+        item_name AS "itemName",
+        equip_slot AS "equipSlot"
       FROM inventories
       WHERE character_object_id = $1
     `, [objectId]);
@@ -328,17 +334,45 @@ class Database {
     `, [objectId]);
   }
 
-  async createScheduledTask(taskId, taskType, payload, scheduledAt, status) {
+  async createScheduledTask(taskType, taskStatus, payload, scheduledAt, createdAccountId, createdType) {
     await this._client.query(`
-      INSERT INTO scheduled_tasks(task_id, task_type, payload, scheduled_at, status)
-      VALUES($1, $2, $3, $4, $5)
+      INSERT INTO scheduled_tasks(type, status, payload, scheduled_at, created_account_id, created_type)
+      VALUES($1, $2, $3, $4, $5, $6)
     `, [
-      taskId,
       taskType,
+      taskStatus,
       payload,
-      scheduledAt,
-      status,
+      new Date(scheduledAt),
+      createdAccountId,
+      createdType,
     ]);
+  }
+
+  async getScheduledTasks() {
+    const result = await this._client.query(`
+      SELECT
+        id,
+        type,
+        payload,
+        scheduled_at AS "scheduledAt",
+        status,
+        created_account_id AS "createdAccountId",
+        created_type AS "createdType"
+      FROM scheduled_tasks
+      WHERE status = 'new'
+    `);
+    const scheduledTasks = result.rows;
+
+    return scheduledTasks; 
+  }
+
+  async updateScheduledTask(task) {
+    await this._client.query(`
+      UPDATE scheduled_tasks
+      SET
+        status = $2
+      WHERE id = $1
+    `, [task.id, task.status]);
   }
 }
 
