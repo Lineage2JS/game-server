@@ -25,8 +25,8 @@ class Database {
 
   async createCharacter(character) {
     const result = await this._client.query(`
-      INSERT INTO characters (object_id, user_login, character_name, title, level, gender, hair_style, hair_color, face, heading, access_level, online, online_time, is_gm, exp, sp, pvp, pk, karma, class_id, class_name, race_id, str, dex, con, int, wit, men, current_hp, max_hp, current_mp, max_mp, base_run_speed, base_walk_speed, x, y, z, attack_speed_multiplier, collision_radius, collision_height)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40)
+      INSERT INTO characters (object_id, user_login, character_name, title, level, gender, hair_style, hair_color, face, heading, access_level, online, online_time, is_gm, exp, sp, pvp, pk, karma, class_id, class_name, race_id, str, dex, con, int, wit, men, current_hp, max_hp, current_mp, max_mp, base_run_speed, base_walk_speed, x, y, z, attack_speed_multiplier, collision_radius, collision_height, created_at)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41)
       RETURNING *
     `, [
       character.objectId,
@@ -69,6 +69,7 @@ class Database {
       character.maleAttackSpeedMultiplier,
       character.maleCollisionRadius,
       character.maleCollisionHeight,
+      new Date(character.createdAt),
     ]);
     const characterData = result.rows[0];
 
@@ -129,7 +130,8 @@ class Database {
       attack_speed_multiplier AS "maleAttackSpeedMultiplier",
       collision_radius AS "maleCollisionRadius",
       collision_height AS "maleCollisionHeight",
-      scheduled_task.scheduled_at AS "scheduledDeletionAt"
+      scheduled_task.scheduled_at AS "scheduledDeletionAt",
+      created_at AS "createdAt"
       FROM characters
       LEFT JOIN scheduled_tasks scheduled_task ON
         scheduled_task.created_type = 'user'
@@ -137,6 +139,7 @@ class Database {
         AND scheduled_task.created_account_id = $1
         AND (scheduled_task.payload::json->>'characterObjectId')::INTEGER = object_id
       WHERE user_login = $1
+      ORDER BY created_at ASC
     `, [userLogin]); // fix male
     const characters = result.rows;
 

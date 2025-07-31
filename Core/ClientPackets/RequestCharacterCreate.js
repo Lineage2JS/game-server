@@ -6,7 +6,7 @@ const characterTemplates = require('./../data/characterTemplates.json');
 const playersManager = require('./../Managers/PlayersManager');
 const itemsManager = require('./../Managers/ItemsManager');
 
-class CharacterCreate {
+class RequestCharacterCreate {
   constructor(client, packet) {
     this._client = client;
     this._data = new ClientPacket(packet);
@@ -126,6 +126,7 @@ class CharacterCreate {
     character.hairStyle = this.hairStyle;
     character.hairColor = this.hairColor;
     character.face = this.face;
+    character.createdAt = Date.now();
 
     // add character to database
     const createdCharacter = await database.createCharacter(character);
@@ -164,4 +165,4 @@ class CharacterCreate {
   }
 }
 
-module.exports = CharacterCreate;
+module.exports = RequestCharacterCreate;

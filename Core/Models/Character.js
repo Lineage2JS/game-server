@@ -101,6 +101,7 @@ class Character extends EventEmitter {
 
     //
     this.target = null;
+    this.createdAt = null;
     //
   }
 

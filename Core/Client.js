@@ -100,7 +100,7 @@ class Client {
 
         break;
       case 0x0B:
-        new clientPackets.CharacterCreate(this, payloadPacket);
+        new clientPackets.RequestCharacterCreate(this, payloadPacket);
 
         break;
       case 0x0C:
