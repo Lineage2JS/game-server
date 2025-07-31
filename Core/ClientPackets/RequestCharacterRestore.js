@@ -20,8 +20,11 @@ class RequestCharacterRestore {
   async _init() {
     const player = playersManager.getPlayerByClient(this._client);
     const characters = await database.getCharactersByLogin(player.login);
+    const character = characters[this.characterSlot];
 
-    this._client.sendPacket(new serverPackets.CharacterSelectInfo(player.login, characters));
+    await playersManager.restoreCharacter(character.objectId);
+
+    this._client.sendPacket(new serverPackets.CharacterSelectInfo(player.login, await database.getCharactersByLogin(player.login)));
   }
 }
 

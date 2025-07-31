@@ -374,6 +374,14 @@ class Database {
       WHERE id = $1
     `, [task.id, task.status]);
   }
+
+  async deleteScheduledTask(type, payload) {
+    await this._client.query(`
+      DELETE FROM scheduled_tasks
+      WHERE type = $1
+      AND payload::jsonb @> $2::jsonb;
+    `, [type, payload]);
+  }
 }
 
 module.exports = new Database();

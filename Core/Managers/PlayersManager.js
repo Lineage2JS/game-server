@@ -1,4 +1,5 @@
 const EventEmitter = require('events');
+const database = require('./../../Database');
 
 class PlayersManager extends EventEmitter {
   constructor() {
@@ -71,6 +72,10 @@ class PlayersManager extends EventEmitter {
     });
 
     return player;
+  }
+
+  async restoreCharacter(characterObjectId) {
+    await database.deleteScheduledTask('character-deletion', {"characterObjectId": characterObjectId});
   }
 }
 
