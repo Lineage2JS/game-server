@@ -1,4 +1,5 @@
 const EventEmitter = require('events');
+const schedulerManager = require('./SchedulerManager');
 const database = require('./../../Database');
 
 class PlayersManager extends EventEmitter {
@@ -23,7 +24,14 @@ class PlayersManager extends EventEmitter {
       } else {
         this.emit('died', player);
       }
-    })
+    });
+
+    schedulerManager.on('completed', async (task) => {
+      if (task.type === 'character-deletion') {
+        await database.deleteCharacter(task.payload.characterObjectId);
+        await database.deleteCharacterInventory(task.payload.characterObjectId);
+      }
+    });
   }
 
   add(player) {
@@ -74,7 +82,22 @@ class PlayersManager extends EventEmitter {
     return player;
   }
 
-  async restoreCharacter(characterObjectId) {
+  async deleteCharacter(playerLogin, characterObjectId) {
+    const task = {
+      type: 'character-deletion',
+      status: 'new',
+      payload: JSON.stringify({
+        characterObjectId: characterObjectId
+      }),
+      scheduledAt: Date.now() + 30000,
+      createdAccountId: playerLogin,
+      createdType: 'user'
+    }
+
+    await schedulerManager.createTask(task);
+  }
+
+  async restoreCharacter(characterObjectId) { // fix взаимодействие через scheduler?
     await database.deleteScheduledTask('character-deletion', {"characterObjectId": characterObjectId});
   }
 }
