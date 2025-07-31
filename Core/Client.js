@@ -104,7 +104,7 @@ class Client {
 
         break;
       case 0x0C:
-        new clientPackets.CharacterDelete(this, payloadPacket);
+        new clientPackets.RequestCharacterDelete(this, payloadPacket);
 
         break;
       case 0x01:

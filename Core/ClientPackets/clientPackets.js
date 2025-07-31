@@ -5,7 +5,7 @@ const RequestQuestList = require('./RequestQuestList');
 const EnterWorld = require('./EnterWorld');
 const NewCharacter = require('./NewCharacter');
 const CharacterCreate = require('./CharacterCreate');
-const CharacterDelete = require('./CharacterDelete');
+const RequestCharacterDelete = require('./RequestCharacterDelete');
 const MoveBackwardToLocation = require('./MoveBackwardToLocation');
 const Action = require('./Action');
 const RequestAttack = require('./RequestAttack');
@@ -47,7 +47,7 @@ module.exports = {
   EnterWorld,
   NewCharacter,
   CharacterCreate,
-  CharacterDelete,
+  RequestCharacterDelete,
   MoveBackwardToLocation,
   Action,
   RequestAttack,

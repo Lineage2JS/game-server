@@ -3,7 +3,7 @@ const ClientPacket = require("./ClientPacket");
 const database = require('./../../Database');
 const playersManager = require('./../Managers/PlayersManager');
 
-class CharacterDelete {
+class RequestCharacterDelete {
   constructor(client, packet) {
     this._client = client;
     this._data = new ClientPacket(packet);
@@ -29,4 +29,4 @@ class CharacterDelete {
   }
 }
 
-module.exports = CharacterDelete;
+module.exports = RequestCharacterDelete;
