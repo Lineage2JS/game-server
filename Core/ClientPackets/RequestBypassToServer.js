@@ -69,6 +69,25 @@ class RequestBypassToServer {
       return;
     }
 
+    if (this.command === 'admin_show_gmshop') {
+      const items = [];
+      const sellList = [
+        "small_sword",
+        "club",
+        "bone_dagger",
+      ]
+
+      for(let i = 0; i < sellList.length; i++) {
+        const item = await itemsManager.createItemByName(sellList[i]);
+
+        items.push(item);
+      }
+
+      this._client.sendPacket(new serverPackets.BuyList(items));
+
+      return;
+    }
+
     if (this.command === 'admin_show_other') {
       const htmlMessage = adminPanelManager.getHtmlMessageByFileName('other');
 
@@ -120,7 +139,6 @@ class RequestBypassToServer {
 
       return;
     }
-
 
     if (this.command.includes('admin_create_item')) {
       const params = this.command.split("?")[1];
