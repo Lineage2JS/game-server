@@ -7,6 +7,7 @@ class Quests {
     const quest = {
       id: questId,
       numberState: 1,
+      isCompleted: false
     };
 
     this._quests.push(quest);

@@ -265,13 +265,19 @@ class EntitiesManager {
     aiManager.on('setMemo', (talker, memo) => {
       talker.addQuest(memo); // memo - questId
 
-      if (memo === 201) {
-        const packet = new serverPackets.ShowTutorialMark(12);
-    
-        playersManager.emit('notify', packet);
-      }
-
       const packet = new serverPackets.QuestList(talker.getQuests());
+    
+      playersManager.emit('notify', packet);
+    });
+
+    aiManager.on('showQuestionMark', (talker, questionMarkId) => {
+      const packet = new serverPackets.ShowTutorialMark(questionMarkId);
+    
+      playersManager.emit('notify', packet);
+    });
+
+    aiManager.on('showRadar', (talker, x, y, z) => {
+      const packet = new serverPackets.ShowRadar(x, y, z);
     
       playersManager.emit('notify', packet);
     });
@@ -282,7 +288,7 @@ class EntitiesManager {
       playersManager.emit('notify', packet);
     });
 
-    aiManager.on('giveItem', async (talker, itemName) => {
+    aiManager.on('giveItem', async (talker, itemName, itemCount) => {
       const item = await itemsManager.createItemByName(itemName);
 
       talker.addItem(item);

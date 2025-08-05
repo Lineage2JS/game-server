@@ -13,12 +13,53 @@ class DefaultNpc {
     this.npcEventBus.emit('setMemo', talker, memo);
   }
 
+  haveMemo(talker, memo) {
+    const quests = talker.getQuests();
+    const quest = quests.find(quest => quest.id === memo);
+
+    if (quest) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  ownItemCount(talker, itemName) {
+    const items = talker.getItems();
+    const item = items.find(item => item.itemName === itemName);
+
+    if (item) {
+      return item.getCount();
+    } else {
+      return 0;
+    }
+  }
+
+  getOneTimeQuestFlag(talker, questId) {
+    const quests = talker.getQuests();
+    const quest = quests.find(quest => quest.id === questId);
+
+    if (quest && quest.isCompleted) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  showQuestionMark(talker, questionMarkId) {
+    this.npcEventBus.emit('showQuestionMark', talker, questionMarkId);
+  }
+
+  showRadar(talker, x, y, z) {
+    this.npcEventBus.emit('showRadar', talker, x, y, z);
+  }
+
   soundEffect(talker, soundName) {
     this.npcEventBus.emit('soundEffect', talker, soundName);
   }
 
-  giveItem(talker, itemName) {
-    this.npcEventBus.emit('giveItem', talker, itemName);
+  giveItem(talker, itemName, itemCount) {
+    this.npcEventBus.emit('giveItem', talker, itemName, itemCount);
   }
 
   deleteItem(talker, itemName, itemCount) {

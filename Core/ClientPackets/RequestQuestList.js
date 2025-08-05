@@ -13,7 +13,10 @@ class RequestQuestList {
   _init() {
     const player = playersManager.getPlayerByClient(this._client);
     
-    this._client.sendPacket(new serverPackets.QuestList(player.getQuests()));
+    //this._client.sendPacket(new serverPackets.QuestList(player.getQuests()));
+
+    // fix
+    this._client.sendPacket(new serverPackets.QuestList(player.getQuests().filter(quest => quest.isCompleted === false)));
   }
 }
 

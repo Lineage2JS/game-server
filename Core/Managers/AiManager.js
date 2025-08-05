@@ -17,12 +17,20 @@ class AiManager extends EventEmitter {
       this.emit('setMemo', talker, memo);
     });
 
+    npcEventBus.on('showQuestionMark', (talker, questionMarkId) => {
+      this.emit('showQuestionMark', talker, questionMarkId);
+    });
+
+    npcEventBus.on('showRadar', (talker, x, y, z) => {
+      this.emit('showRadar', talker, x, y, z);
+    });
+
     npcEventBus.on('soundEffect', (talker, soundName) => {
       this.emit('soundEffect', talker, soundName);
     });
 
-    npcEventBus.on('giveItem', (talker, itemName) => {
-      this.emit('giveItem', talker, itemName);
+    npcEventBus.on('giveItem', (talker, itemName, itemCount) => {
+      this.emit('giveItem', talker, itemName, itemCount);
     });
     
     npcEventBus.on('deleteItem', (talker, itemName, itemCount) => {

@@ -8,7 +8,7 @@ class PlayersManager extends EventEmitter {
     
     this._players = [];
 
-    this.on('notify', packet => {
+    this.on('notify', packet => { // nofity = send, broadcast? fix
       this._players.forEach(player => {
         const client = player.getClient();
 
