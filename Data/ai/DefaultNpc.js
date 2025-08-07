@@ -1,4 +1,4 @@
-const npcEventBus = require('./../../Core/Events/NpcEventBus');
+const npcEventBus = require('./../../core/Events/NpcEventBus');
 
 class DefaultNpc {
   constructor() {
