@@ -1,6 +1,6 @@
 const EventEmitter = require('events');
 const Npc = require('./../Models/Npc');
-const database = require('./../../Database');
+const database = require('./../../database');
 const npcsList = require('./../../Data/npcsList.json');
 const spawnList = require('./../../Data/spawnList.json');
 

@@ -2,7 +2,7 @@ const serverPackets = require('./../ServerPackets/serverPackets');
 const ClientPacket = require("./ClientPacket");
 const playersManager = require('./../Managers/PlayersManager');
 const npcManager = require('./../Managers/NpcManager');
-const database = require('./../../Database');
+const database = require('./../../database');
 
 class EnterWorld {
   constructor(client, packet) {

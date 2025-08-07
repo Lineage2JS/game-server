@@ -2,7 +2,7 @@ const Character = require('./Character');
 const serverPackets = require('./../ServerPackets/serverPackets');
 
 //
-const database = require('./../../Database');
+const database = require('./../../database');
 const movingManager = require('./../Managers/MovingManager');
 const npcManager = require('./../Managers/NpcManager');
 const itemsManager = require('../Managers/ItemsManager');

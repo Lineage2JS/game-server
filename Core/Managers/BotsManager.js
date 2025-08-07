@@ -1,5 +1,5 @@
 const EventEmitter = require('events');
-const database = require('./../../Database');
+const database = require('./../../database');
 const Bot = require('./../Models/Bot');
 
 class BotsManager extends EventEmitter {

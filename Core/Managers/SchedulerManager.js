@@ -1,5 +1,5 @@
 const EventEmmiter = require('events');
-const database = require('./../../Database');
+const database = require('./../../database');
 
 class SchedulerManager extends EventEmmiter {
   constructor() {

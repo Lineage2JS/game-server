@@ -1,4 +1,4 @@
-const database = require('./../../Database');
+const database = require('./../../database');
 const DropItem = require('./../Models/DropItem');
 
 class DropItemsManager {

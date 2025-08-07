@@ -1,4 +1,4 @@
-const database = require('./../../Database');
+const database = require('./../../database');
 const Item = require('./../Models/Item');
 const itemsList = require('./../../Data/itemsList.json');
 
