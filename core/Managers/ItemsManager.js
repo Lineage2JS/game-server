@@ -1,6 +1,6 @@
 const database = require('./../../database');
 const Item = require('./../Models/Item');
-const itemsList = require('./../../Data/itemsList.json');
+const itemsList = require('./../../datapack/itemsList.json');
 
 class ItemsManager {
   async createItemByName(itemName) {

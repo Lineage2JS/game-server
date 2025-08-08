@@ -1,5 +1,5 @@
 const EventEmitter = require('events');
-const ai = require('./../../Data/ai');
+const ai = require('./../../datapack/ai');
 const npcHtmlMessagesManager = require('./NpcHtmlMessagesManager');
 const npcEventBus = require('./../Events/NpcEventBus');
 

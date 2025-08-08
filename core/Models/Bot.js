@@ -83,7 +83,7 @@ class Bot extends Character {
     // }, 10000)
 
     //this.ai.name
-    const RunningBot = require('./../../Data/ai/bot/RunningBot');
+    const RunningBot = require('./../../datapack/ai/bot/RunningBot');
     const runningBot = new RunningBot();
 
     runningBot.created();

@@ -1,8 +1,8 @@
 const EventEmitter = require('events');
 const Npc = require('./../Models/Npc');
 const database = require('./../../database');
-const npcsList = require('./../../Data/npcsList.json');
-const spawnList = require('./../../Data/spawnList.json');
+const npcsList = require('./../../datapack/npcsList.json');
+const spawnList = require('./../../datapack/spawnList.json');
 
 class NpcManager extends EventEmitter {
   constructor() {
@@ -97,7 +97,7 @@ class NpcManager extends EventEmitter {
           npc.maximumHp = npc.hp; // fix
           npc.characterName = npcData.name;
           //
-          const ai = require('./../../Data/ai');
+          const ai = require('./../../datapack/ai');
           const AiInstance = ai[npcData.ai.name];
 
           if (AiInstance) {

@@ -133,7 +133,7 @@ class RequestCharacterCreate {
 
     //fix
     //create inventory
-    const initialEquipment = require('./../../Data/initialEquipment.json');
+    const initialEquipment = require('./../../datapack/initialEquipment.json');
     const inventoryItems = [];
 
     for (let i = 0; i < initialEquipment['human_fighter'].length; i++) {
