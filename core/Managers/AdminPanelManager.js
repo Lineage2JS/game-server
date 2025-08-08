@@ -9,7 +9,7 @@ class AdminPanelManager {
   }
 
   _getFileContentByFileName(fileName) {
-    const dir = path.join(process.cwd(), 'Data/html/admin');
+    const dir = path.join(process.cwd(), 'datapack/html/admin');
     const content = fs.readFileSync(path.join(dir, `${fileName}.htm`), 'utf8');
 
     return content;

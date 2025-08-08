@@ -9,7 +9,7 @@ class TutorialHtmlMessagesManager {
   }
 
   _getFileContentByFileName(fileName) {
-    const dir = path.join(process.cwd(), 'Data/html/tutorial');
+    const dir = path.join(process.cwd(), 'datapack/html/tutorial');
     const content = fs.readFileSync(path.join(dir, `${fileName}.htm`), 'utf8');
 
     return content;

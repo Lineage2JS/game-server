@@ -11,7 +11,7 @@ class NpcHtmlMessagesManager {
   }
 
   enable() {
-    const dir = path.join(process.cwd(), 'Data/html/npc');
+    const dir = path.join(process.cwd(), 'datapack/html/npc');
 
     fs.readdirSync(dir).forEach(file => {
       this._messages[file] = fs.readFileSync(path.join(dir, file), 'utf8');

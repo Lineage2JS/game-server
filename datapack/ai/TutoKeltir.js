@@ -12,4 +12,4 @@ class TutoKeltir extends DefaultNpc {
   }
 }
 
-module.exports = new TutoKeltir();
+module.exports = TutoKeltir;
