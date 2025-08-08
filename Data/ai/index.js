@@ -3,8 +3,8 @@ const Maslin = require('./Maslin');
 const Langu = require('./Langu');
 const Guts = require('./Guts');
 const Roien = require('./Roien');
-const tuto_keltir = require('./tuto_keltir');
-const lector = require('./lector');
+const TutoKeltir = require('./TutoKeltir');
+const Lector = require('./Lector');
 const Elpy = require('./Elpy');
 const Minx = require('./Minx');
 const Bowman = require('./Bowman');
@@ -15,8 +15,8 @@ module.exports = {
   Langu,
   Guts,
   Roien,
-  tuto_keltir,
-  lector,
+  TutoKeltir,
+  Lector,
   Elpy,
   Minx,
   Bowman,
