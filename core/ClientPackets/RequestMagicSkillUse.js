@@ -155,7 +155,7 @@ class RequestMagicSkillUse {
           }
 
           { // fix test
-            aiManager.onMyDying(npc.ai.script, player);
+            aiManager.onMyDying(npc.ai.name, player);
           }
           
           player.target = null;

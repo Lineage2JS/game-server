@@ -5,6 +5,10 @@ class DefaultNpc {
     this.npcEventBus = npcEventBus;
   }
 
+  onTalkSelected(talker) {
+    this.showPage(talker, 'noquest.htm');
+  }
+
   showPage(talker, htmlFileName) {
     this.npcEventBus.emit('showPage', talker, htmlFileName);
   }
@@ -97,6 +101,16 @@ class DefaultNpc {
 
   showSkillList(talker) {
     this.npcEventBus.emit('showSkillList', talker);
+  }
+
+  talkSelect(talker) {
+    this.onTalkSelected(talker);
+  }
+
+  talk(talker) {
+    if (this.onTalked) {
+      this.onTalked(talker);
+    }
   }
 }
 

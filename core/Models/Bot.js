@@ -82,7 +82,7 @@ class Bot extends Character {
     //   this.updateJob('attack', this.target);
     // }, 10000)
 
-    //this.ai.script
+    //this.ai.name
     const RunningBot = require('./../../Data/ai/bot/RunningBot');
     const runningBot = new RunningBot();
 

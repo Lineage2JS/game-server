@@ -69,18 +69,12 @@ class Action {
       }
 
       if (entity.canBeAttacked === 0 && player.target === entity.objectId) {
-        const htmlMessage = npcHtmlMessagesManager.getHtmlMessageByFileName(entity.ai.fnHi); // вызов через event TALKED shoPage(talker, fnHi) guard.ais
-        
-        if (htmlMessage) {
-          this._client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
-        } else {
-          this._client.sendPacket(new serverPackets.NpcHtmlMessage(npcHtmlMessagesManager.getHtmlMessageByFileName("noquest.htm")));
-        }
+        entity.ai.talk(player)
 
         this._client.sendPacket(new serverPackets.ActionFailed()); // fix?
 
         //
-        player.lastTalkedNpcId = entity.id;
+        player.lastTalkedNpcId = entity.id; // fix pack to method setLastTalkedNpcId()
         //
 
         return;

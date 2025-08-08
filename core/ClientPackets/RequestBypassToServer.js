@@ -156,20 +156,18 @@ class RequestBypassToServer {
 
       return;
     }
-    
+
     const npc = npcManager.getNpcById(player.lastTalkedNpcId);
 
     if (this.command === 'talk_select') {
-      if (npc.ai.script === 'Carl') {
-        aiManager.onTalkSelect(npc.ai.script, player);
-      }
+      npc.ai.talkSelect(player);
 
       return;
     }
 
     if (this.command === 'learn_skill') {
-      if (npc.ai.script === 'Minx') {
-        aiManager.onLearnSkill(npc.ai.script, player);
+      if (npc.ai.name === 'Minx') {
+        aiManager.onLearnSkill(npc.ai.name, player);
       }
 
       return;
@@ -183,7 +181,7 @@ class RequestBypassToServer {
         return { [key]: Number(value) };
       }).reduce((a, b) => { return {...a, ...b} });
 
-      aiManager.menuSelect(npc.ai.script, player, params.ask, params.reply);
+      aiManager.menuSelect(npc.ai.name, player, params.ask, params.reply);
 
       return;
     }

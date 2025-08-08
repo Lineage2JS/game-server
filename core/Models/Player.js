@@ -267,7 +267,7 @@ class Player extends Character {
         npc.updateState('stop'); // attack, if attack = stop > attack or follow
 
         { // fix test
-          aiManager.onAttacked(npc, npc.ai.script, this);
+          aiManager.onAttacked(npc, npc.ai.name, this);
         }
       }, 500000 / 330 / 2);
     }
@@ -297,7 +297,7 @@ class Player extends Character {
           }
 
           { // fix test
-            aiManager.onMyDying(npc.ai.script, this);
+            aiManager.onMyDying(npc.ai.name, this);
           }
           
           this.target = null;

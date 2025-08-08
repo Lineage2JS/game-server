@@ -1,6 +1,6 @@
-const DefaultNpc = require('./DefaultNpc');
+const Citizen = require('./Citizen');
 
-class Carl extends DefaultNpc {
+class Carl extends Citizen {
   onTalkSelected(talker) {
     if (this.haveMemo(talker, 201) === 0
       && this.getOneTimeQuestFlag(talker, 201) === 0
@@ -60,4 +60,4 @@ class Carl extends DefaultNpc {
   }
 }
 
-module.exports = new Carl();
+module.exports = Carl;

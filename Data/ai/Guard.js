@@ -1,9 +1,9 @@
 const DefaultNpc = require('./DefaultNpc');
 
-class Citizen extends DefaultNpc {
+class Guard extends DefaultNpc {
   constructor(props) {
     super();
-
+    
     this.fnHi = props.fnHi || "chi.htm";
   }
 
@@ -12,4 +12,4 @@ class Citizen extends DefaultNpc {
   }
 }
 
-module.exports = Citizen;
+module.exports = Guard;

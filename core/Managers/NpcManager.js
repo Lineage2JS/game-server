@@ -95,7 +95,16 @@ class NpcManager extends EventEmitter {
           }
 
           npc.maximumHp = npc.hp; // fix
+          npc.characterName = npcData.name;
+          //
+          const ai = require('./../../Data/ai');
+          const AiInstance = ai[npcData.ai.name];
+
+          if (AiInstance) {
+            npc.ai = new AiInstance(npcData.ai.props);
+          }
           
+          //
           this.spawn(npc);
 
           if (npc.type === 'warrior') {

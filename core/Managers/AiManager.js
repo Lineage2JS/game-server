@@ -47,7 +47,9 @@ class AiManager extends EventEmitter {
   }
 
   onTalkSelect(aiName, talker) {
-    ai.carl.onTalkSelected(talker);
+    const carl = new ai.Carl();
+
+    carl.onTalkSelected(talker);
   }
 
   onMyDying(aiName, talker) { // talker = attacker
