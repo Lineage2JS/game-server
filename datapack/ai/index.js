@@ -17,6 +17,8 @@ const Hank = require('./Hank');
 const Ken = require('./Ken');
 const Chip = require('./Chip');
 const Johnson = require('./Johnson');
+const Katrine = require('./Katrine');
+const Silvia = require('./Silvia');
 
 module.exports = {
   Carl,
@@ -38,4 +40,6 @@ module.exports = {
   Ken,
   Chip,
   Johnson,
+  Katrine,
+  Silvia,
 }
