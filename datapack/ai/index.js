@@ -8,6 +8,14 @@ const Lector = require('./Lector');
 const Elpy = require('./Elpy');
 const Minx = require('./Minx');
 const Bowman = require('./Bowman');
+const Abel = require('./Abel');
+const Arnold = require('./Arnold');
+const Gilbert = require('./Gilbert');
+const Lee = require('./Lee');
+const Hank = require('./Hank');
+const Ken = require('./Ken');
+const Chip = require('./Chip');
+const Johnson = require('./Johnson');
 
 module.exports = {
   Carl,
@@ -20,4 +28,12 @@ module.exports = {
   Elpy,
   Minx,
   Bowman,
+  Abel,
+  Arnold,
+  Gilbert,
+  Lee,
+  Hank,
+  Ken,
+  Chip,
+  Johnson,
 }
