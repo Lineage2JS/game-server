@@ -4,4 +4,4 @@ class GuideHumanCnacelot extends NewbieGuide {
 
 }
 
-module.exports = new GuideHumanCnacelot();
+module.exports = GuideHumanCnacelot;

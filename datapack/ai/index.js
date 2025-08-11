@@ -31,6 +31,11 @@ const Voni = require('./Voni');
 const Cristel = require('./Cristel');
 const Wilph = require('./Wilph');
 const Rollfnan = require('./Rollfnan');
+const Rant = require('./Rant');
+const Elias = require('./Elias');
+const Daring = require('./Daring');
+const GuideHumanCnacelot = require('./GuideHumanCnacelot');
+const Rockswell = require('./Rockswell');
 
 module.exports = {
   Carl,
@@ -66,4 +71,9 @@ module.exports = {
   Cristel,
   Wilph,
   Rollfnan,
+  Rant,
+  Elias,
+  Daring,
+  GuideHumanCnacelot,
+  Rockswell,
 }
