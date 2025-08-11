@@ -28,6 +28,8 @@ const Potter = require('./Potter');
 const Quilt = require('./Quilt');
 const Rapunzel = require('./Rapunzel');
 const Voni = require('./Voni');
+const Cristel = require('./Cristel');
+const Wilph = require('./Wilph');
 
 module.exports = {
   Carl,
@@ -60,4 +62,6 @@ module.exports = {
   Quilt,
   Rapunzel,
   Voni,
+  Cristel,
+  Wilph,
 }
