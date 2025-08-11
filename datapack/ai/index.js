@@ -19,6 +19,7 @@ const Chip = require('./Chip');
 const Johnson = require('./Johnson');
 const Katrine = require('./Katrine');
 const Silvia = require('./Silvia');
+const BlacksmithAlltran = require('./BlacksmithAlltran');
 
 module.exports = {
   Carl,
@@ -42,4 +43,5 @@ module.exports = {
   Johnson,
   Katrine,
   Silvia,
+  BlacksmithAlltran,
 }
