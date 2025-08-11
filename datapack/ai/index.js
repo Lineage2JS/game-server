@@ -20,6 +20,11 @@ const Johnson = require('./Johnson');
 const Katrine = require('./Katrine');
 const Silvia = require('./Silvia');
 const BlacksmithAlltran = require('./BlacksmithAlltran');
+const Rylith = require('./Rylith');
+const Yohan = require('./Yohan');
+const Baul = require('./Baul');
+const Harry = require('./Harry');
+const Potter = require('./Potter');
 
 module.exports = {
   Carl,
@@ -44,4 +49,9 @@ module.exports = {
   Katrine,
   Silvia,
   BlacksmithAlltran,
+  Rylith,
+  Yohan,
+  Baul,
+  Harry,
+  Potter,
 }
