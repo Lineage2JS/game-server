@@ -30,6 +30,7 @@ const Rapunzel = require('./Rapunzel');
 const Voni = require('./Voni');
 const Cristel = require('./Cristel');
 const Wilph = require('./Wilph');
+const Rollfnan = require('./Rollfnan');
 
 module.exports = {
   Carl,
@@ -64,4 +65,5 @@ module.exports = {
   Voni,
   Cristel,
   Wilph,
+  Rollfnan,
 }
