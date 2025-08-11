@@ -336,6 +336,12 @@ class EntitiesManager {
 
       playersManager.emit('notify', packet);
     });
+
+    aiManager.on('teleport', async (talker, position) => {
+      const packet = new serverPackets.NpcHtmlMessage(`<html><head><body>Teleport: ${position}</body></html>`);
+
+      playersManager.emit('notify', packet);
+    });
   }
 }
 

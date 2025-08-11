@@ -12,7 +12,9 @@ class Teleporter extends DefaultNpc {
   }
 
   onTeleportRequested(talker) {
-    
+    const position = [1010004, -80749, 149834, -3043, 18000, 0]; // fix
+
+    this.teleport(talker, position);
   }
 }
 

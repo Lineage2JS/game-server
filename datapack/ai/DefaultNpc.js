@@ -116,6 +116,16 @@ class DefaultNpc {
       this.onTalked(talker);
     }
   }
+
+  teleportRequest(talker) {
+    if (this.onTeleportRequested) {
+      this.onTeleportRequested(talker);
+    }
+  }
+
+  teleport(talker, position) {
+    this.npcEventBus.emit('teleport', talker, position);
+  }
 }
 
 module.exports = DefaultNpc;

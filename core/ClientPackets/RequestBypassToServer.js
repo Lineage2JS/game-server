@@ -186,6 +186,12 @@ class RequestBypassToServer {
       return;
     }
     
+    if (this.command === 'teleport_request') {
+      npc.ai.teleportRequest(player);
+
+      return;
+    }
+
     const htmlMessage = npcHtmlMessagesManager.getHtmlMessageByFileName('noquest.htm');
     
     this._client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));

@@ -44,6 +44,10 @@ class AiManager extends EventEmitter {
     npcEventBus.on('showSkillList', (talker) => {
       this.emit('showSkillList', talker);
     });
+
+    npcEventBus.on('teleport', (talker, position) => {
+      this.emit('teleport', talker, position);
+    });
   }
 
   onTalkSelect(aiName, talker) {
