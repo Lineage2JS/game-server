@@ -26,6 +26,7 @@ const Baul = require('./Baul');
 const Harry = require('./Harry');
 const Potter = require('./Potter');
 const Quilt = require('./Quilt');
+const Rapunzel = require('./Rapunzel');
 
 module.exports = {
   Carl,
@@ -56,4 +57,5 @@ module.exports = {
   Harry,
   Potter,
   Quilt,
+  Rapunzel,
 }
