@@ -107,6 +107,10 @@ class DefaultNpc {
     this.onTalkSelected(talker);
   }
 
+  menuSelect(talker, ask, reply) {
+    this.onMenuSelected(talker, ask, reply);
+  }
+
   talk(talker) {
     if (this.onTalked) {
       this.onTalked(talker);

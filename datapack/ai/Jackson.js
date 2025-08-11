@@ -4,4 +4,4 @@ class Jackson extends Merchant {
   
 }
 
-module.exports = new Jackson();
+module.exports = Jackson;

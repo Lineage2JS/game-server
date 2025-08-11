@@ -5,6 +5,7 @@ const Guts = require('./Guts');
 const Roien = require('./Roien');
 const TutoKeltir = require('./TutoKeltir');
 const Lector = require('./Lector');
+const Jackson = require('./Jackson');
 const Elpy = require('./Elpy');
 const Minx = require('./Minx');
 const Bowman = require('./Bowman');
@@ -25,6 +26,7 @@ module.exports = {
   Roien,
   TutoKeltir,
   Lector,
+  Jackson,
   Elpy,
   Minx,
   Bowman,

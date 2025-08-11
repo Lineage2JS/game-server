@@ -181,7 +181,7 @@ class RequestBypassToServer {
         return { [key]: Number(value) };
       }).reduce((a, b) => { return {...a, ...b} });
 
-      aiManager.menuSelect(npc.ai.name, player, params.ask, params.reply);
+      npc.ai.menuSelect(player, params.ask, params.reply);
 
       return;
     }
