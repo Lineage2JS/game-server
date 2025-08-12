@@ -36,6 +36,8 @@ const Elias = require('./Elias');
 const Daring = require('./Daring');
 const GuideHumanCnacelot = require('./GuideHumanCnacelot');
 const Rockswell = require('./Rockswell');
+const Pin = require('./Pin');
+const Gwyn = require('./Gwyn');
 
 module.exports = {
   Carl,
@@ -76,4 +78,6 @@ module.exports = {
   Daring,
   GuideHumanCnacelot,
   Rockswell,
+  Pin,
+  Gwyn,
 }
