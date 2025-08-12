@@ -69,7 +69,6 @@ class Action {
       }
 
       if (entity.canBeAttacked === 0 && player.target === entity.objectId) {
-        console.log(entity)
         entity.ai.talk(player)
 
         this._client.sendPacket(new serverPackets.ActionFailed()); // fix?
