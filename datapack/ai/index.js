@@ -52,6 +52,8 @@ const GatekeeperCiffon = require('./GatekeeperCiffon');
 const Ramus = require('./Ramus');
 const SummonerAlmors = require('./SummonerAlmors');
 const Marius = require('./Marius');
+const Edmond = require('./Edmond');
+const Mesella = require('./Mesella');
 
 module.exports = {
   Carl,
@@ -108,4 +110,6 @@ module.exports = {
   Ramus,
   SummonerAlmors,
   Marius,
+  Edmond,
+  Mesella,
 }
