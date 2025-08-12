@@ -48,6 +48,10 @@ const Matheo = require('./Matheo');
 const Philly = require('./Philly');
 const SirCollinWindawood = require('./SirCollinWindawood');
 const Lemoniell = require('./Lemoniell');
+const GatekeeperCiffon = require('./GatekeeperCiffon');
+const Ramus = require('./Ramus');
+const SummonerAlmors = require('./SummonerAlmors');
+const Marius = require('./Marius');
 
 module.exports = {
   Carl,
@@ -100,4 +104,8 @@ module.exports = {
   Philly,
   SirCollinWindawood,
   Lemoniell,
+  GatekeeperCiffon,
+  Ramus,
+  SummonerAlmors,
+  Marius,
 }
