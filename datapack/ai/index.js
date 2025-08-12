@@ -38,6 +38,16 @@ const GuideHumanCnacelot = require('./GuideHumanCnacelot');
 const Rockswell = require('./Rockswell');
 const Pin = require('./Pin');
 const Gwyn = require('./Gwyn');
+const Bitz = require('./Bitz');
+const Gallin = require('./Gallin');
+const Guflang = require('./Guflang');
+const Doff = require('./Doff');
+const Rayon = require('./Rayon');
+const Ria = require('./Ria');
+const Matheo = require('./Matheo');
+const Philly = require('./Philly');
+const SirCollinWindawood = require('./SirCollinWindawood');
+const Lemoniell = require('./Lemoniell');
 
 module.exports = {
   Carl,
@@ -80,4 +90,14 @@ module.exports = {
   Rockswell,
   Pin,
   Gwyn,
+  Bitz,
+  Gallin,
+  Guflang,
+  Doff,
+  Rayon,
+  Ria,
+  Matheo,
+  Philly,
+  SirCollinWindawood,
+  Lemoniell,
 }
