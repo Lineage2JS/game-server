@@ -15,6 +15,8 @@ class EnterWorld {
   async _init() {
     const player = playersManager.getPlayerByClient(this._client);
 
+    player.mSpd = 231;
+    
     this._client.sendPacket(new serverPackets.UserInfo(player));
     this._client.sendPacket(new serverPackets.SunRise()); // TimeManager?
     this._client.sendPacket(new serverPackets.SystemMessage(34)); // fix
