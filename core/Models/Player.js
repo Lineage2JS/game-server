@@ -227,6 +227,10 @@ class Player extends Character {
 
   attack(objectId) {
     if (this.job !== 'attack') {
+      setTimeout(() => {
+        this.emit('endAttack');
+      }, 10000);
+
       return; // fix?
     }
 

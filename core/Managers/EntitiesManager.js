@@ -218,6 +218,18 @@ class EntitiesManager {
       movingManager.unregisterMovingObject(player);
     });
 
+    playersManager.on('startAttack', async (player) => {
+      const packet = new serverPackets.AutoAttackStart(player.objectId);
+
+      playersManager.emit('notify', packet);
+    });
+
+    playersManager.on('endAttack', async (player) => {
+      const packet = new serverPackets.AutoAttackStop(player.objectId);
+
+      playersManager.emit('notify', packet);
+    });
+
     botsManager.on('spawn', bot => {
       this._entities.push(bot);
     });
