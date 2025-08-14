@@ -400,7 +400,7 @@ class Bot extends Character {
     if (distance < (this.runSpeed / 10)) {  
       const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
 
-      this.update({
+      this.updateParams({
         x: parseFloat((this.x + (Math.cos(angle) * distance)).toFixed(1)),
         y: parseFloat((this.y + (Math.sin(angle) * distance)).toFixed(1)),
         z: this.z
@@ -416,7 +416,7 @@ class Bot extends Character {
     const step = this.runSpeed * time;
     const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
 
-    this.update({
+    this.updateParams({
       x: parseFloat((this.x + (Math.cos(angle) * step)).toFixed(1)),
       y: parseFloat((this.y + (Math.sin(angle) * step)).toFixed(1)),
       z: this.z

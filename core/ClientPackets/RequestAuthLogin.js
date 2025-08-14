@@ -48,7 +48,7 @@ class RequestAuthLogin {
     const player = playersManager.getPlayerByClient(this._client);
     const characters = await database.getCharactersByLogin(this.login); // fix
 
-    player.update({
+    player.updateParams({
       login: this.login
     }); // fix?
 

@@ -24,7 +24,7 @@ class CharacterSelected {
     const character = characters[this.characterSlot];
     const inventoryItems = await database.getCharacterInventoryItems(character.objectId);
 
-    player.update(character);
+    player.updateParams(character);
 
     // fix
     for (let i = 0; i < inventoryItems.length; i++) {

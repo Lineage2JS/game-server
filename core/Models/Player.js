@@ -227,10 +227,6 @@ class Player extends Character {
 
   attack(objectId) {
     if (this.job !== 'attack') {
-      setTimeout(() => {
-        this.emit('endAttack');
-      }, 10000);
-
       return; // fix?
     }
 
@@ -259,6 +255,8 @@ class Player extends Character {
 
       return;
     }
+    
+    this.lastAttackTimestamp = Date.now();
 
     this._client.sendPacket(new serverPackets.Attack(this, npc.objectId, this._activeSoulShot));
 
@@ -387,11 +385,9 @@ class Player extends Character {
     this.emit('pickup', this.pickupItem); //fix?
   }
 
-  update(data) { // remove
-    for(const key in data) {
-      if (this.hasOwnProperty(key)) {
-        this[key] = data[key];
-      }
+  update() { // remove
+    if ((Date.now() - this.lastAttackTimestamp) > 5000) {
+      this.emit('endAttack');
     }
   }
 
@@ -412,7 +408,7 @@ class Player extends Character {
     if (distance < (this.runSpeed / 10)) {  
       const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
 
-      this.update({
+      this.updateParams({
         x: parseFloat((this.x + (Math.cos(angle) * distance)).toFixed(1)),
         y: parseFloat((this.y + (Math.sin(angle) * distance)).toFixed(1)),
         z: this.z
@@ -428,7 +424,7 @@ class Player extends Character {
     const step = this.runSpeed * time;
     const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
 
-    this.update({
+    this.updateParams({
       x: parseFloat((this.x + (Math.cos(angle) * step)).toFixed(1)),
       y: parseFloat((this.y + (Math.sin(angle) * step)).toFixed(1)),
       z: this.z

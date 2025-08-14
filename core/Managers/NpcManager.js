@@ -73,7 +73,7 @@ class NpcManager extends EventEmitter {
             }
           });
 
-          npc.update(npcData);
+          npc.updateParams(npcData);
           
           npc.objectId = await database.getNextObjectId();
           
@@ -123,7 +123,7 @@ class NpcManager extends EventEmitter {
     const npcData = npcsList.find(npcItem => npcItem.id === id);
     const npc = new Npc();
 
-    npc.update(npcData);
+    npc.updateParams(npcData);
 
     npc.on('move', () => {
       this.emit('move', npc);

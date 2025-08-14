@@ -20,7 +20,7 @@ class BotsManager extends EventEmitter {
       
       const positions = this._getRandomPos([{ x: -84999, y: 243217 }, { x: -84652, y: 242917 }, { x: -84382, y: 243289 }, { x: -84883, y: 243651 }]);
   
-      bot.update({
+      bot.updateParams({
         objectId: await database.getNextObjectId(),
         login: "a",
         characterName: "test" + i,

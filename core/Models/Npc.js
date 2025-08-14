@@ -123,7 +123,7 @@ class Npc extends Character {
   
       const angle = Math.atan2(path.target.y - path.origin.y, path.target.x - path.origin.x);
   
-      this.update({
+      this.updateParams({
         x: this.x + (Math.cos(angle) * dist), // забирается из вне. Значение стирается
         y: this.y + (Math.sin(angle) * dist),
         z: this.z
@@ -152,7 +152,7 @@ class Npc extends Character {
 
     const angle = Math.atan2(path.target.y - path.origin.y, path.target.x - path.origin.x);
 
-    this.update({
+    this.updateParams({
       x: this.x + (Math.cos(angle) * dist),
       y: this.y + (Math.sin(angle) * dist),
       z: this.z
@@ -312,7 +312,11 @@ class Npc extends Character {
     }
   }
 
-  update(data) {
+  update() {
+    
+  }
+
+  updateParams(data) {
     for(const key in data) {
       if (this.hasOwnProperty(key)) {
         this[key] = data[key];

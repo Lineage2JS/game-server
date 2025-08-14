@@ -21,6 +21,18 @@ class EntitiesManager {
     const movingManager = require('./MovingManager');
     const serverPackets = require('./../ServerPackets/serverPackets');
 
+    //
+    setInterval(() => {
+      for (let i = 0; i < this._entities.length; i++) {
+        const entity = this._entities[i];
+        
+        if (entity.update) {
+          entity.update();
+        }
+      }
+    }, 1000);
+    //
+
     npcManager.on('spawn', npc => {
       this._entities.push(npc);
 
