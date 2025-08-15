@@ -62,6 +62,8 @@ class Player extends Character {
     this.lastTalkedNpcId = null;
     this.pickupItem = null; // хранить objectId? как target?
     this._activeSoulShot = false;
+    this.lastAttackTimestamp = 0;
+    this.lastRegenerateTimestamp = 0;
     //
   }
 
@@ -389,6 +391,8 @@ class Player extends Character {
     if ((Date.now() - this.lastAttackTimestamp) > 5000) {
       this.emit('endAttack');
     }
+
+    this.regenerate();
   }
 
   updateParams(data) {
@@ -436,8 +440,9 @@ class Player extends Character {
   }
 
   regenerate() {
-    if (this.hp < this.maximumHp) {
+    if (this.hp < this.maximumHp && (Date.now() - this.lastRegenerateTimestamp) > 3000) {
       this.hp += 1;
+      this.lastRegenerateTimestamp = Date.now();
 
       this.emit('regenerate');
     }

@@ -5,7 +5,6 @@ const movingManager = require('./core/Managers/MovingManager');
 const entitiesManager = require('./core/Managers/EntitiesManager');
 const visibilityManager = require('./core/Managers/VisibilityManager');
 const npcHtmlMessagesManager = require('./core/Managers/NpcHtmlMessagesManager');
-const regenerationManager = require('./core/Managers/RegenerationManager');
 const schedulerManager = require('./core/Managers/SchedulerManager');
 const database = require('./database');
 const config = require('./config');
@@ -67,7 +66,6 @@ async function run() {
       movingManager.enable();
       visibilityManager.enable();
       npcHtmlMessagesManager.enable();
-      regenerationManager.enable();
       await schedulerManager.enable();
     });
   } catch {

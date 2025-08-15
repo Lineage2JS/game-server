@@ -17,7 +17,6 @@ class EntitiesManager {
     const visibilityManager = require('./VisibilityManager');
     const aiManager = require('./AiManager');
     const dropItemsManager = require('./DropItemsManager');
-    const regenerationManager = require('./RegenerationManager');
     const movingManager = require('./MovingManager');
     const serverPackets = require('./../ServerPackets/serverPackets');
 
@@ -106,7 +105,6 @@ class EntitiesManager {
       this._entities.push(player);
 
       visibilityManager.addPlayer(player);
-      regenerationManager.addCharacter(player);
     });
 
     playersManager.on('move', player => {
