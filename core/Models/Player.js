@@ -65,6 +65,8 @@ class Player extends Character {
     this.lastAttackTimestamp = 0;
     this.lastRegenerateTimestamp = 0;
     //
+    this.payloadAttack = null; // fix
+    //
   }
 
   getClient() {
@@ -167,7 +169,8 @@ class Player extends Character {
 
         break;
       case 'attack':
-        this.attack(payload);
+        this.payloadAttack = payload;
+        //this.attack(payload);
 
         break;
       case 'stop':
@@ -264,79 +267,79 @@ class Player extends Character {
 
     this._activeSoulShot = false;
 
-    if (npc.job === 'patrol') {
-      setTimeout(() => {
-        npc.job = 'attack';
-        npc.target = this.objectId;
-        npc.updateState('stop'); // attack, if attack = stop > attack or follow
+    // if (npc.job === 'patrol') {
+    //   setTimeout(() => {
+    //     npc.job = 'attack';
+    //     npc.target = this.objectId;
+    //     npc.updateState('stop'); // attack, if attack = stop > attack or follow
 
-        { // fix test
-          aiManager.onAttacked(npc, npc.ai.name, this);
-        }
-      }, 500000 / 330 / 2);
-    }
+    //     { // fix test
+    //       aiManager.onAttacked(npc, npc.ai.name, this);
+    //     }
+    //   }, 500000 / 330 / 2);
+    // }
 
-    if (npc.hp >= 0) {
-      setTimeout(() => {
-        npc.hp = npc.hp - 10;
+    // if (npc.hp >= 0) {
+    //   setTimeout(() => {
+    //     npc.hp = npc.hp - 10;
 
-        //
-        if (npc.hp <= 0) {
-          npc.job = 'dead';
-          npc.updateState('stop');
-          npc.emit('died');
-          npc.emit('dropItems');
+    //     //
+    //     if (npc.hp <= 0) {
+    //       npc.job = 'dead';
+    //       npc.updateState('stop');
+    //       npc.emit('died');
+    //       npc.emit('dropItems');
 
-          this.exp += 100;
-          this.emit('updateExp');
+    //       this.exp += 100;
+    //       this.emit('updateExp');
 
-          {
-            const level = findLevel(this.exp);
+    //       {
+    //         const level = findLevel(this.exp);
             
-            if (this.level < level) {
-              this.level = level;
+    //         if (this.level < level) {
+    //           this.level = level;
 
-              this.emit('updateLevel');
-            }
-          }
+    //           this.emit('updateLevel');
+    //         }
+    //       }
 
-          { // fix test
-            aiManager.onMyDying(npc.ai.name, this);
-          }
+    //       { // fix test
+    //         aiManager.onMyDying(npc.ai.name, this);
+    //       }
           
-          this.target = null;
-          this.isAttacking = false;
+    //       this.target = null;
+    //       this.isAttacking = false;
     
-          setTimeout(() => {
-            this._client.sendPacket(new serverPackets.AutoAttackStop(this.objectId));
-          }, 3000);
+    //       setTimeout(() => {
+    //         this._client.sendPacket(new serverPackets.AutoAttackStop(this.objectId));
+    //       }, 3000);
     
-          return;
-        }
-        //
+    //       return;
+    //     }
+    //     //
 
-        this._client.sendPacket(new serverPackets.StatusUpdate(objectId, [
-          {
-            id: characterStatusEnums.CUR_HP,
-            value: npc.hp,
-          },
-          {
-            id: characterStatusEnums.MAX_HP,
-            value: npc.maximumHp,
-          }
-        ]));
-      }, 500000 / 330 / 2);
+    //     this._client.sendPacket(new serverPackets.StatusUpdate(objectId, [
+    //       {
+    //         id: characterStatusEnums.CUR_HP,
+    //         value: npc.hp,
+    //       },
+    //       {
+    //         id: characterStatusEnums.MAX_HP,
+    //         value: npc.maximumHp,
+    //       }
+    //     ]));
+    //   }, 500000 / 330 / 2);
   
-      setTimeout(() => {
-        if (npc.hp <= 0) {
-          this._client.sendPacket(new serverPackets.AutoAttackStop(this.objectId));
+    //   setTimeout(() => {
+    //     if (npc.hp <= 0) {
+    //       this._client.sendPacket(new serverPackets.AutoAttackStop(this.objectId));
 
-          return;
-        }
+    //       return;
+    //     }
 
-        this.updateState('attack', this.target);
-      }, 500000 / 330);
-    }
+    //     this.updateState('attack', this.target);
+    //   }, 500000 / 330);
+    // }
   }
 
   stop() {
@@ -392,7 +395,13 @@ class Player extends Character {
       this.emit('endAttack');
     }
 
-    this.regenerate();
+    if (this.hp < this.maximumHp) {
+      this.regenerate(); 
+    }
+
+    if (this.state === 'attack' && (Date.now() - this.lastAttackTimestamp) > (500000 / 330)) {
+      this.attack(this.payloadAttack);
+    }
   }
 
   updateParams(data) {
@@ -440,7 +449,7 @@ class Player extends Character {
   }
 
   regenerate() {
-    if (this.hp < this.maximumHp && (Date.now() - this.lastRegenerateTimestamp) > 3000) {
+    if ((Date.now() - this.lastRegenerateTimestamp) > 3000) {
       this.hp += 1;
       this.lastRegenerateTimestamp = Date.now();
 

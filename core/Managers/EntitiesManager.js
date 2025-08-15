@@ -29,7 +29,7 @@ class EntitiesManager {
           entity.update();
         }
       }
-    }, 1000);
+    }, 100);
     //
 
     npcManager.on('spawn', npc => {
