@@ -4,6 +4,7 @@ const characterStatusEnums = require('./../../enums/characterStatusEnums');
 const levelExpTable = require('./../data/exp.json');
 const Inventory = require('./../Systems/Inventory');
 const Quests = require('./../Systems/Quests');
+const MoveState = require('./../states/MoveState');
 
 //
 const npcManager = require('./../Managers/NpcManager');
@@ -55,6 +56,10 @@ class Player extends Character {
     this.job = '';
     this.isMoving = false;
     this.isAttacking = false;
+
+    this._states = {
+      move: new MoveState(this),
+    }
 
     //
     this._inventory = new Inventory();
