@@ -56,6 +56,10 @@ class Npc extends Character {
     //
     this.lastTimeTick = 0;
     this.coordinates = null;
+
+    this.lastAttackTimestamp = 0;
+    //
+    this.payloadAttack = null; // fix
     //
 
     //
@@ -176,7 +180,8 @@ class Npc extends Character {
 
         break;
       case 'attack':
-        this.attack(payload);
+        this.payloadAttack = payload;
+        //this.attack(payload);
 
         break;
       case 'stop':
@@ -233,9 +238,9 @@ class Npc extends Character {
 
     this.emit('attack', objectId);
 
-    setTimeout(() => {
-      this.updateState('attack', this.target);
-    }, 500000 / 273);
+    // setTimeout(() => {
+    //   this.updateState('attack', this.target);
+    // }, 500000 / 273);
   }
 
   follow(path) {
@@ -313,7 +318,16 @@ class Npc extends Character {
   }
 
   update() {
-    
+    // if (this.objTest) {
+    //   console.log(this.state)
+    // }
+    if (this.state === 'attack' && (Date.now() - this.lastAttackTimestamp) > (500000 / this.baseAttackSpeed)) {
+      // this.objTest = this.objectId;
+      // console.log(123)
+      this.updateState('stop');
+      this.attack(this.payloadAttack);
+      this.lastAttackTimestamp = Date.now();
+    }
   }
 
   updateParams(data) {

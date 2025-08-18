@@ -64,6 +64,7 @@ class Player extends Character {
     this._activeSoulShot = false;
     this.lastAttackTimestamp = 0;
     this.lastRegenerateTimestamp = 0;
+    this.baseAttackSpeed = 330
     //
     this.payloadAttack = null; // fix
     //
@@ -267,17 +268,23 @@ class Player extends Character {
 
     this._activeSoulShot = false;
 
-    // if (npc.job === 'patrol') {
-    //   setTimeout(() => {
-    //     npc.job = 'attack';
-    //     npc.target = this.objectId;
-    //     npc.updateState('stop'); // attack, if attack = stop > attack or follow
+    if (npc.job === 'patrol') {
+      npc.job = 'attack';
+      npc.state = 'attack';
+      npc.target = this.objectId;
+      npc.payloadAttack = this.objectId;
+      npc.lastAttackTimestamp = Date.now() - (((500000 / npc.baseAttackSpeed) - (500000 / this.baseAttackSpeed)) + ((500000 / this.baseAttackSpeed) / 2));
 
-    //     { // fix test
-    //       aiManager.onAttacked(npc, npc.ai.name, this);
-    //     }
-    //   }, 500000 / 330 / 2);
-    // }
+      // setTimeout(() => {
+      //   npc.job = 'attack';
+      //   npc.target = this.objectId;
+      //   npc.updateState('stop'); // attack, if attack = stop > attack or follow
+
+      //   { // fix test
+      //     aiManager.onAttacked(npc, npc.ai.name, this);
+      //   }
+      // }, 500000 / 330 / 2);
+    }
 
     // if (npc.hp >= 0) {
     //   setTimeout(() => {
