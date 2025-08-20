@@ -5,6 +5,9 @@ const levelExpTable = require('./../data/exp.json');
 const Inventory = require('./../Systems/Inventory');
 const Quests = require('./../Systems/Quests');
 const MoveState = require('./../states/MoveState');
+const StopState = require('./../states/StopState');
+const AttackState = require('./../states/AttackState');
+const FollowState = require('./../states/FollowState');
 
 //
 const npcManager = require('./../Managers/NpcManager');
@@ -26,25 +29,6 @@ function findLevel(exp) { // оптимизировать get level by exp
   return level;
 }
 
-function moveCloser(x1, y1, x2, y2, distance) {
-  // Вычисляем разницу между координатами
-  let dx = x2 - x1;
-  let dy = y2 - y1;
-
-  // Вычисляем расстояние между точками
-  let dist = Math.sqrt(dx * dx + dy * dy);
-
-  // Нормализуем вектор разницы
-  let nx = dx / dist;
-  let ny = dy / dist;
-
-  // Перемещаем точку (x2, y2) ближе на заданное расстояние
-  let newX = x2 - nx * distance;
-  let newY = y2 - ny * distance;
-
-  return { x: newX, y: newY };
-}
-
 class Player extends Character {
   constructor(client) {
     super();
@@ -58,7 +42,10 @@ class Player extends Character {
     this.isAttacking = false;
 
     this._states = {
-      move: new MoveState(this),
+      'move': new MoveState(this),
+      'stop': new StopState(this),
+      'attack': new AttackState(this),
+      'follow': new FollowState(this),
     }
 
     //
@@ -72,6 +59,8 @@ class Player extends Character {
     this.baseAttackSpeed = 330
     //
     this.payloadAttack = null; // fix
+
+    this.lastUpdateTimestamp = 0;
     //
   }
 
@@ -146,12 +135,11 @@ class Player extends Character {
 
     switch(job) {
       case 'move':
-        this.updateState('move', payload);
-        this._client.sendPacket(new serverPackets.MoveToLocation(payload, this.objectId));
+        this.setState('move', payload);
         
         break;
       case 'attack':
-        this.updateState('attack', payload); // IPayloadAttack ? instanceof
+        this.setState('attack', payload);
 
         break;
       case 'pickup':
@@ -166,23 +154,6 @@ class Player extends Character {
     this.state = state;
 
     switch(state) {
-      case 'move':
-        this.move(payload);
-        
-        break;
-      case 'follow':
-        this.follow(payload);
-
-        break;
-      case 'attack':
-        this.payloadAttack = payload;
-        //this.attack(payload);
-
-        break;
-      case 'stop':
-        this.stop();
-
-        break;
       case 'pickup':
         this.pickup();
 
@@ -190,187 +161,136 @@ class Player extends Character {
     }
   }
 
-  move(path) {
-    this.path = path;
-
-    if (!this.isMoving) {
-      this.emit('startedMoving');
-
-      this.positionUpdateTimestamp = Date.now();
-      this.isMoving = true;
+  setState(stateName, payload) {
+    if (this._currentState) {
+      this._currentState.leave();
     }
 
-    // cancel job if change job. Stop attack if attack => move;
-    if (this.job === 'move') {
-      this.isAttacking = false;
-    }
-  }
+    const state = this._states[stateName];
 
-  follow(path) { // objectId // наверное надо в follow переместить updateState('stop') а не в updatePosition хранить
-    this.move(path);
-
-    function tick() {
-      if (this.state !== 'follow') {
-        return;
-      }
-      
-      const npc = npcManager.getNpcByObjectId(this.target);
-
-      this.path.origin.x = this.x;
-      this.path.origin.y = this.y;
-      this.path.target.x = npc.x;
-      this.path.target.y = npc.y;
-
-      const p = moveCloser(this.path.origin.x, this.path.origin.y, this.path.target.x, this.path.target.y, 20);
-
-      this.path.target.x = p.x;
-      this.path.target.y = p.y;
-
-      this._client.sendPacket(new serverPackets.MoveToLocation(this.path, this.objectId));
-
-      if (this.state === 'follow') {
-        setTimeout(tick.bind(this), 100);
-      }
-    }
-
-    tick.bind(this)();
-  }
-
-  attack(objectId) {
-    if (this.job !== 'attack') {
-      return; // fix?
-    }
-
-    const npc = npcManager.getNpcByObjectId(objectId);
-    const path = {
-      target: {
-        x: npc.x,
-        y: npc.y,
-        z: npc.z
-      },
-      origin: {
-        x: this.x,
-        y: this.y,
-        z: this.z
-      }
-    }
-
-    this.path = path;
-
-    const dx = this.path.target.x - this.x;
-    const dy = this.path.target.y - this.y;
-    const distance = Math.sqrt(dx * dx + dy * dy) - 20;
-
-    if (distance > 29) { // 29 - attack range + collision radius
-      this.updateState('follow', this.path);
-
-      return;
-    }
+    state.payload = payload;
+    this._currentState = state;
     
-    this.lastAttackTimestamp = Date.now();
+    state.enter();
+  }
 
-    this._client.sendPacket(new serverPackets.Attack(this, npc.objectId, this._activeSoulShot));
+  // attack(objectId) {
+  //   if (this.job !== 'attack') {
+  //     return; // fix?
+  //   }
 
-    this._activeSoulShot = false;
+  //   const npc = npcManager.getNpcByObjectId(objectId);
+  //   const path = {
+  //     target: {
+  //       x: npc.x,
+  //       y: npc.y,
+  //       z: npc.z
+  //     },
+  //     origin: {
+  //       x: this.x,
+  //       y: this.y,
+  //       z: this.z
+  //     }
+  //   }
 
-    if (npc.job === 'patrol') {
-      npc.job = 'attack';
-      npc.state = 'attack';
-      npc.target = this.objectId;
-      npc.payloadAttack = this.objectId;
-      npc.lastAttackTimestamp = Date.now() - (((500000 / npc.baseAttackSpeed) - (500000 / this.baseAttackSpeed)) + ((500000 / this.baseAttackSpeed) / 2));
+  //   this.path = path;
 
-      // setTimeout(() => {
-      //   npc.job = 'attack';
-      //   npc.target = this.objectId;
-      //   npc.updateState('stop'); // attack, if attack = stop > attack or follow
+  //   const dx = this.path.target.x - this.x;
+  //   const dy = this.path.target.y - this.y;
+  //   const distance = Math.sqrt(dx * dx + dy * dy) - 20;
 
-      //   { // fix test
-      //     aiManager.onAttacked(npc, npc.ai.name, this);
-      //   }
-      // }, 500000 / 330 / 2);
-    }
+  //   if (distance > 29) { // 29 - attack range + collision radius
+  //     this.updateState('follow', this.path);
 
-    // if (npc.hp >= 0) {
-    //   setTimeout(() => {
-    //     npc.hp = npc.hp - 10;
+  //     return;
+  //   }
+    
+  //   this.lastAttackTimestamp = Date.now();
 
-    //     //
-    //     if (npc.hp <= 0) {
-    //       npc.job = 'dead';
-    //       npc.updateState('stop');
-    //       npc.emit('died');
-    //       npc.emit('dropItems');
+  //   this._client.sendPacket(new serverPackets.Attack(this, npc.objectId, this._activeSoulShot));
 
-    //       this.exp += 100;
-    //       this.emit('updateExp');
+  //   this._activeSoulShot = false;
 
-    //       {
-    //         const level = findLevel(this.exp);
+  //   if (npc.job === 'patrol') {
+  //     npc.job = 'attack';
+  //     npc.state = 'attack';
+  //     npc.target = this.objectId;
+  //     npc.payloadAttack = this.objectId;
+  //     npc.lastAttackTimestamp = Date.now() - (((500000 / npc.baseAttackSpeed) - (500000 / this.baseAttackSpeed)) + ((500000 / this.baseAttackSpeed) / 2));
+
+  //     // setTimeout(() => {
+  //     //   npc.job = 'attack';
+  //     //   npc.target = this.objectId;
+  //     //   npc.updateState('stop'); // attack, if attack = stop > attack or follow
+
+  //     //   { // fix test
+  //     //     aiManager.onAttacked(npc, npc.ai.name, this);
+  //     //   }
+  //     // }, 500000 / 330 / 2);
+  //   }
+
+  //   // if (npc.hp >= 0) {
+  //   //   setTimeout(() => {
+  //   //     npc.hp = npc.hp - 10;
+
+  //   //     //
+  //   //     if (npc.hp <= 0) {
+  //   //       npc.job = 'dead';
+  //   //       npc.updateState('stop');
+  //   //       npc.emit('died');
+  //   //       npc.emit('dropItems');
+
+  //   //       this.exp += 100;
+  //   //       this.emit('updateExp');
+
+  //   //       {
+  //   //         const level = findLevel(this.exp);
             
-    //         if (this.level < level) {
-    //           this.level = level;
+  //   //         if (this.level < level) {
+  //   //           this.level = level;
 
-    //           this.emit('updateLevel');
-    //         }
-    //       }
+  //   //           this.emit('updateLevel');
+  //   //         }
+  //   //       }
 
-    //       { // fix test
-    //         aiManager.onMyDying(npc.ai.name, this);
-    //       }
+  //   //       { // fix test
+  //   //         aiManager.onMyDying(npc.ai.name, this);
+  //   //       }
           
-    //       this.target = null;
-    //       this.isAttacking = false;
+  //   //       this.target = null;
+  //   //       this.isAttacking = false;
     
-    //       setTimeout(() => {
-    //         this._client.sendPacket(new serverPackets.AutoAttackStop(this.objectId));
-    //       }, 3000);
+  //   //       setTimeout(() => {
+  //   //         this._client.sendPacket(new serverPackets.AutoAttackStop(this.objectId));
+  //   //       }, 3000);
     
-    //       return;
-    //     }
-    //     //
+  //   //       return;
+  //   //     }
+  //   //     //
 
-    //     this._client.sendPacket(new serverPackets.StatusUpdate(objectId, [
-    //       {
-    //         id: characterStatusEnums.CUR_HP,
-    //         value: npc.hp,
-    //       },
-    //       {
-    //         id: characterStatusEnums.MAX_HP,
-    //         value: npc.maximumHp,
-    //       }
-    //     ]));
-    //   }, 500000 / 330 / 2);
+  //   //     this._client.sendPacket(new serverPackets.StatusUpdate(objectId, [
+  //   //       {
+  //   //         id: characterStatusEnums.CUR_HP,
+  //   //         value: npc.hp,
+  //   //       },
+  //   //       {
+  //   //         id: characterStatusEnums.MAX_HP,
+  //   //         value: npc.maximumHp,
+  //   //       }
+  //   //     ]));
+  //   //   }, 500000 / 330 / 2);
   
-    //   setTimeout(() => {
-    //     if (npc.hp <= 0) {
-    //       this._client.sendPacket(new serverPackets.AutoAttackStop(this.objectId));
+  //   //   setTimeout(() => {
+  //   //     if (npc.hp <= 0) {
+  //   //       this._client.sendPacket(new serverPackets.AutoAttackStop(this.objectId));
 
-    //       return;
-    //     }
+  //   //       return;
+  //   //     }
 
-    //     this.updateState('attack', this.target);
-    //   }, 500000 / 330);
-    // }
-  }
-
-  stop() {
-    //movingManager.unregisterMovingObject(this); // fix надо дожидаться
-    this.emit('endMoving');
-    
-    this.isMoving = false;
-
-    // fix дождатся остановки перемещения(удаления из таймера)
-    setTimeout(() => {
-      if (this.job === 'attack') {
-        this.updateState('attack', this.target);
-      }
-
-      if (this.job === 'pickup') {
-        this.updateState('pickup');
-      }
-    }, 200);
-  }
+  //   //     this.updateState('attack', this.target);
+  //   //   }, 500000 / 330);
+  //   // }
+  // }
 
   pickup() {
     const path = {
@@ -403,16 +323,18 @@ class Player extends Character {
   }
 
   update() { // remove
+    this.lastUpdateTimestamp = Date.now();
+
+    if (this._currentState) {
+      this._currentState.update();
+    }
+    
     if ((Date.now() - this.lastAttackTimestamp) > 5000) {
       this.emit('endAttack');
     }
 
     if (this.hp < this.maximumHp) {
       this.regenerate(); 
-    }
-
-    if (this.state === 'attack' && (Date.now() - this.lastAttackTimestamp) > (500000 / 330)) {
-      this.attack(this.payloadAttack);
     }
   }
 
@@ -441,7 +363,7 @@ class Player extends Character {
   
       this.positionUpdateTimestamp = tick;
 
-      this.updateState('stop');
+      this.setState('stop');
 
       return;
     }

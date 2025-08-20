@@ -221,11 +221,15 @@ class EntitiesManager {
     });
 
     playersManager.on('startedMoving', async (player) => {
-      movingManager.registerMovingObject(player);
+      //movingManager.registerMovingObject(player);
+
+      const packet = new serverPackets.MoveToLocation(player.path, player.objectId);
+      
+      playersManager.emit('notify', packet);
     });
 
     playersManager.on('endMoving', async (player) => {
-      movingManager.unregisterMovingObject(player);
+      //movingManager.unregisterMovingObject(player);
     });
 
     playersManager.on('startAttack', async (player) => {
