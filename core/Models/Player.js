@@ -1,33 +1,11 @@
 const Character = require('./Character');
-const serverPackets = require('./../ServerPackets/serverPackets');
-const characterStatusEnums = require('./../../enums/characterStatusEnums');
-const levelExpTable = require('./../data/exp.json');
 const Inventory = require('./../Systems/Inventory');
 const Quests = require('./../Systems/Quests');
 const MoveState = require('./../states/MoveState');
 const StopState = require('./../states/StopState');
 const AttackState = require('./../states/AttackState');
 const FollowState = require('./../states/FollowState');
-
-//
-const npcManager = require('./../Managers/NpcManager');
-const aiManager = require('./../Managers/AiManager');
-//
-
-function findLevel(exp) { // оптимизировать get level by exp
-  let level = 1;
-  
-  // Перебираем уровни, пока не найдем нужный
-  for (let i = 1; i <= 60; i++) {
-    if (exp >= levelExpTable[i]) {
-      level = i;
-    } else {
-      break;
-    }
-  }
-  
-  return level;
-}
+const PickupState = require('./../states/PickupState');
 
 class Player extends Character {
   constructor(client) {
@@ -46,6 +24,7 @@ class Player extends Character {
       'stop': new StopState(this),
       'attack': new AttackState(this),
       'follow': new FollowState(this),
+      'pickup': new PickupState(this),
     }
 
     //
@@ -61,6 +40,7 @@ class Player extends Character {
     this.payloadAttack = null; // fix
 
     this.lastUpdateTimestamp = 0;
+    this.isDamage = false;
     //
   }
 
@@ -135,33 +115,22 @@ class Player extends Character {
 
     switch(job) {
       case 'move':
-        this.setState('move', payload);
+        this.changeState('move', payload);
         
         break;
       case 'attack':
-        this.setState('attack', payload);
+        this.changeState('attack', payload);
 
         break;
       case 'pickup':
         this.pickupItem = payload;
-        this.updateState('pickup');
+        this.changeState('pickup', payload);
 
         break;
     }
   }
 
-  updateState(state, payload) {
-    this.state = state;
-
-    switch(state) {
-      case 'pickup':
-        this.pickup();
-
-        break;
-    }
-  }
-
-  setState(stateName, payload) {
+  changeState(stateName, payload) {
     if (this._currentState) {
       this._currentState.leave();
     }
@@ -172,154 +141,6 @@ class Player extends Character {
     this._currentState = state;
     
     state.enter();
-  }
-
-  // attack(objectId) {
-  //   if (this.job !== 'attack') {
-  //     return; // fix?
-  //   }
-
-  //   const npc = npcManager.getNpcByObjectId(objectId);
-  //   const path = {
-  //     target: {
-  //       x: npc.x,
-  //       y: npc.y,
-  //       z: npc.z
-  //     },
-  //     origin: {
-  //       x: this.x,
-  //       y: this.y,
-  //       z: this.z
-  //     }
-  //   }
-
-  //   this.path = path;
-
-  //   const dx = this.path.target.x - this.x;
-  //   const dy = this.path.target.y - this.y;
-  //   const distance = Math.sqrt(dx * dx + dy * dy) - 20;
-
-  //   if (distance > 29) { // 29 - attack range + collision radius
-  //     this.updateState('follow', this.path);
-
-  //     return;
-  //   }
-    
-  //   this.lastAttackTimestamp = Date.now();
-
-  //   this._client.sendPacket(new serverPackets.Attack(this, npc.objectId, this._activeSoulShot));
-
-  //   this._activeSoulShot = false;
-
-  //   if (npc.job === 'patrol') {
-  //     npc.job = 'attack';
-  //     npc.state = 'attack';
-  //     npc.target = this.objectId;
-  //     npc.payloadAttack = this.objectId;
-  //     npc.lastAttackTimestamp = Date.now() - (((500000 / npc.baseAttackSpeed) - (500000 / this.baseAttackSpeed)) + ((500000 / this.baseAttackSpeed) / 2));
-
-  //     // setTimeout(() => {
-  //     //   npc.job = 'attack';
-  //     //   npc.target = this.objectId;
-  //     //   npc.updateState('stop'); // attack, if attack = stop > attack or follow
-
-  //     //   { // fix test
-  //     //     aiManager.onAttacked(npc, npc.ai.name, this);
-  //     //   }
-  //     // }, 500000 / 330 / 2);
-  //   }
-
-  //   // if (npc.hp >= 0) {
-  //   //   setTimeout(() => {
-  //   //     npc.hp = npc.hp - 10;
-
-  //   //     //
-  //   //     if (npc.hp <= 0) {
-  //   //       npc.job = 'dead';
-  //   //       npc.updateState('stop');
-  //   //       npc.emit('died');
-  //   //       npc.emit('dropItems');
-
-  //   //       this.exp += 100;
-  //   //       this.emit('updateExp');
-
-  //   //       {
-  //   //         const level = findLevel(this.exp);
-            
-  //   //         if (this.level < level) {
-  //   //           this.level = level;
-
-  //   //           this.emit('updateLevel');
-  //   //         }
-  //   //       }
-
-  //   //       { // fix test
-  //   //         aiManager.onMyDying(npc.ai.name, this);
-  //   //       }
-          
-  //   //       this.target = null;
-  //   //       this.isAttacking = false;
-    
-  //   //       setTimeout(() => {
-  //   //         this._client.sendPacket(new serverPackets.AutoAttackStop(this.objectId));
-  //   //       }, 3000);
-    
-  //   //       return;
-  //   //     }
-  //   //     //
-
-  //   //     this._client.sendPacket(new serverPackets.StatusUpdate(objectId, [
-  //   //       {
-  //   //         id: characterStatusEnums.CUR_HP,
-  //   //         value: npc.hp,
-  //   //       },
-  //   //       {
-  //   //         id: characterStatusEnums.MAX_HP,
-  //   //         value: npc.maximumHp,
-  //   //       }
-  //   //     ]));
-  //   //   }, 500000 / 330 / 2);
-  
-  //   //   setTimeout(() => {
-  //   //     if (npc.hp <= 0) {
-  //   //       this._client.sendPacket(new serverPackets.AutoAttackStop(this.objectId));
-
-  //   //       return;
-  //   //     }
-
-  //   //     this.updateState('attack', this.target);
-  //   //   }, 500000 / 330);
-  //   // }
-  // }
-
-  pickup() {
-    const path = {
-      target: {
-        x: this.pickupItem.x,
-        y: this.pickupItem.y,
-        z: this.pickupItem.z
-      },
-      origin: {
-        x: this.x,
-        y: this.y,
-        z: this.z
-      }
-    }
-
-    this.path = path;
-
-    const dx = this.path.target.x - this.x;
-    const dy = this.path.target.y - this.y;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-
-    if (distance > 10) { // fix?
-      this.updateState('move', this.path);
-      this.emit('move');
-
-      return;
-    }
-
-    this.emit('pickup', this.pickupItem); //fix?
   }
 
   update() { // remove
@@ -363,7 +184,7 @@ class Player extends Character {
   
       this.positionUpdateTimestamp = tick;
 
-      this.setState('stop');
+      this.changeState('stop');
 
       return;
     }
