@@ -30,13 +30,17 @@ class RequestActionUse {
     const player = playersManager.getPlayerByClient(this._client);
 
     if (this.actionId === 0) {
-      this._client.sendPacket(new serverPackets.ChangeWaitType(player));
+      player.waitType = !player.waitType;
+
+      this._client.sendPacket(new serverPackets.ChangeWaitType(player, player.waitType));
 
       return;
     }
 
     if (this.actionId === 1) {
-      this._client.sendPacket(new serverPackets.ChangeMoveType(player.objectId, 0));
+      player.moveType = !player.moveType;
+
+      this._client.sendPacket(new serverPackets.ChangeMoveType(player.objectId, player.moveType));
 
       return;
     }

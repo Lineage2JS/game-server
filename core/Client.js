@@ -239,6 +239,14 @@ class Client {
         new clientPackets.FinishRotating(this, payloadPacket);
 
         break;
+      case 0x1C:
+        new clientPackets.ChangeMoveType(this, payloadPacket);
+
+        break;
+      case 0x1D:
+        new clientPackets.ChangeWaitType(this, payloadPacket);
+
+        break;
     }
   }
 

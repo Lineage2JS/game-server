@@ -40,6 +40,8 @@ const NetPing = require('./NetPing');
 const RequestCharacterRestore = require('./RequestCharacterRestore');
 const StartRotating = require('./StartRotating');
 const FinishRotating = require('./FinishRotating');
+const ChangeMoveType = require('./ChangeMoveType');
+const ChangeWaitType = require('./ChangeWaitType');
 
 module.exports = {
   SendProtocolVersion,
@@ -84,4 +86,6 @@ module.exports = {
   RequestCharacterRestore,
   StartRotating,
   FinishRotating,
+  ChangeMoveType,
+  ChangeWaitType,
 }
