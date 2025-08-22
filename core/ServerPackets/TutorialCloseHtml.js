@@ -3,7 +3,8 @@ const ServerPacket = require('./ServerPacket.js');
 class TutorialCloseHtml {
   constructor() {
     this._packet = new ServerPacket();
-    this._packet.writeC(0xBC);
+    this._packet
+      .writeC(0xBC);
   }
 
   getBuffer() {

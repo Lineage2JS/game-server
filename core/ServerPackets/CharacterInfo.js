@@ -3,49 +3,51 @@ const ServerPacket = require('./ServerPacket.js');
 class CharacterInfo {
   constructor(player) {
     this._packet = new ServerPacket();
-    this._packet.writeC(0x03)
-    .writeD(player.x)
-    .writeD(player.y)
-    .writeD(player.z)
-    .writeD(player.heading)
-    .writeD(player.objectId)
-    .writeS(player.characterName)
-    .writeD(player.raceId)
-    .writeD(player.gender)
-    .writeD(player.classId)
-    
-    .writeD(0x00)
+    this._packet
+      .writeC(0x03)
+      .writeD(player.x)
+      .writeD(player.y)
+      .writeD(player.z)
+      .writeD(player.heading)
+      .writeD(player.objectId)
+      .writeS(player.characterName)
+      .writeD(player.raceId)
+      .writeD(player.gender)
+      .writeD(player.classId)
+      
+      .writeD(0x00)
 
-    .writeD(0)
-    .writeD(0)
-    .writeD(0)
-    .writeD(0)
-    .writeD(player.chest.itemId)
-    .writeD(0)
-    .writeD(0)
-    .writeD(0)
-    .writeD(0)
-    .writeD(0)
+      .writeD(0)
+      .writeD(0)
+      .writeD(0)
+      .writeD(0)
+      .writeD(player.chest.itemId)
+      .writeD(0)
+      .writeD(0)
+      .writeD(0)
+      .writeD(0)
+      .writeD(0)
 
-    .writeD(0x00)
-    .writeD(0)
-    .writeD(0)
-    
-    .writeD(0)
-    .writeD(player.karma)
+      .writeD(0x00)
+      .writeD(0)
+      .writeD(0)
+      
+      .writeD(0)
+      .writeD(player.karma)
 
-    .writeD(player.baseRunSpeed)
-    .writeD(player.baseWalkSpeed)
-    .writeD(32)
-    .writeD(32)
-    .writeD(player.baseRunSpeed) // getFloatingRunSpeed
-    .writeD(player.baseWalkSpeed) // getFloatingWalkSpeed
-    .writeD(player.baseRunSpeed) // getFlyingRunSpeed
-    .writeD(player.baseWalkSpeed) // getFlyingWalkSpeed
+      .writeD(player.baseRunSpeed)
+      .writeD(player.baseWalkSpeed)
+      .writeD(32)
+      .writeD(32)
+      .writeD(player.baseRunSpeed) // getFloatingRunSpeed
+      .writeD(player.baseWalkSpeed) // getFloatingWalkSpeed
+      .writeD(player.baseRunSpeed) // getFlyingRunSpeed
+      .writeD(player.baseWalkSpeed) // getFlyingWalkSpeed
 
     // male
     if(player.gender === 0) {
-      this._packet.writeF(player.maleAttackSpeedMultiplier)
+      this._packet
+        .writeF(player.maleAttackSpeedMultiplier)
         .writeF((player.pSpd / 500) / 0.555)
         .writeF(player.maleCollisionRadius)
         .writeF(player.maleCollisionHeight)
@@ -53,13 +55,15 @@ class CharacterInfo {
 
     // female
     if(player.gender === 1) {
-      this._packet.writeF(player.femaleAttackSpeedMultiplier)
+      this._packet
+        .writeF(player.femaleAttackSpeedMultiplier)
         .writeF((player.pSpd / 500) / 0.555)
         .writeF(player.femaleCollisionRadius)
         .writeF(player.femaleCollisionHeight)
     }
 
-    this._packet.writeD(player.hairStyle)
+    this._packet
+      .writeD(player.hairStyle)
       .writeD(player.hairColor)
       .writeD(player.face)
 

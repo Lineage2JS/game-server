@@ -3,7 +3,8 @@ const ServerPacket = require('./ServerPacket.js');
 class QuestList {
   constructor(quests = []) {
     this._packet = new ServerPacket();
-    this._packet.writeC(0x98)
+    this._packet
+      .writeC(0x98)
       .writeH(quests.length);
 
     for (let i = 0; i < quests.length; i++) {

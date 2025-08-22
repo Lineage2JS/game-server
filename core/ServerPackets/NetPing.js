@@ -3,7 +3,8 @@ const ServerPacket = require('./ServerPacket.js');
 class NetPing {
   constructor(objectId) {
     this._packet = new ServerPacket();
-    this._packet.writeC(0xEC)
+    this._packet
+      .writeC(0xEC)
       .writeD(objectId);
   }
 

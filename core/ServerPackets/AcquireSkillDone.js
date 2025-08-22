@@ -3,7 +3,8 @@ const ServerPacket = require('./ServerPacket.js');
 class AcquireSkillDone {
   constructor() {
     this._packet = new ServerPacket();
-    this._packet.writeC(0xA7);
+    this._packet
+      .writeC(0xA7);
   }
 
   getBuffer() {

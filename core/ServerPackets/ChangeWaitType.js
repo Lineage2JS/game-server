@@ -3,7 +3,8 @@ const ServerPacket = require('./ServerPacket.js');
 class ChangeWaitType {
   constructor(character, waitType) {
     this._packet = new ServerPacket();
-    this._packet.writeC(0x3F)
+    this._packet
+      .writeC(0x3F)
       .writeD(character.objectId)
       .writeD(waitType)
       .writeD(character.x)

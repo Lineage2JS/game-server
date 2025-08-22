@@ -3,7 +3,8 @@ const ServerPacket = require('./ServerPacket.js');
 class SkillList {
   constructor(skills) {
     this._packet = new ServerPacket();
-    this._packet.writeC(0x6D)
+    this._packet
+      .writeC(0x6D)
       .writeD(skills.length);
 
     for (let i = 0; i < skills.length; i++) {

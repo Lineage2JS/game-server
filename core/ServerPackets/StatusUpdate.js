@@ -3,7 +3,8 @@ const ServerPacket = require('./ServerPacket.js');
 class StatusUpdate {
   constructor(objectId, attributes) {
     this._packet = new ServerPacket();
-    this._packet.writeC(0x1A)
+    this._packet
+      .writeC(0x1A)
       .writeD(objectId)
       .writeD(attributes.length)
 

@@ -25,14 +25,16 @@ const slot = {
 class ItemList {
   constructor(items, showWindow = false) {
     this._packet = new ServerPacket();
-    this._packet.writeC(0x27)
+    this._packet
+      .writeC(0x27)
       .writeH(showWindow ? 0x01 : 0x00)
       .writeH(items.length)
 
     for(let i = 0; i < items.length; i++) {
       const item = items[i];
 
-      this._packet.writeH(0) // items[i].type1
+      this._packet
+        .writeH(0) // items[i].type1
         .writeD(item.objectId)
         .writeD(item.itemId)
 
@@ -56,7 +58,8 @@ class ItemList {
         this._packet.writeH(0x00);
       }
       
-      this._packet.writeD(slot[item.equipSlot]) // items[i].bodyPart
+      this._packet
+        .writeD(slot[item.equipSlot]) // items[i].bodyPart
         .writeH(0x00) // getEnchantLevel
         .writeH(0x00);
     }

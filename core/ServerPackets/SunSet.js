@@ -3,7 +3,8 @@ const ServerPacket = require('./ServerPacket.js');
 class SunSet {
   constructor() {
     this._packet = new ServerPacket();
-    this._packet.writeC(0x29);
+    this._packet
+      .writeC(0x29);
   }
 
   getBuffer() {

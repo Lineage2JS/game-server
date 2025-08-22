@@ -3,7 +3,8 @@ const ServerPacket = require('./ServerPacket.js');
 class UserInfo {
   constructor(player) {
     this._packet = new ServerPacket();
-    this._packet.writeC(0x04)
+    this._packet
+      .writeC(0x04)
       .writeD(player.x)
       .writeD(player.y)
       .writeD(player.z)
@@ -92,19 +93,22 @@ class UserInfo {
 
       // male
     if(player.gender === 0) {
-      this._packet.writeF(player.maleAttackSpeedMultiplier)
+      this._packet
+        .writeF(player.maleAttackSpeedMultiplier)
         .writeF(player.maleCollisionRadius)
         .writeF(player.maleCollisionHeight);
     }
 
     // female
     if(player.gender === 1) {
-      this._packet.writeF(player.femaleAttackSpeedMultiplier)
+      this._packet
+        .writeF(player.femaleAttackSpeedMultiplier)
         .writeF(player.femaleCollisionRadius)
         .writeF(player.femaleCollisionHeight);
     }
 
-    this._packet.writeD(player.hairStyle)
+    this._packet
+      .writeD(player.hairStyle)
       .writeD(player.hairColor)
       .writeD(player.face)
       .writeD(1)

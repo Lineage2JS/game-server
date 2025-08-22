@@ -3,7 +3,8 @@ const ServerPacket = require('./ServerPacket.js');
 class SpawnItem {
   constructor(item) {
     this._packet = new ServerPacket();
-    this._packet.writeC(0x15)
+    this._packet
+      .writeC(0x15)
       .writeD(item.objectId)
       .writeD(item.itemId)
       .writeD(item.x)

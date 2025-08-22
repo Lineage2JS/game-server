@@ -3,7 +3,8 @@ const ServerPacket = require('./ServerPacket.js');
 class ShowTutorialMark {
   constructor(blink) {
     this._packet = new ServerPacket();
-    this._packet.writeC(0xBA)
+    this._packet
+      .writeC(0xBA)
       .writeD(blink);
   }
 

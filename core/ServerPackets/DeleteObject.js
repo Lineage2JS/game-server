@@ -3,7 +3,8 @@ const ServerPacket = require('./ServerPacket.js');
 class DeleteObject {
   constructor(objectId) {
     this._packet = new ServerPacket();
-    this._packet.writeC(0x1E)
+    this._packet
+      .writeC(0x1E)
       .writeD(objectId);
   }
 

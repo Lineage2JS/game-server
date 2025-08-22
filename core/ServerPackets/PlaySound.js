@@ -3,7 +3,8 @@ const ServerPacket = require('./ServerPacket.js');
 class PlaySound {
   constructor(soundName) {
     this._packet = new ServerPacket();
-    this._packet.writeC(0xB1)
+    this._packet
+      .writeC(0xB1)
       .writeD(0)
       .writeS(soundName)
       .writeD(0)

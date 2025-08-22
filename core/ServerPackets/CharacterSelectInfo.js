@@ -3,13 +3,15 @@ const ServerPacket = require('./ServerPacket.js');
 class CharacterSelectInfo {
   constructor(login, characters) {
     this._packet = new ServerPacket();
-    this._packet.writeC(0x1F)
+    this._packet
+      .writeC(0x1F)
 
     if(characters && characters.length > 0) {
       this._packet.writeD(characters.length);
 
       for(let i = 0; i < characters.length; i++) {
-        this._packet.writeS(characters[i].characterName)
+        this._packet
+          .writeS(characters[i].characterName)
           .writeD(characters[i].objectId)
           .writeS(login)
           .writeD(0x55555555)	// getSessionId

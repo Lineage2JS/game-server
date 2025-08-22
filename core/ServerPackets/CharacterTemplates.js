@@ -3,11 +3,13 @@ const ServerPacket = require('./ServerPacket.js');
 class CharacterTemplates {
   constructor(characters) {
     this._packet = new ServerPacket();
-    this._packet.writeC(0x23)
+    this._packet
+      .writeC(0x23)
       .writeD(characters.length);
 
     for (let i = 0; i < characters.length; i++) {
-      this._packet.writeD(characters[i].raceId)
+      this._packet
+        .writeD(characters[i].raceId)
         .writeD(characters[i].classId)
         .writeD(0x46)
         .writeD(characters[i].str)

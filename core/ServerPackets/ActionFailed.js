@@ -3,7 +3,8 @@ const ServerPacket = require('./ServerPacket.js');
 class ActionFailed {
   constructor() {
     this._packet = new ServerPacket();
-    this._packet.writeC(0x35);
+    this._packet
+      .writeC(0x35);
   }
 
   getBuffer() {

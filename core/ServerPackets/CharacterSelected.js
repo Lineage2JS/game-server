@@ -3,7 +3,8 @@ const ServerPacket = require('./ServerPacket.js');
 class CharacterSelected {
   constructor(character) {
     this._packet = new ServerPacket();
-    this._packet.writeC(0x21)
+    this._packet
+      .writeC(0x21)
       .writeS(character.characterName)
       .writeD(character.objectId)
       .writeS(character.title)

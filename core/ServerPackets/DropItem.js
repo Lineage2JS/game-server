@@ -3,7 +3,8 @@ const ServerPacket = require('./ServerPacket.js');
 class DropItem {
   constructor(character, item) {
     this._packet = new ServerPacket();
-    this._packet.writeC(0x16)
+    this._packet
+      .writeC(0x16)
       .writeD(character.objectId)
       .writeD(item.objectId)
       .writeD(item.itemId)
