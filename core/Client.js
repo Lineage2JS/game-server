@@ -231,6 +231,14 @@ class Client {
         new clientPackets.RequestCharacterRestore(this, payloadPacket);
 
         break;
+      case 0x4A:
+        new clientPackets.StartRotating(this, payloadPacket);
+
+        break;
+      case 0x4B:
+        new clientPackets.FinishRotating(this, payloadPacket);
+
+        break;
     }
   }
 

@@ -38,6 +38,8 @@ const RequestTutorialQuestionMarkPressed = require('./RequestTutorialQuestionMar
 const RequestTutorialLinkHtml = require('./RequestTutorialLinkHtml');
 const NetPing = require('./NetPing');
 const RequestCharacterRestore = require('./RequestCharacterRestore');
+const StartRotating = require('./StartRotating');
+const FinishRotating = require('./FinishRotating');
 
 module.exports = {
   SendProtocolVersion,
@@ -80,4 +82,6 @@ module.exports = {
   RequestTutorialLinkHtml,
   NetPing,
   RequestCharacterRestore,
+  StartRotating,
+  FinishRotating,
 }

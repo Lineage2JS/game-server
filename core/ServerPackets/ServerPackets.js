@@ -16,7 +16,8 @@ const NpcInfo = require('./NpcInfo');
 const TargetSelected = require('./TargetSelected');
 const Attack = require('./Attack');
 const DropItem = require('./DropItem');
-const StopRotating = require('./StopRotating');
+const StartRotating = require('./StartRotating');
+const FinishRotating = require('./FinishRotating');
 const DeleteObject = require('./DeleteObject');
 const StopMove = require('./StopMove');
 const LeaveWorld = require('./LeaveWorld');
@@ -83,7 +84,8 @@ module.exports = {
   TargetSelected,
   Attack,
   DropItem,
-  StopRotating,
+  StartRotating,
+  FinishRotating,
   DeleteObject,
   StopMove,
   LeaveWorld,

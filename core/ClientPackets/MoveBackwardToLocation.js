@@ -19,18 +19,23 @@ class MoveBackwardToLocation {
   get targetX() {
     return this._data.getData()[0];
   }
+
   get targetY() {
     return this._data.getData()[1];
   }
+
   get targetZ() {
     return this._data.getData()[2];
   }
+
   get originX() {
     return this._data.getData()[3];
   }
+
   get originY() {
     return this._data.getData()[4];
   }
+
   get originZ() {
     return this._data.getData()[5];
   }
