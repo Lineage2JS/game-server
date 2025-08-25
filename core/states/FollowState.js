@@ -1,7 +1,7 @@
 const BaseState = require("./BaseState");
 
 //
-const npcManager = require('./../Managers/NpcManager');
+const entitiesManager = require('./../Managers/EntitiesManager');
 const serverPackets = require('./../ServerPackets/serverPackets');
 //
 
@@ -43,12 +43,12 @@ class FollowState extends BaseState {
   }
 
   update() {     
-    const npc = npcManager.getNpcByObjectId(this.character.target);
+    const entity = entitiesManager.getEntityByObjectId(this.character.target);
 
     this.character.path.origin.x = this.character.x;
     this.character.path.origin.y = this.character.y;
-    this.character.path.target.x = npc.x;
-    this.character.path.target.y = npc.y;
+    this.character.path.target.x = entity.x;
+    this.character.path.target.y = entity.y;
 
     const p = moveCloser(this.character.path.origin.x, this.character.path.origin.y, this.character.path.target.x, this.character.path.target.y, 20);
 

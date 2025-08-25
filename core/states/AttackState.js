@@ -1,7 +1,7 @@
 const BaseState = require("./BaseState");
 
 //
-const npcManager = require('./../Managers/NpcManager');
+const entitiesManager = require('./../Managers/EntitiesManager');
 const aiManager = require('./../Managers/AiManager');
 const serverPackets = require('./../ServerPackets/serverPackets');
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
@@ -31,9 +31,9 @@ class AttackState extends BaseState {
   }
 
   update() {
-    const npc = npcManager.getNpcByObjectId(this.payload);
+    const entity = entitiesManager.getEntityByObjectId(this.payload);
 
-    if (!npc) { // fix
+    if (!entity) { // fix
       return;
     }
 
@@ -42,9 +42,9 @@ class AttackState extends BaseState {
 
       const path = {
         target: {
-          x: npc.x,
-          y: npc.y,
-          z: npc.z
+          x: entity.x,
+          y: entity.y,
+          z: entity.z
         },
         origin: {
           x: this.character.x,
@@ -67,42 +67,43 @@ class AttackState extends BaseState {
       
       this.character.lastAttackTimestamp = Date.now();
   
-      this.character._client.sendPacket(new serverPackets.Attack(this.character, npc.objectId, this.character._activeSoulShot));
+      this.character._client.sendPacket(new serverPackets.Attack(this.character, entity.objectId, this.character._activeSoulShot));
   
       this.character._activeSoulShot = false;
-
-      if (npc.job === 'patrol') {
-        npc.job = 'attack';
-        npc.state = 'attack';
-        npc.target = this.character.objectId;
-        npc.payloadAttack = this.character.objectId;
-        npc.lastAttackTimestamp = Date.now() - (((500000 / npc.baseAttackSpeed) - (500000 / this.character.baseAttackSpeed)) + ((500000 / this.character.baseAttackSpeed) / 2));
+      
+      // if entity instanceof Npc
+      if (entity.job === 'patrol') {
+        entity.job = 'attack';
+        entity.state = 'attack';
+        entity.target = this.character.objectId;
+        entity.payloadAttack = this.character.objectId;
+        entity.lastAttackTimestamp = Date.now() - (((500000 / entity.baseAttackSpeed) - (500000 / this.character.baseAttackSpeed)) + ((500000 / this.character.baseAttackSpeed) / 2));
       }
     }
 
     if ((Date.now() - this.character.lastAttackTimestamp) > ((500000 / 330 / 2)) && !this.character.isDamage) {
-      if (npc.hp > 0) {
-        npc.hp = npc.hp - 10;
+      if (entity.hp > 0) {
+        entity.hp = entity.hp - 10;
 
         this.character._client.sendPacket(new serverPackets.StatusUpdate(this.payload, [
           {
             id: characterStatusEnums.CUR_HP,
-            value: npc.hp,
+            value: entity.hp,
           },
           {
             id: characterStatusEnums.MAX_HP,
-            value: npc.maximumHp,
+            value: entity.maximumHp,
           }
         ]));
 
         this.character.isDamage = true;
       }
 
-      if (npc.hp <= 0) {
-        npc.job = 'dead';
-        npc.updateState('stop');
-        npc.emit('died');
-        npc.emit('dropItems');
+      if (entity.hp <= 0) {
+        entity.job = 'dead';
+        entity.updateState('stop');
+        entity.emit('died');
+        entity.emit('dropItems');
 
         this.character.exp += 100;
         this.character.emit('updateExp');
@@ -118,11 +119,13 @@ class AttackState extends BaseState {
         }
 
         { // fix test
-          aiManager.onMyDying(npc.ai.name, this);
+          aiManager.onMyDying(entity.ai.name, this);
         }
         
         this.character.target = null;
         this.character.isAttacking = false;
+
+        this.character.changeState('stop');
       }
     }
   }
