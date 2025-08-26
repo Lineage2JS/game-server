@@ -27,7 +27,7 @@ function findLevel(exp) { // оптимизировать get level by exp
 
 class AttackState extends BaseState {
   enter() {
-    this.character.isDamage = false;
+    this.character.isDamage = true; // fix? logic
   }
 
   update() {
@@ -73,6 +73,7 @@ class AttackState extends BaseState {
       
       // if entity instanceof Npc
       if (entity.job === 'patrol') {
+        entity.lastAttackTimestamp = Date.now() - (((500000 / entity.baseAttackSpeed) - (500000 / this.character.baseAttackSpeed)) + ((500000 / this.character.baseAttackSpeed) / 2));
         entity.job = 'attack';
         entity.isRunning = true;
         entity.emit('changeMove');
@@ -80,7 +81,6 @@ class AttackState extends BaseState {
         entity.target = this.character.objectId;
         //entity.payloadAttack = this.character.objectId;
         entity.changeState('attack', this.character.objectId);
-        entity.lastAttackTimestamp = Date.now() - (((500000 / entity.baseAttackSpeed) - (500000 / this.character.baseAttackSpeed)) + ((500000 / this.character.baseAttackSpeed) / 2));
       }
     }
 
