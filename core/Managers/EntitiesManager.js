@@ -51,7 +51,6 @@ class EntitiesManager {
       const packet = new serverPackets.Attack(npc, npc.target);
       
       playersManager.emit('notify', packet);
-      playersManager.emit('damage', entity);
     });
 
     npcManager.on('changeMove', npc => {
@@ -99,6 +98,21 @@ class EntitiesManager {
         y: droppedItem.y,
         z: droppedItem.z
       }));
+    });
+
+    npcManager.on('damaged', (npc) => {
+      const packet = new serverPackets.StatusUpdate(npc.objectId, [
+        {
+          id: characterStatusEnums.CUR_HP,
+          value: npc.hp,
+        },
+        {
+          id: characterStatusEnums.MAX_HP,
+          value: npc.maximumHp,
+        }
+      ]);
+
+      playersManager.emit('notify', packet);
     });
 
     playersManager.on('spawn', player => {
@@ -230,6 +244,12 @@ class EntitiesManager {
 
     playersManager.on('endMoving', async (player) => {
       //movingManager.unregisterMovingObject(player);
+    });
+
+    playersManager.on('attack', async (player, targetObjectId) => {
+      const packet = new serverPackets.Attack(player, targetObjectId, false);
+
+      playersManager.emit('notify', packet);
     });
 
     playersManager.on('startAttack', async (player) => {

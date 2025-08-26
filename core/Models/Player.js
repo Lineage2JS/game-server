@@ -43,6 +43,7 @@ class Player extends Character {
     this.isDamage = false;
     this.moveType = 1;
     this.waitType = 1;
+    this._currentState = '';
     //
   }
 

@@ -67,60 +67,58 @@ class AttackState extends BaseState {
       
       this.character.lastAttackTimestamp = Date.now();
   
-      this.character._client.sendPacket(new serverPackets.Attack(this.character, entity.objectId, this.character._activeSoulShot));
-  
-      this.character._activeSoulShot = false;
+      this.character.emit('attack', entity.objectId);
+
+      //this.character._activeSoulShot = false;
       
       // if entity instanceof Npc
       if (entity.job === 'patrol') {
         entity.job = 'attack';
-        entity.state = 'attack';
+        entity.isRunning = true;
+        entity.emit('changeMove');
+        //entity.state = 'attack';
         entity.target = this.character.objectId;
-        entity.payloadAttack = this.character.objectId;
+        //entity.payloadAttack = this.character.objectId;
+        entity.changeState('attack', this.character.objectId);
         entity.lastAttackTimestamp = Date.now() - (((500000 / entity.baseAttackSpeed) - (500000 / this.character.baseAttackSpeed)) + ((500000 / this.character.baseAttackSpeed) / 2));
       }
     }
 
-    if ((Date.now() - this.character.lastAttackTimestamp) > ((500000 / 330 / 2)) && !this.character.isDamage) {
+    if ((Date.now() - this.character.lastAttackTimestamp) > (500000 / 330 / 2) && !this.character.isDamage) {
       if (entity.hp > 0) {
         entity.hp = entity.hp - 10;
 
-        this.character._client.sendPacket(new serverPackets.StatusUpdate(this.payload, [
-          {
-            id: characterStatusEnums.CUR_HP,
-            value: entity.hp,
-          },
-          {
-            id: characterStatusEnums.MAX_HP,
-            value: entity.maximumHp,
-          }
-        ]));
+        entity.emit('damaged');
 
         this.character.isDamage = true;
       }
 
       if (entity.hp <= 0) {
         entity.job = 'dead';
-        entity.updateState('stop');
+        entity.changeState('stop');
         entity.emit('died');
         entity.emit('dropItems');
 
-        this.character.exp += 100;
-        this.character.emit('updateExp');
+        // if character of npc
+        this.character.job = 'patrol';
+        
+        // if character of player
+        //this.character.exp += 100;
+        //this.character.emit('updateExp');
 
-        {
-          const level = findLevel(this.character.exp);
+        // {
+        //   const level = findLevel(this.character.exp);
           
-          if (this.character.level < level) {
-            this.character.level = level;
+        //   if (this.character.level < level) {
+        //     this.character.level = level;
 
-            this.character.emit('updateLevel');
-          }
-        }
+        //     this.character.emit('updateLevel');
+        //   }
+        // }
 
-        { // fix test
-          aiManager.onMyDying(entity.ai.name, this);
-        }
+        // { // fix test
+        //   aiManager.onMyDying(entity.ai.name, this);
+        // }
         
         this.character.target = null;
         this.character.isAttacking = false;

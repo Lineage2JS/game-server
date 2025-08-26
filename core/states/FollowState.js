@@ -55,8 +55,7 @@ class FollowState extends BaseState {
     this.character.path.target.x = p.x;
     this.character.path.target.y = p.y;
 
-    this.character._client.sendPacket(new serverPackets.MoveToLocation(this.character.path, this.character.objectId));
-
+    this.character.emit('move');
     this.character.updatePosition(this.character.lastUpdateTimestamp);
 
     // this.character._client.sendPacket(new serverPackets.DropItem(this.character, {

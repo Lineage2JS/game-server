@@ -16,16 +16,6 @@ class PlayersManager extends EventEmitter {
       })
     });
 
-    this.on('damage', player => {
-      player.hp -= 10;
-
-      if (player.hp > 0) {
-        this.emit('damaged', player);
-      } else {
-        this.emit('died', player);
-      }
-    });
-
     schedulerManager.on('completed', async (task) => {
       if (task.type === 'character-deletion') {
         await database.deleteCharacter(task.payload.characterObjectId);
@@ -69,12 +59,24 @@ class PlayersManager extends EventEmitter {
       this.emit('endMoving', player);
     });
 
+    player.on('attack', (targetObjectId) => {
+      this.emit('attack', player, targetObjectId);
+    });
+
     player.on('startAttack', () => {
       this.emit('startAttack', player);
     });
 
     player.on('endAttack', () => {
       this.emit('endAttack', player);
+    });
+
+    player.on('died', () => {
+      this.emit('died', player);
+    });
+
+    player.on('damaged', () => {
+      this.emit('damaged', player);
     });
   }
 

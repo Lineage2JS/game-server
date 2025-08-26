@@ -52,6 +52,10 @@ class NpcManager extends EventEmitter {
             this.emit('changeMove', npc);
           });
 
+          npc.on('damaged', () => {
+            this.emit('damaged', npc);
+          });
+
           npc.on('died', () => {
             this.emit('died', npc);
             this.remove(npc);
@@ -74,6 +78,8 @@ class NpcManager extends EventEmitter {
           });
 
           npc.updateParams(npcData);
+
+          npc.baseAttackSpeed = 330; // fix remove
           
           npc.objectId = await database.getNextObjectId();
           
@@ -133,8 +139,8 @@ class NpcManager extends EventEmitter {
       this.emit('updatePosition', npc);
     });
 
-    npc.on('attack', () => {
-      this.emit('attack', npc);
+    npc.on('attack', (objectId) => {
+      this.emit('attack', npc, objectId);
     });
 
     npc.on('stop', () => {
@@ -143,6 +149,10 @@ class NpcManager extends EventEmitter {
 
     npc.on('changeMove', () => {
       this.emit('changeMove', npc);
+    });
+
+    npc.on('damaged', () => {
+      this.emit('damaged', npc);
     });
 
     npc.on('died', () => {
