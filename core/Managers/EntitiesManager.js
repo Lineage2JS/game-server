@@ -359,6 +359,7 @@ class EntitiesManager {
 
       for(let i = 0; i < sellList.length; i++) {
         const [itemName] = Object.keys(sellList[i]);
+        
         const item = await itemsManager.createItemByName(itemName);
 
         items.push(item);

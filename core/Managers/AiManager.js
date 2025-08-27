@@ -61,7 +61,7 @@ class AiManager extends EventEmitter {
   }
 
   menuSelect(aiName, talker, ask, reply) {
-    ai.Lector.onMenuSelected(talker, ask, reply);
+    ai[aiName].onMenuSelected(talker, ask, reply);
   }
 
   onAttacked(npc, aiName, attacker) {
