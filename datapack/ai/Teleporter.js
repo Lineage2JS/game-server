@@ -5,6 +5,7 @@ class Teleporter extends DefaultNpc {
     super();
 
     this.fnHi = props.fnHi || "thi.htm";
+    this.position = [];
   }
 
   onTalked(talker) {
@@ -12,9 +13,7 @@ class Teleporter extends DefaultNpc {
   }
 
   onTeleportRequested(talker) {
-    const position = [1010004, -80749, 149834, -3043, 18000, 0]; // fix
-
-    this.teleport(talker, position);
+    this.teleport(talker, this.position);
   }
 }
 

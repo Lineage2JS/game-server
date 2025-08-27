@@ -385,7 +385,9 @@ class EntitiesManager {
     });
 
     aiManager.on('teleport', async (talker, position) => {
-      const packet = new serverPackets.NpcHtmlMessage(`<html><head><body>Teleport: ${position}</body></html>`);
+      //const packet = new serverPackets.NpcHtmlMessage(`<html><head><body>Teleport: ${position}</body></html>`);
+      const [, x, y, z] = position[0];
+      const packet = new serverPackets.TeleportToLocation(talker.objectId, x, y, z);
 
       playersManager.emit('notify', packet);
     });
