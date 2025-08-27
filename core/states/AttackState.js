@@ -27,7 +27,7 @@ function findLevel(exp) { // оптимизировать get level by exp
 
 class AttackState extends BaseState {
   enter() {
-    this.character.isDamage = true; // fix? logic
+    this.character.isDamage = false;
   }
 
   update() {
@@ -38,7 +38,7 @@ class AttackState extends BaseState {
     }
 
     if ((Date.now() - this.character.lastAttackTimestamp) > (500000 / 330)) {
-      this.character.isDamage = false;
+      this.character.isDamage = true;
 
       const path = {
         target: {
@@ -84,13 +84,13 @@ class AttackState extends BaseState {
       }
     }
 
-    if ((Date.now() - this.character.lastAttackTimestamp) > (500000 / 330 / 2) && !this.character.isDamage) {
+    if ((Date.now() - this.character.lastAttackTimestamp) > (500000 / 330 / 2) && this.character.isDamage) {
       if (entity.hp > 0) {
         entity.hp = entity.hp - 10;
 
         entity.emit('damaged');
 
-        this.character.isDamage = true;
+        this.character.isDamage = false;
       }
 
       if (entity.hp <= 0) {
