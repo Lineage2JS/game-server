@@ -25,7 +25,7 @@ function findLevel(exp) { // оптимизировать get level by exp
 }
 //
 
-class AttackState extends BaseState {
+class AttackState extends BaseState { // fix много в коде
   enter() {
     this.character.isDamage = false;
   }

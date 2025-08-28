@@ -385,9 +385,18 @@ class EntitiesManager {
     });
 
     aiManager.on('teleport', async (talker, position) => {
-      //const packet = new serverPackets.NpcHtmlMessage(`<html><head><body>Teleport: ${position}</body></html>`);
-      const [, x, y, z] = position[0];
-      const packet = new serverPackets.TeleportToLocation(talker.objectId, x, y, z);
+      let teleportLinks = '';
+
+      for(let i = 0; i < position.length; i++) {
+        const pos = position[i];
+        const [location, x, y, z, amount] = pos;
+        const teleportLink = `<a action="bypass -h teleport ${x} ${y} ${z}">${location} - ${amount} Adena</a>`;
+
+        teleportLinks += teleportLink;
+      }
+
+      const message = `<html><head><body>Region where teleporting is possible<br><br>${teleportLinks}</body></html>`;
+      const packet = new serverPackets.NpcHtmlMessage(message);
 
       playersManager.emit('notify', packet);
     });

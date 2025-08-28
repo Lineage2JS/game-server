@@ -79,7 +79,7 @@ class NpcManager extends EventEmitter {
 
           npc.updateParams(npcData);
 
-          npc.baseAttackSpeed = 330; // fix remove
+          npc.baseAttackSpeed = 330; // fix remove брать из датапака
           
           npc.objectId = await database.getNextObjectId();
           

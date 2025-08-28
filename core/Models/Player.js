@@ -146,7 +146,7 @@ class Player extends Character {
     state.enter();
   }
 
-  update() { // remove
+  update() {
     this.lastUpdateTimestamp = Date.now();
 
     if (this._currentState) {

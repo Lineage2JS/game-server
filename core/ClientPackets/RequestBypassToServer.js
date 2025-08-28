@@ -192,6 +192,14 @@ class RequestBypassToServer {
       return;
     }
 
+    if (this.command.includes('teleport')) { // fix collision? admin_teleport / teleport
+      const [x, y, z] = this.command.split(' ').slice(1).map(i => Number(i)); // fix
+
+      this._client.sendPacket(new serverPackets.TeleportToLocation(player.objectId, x, y, z));
+
+      return;
+    }
+
     const htmlMessage = npcHtmlMessagesManager.getHtmlMessageByFileName('noquest.htm');
     
     this._client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
