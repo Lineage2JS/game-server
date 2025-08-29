@@ -1,12 +1,12 @@
 {
-  "name": "gameserver",
+  "name": "game-server",
   "version": "0.0.1",
-  "description": "",
+  "description": "Lineage 2 Chronicle 1: Harbingers of War – game server emulator (written in JavaScript)",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "space2pacman",
   "license": "ISC",
   "dependencies": {
     "pg": "^8.16.3"
