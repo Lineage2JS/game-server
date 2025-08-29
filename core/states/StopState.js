@@ -11,6 +11,10 @@ class StopState extends BaseState { // IdleState
     if (this.character.job === 'pickup') {
       this.character.changeState('pickup', this.character.target); //
     }
+
+    if (this.character.job === 'talk') {
+      this.character.changeState('talk');
+    }
   }
 
   update() {

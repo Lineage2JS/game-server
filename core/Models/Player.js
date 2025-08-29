@@ -6,6 +6,7 @@ const StopState = require('./../states/StopState');
 const AttackState = require('./../states/AttackState');
 const FollowState = require('./../states/FollowState');
 const PickupState = require('./../states/PickupState');
+const TalkState = require('./../states/TalkState');
 
 class Player extends Character {
   constructor(client) {
@@ -25,6 +26,7 @@ class Player extends Character {
       'attack': new AttackState(this),
       'follow': new FollowState(this),
       'pickup': new PickupState(this),
+      'talk': new TalkState(this),
     }
 
     //

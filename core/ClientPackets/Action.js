@@ -69,13 +69,27 @@ class Action {
       }
 
       if (entity.canBeAttacked === 0 && player.target === entity.objectId) {
-        entity.ai.talk(player)
-
-        this._client.sendPacket(new serverPackets.ActionFailed()); // fix?
-
+        const path = {
+          target: {
+            x: entity.x,
+            y: entity.y,
+            z: entity.z
+          },
+          origin: {
+            x: player.x,
+            y: player.y,
+            z: player.z
+          }
+        }
+    
         //
         player.lastTalkedNpcId = entity.id; // fix pack to method setLastTalkedNpcId()
         //
+        player.path = path;
+        player.job = 'talk';
+        player.changeState('follow', player.path);
+
+        this._client.sendPacket(new serverPackets.ActionFailed()); // fix?
 
         return;
       }
