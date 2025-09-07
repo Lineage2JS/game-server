@@ -4,6 +4,7 @@ const Quests = require('./../Systems/Quests');
 const MoveState = require('./../states/MoveState');
 const StopState = require('./../states/StopState');
 const AttackState = require('./../states/AttackState');
+const CastState = require('./../states/CastState');
 const FollowState = require('./../states/FollowState');
 const PickupState = require('./../states/PickupState');
 const TalkState = require('./../states/TalkState');
@@ -24,6 +25,7 @@ class Player extends Character {
       'move': new MoveState(this),
       'stop': new StopState(this),
       'attack': new AttackState(this),
+      'cast': new CastState(this),
       'follow': new FollowState(this),
       'pickup': new PickupState(this),
       'talk': new TalkState(this),
@@ -176,7 +178,6 @@ class Player extends Character {
     const dx = this.path.target.x - this.x;
     const dy = this.path.target.y - this.y;
     const distance = Math.sqrt(dx * dx + dy * dy) - 9;
-    const time = (tick  - this.positionUpdateTimestamp) / 1000;
     
     if (distance < (this.runSpeed / 10)) {  
       const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
@@ -194,6 +195,7 @@ class Player extends Character {
       return;
     }
 
+    const time = (tick  - this.positionUpdateTimestamp) / 1000;
     const step = this.runSpeed * time;
     const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
 

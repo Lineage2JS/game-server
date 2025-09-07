@@ -51,136 +51,140 @@ class RequestMagicSkillUse {
   async _init() {
     const player = playersManager.getPlayerByClient(this._client);
 
-    if (this.skillId === 1068) {
-      this._client.sendPacket(new serverPackets.MagicSkillUse(player, {
-        id: this.skillId,
-        level: 1,
-        hitTime: 4000, //1.08,
-        reuseDelay: 4000 //13
-      }));
+    // if (this.skillId === 1068) {
+    //   this._client.sendPacket(new serverPackets.MagicSkillUse(player, {
+    //     id: this.skillId,
+    //     level: 1,
+    //     hitTime: 4000, //1.08,
+    //     reuseDelay: 4000 //13
+    //   }));
 
-      this._client.sendPacket(new serverPackets.MagicSkillLaunched(player, {
-        id: this.skillId,
-        level: 1
-      }));
+    //   this._client.sendPacket(new serverPackets.MagicSkillLaunched(player, {
+    //     id: this.skillId,
+    //     level: 1
+    //   }));
 
-      this._client.sendPacket(new serverPackets.AbnormalStatusUpdate([
-        {
-          skillId: this.skillId,
-          level: 1,
-          duration: 10000
-        }
-      ]));
+    //   this._client.sendPacket(new serverPackets.AbnormalStatusUpdate([
+    //     {
+    //       skillId: this.skillId,
+    //       level: 1,
+    //       duration: 10000
+    //     }
+    //   ]));
 
-      return;
-    }
+    //   return;
+    // }
 
-    if (this.skillId === 1216) {
-      this._client.sendPacket(new serverPackets.MagicSkillUse(player, {
-        id: this.skillId,
-        level: 1,
-        hitTime: 4000, //1.08,
-        reuseDelay: 4000 //13
-      }));
+    // if (this.skillId === 1216) {
+    //   this._client.sendPacket(new serverPackets.MagicSkillUse(player, {
+    //     id: this.skillId,
+    //     level: 1,
+    //     hitTime: 4000, //1.08,
+    //     reuseDelay: 4000 //13
+    //   }));
   
-      this._client.sendPacket(new serverPackets.MagicSkillLaunched(player, {
-        id: this.skillId,
-        level: 1
-      }));
+    //   this._client.sendPacket(new serverPackets.MagicSkillLaunched(player, {
+    //     id: this.skillId,
+    //     level: 1
+    //   }));
 
-      this._client.sendPacket(new serverPackets.SetupGauge(0, 4000));
+    //   this._client.sendPacket(new serverPackets.SetupGauge(0, 4000));
 
-      return;
-    }
+    //   return;
+    // }
 
-    this._client.sendPacket(new serverPackets.MagicSkillUse(player, {
-      id: this.skillId,
-      level: 1,
-      hitTime: 4000, //1.08,
-      reuseDelay: 4000 //13
-    }));
+    // this._client.sendPacket(new serverPackets.MagicSkillUse(player, {
+    //   id: this.skillId,
+    //   level: 1,
+    //   hitTime: 4000, //1.08,
+    //   reuseDelay: 4000 //13
+    // }));
 
-    this._client.sendPacket(new serverPackets.MagicSkillLaunched(player, {
-      id: this.skillId,
-      level: 1
-    }));
+    // this._client.sendPacket(new serverPackets.MagicSkillLaunched(player, {
+    //   id: this.skillId,
+    //   level: 1
+    // }));
 
-    this._client.sendPacket(new serverPackets.SetupGauge(0, 4000));
+    // this._client.sendPacket(new serverPackets.SetupGauge(0, 4000));
 
     //
-    const npc = npcManager.getNpcByObjectId(player.target);
+    //const npc = npcManager.getNpcByObjectId(player.target);
+    player.isAttacking = true;
 
-    if (npc.job === 'patrol') {
-      setTimeout(() => {
-        npc.hp = npc.hp - 30;
-        npc.job = 'attack';
-        npc.target = player.objectId;
-        npc.updateState('stop'); // attack, if attack = stop > attack or follow
+    player.job = 'cast';
+    player.changeState('cast', player.target);
 
-        this._client.sendPacket(new serverPackets.StatusUpdate(npc.objectId, [
-          {
-            id: characterStatusEnums.CUR_HP,
-            value: npc.hp,
-          },
-          {
-            id: characterStatusEnums.MAX_HP,
-            value: npc.maximumHp,
-          }
-        ]));
-      }, 4000);
-    }
+    // if (npc.job === 'patrol') {
+    //   setTimeout(() => {
+    //     npc.hp = npc.hp - 30;
+    //     npc.job = 'attack';
+    //     npc.target = player.objectId;
+    //     npc.changeState('stop'); // attack, if attack = stop > attack or follow
 
-    if (npc.job === 'attack') {
-      setTimeout(() => {
-        npc.hp = npc.hp - 30;
+    //     this._client.sendPacket(new serverPackets.StatusUpdate(npc.objectId, [
+    //       {
+    //         id: characterStatusEnums.CUR_HP,
+    //         value: npc.hp,
+    //       },
+    //       {
+    //         id: characterStatusEnums.MAX_HP,
+    //         value: npc.maximumHp,
+    //       }
+    //     ]));
+    //   }, 4000);
+    // }
 
-        //
-        if (npc.hp <= 0) {
-          npc.job = 'dead';
-          npc.updateState('stop');
-          npc.emit('died');
-          npc.emit('dropItems');
+    // if (npc.job === 'attack') {
+    //   setTimeout(() => {
+    //     npc.hp = npc.hp - 30;
 
-          player.exp += 100;
-          player.emit('updateExp');
+    //     //
+    //     if (npc.hp <= 0) {
+    //       npc.job = 'dead';
+    //       npc.changeState('stop');
+    //       npc.emit('died');
+    //       npc.emit('dropItems');
 
-          {
-            const level = findLevel(player.exp);
+    //       player.exp += 100;
+    //       player.emit('updateExp');
+
+    //       {
+    //         const level = findLevel(player.exp);
             
-            if (player.level < level) {
-              player.level = level;
+    //         if (player.level < level) {
+    //           player.level = level;
 
-              player.emit('updateLevel');
-            }
-          }
+    //           player.emit('updateLevel');
+    //         }
+    //       }
 
-          { // fix test
-            aiManager.onMyDying(npc.ai.name, player);
-          }
+    //       { // fix test
+    //         aiManager.onMyDying(npc.ai.name, player);
+    //       }
           
-          player.target = null;
-          player.isAttacking = false;
+    //       player.target = null;
+    //       player.isAttacking = false;
     
-          setTimeout(() => {
-            this._client.sendPacket(new serverPackets.AutoAttackStop(player.objectId));
-          }, 3000);
+    //       setTimeout(() => {
+    //         this._client.sendPacket(new serverPackets.AutoAttackStop(player.objectId));
+    //       }, 3000);
     
-          return;
-        }
-        //
+    //       return;
+    //     }
+    //     //
 
-        this._client.sendPacket(new serverPackets.StatusUpdate(npc.objectId, [
-          {
-            id: characterStatusEnums.CUR_HP,
-            value: npc.hp,
-          },
-          {
-            id: characterStatusEnums.MAX_HP,
-            value: npc.maximumHp,
-          }
-        ]));
-      }, 4000);
-    }
+    //     this._client.sendPacket(new serverPackets.StatusUpdate(npc.objectId, [
+    //       {
+    //         id: characterStatusEnums.CUR_HP,
+    //         value: npc.hp,
+    //       },
+    //       {
+    //         id: characterStatusEnums.MAX_HP,
+    //         value: npc.maximumHp,
+    //       }
+    //     ]));
+    //   }, 4000);
+    // }
     //
   }
 }

@@ -75,7 +75,7 @@ class DefaultNpc {
   }
 
   addFleeDesire(attacker) {    
-    this._npc.updateState('stop');
+    this._npc.changeState('stop');
     // fix
     const positions = this._npc._getRandomPos(this._npc.coordinates);
 
@@ -93,7 +93,7 @@ class DefaultNpc {
     }
 
     this._npc.job = 'patrol';
-    this._npc.updateState('move', path);
+    this._npc.changeState('move', path);
 
     console.log(this._npc);
     //
