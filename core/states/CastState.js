@@ -10,7 +10,7 @@ class CastState extends BaseState {
   }
 
   update() {
-    const entity = entitiesManager.getEntityByObjectId(this.payload);
+    const entity = entitiesManager.getEntityByObjectId(this.payload.target);
 
     if (!entity) { // fix
       return;
@@ -40,8 +40,10 @@ class CastState extends BaseState {
 
       return;
     }
-
-    console.log('cast')
+    
+    this.character.job = '';
+    this.character.emit('cast', this.payload.skillId);
+    this.character.changeState('stop');
   }
 
   leave() {

@@ -112,7 +112,10 @@ class RequestMagicSkillUse {
     player.isAttacking = true;
 
     player.job = 'cast';
-    player.changeState('cast', player.target);
+    player.changeState('cast', {
+      target: player.target,
+      skillId: this.skillId // p.setCastSkill ?
+    });
 
     // if (npc.job === 'patrol') {
     //   setTimeout(() => {

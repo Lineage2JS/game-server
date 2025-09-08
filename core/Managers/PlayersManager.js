@@ -78,6 +78,10 @@ class PlayersManager extends EventEmitter {
     player.on('damaged', () => {
       this.emit('damaged', player);
     });
+
+    player.on('cast', (skillId) => {
+      this.emit('cast', player, skillId);
+    });
   }
 
   getPlayerByClient(client) {
