@@ -109,6 +109,11 @@ class RequestMagicSkillUse {
 
     //
     //const npc = npcManager.getNpcByObjectId(player.target);
+    
+    if (player.isCasting) {
+      return;
+    }
+
     player.isAttacking = true;
 
     player.job = 'cast';

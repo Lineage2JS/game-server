@@ -6,10 +6,19 @@ const entitiesManager = require('./../Managers/EntitiesManager');
 
 class CastState extends BaseState {
   enter() {
-    
+    this.character.isCasting = false;
   }
 
   update() {
+    if (this.character.isCasting) {
+      if ((Date.now() - this.character.lastAttackTimestamp) > 1000) {
+        this.character.job = '';
+        this.character.changeState('stop');
+      }
+
+      return;
+    }
+
     const entity = entitiesManager.getEntityByObjectId(this.payload.target);
 
     if (!entity) { // fix
@@ -41,13 +50,13 @@ class CastState extends BaseState {
       return;
     }
     
-    this.character.job = '';
+    this.character.lastAttackTimestamp = Date.now();
+    this.character.isCasting = true;
     this.character.emit('cast', this.payload.skillId);
-    this.character.changeState('stop');
   }
 
   leave() {
-    
+    this.character.isCasting = false;
   }
 }
 

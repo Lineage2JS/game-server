@@ -272,11 +272,20 @@ class EntitiesManager {
       const packet = new serverPackets.MagicSkillUse(player, {
         id: skillId,
         level: 1,
-        hitTime: 4000, //1.08,
-        reuseDelay: 4000 //13
+        hitTime: 1000, //1.08,
+        reuseDelay: 1000 //13
       });
 
       playersManager.emit('notify', packet);
+
+      {
+        const packet = new serverPackets.MagicSkillLaunched(player, {
+          id: skillId,
+          level: 1
+        });
+
+        playersManager.emit('notify', packet);
+      }
     });
 
     botsManager.on('spawn', bot => {

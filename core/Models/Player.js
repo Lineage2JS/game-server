@@ -20,6 +20,7 @@ class Player extends Character {
     this.job = '';
     this.isMoving = false;
     this.isAttacking = false;
+    this.isCasting = false;
 
     this._states = {
       'move': new MoveState(this),
