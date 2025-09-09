@@ -10,6 +10,10 @@ class CastState extends BaseState {
   }
 
   update() {
+    if (this.character.target === this.character.objectId) {
+      return;
+    }
+
     if (this.character.isCasting) {
       if ((Date.now() - this.character.lastAttackTimestamp) > 1000) {
         this.character.job = '';

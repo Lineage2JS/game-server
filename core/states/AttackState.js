@@ -37,6 +37,14 @@ class AttackState extends BaseState { // fix много в коде
       return;
     }
 
+    if (entity.isDead) {
+      // if character of npc
+      this.character.job = 'patrol';
+      this.character.changeState('stop');
+
+      return;
+    }
+
     if ((Date.now() - this.character.lastAttackTimestamp) > (500000 / 330)) {
       this.character.isDamage = true;
 
@@ -98,6 +106,7 @@ class AttackState extends BaseState { // fix много в коде
         entity.changeState('stop');
         entity.emit('died');
         entity.emit('dropItems');
+        entity.isDead = true;
 
         // if character of npc
         this.character.job = 'patrol';
