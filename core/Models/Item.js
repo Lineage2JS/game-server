@@ -1,11 +1,12 @@
 class Item {
-  constructor(objectId, itemId, consume_type, item_type, itemName, equipSlot) {
+  constructor(objectId, itemId, consume_type, item_type, itemName, equipSlot, defaultPrice) {
     this.objectId = objectId;
     this.itemId = itemId;
     this.consumeType = consume_type;
     this.itemType = item_type;
     this.itemName = itemName;
     this.equipSlot = equipSlot;
+    this.defaultPrice = defaultPrice;
     this._count = 1;
     this._equipped = false;
   }

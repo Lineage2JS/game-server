@@ -6,7 +6,7 @@ class ItemsManager {
   async createItemByName(itemName) {
     const itemData = itemsList.find(i => i.name === itemName);
     const objectId = await database.getNextObjectId();
-    const item = new Item(objectId, itemData.id, itemData.consume_type, itemData.item_type, itemData.name, itemData.slot_bit_type);
+    const item = new Item(objectId, itemData.id, itemData.consume_type, itemData.item_type, itemData.name, itemData.slot_bit_type, itemData.default_price);
 
     return item;
   }
@@ -14,7 +14,7 @@ class ItemsManager {
   async createItemById(itemId) {
     const itemData = itemsList.find(i => i.id === itemId);
     const objectId = await database.getNextObjectId();
-    const item = new Item(objectId, itemData.id, itemData.consume_type, itemData.item_type, itemData.name, itemData.slot_bit_type);
+    const item = new Item(objectId, itemData.id, itemData.consume_type, itemData.item_type, itemData.name, itemData.slot_bit_type, itemData.default_price);
 
     return item;
   }

@@ -7,10 +7,10 @@ class BuyList {
       .writeC(0x1D)
       .writeD(1000) // money
       .writeD(8) // buyListId ?
-      .writeH(items.length) // items length
+      .writeH(items.length); // items length
 
     for (let i = 0; i < items.length; i++) {
-      const item = items[i]
+      const item = items[i];
 
       this._packet
         .writeH(1)
@@ -23,7 +23,7 @@ class BuyList {
         .writeH(0)
         .writeH(0)
         .writeH(0)
-        .writeD(10)
+        .writeD(item.defaultPrice);
     }
   }
 
