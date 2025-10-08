@@ -56,6 +56,14 @@ class Player extends Character {
     return this._client;
   }
 
+  // isState(state) {
+  //   return this.getState() === stateName;
+  // }
+
+  // isDead() {
+  //   return this.isState('dead');
+  // }
+
   setActiveSoulShot() {
     this._activeSoulShot = true;
   }
@@ -70,10 +78,12 @@ class Player extends Character {
 
   getItemByObjectId(objectId) {
     const items = this._inventory.getItems();
-    const foundItem = items.find(item => item.objectId === objectId);
+    const foundItem = items.find(item => item.getObjectId() === objectId);
 
     if (foundItem) {
       return foundItem;
+    } else {
+      return null;
     }
   }
 
@@ -218,6 +228,89 @@ class Player extends Character {
 
       this.emit('regenerate');
     }
+  }
+
+  equipItem(item) {
+    const slot = item.getBodyPart();
+
+    if (slot === 0x0080) { // SLOT_R_HAND
+      const itemEquipped = this.getItemByObjectId(this.hand.right.objectId);
+
+      if (itemEquipped) {
+        itemEquipped.unEquip();
+      }
+
+      this.hand.right.objectId = item.getObjectId();
+      this.hand.right.itemId = item.getItemId();
+    }
+
+    if (slot === 0x0400) { // SLOT_CHEST
+      const itemEquipped = this.getItemByObjectId(this.chest.objectId);
+
+      if (itemEquipped) {
+        itemEquipped.unEquip();
+      }
+
+      this.chest.objectId = item.getObjectId();
+      this.chest.itemId = item.getItemId();
+    }
+
+    if (slot === 0x0800) { // SLOT_LEGS
+      const itemEquipped = this.getItemByObjectId(this.legs.objectId);
+
+      if (itemEquipped) {
+        itemEquipped.unEquip();
+      }
+
+      this.legs.objectId = item.getObjectId();
+      this.legs.itemId = item.getItemId();
+    }
+
+    if (slot === 0x0200) { // SLOT_GLOVES
+      const itemEquipped = this.getItemByObjectId(this.gloves.objectId);
+
+      if (itemEquipped) {
+        itemEquipped.unEquip();
+      }
+
+      this.gloves.objectId = item.getObjectId();
+      this.gloves.itemId = item.getItemId();
+    }
+
+    if (slot === 0x1000) { // SLOT_FEET
+      const itemEquipped = this.getItemByObjectId(this.feet.objectId);
+
+      if (itemEquipped) {
+        itemEquipped.unEquip();
+      }
+
+      this.feet.objectId = item.getObjectId();
+      this.feet.itemId = item.getItemId();
+    }
+
+    if (slot === 0x0040) { // SLOT_HEAD
+      const itemEquipped = this.getItemByObjectId(this.head.objectId);
+
+      if (itemEquipped) {
+        itemEquipped.unEquip();
+      }
+
+      this.head.objectId = item.getObjectId();
+      this.head.itemId = item.getItemId();
+    }
+
+    item.equip();
+  }
+
+  unEquipItem(item) {
+    const slot = item.getBodyPart();
+    
+    if (slot === 0x0080) {
+      this.hand.right.objectId = 0;
+      this.hand.right.itemId = 0;
+    }
+
+    item.unEquip();
   }
 }
 

@@ -2,6 +2,7 @@ const serverPackets = require('./../ServerPackets/serverPackets');
 const ClientPacket = require("./ClientPacket");
 const playersManager = require('./../Managers/PlayersManager');
 const itemsManager = require('./../Managers/ItemsManager');
+const npcManager = require('./../Managers/NpcManager');
 
 class RequestBuyItem {
   constructor(client, packet) {
@@ -34,9 +35,23 @@ class RequestBuyItem {
 
   async _init() {
     const player = playersManager.getPlayerByClient(this._client);
-    const item = await itemsManager.createItemById(this.itemId);
+    const item = await itemsManager.createItem(this.itemId);
+
+    if (item.getPrice() > 1000) { // TODO for example
+      this._client.sendPacket(new serverPackets.SystemMessage(279))
+
+      return;
+    }
 
     player.addItem(item);
+
+    const items = player.getItems();
+
+    this._client.sendPacket(new serverPackets.ItemList(items, true));
+
+    const npc = npcManager.getNpcById(player.lastTalkedNpcId);
+
+    npc.ai.talk(player); // TODO тут ли вызывать?
   }
 }
 

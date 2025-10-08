@@ -1,54 +1,81 @@
 class Item {
-  constructor(objectId, itemId, consume_type, item_type, itemName, equipSlot) {
-    this.objectId = objectId;
-    this.itemId = itemId;
-    this.consumeType = consume_type;
-    this.itemType = item_type;
-    this.itemName = itemName;
-    this.equipSlot = equipSlot;
+  constructor(data) {
+    this._objectId = null;
+    this._itemId = data.itemId;
+    this._name = data.name;
+    this._bodyPart = data.bodyPart;
+    this._type1 = data.type1;
+    this._type2 = data.type2;
+    this._weight = data.weight;
+    this._price = data.price;
     this._count = 1;
-    this._equipped = false;
+    this._isEquipped = false;
   }
 
-  get isStackable() {
-    if (this.consumeType === 'consume_type_stackable' || this.consumeType === 'consume_type_asset') {
-      return true;
-    } else {
-      return false;
-    }
+  setObjectId(objectId) {
+    this._objectId = objectId;
   }
 
-  get isEquippable() {
-    if (this.equipSlot !== 'none') {
-      return true;
-    } else {
-      return false;
-    }
+  getObjectId() {
+    return this._objectId;
   }
 
-  get isEquipped() {
-    return this._equipped;
+  getItemId() {
+    return this._itemId;
   }
 
-  get isQuestItem() {
-    if (this.itemType === 'questitem') {
-      return true;
-    } else {
-      return false;
-    }
+  getName() {
+    return this._name;
   }
 
-  toggleEquip() {
-    this._equipped = !this._equipped;
+  getBodyPart() {
+    return this._bodyPart;
+  }
+
+  getType1() {
+    return this._type1;
+  }
+
+  getType2() {
+    return this._type2;
+  }
+
+  getWeight() {
+    return this._weight;
+  }
+
+  getPrice() {
+    return this._price;
   }
 
   getCount() {
     return this._count;
   }
 
-  updateCount(value) {
-    this._count = value;
+  equip() {
+    this._isEquipped = true;
   }
+
+  unEquip() {
+    this._isEquipped = false;
+  }
+
+  get isEquipped() {
+    return this._isEquipped;
+  }
+
+  // get isEquippable() {
+  //   if (this.equipSlot !== 'none') {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+
+  // updateCount(value) {
+  //   this._count = value;
+  // }
 }
 
 module.exports = Item;

@@ -1,0 +1,13 @@
+{
+  "initialEquipment": {
+    "humanFighter": ["squire's_sword", "dagger", "squire's_shirt", "squire's_pants"],
+    "humanMagician": ["apprentice's_wand", "apprentice's_tunic", "apprentice's_hose"],
+    "elfFighter": ["squire's_sword", "dagger", "squire's_shirt", "squire's_pants"],
+    "elfMagician": ["apprentice's_wand", "apprentice's_tunic", "apprentice's_hose"],
+    "darkelfFighter": ["squire's_sword", "dagger", "squire's_shirt", "squire's_pants"],
+    "darkelfMagician": ["apprentice's_wand", "apprentice's_tunic", "apprentice's_hose"],
+    "orcFighter": ["training_gloves", "squire's_sword", "squire's_shirt", "squire's_pants"],
+    "orcShaman": ["apprentice's_wand", "apprentice's_tunic", "apprentice's_hose"],
+    "dwarfApprentice": ["union_member's_club", "dagger", "squire's_shirt", "squire's_pants"]
+  }
+}

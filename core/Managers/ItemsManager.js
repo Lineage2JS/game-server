@@ -1,23 +1,323 @@
 const database = require('./../../database');
-const Item = require('./../Models/Item');
+const ItemEtc = require('./../Models/ItemEtc');
+const ItemArmor = require('./../Models/ItemArmor');
+const ItemWeapon = require('./../Models/ItemWeapon');
 const itemsList = require('./../../datapack/itemsList.json');
+const itemsIdMap = require('./../../datapack/itemsIdMap.json');
+
+const TYPE_ARROW = 0;
+const TYPE_MATERIAL = 1;
+const TYPE_PET_COLLAR = 2;
+const TYPE_POTION = 3;
+const TYPE_RECEIPE = 4;
+const TYPE_SCROLL = 5;
+const TYPE_QUEST = 6;
+const TYPE_MONEY = 7;
+const TYPE_OTHER = 8;
+const TYPE_SPELLBOOK = 9;
+
+const TYPE1_WEAPON_RING_EARRING_NECKLACE = 0;
+const TYPE1_SHIELD_ARMOR = 1;
+const TYPE1_ITEM_QUESTITEM_ADENA = 4;
+
+const TYPE2_WEAPON = 0;
+const TYPE2_SHIELD_ARMOR = 1;
+const TYPE2_ACCESSORY = 2;
+const TYPE2_QUEST = 3;
+const TYPE2_MONEY = 4;
+const TYPE2_OTHER = 5;
+
+const SLOT_NONE = 0x0000;
+const SLOT_UNDERWEAR = 0x0001;
+const SLOT_R_EAR = 0x0002;
+const SLOT_L_EAR = 0x0004;
+const SLOT_NECK = 0x0008;
+const SLOT_R_FINGER = 0x0010;
+const SLOT_L_FINGER = 0x0020;
+const SLOT_HEAD = 0x0040;
+const SLOT_R_HAND = 0x0080;
+const SLOT_L_HAND = 0x0100;
+const SLOT_GLOVES = 0x0200;
+const SLOT_CHEST = 0x0400;
+const SLOT_LEGS = 0x0800;
+const SLOT_FEET = 0x1000;
+const SLOT_BACK = 0x2000;
+const SLOT_LR_HAND = 0x4000;
+const SLOT_FULL_ARMOR = 0x8000;
+const slots = {
+  "chest": SLOT_CHEST,
+  "chest_full": SLOT_FULL_ARMOR, 
+  "head": SLOT_HEAD,
+  "underwear": SLOT_UNDERWEAR,
+  "back": SLOT_BACK,
+  "neck": SLOT_NECK,
+  "legs": SLOT_LEGS,
+  "feet": SLOT_FEET,
+  "gloves": SLOT_GLOVES,
+  "chest,legs": SLOT_CHEST, // | L2Item.SLOT_LEGS,
+  "rhand": SLOT_R_HAND,
+  "lhand": SLOT_L_HAND,
+  "lrhand": SLOT_LR_HAND,
+  "rear,lear": SLOT_L_EAR, // | L2Item.SLOT_R_EAR,
+  "rfinger,lfinger": SLOT_L_FINGER, // | L2Item.SLOT_R_FINGER,
+  "none": SLOT_NONE
+}
 
 class ItemsManager {
-  async createItemByName(itemName) {
-    const itemData = itemsList.find(i => i.name === itemName);
-    const objectId = await database.getNextObjectId();
-    const item = new Item(objectId, itemData.id, itemData.consume_type, itemData.item_type, itemData.name, itemData.slot_bit_type);
-
-    return item;
+  constructor() {
+    this._itemsTable = new Map();
   }
 
-  async createItemById(itemId) {
-    const itemData = itemsList.find(i => i.id === itemId);
-    const objectId = await database.getNextObjectId();
-    const item = new Item(objectId, itemData.id, itemData.consume_type, itemData.item_type, itemData.name, itemData.slot_bit_type);
-
-    return item;
+  enable() {
+    this._loadItemTemplates();
   }
+
+  async createItem(itemId) {
+    const itemTemplate = this._getItemTemplate(itemId);
+    const objectId = await database.getNextObjectId();
+
+    if (itemTemplate instanceof ItemEtc) {
+      return this._createItemEtc(itemTemplate, objectId);
+    }
+
+    if (itemTemplate instanceof ItemArmor) {
+      return this._createItemArmor(itemTemplate, objectId);
+    }
+
+    if (itemTemplate instanceof ItemWeapon) {
+      return this._createItemWeapon(itemTemplate, objectId);
+    }
+  }
+
+  getItem(itemId, objectId) {
+    const itemTemplate = this._getItemTemplate(itemId);
+
+    if (itemTemplate instanceof ItemEtc) {
+      return this._createItemEtc(itemTemplate, objectId);
+    }
+
+    if (itemTemplate instanceof ItemArmor) {
+      return this._createItemArmor(itemTemplate, objectId);
+    }
+
+    if (itemTemplate instanceof ItemWeapon) {
+      return this._createItemWeapon(itemTemplate, objectId);
+    }
+  }
+
+  getItemIdByName(itemName) {
+    return itemsIdMap[itemName];
+  }
+
+  _createItemEtc(itemTemplate, objectId) {
+    const data = {
+      itemId: itemTemplate.getItemId(),
+      name: itemTemplate.getName(),
+      etcItemType: itemTemplate.getEtcItemType(),
+      type1: itemTemplate.getType1(),
+      type2: itemTemplate.getType2(),
+      bodyPart: itemTemplate.getBodyPart(),
+      weight: itemTemplate.getWeight(),
+      price: itemTemplate.getPrice(),
+      stackable: itemTemplate.getStackable(),
+    }
+    const itemEtc = new ItemEtc(data);
+
+    itemEtc.setObjectId(objectId);
+
+    return itemEtc;
+  }
+
+  _createItemArmor(itemTemplate, objectId) {
+    const data = {
+      itemId: itemTemplate.getItemId(),
+      name: itemTemplate.getName(),
+      armorType: itemTemplate.getArmorType(),
+      type1: itemTemplate.getType1(),
+      type2: itemTemplate.getType2(),
+      bodyPart: itemTemplate.getBodyPart(),
+      weight: itemTemplate.getWeight(),
+      price: itemTemplate.getPrice(),
+    }
+    const itemArmor = new ItemArmor(data);
+
+    itemArmor.setObjectId(objectId);
+
+    return itemArmor;
+  }
+
+  _createItemWeapon(itemTemplate, objectId) {
+    const data = {
+      itemId: itemTemplate.getItemId(),
+      name: itemTemplate.getName(),
+      weaponType: itemTemplate.getWeaponType(),
+      type1: itemTemplate.getType1(),
+      type2: itemTemplate.getType2(),
+      bodyPart: itemTemplate.getBodyPart(),
+      weight: itemTemplate.getWeight(),
+      price: itemTemplate.getPrice(),
+    }
+    const itemWeapon = new ItemWeapon(data);
+
+    itemWeapon.setObjectId(objectId);
+
+    return itemWeapon;
+  }
+
+  _loadItemTemplates() {
+    for(const itemData of itemsList) {
+      //accessary
+      //questitem
+      //asset - adena
+
+      if (itemData.item_type === "etcitem") {
+        this._createItemEtcTemplate(itemData);
+      }
+
+      if (itemData.item_type === "armor") {
+        this._createItemArmorTemplate(itemData);
+      }
+
+      if (itemData.item_type === "weapon") {
+        this._createItemWeaponTemplate(itemData);
+      }
+    }
+  }
+
+  _createItemEtcTemplate(itemData) {
+    let type2 = TYPE2_OTHER;
+    let etcItemType = TYPE_OTHER
+    let bodyPart = SLOT_NONE;
+    let stackable = false;
+
+    switch(itemData.etcitem_type) {
+      case 'none':
+        type2 = TYPE2_OTHER;
+        etcItemType = TYPE_OTHER;
+
+        break;
+      case 'arrow':
+        type2 = TYPE2_OTHER;
+        etcItemType = TYPE_ARROW;
+        bodyPart = SLOT_L_HAND;
+
+        break;
+      case 'castle_guard':
+        type2 = TYPE2_OTHER;
+        etcItemType = TYPE_SCROLL;
+
+        break;
+      case 'material':
+        type2 = TYPE2_OTHER;
+        etcItemType = TYPE_MATERIAL;
+
+        break;
+      case 'pet_collar':
+        type2 = TYPE2_OTHER;
+        etcItemType = TYPE_PET_COLLAR;
+
+        break;
+      case 'potion':
+        type2 = TYPE2_OTHER;
+        etcItemType = TYPE_POTION;
+
+        break;
+      case 'recipe':
+        type2 = TYPE2_OTHER;
+        etcItemType = TYPE_RECEIPE;
+
+        break;
+      case 'scroll':
+        type2 = TYPE2_OTHER;
+        etcItemType = TYPE_SCROLL;
+
+        break;
+    }
+
+    if (itemData.consume_type === 'consume_type_stackable') {
+      stackable = true;
+    } else {
+      stackable = false;
+    }
+
+    const data = {
+      itemId: itemData.id,
+      name: itemData.name,
+      etcItemType,
+      type1: TYPE1_ITEM_QUESTITEM_ADENA,
+      type2,
+      bodyPart,
+      weight: itemData.weight,
+      price: itemData.default_price,
+      stackable,
+    }
+    const itemEtc = new ItemEtc(data);
+
+    this._addItem(itemEtc.getItemId(), itemEtc);
+  }
+
+  _createItemArmorTemplate(itemData) {
+    const slot = slots[itemData.slot_bit_type];
+    const armorTypeConfig = this._getArmorTypeConfig(slot);
+    const data = {
+      itemId: itemData.id,
+      name: itemData.name,
+      armorType: itemData.armor_type === null ? "none" : itemData.armor_type,
+      type1: armorTypeConfig.type1,
+      type2: armorTypeConfig.type2,
+      bodyPart: slot,
+      weight: itemData.weight,
+      price: itemData.default_price,
+    }
+    const itemArmor = new ItemArmor(data);
+
+    this._addItem(itemArmor.getItemId(), itemArmor);
+  }
+
+  _createItemWeaponTemplate(itemData) {
+    const slot = slots[itemData.slot_bit_type];
+    const data = {
+      itemId: itemData.id,
+      name: itemData.name,
+      weaponType: itemData.weapon_type,
+      type1: TYPE1_WEAPON_RING_EARRING_NECKLACE,
+      type2: TYPE2_WEAPON,
+      bodyPart: slot,
+      weight: itemData.weight,
+      price: itemData.default_price,
+    }        
+    const itemWeapon = new ItemWeapon(data);
+
+    this._addItem(itemWeapon.getItemId(), itemWeapon);
+  }
+
+  _addItem(itemId, item) {
+    this._itemsTable.set(itemId, item);
+  }
+
+  _getItemTemplate(itemId) {
+    return this._itemsTable.get(itemId);
+  }
+
+  _getArmorTypeConfig(slot) {
+    const isAccessory = (slot === SLOT_NECK || 
+      (slot & SLOT_L_EAR) !== 0 ||
+      (slot & SLOT_L_FINGER) !== 0);
+    
+    if (isAccessory) {
+      return {
+        type1: TYPE1_WEAPON_RING_EARRING_NECKLACE,
+        type2: TYPE2_ACCESSORY
+      }
+    } else {
+      return {
+        type1: TYPE1_SHIELD_ARMOR,
+        type2: TYPE2_SHIELD_ARMOR
+      }
+    }
+  }
+
+  // TODO loadItem from CharacterSelected
 }
 
 module.exports = new ItemsManager();

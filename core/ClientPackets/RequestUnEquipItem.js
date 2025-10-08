@@ -22,13 +22,47 @@ class RequestUnEquipItem {
     if (this.slot === 0x0080) {
       const item = player.getItemByObjectId(player.hand.right.objectId);
       
-      item.toggleEquip();
-
-      player.hand.right.objectId = 0;
-      player.hand.right.itemId = 0;
-
-      this._client.sendPacket(new serverPackets.ItemList(player.getItems()));
+      item.unEquip();
+      player.unEquipItem(item); // unEquipItemBySlot()
     }
+
+    if (this.slot === 0x0400) {
+      const item = player.getItemByObjectId(player.chest.objectId);
+      
+      item.unEquip();
+      player.unEquipItem(item); // unEquipItemBySlot()
+    }
+
+    if (this.slot === 0x0800) {
+      const item = player.getItemByObjectId(player.legs.objectId);
+      
+      item.unEquip();
+      player.unEquipItem(item); // unEquipItemBySlot()
+    }
+
+    if (this.slot === 0x0200) { // SLOT_GLOVES
+      const item = player.getItemByObjectId(player.gloves.objectId);
+
+      item.unEquip();
+      player.unEquipItem(item);
+    }
+
+    if (this.slot === 0x1000) { // SLOT_FEET
+      const item = player.getItemByObjectId(player.feet.objectId);
+
+      item.unEquip();
+      player.unEquipItem(item);
+    }
+
+    if (this.slot === 0x0040) { // SLOT_HEAD
+      const item = player.getItemByObjectId(player.head.objectId);
+
+      item.unEquip();
+      player.unEquipItem(item);
+    }
+
+    this._client.sendPacket(new serverPackets.UserInfo(player));
+    this._client.sendPacket(new serverPackets.ItemList(player.getItems()));
   }
 }
 

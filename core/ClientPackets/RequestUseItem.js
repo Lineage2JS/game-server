@@ -20,55 +20,61 @@ class RequestUseItem {
     const player = playersManager.getPlayerByClient(this._client);
     const item = player.getItemByObjectId(this.objectId);
 
-    if (item.itemName === 'soulshot_none') {
-      player.deleteItemByName(item.itemName);
-      player.target = player.objectId; // fix? вернуть обратно
-      player.setActiveSoulShot();
-      this._client.sendPacket(new serverPackets.MagicSkillUse(player, {
-        id: 2039,
-        level: 1,
-        hitTime: 0,
-        reuseDelay: 0,
-      }));
-      player.target = null;
+    // if (item.itemName === 'soulshot_none') {
+    //   player.deleteItemByName(item.itemName);
+    //   player.target = player.objectId; // fix? вернуть обратно
+    //   player.setActiveSoulShot();
+    //   this._client.sendPacket(new serverPackets.MagicSkillUse(player, {
+    //     id: 2039,
+    //     level: 1,
+    //     hitTime: 0,
+    //     reuseDelay: 0,
+    //   }));
+    //   player.target = null;
 
-      return;
-    }
+    //   return;
+    // }
     
-    if (item.itemName === 'world_map') {
-      this._client.sendPacket(new serverPackets.ShowMiniMap(item.itemId));
+    // if (item.itemName === 'world_map') {
+    //   this._client.sendPacket(new serverPackets.ShowMiniMap(item.itemId));
 
-      return;
+    //   return;
+    // }
+    
+    if (item.isEquipped) {
+      player.unEquipItem(item);
+    } else {
+      player.equipItem(item);
     }
 
-    if (item.isEquippable) {
-      if (item.equipSlot === 'chest') {
-        player.chest.objectId = item.objectId;
-        player.chest.itemId = item.itemId;
+    // if (item.isEquippable) {
+    //   if (item.equipSlot === 'chest') {
+    //     player.chest.objectId = item.objectId;
+    //     player.chest.itemId = item.itemId;
         
-        item.toggleEquip();
-      }
+    //     item.toggleEquip();
+    //   }
 
-      if (item.equipSlot === 'legs') {
-        player.legs.objectId = item.objectId;
-        player.legs.itemId = item.itemId;
+    //   if (item.equipSlot === 'legs') {
+    //     player.legs.objectId = item.objectId;
+    //     player.legs.itemId = item.itemId;
         
-        item.toggleEquip();
-      }
+    //     item.toggleEquip();
+    //   }
       
-      if (item.equipSlot === 'rhand') {
-        if (player.hand.right.objectId !== 0) {
-          const equippedItem = player.getItemByObjectId(player.hand.right.objectId);
+    //   if (item.equipSlot === 'rhand') {
+    //     if (player.hand.right.objectId !== 0) {
+    //       const equippedItem = player.getItemByObjectId(player.hand.right.objectId);
 
-          equippedItem.toggleEquip();
-        }
+    //       equippedItem.toggleEquip();
+    //     }
 
-        player.hand.right.objectId = item.objectId;
-        player.hand.right.itemId = item.itemId;
+    //     player.hand.right.objectId = item.objectId;
+    //     player.hand.right.itemId = item.itemId;
         
-        item.toggleEquip();
-      }
-    }
+    //     item.toggleEquip();
+    //   }
+    // }
 
     this._client.sendPacket(new serverPackets.UserInfo(player));
 		this._client.sendPacket(new serverPackets.ItemList(player.getItems()));

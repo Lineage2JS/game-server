@@ -34,34 +34,24 @@ class ItemList {
       const item = items[i];
 
       this._packet
-        .writeH(0) // items[i].type1
-        .writeD(item.objectId)
-        .writeD(item.itemId)
-
-      if (item.isStackable) {
-        this._packet.writeD(item.getCount());
-      } else {
-        this._packet.writeD(0x01);
-      }
-
-      if (item.isQuestItem) {
-        this._packet.writeH(0x03);
-      } else {
-        this._packet.writeH(0x00);
-      }
+        .writeH(item.getType1())
+        .writeD(item.getObjectId())
+        .writeD(item.getItemId())
+        .writeD(item.getCount())
+        .writeH(item.getType2());
       
-      this._packet.writeH(0xff);
+      this._packet.writeH(0xff); // TODO
 
-      if (item.isEquipped) {
+      if (item.isEquipped) { // TODO
         this._packet.writeH(0x01);
       } else {
         this._packet.writeH(0x00);
       }
       
       this._packet
-        .writeD(slot[item.equipSlot]) // items[i].bodyPart
+        .writeD(item.getBodyPart())
         .writeH(0x00) // getEnchantLevel
-        .writeH(0x00);
+        .writeH(0x00); // TODO
     }
   }
 

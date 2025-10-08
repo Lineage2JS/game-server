@@ -19,7 +19,7 @@ class PlayersManager extends EventEmitter {
     schedulerManager.on('completed', async (task) => {
       if (task.type === 'character-deletion') {
         await database.deleteCharacter(task.payload.characterObjectId);
-        await database.deleteCharacterInventory(task.payload.characterObjectId);
+        await database.deleteCharacterItems(task.payload.characterObjectId);
       }
     });
   }

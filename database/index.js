@@ -288,52 +288,40 @@ class Database {
     `, [value, id]);
   }
 
-  async createInventory(inventoryItems) {
-    await this._client.query('BEGIN');
-
-    for (let i = 0; i < inventoryItems.length; i++) {
-      const inventoryItem = inventoryItems[i];
-
-      await this._client.query(`
-        INSERT INTO inventories(item_object_id, item_id, item_type, item_name, item_count, equip_slot, is_equipped, consume_type, character_object_id)
-        VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
-      `, [
-        inventoryItem.itemObjectId,
-        inventoryItem.itemId,
-        inventoryItem.itemType,
-        inventoryItem.itemName,
-        inventoryItem.itemCount,
-        inventoryItem.itemEquipSlot,
-        inventoryItem.isEquipped,
-        inventoryItem.consumeType,
-        inventoryItem.characterObjectId
-      ]);
-    }
-
-    await this._client.query('COMMIT');
+  async createItem(item) {
+    await this._client.query(`
+      INSERT INTO items(object_id, item_id, item_count, location, owner_object_id, equip_slot)
+      VALUES($1, $2, $3, $4, $5, $6)
+    `, [
+      item.objectId,
+      item.itemId,
+      item.itemCount,
+      item.location,
+      item.ownerObjectId,
+      item.equipSlot,
+    ]);
   }
 
   async getCharacterInventoryItems(objectId) {
     const result = await this._client.query(`
       SELECT
-        item_object_id AS "objectId",
+        object_id AS "objectId",
         item_id AS "itemId",
-        consume_type AS "consumeType",
-        item_type AS "itemType",
-        item_name AS "itemName",
+        item_count AS "itemCount",
         equip_slot AS "equipSlot"
-      FROM inventories
-      WHERE character_object_id = $1
+      FROM items
+      WHERE owner_object_id = $1
+      AND location = 'inventory'
     `, [objectId]);
     const inventoryItems = result.rows;
 
     return inventoryItems;
   }
 
-  async deleteCharacterInventory(objectId) {
+  async deleteCharacterItems(objectId) {
     await this._client.query(`
-      DELETE FROM inventories
-      WHERE character_object_id = $1
+      DELETE FROM items
+      WHERE owner_object_id = $1
     `, [objectId]);
   }
 

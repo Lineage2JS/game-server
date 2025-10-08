@@ -13,18 +13,22 @@ class BuyList {
       const item = items[i]
 
       this._packet
-        .writeH(1)
-        .writeD(item.objectId)
-        .writeD(item.itemId)
-        .writeD(1)
-        .writeH(1)
-        .writeH(0)
-        .writeD(0x0080)
-        .writeH(0)
-        .writeH(0)
-        .writeH(0)
-        .writeD(10)
-    }
+        .writeH(item.getType1())
+        .writeD(item.getObjectId())
+        .writeD(item.getItemId())
+        .writeD(item.getCount())
+        .writeH(item.getType2())
+        .writeH(0); // TODO ?
+      
+      if (item.getType1() < 4) { // TODO
+        this._packet.writeD(item.getBodyPart())
+        .writeH(0) // enchant level
+        .writeH(0) // TODO ?
+        .writeH(0); // TODO ?
+      }
+
+      this._packet.writeD(item.getPrice()) // price
+    } 
   }
 
   getBuffer() {

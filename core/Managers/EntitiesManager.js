@@ -383,8 +383,8 @@ class EntitiesManager {
 
       for(let i = 0; i < sellList.length; i++) {
         const [itemName] = Object.keys(sellList[i]);
-        
-        const item = await itemsManager.createItemByName(itemName);
+        const itemId = itemsManager.getItemIdByName(itemName);
+        const item = await itemsManager.createItem(itemId);
 
         items.push(item);
       }

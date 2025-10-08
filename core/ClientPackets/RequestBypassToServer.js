@@ -145,7 +145,7 @@ class RequestBypassToServer {
       const [key, value] = params.split("=").map(i => i.trim());
 
       if (key === 'id') {
-        const item = await itemsManager.createItemById(Number(value));
+        const item = await itemsManager.createItem(Number(value));
 
         player.addItem(item);
       }

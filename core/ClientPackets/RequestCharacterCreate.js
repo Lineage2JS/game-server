@@ -5,6 +5,7 @@ const database = require('./../../database');
 const characterTemplates = require('./../data/characterTemplates.json');
 const playersManager = require('./../Managers/PlayersManager');
 const itemsManager = require('./../Managers/ItemsManager');
+const initialParametersManager = require('./../Managers/InitialParametersManager');
 
 class RequestCharacterCreate {
   constructor(client, packet) {
@@ -131,31 +132,23 @@ class RequestCharacterCreate {
     // add character to database
     const createdCharacter = await database.createCharacter(character);
 
-    //fix
-    //create inventory
-    const initialEquipment = require('./../../datapack/initialEquipment.json');
-    const inventoryItems = [];
+    //fix humanFighter
+    const initialEquipmentIds = initialParametersManager.getInitialEquipmentIds('humanFighter');
 
-    for (let i = 0; i < initialEquipment['human_fighter'].length; i++) {
-      const itemName = initialEquipment['human_fighter'][i];
-      const item = await itemsManager.createItemByName(itemName);
-      const inventoryItem = {
-        itemObjectId: item.objectId,
-        itemId: item.itemId,
-        itemType: item.itemType,
-        itemName: item.itemName,
+    for (let i = 0; i < initialEquipmentIds.length; i++) {
+      const itemId = initialEquipmentIds[i];
+      const item = await itemsManager.createItem(itemId);
+      const dbItem = { // TODO dbItem?
+        objectId: item.getObjectId(),
+        itemId: item.getItemId(),
         itemCount: item.getCount(),
-        itemEquipSlot: item.equipSlot,
-        isEquipped: item.isEquipped,
-        consumeType: item.consumeType,
-        characterObjectId: createdCharacter.object_id, // extra fix
+        location: 'inventory',
+        ownerObjectId: createdCharacter.object_id, // extra fix
+        equipSlot: 0,
       }
 
-      inventoryItems.push(inventoryItem);
+      await database.createItem(dbItem);
     }
-
-    await database.createInventory(inventoryItems);
-    //
 
     // get all characters on user account
     const characters = await database.getCharactersByLogin(player.login);
