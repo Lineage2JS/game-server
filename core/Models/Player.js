@@ -21,6 +21,7 @@ class Player extends Character {
     this.isMoving = false;
     this.isAttacking = false;
     this.isCasting = false;
+    this.isDead = false;
 
     this._states = {
       'move': new MoveState(this),

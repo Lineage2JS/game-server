@@ -22,6 +22,7 @@ class RequestRestartPoint {
 
     this._client.sendPacket(new serverPackets.Revive(player.objectId));
 
+    player.isDead = false; // fix
     player.hp = player.maximumHp - 30; // fix
 
     this._client.sendPacket(new serverPackets.StatusUpdate(player.objectId, [
