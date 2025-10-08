@@ -235,10 +235,19 @@ class Player extends Character {
     const slot = item.getBodyPart();
 
     if (slot === 0x0080) { // SLOT_R_HAND
-      const itemEquipped = this.getItemByObjectId(this.hand.right.objectId);
+      const itemEquippedLeftAndRight = this.getItemByObjectId(this.hand.leftAndRight.objectId);
 
-      if (itemEquipped) {
-        itemEquipped.unEquip();
+      if (itemEquippedLeftAndRight) {
+        itemEquippedLeftAndRight.unEquip();
+      }
+
+      this.hand.leftAndRight.objectId = 0;
+      this.hand.leftAndRight.itemId = 0;
+      
+      const itemEquippedLeft = this.getItemByObjectId(this.hand.right.objectId);
+
+      if (itemEquippedLeft) {
+        itemEquippedLeft.unEquip();
       }
 
       this.hand.right.objectId = item.getObjectId();
@@ -300,6 +309,35 @@ class Player extends Character {
       this.head.itemId = item.getItemId();
     }
 
+    if (slot === 0x4000) { // SLOT_LR_HAND
+      const itemEquippedLeft = this.getItemByObjectId(this.hand.left.objectId);
+
+      if (itemEquippedLeft) {
+        itemEquippedLeft.unEquip();
+      }
+
+      this.hand.left.objectId = 0;
+      this.hand.left.itemId = 0;
+
+      const itemEquippedRight = this.getItemByObjectId(this.hand.right.objectId);
+
+      if (itemEquippedRight) {
+        itemEquippedRight.unEquip();
+      }
+
+      this.hand.right.objectId = 0;
+      this.hand.right.itemId = 0;
+
+      const itemEquippedLeftAndRight = this.getItemByObjectId(this.hand.leftAndRight.objectId);
+
+      if (itemEquippedLeftAndRight) {
+        itemEquippedLeftAndRight.unEquip();
+      }
+
+      this.hand.leftAndRight.objectId = item.getObjectId();
+      this.hand.leftAndRight.itemId = item.getItemId();
+    }
+
     item.equip();
   }
 
@@ -309,6 +347,11 @@ class Player extends Character {
     if (slot === 0x0080) {
       this.hand.right.objectId = 0;
       this.hand.right.itemId = 0;
+    }
+
+    if (slot === 0x4000) {
+      this.hand.leftAndRight.objectId = 0;
+      this.hand.leftAndRight.itemId = 0;
     }
 
     item.unEquip();

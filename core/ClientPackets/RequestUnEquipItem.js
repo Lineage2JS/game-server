@@ -61,6 +61,13 @@ class RequestUnEquipItem {
       player.unEquipItem(item);
     }
 
+    if (this.slot === 0x4000) { // SLOT_LR_HAND
+      const item = player.getItemByObjectId(player.hand.leftAndRight.objectId);
+
+      item.unEquip();
+      player.unEquipItem(item);
+    }
+
     this._client.sendPacket(new serverPackets.UserInfo(player));
     this._client.sendPacket(new serverPackets.ItemList(player.getItems()));
   }
