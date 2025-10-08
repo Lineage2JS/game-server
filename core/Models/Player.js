@@ -244,14 +244,34 @@ class Player extends Character {
       this.hand.leftAndRight.objectId = 0;
       this.hand.leftAndRight.itemId = 0;
       
-      const itemEquippedLeft = this.getItemByObjectId(this.hand.right.objectId);
+      const itemEquippedRight = this.getItemByObjectId(this.hand.right.objectId);
+
+      if (itemEquippedRight) {
+        itemEquippedRight.unEquip();
+      }
+
+      this.hand.right.objectId = item.getObjectId();
+      this.hand.right.itemId = item.getItemId();
+    }
+
+    if (slot === 0x0100) { // SLOT_L_HAND
+      const itemEquippedLeftAndRight = this.getItemByObjectId(this.hand.leftAndRight.objectId);
+
+      if (itemEquippedLeftAndRight) {
+        itemEquippedLeftAndRight.unEquip();
+      }
+
+      this.hand.leftAndRight.objectId = 0;
+      this.hand.leftAndRight.itemId = 0;
+      
+      const itemEquippedLeft = this.getItemByObjectId(this.hand.left.objectId);
 
       if (itemEquippedLeft) {
         itemEquippedLeft.unEquip();
       }
 
-      this.hand.right.objectId = item.getObjectId();
-      this.hand.right.itemId = item.getItemId();
+      this.hand.left.objectId = item.getObjectId();
+      this.hand.left.itemId = item.getItemId();
     }
 
     if (slot === 0x0400) { // SLOT_CHEST
@@ -347,6 +367,11 @@ class Player extends Character {
     if (slot === 0x0080) {
       this.hand.right.objectId = 0;
       this.hand.right.itemId = 0;
+    }
+
+    if (slot === 0x0100) {
+      this.hand.left.objectId = 0;
+      this.hand.left.itemId = 0;
     }
 
     if (slot === 0x4000) {

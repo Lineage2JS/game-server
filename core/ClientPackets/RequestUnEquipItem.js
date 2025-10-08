@@ -26,6 +26,13 @@ class RequestUnEquipItem {
       player.unEquipItem(item); // unEquipItemBySlot()
     }
 
+    if (this.slot === 0x0100) {
+      const item = player.getItemByObjectId(player.hand.left.objectId);
+      
+      item.unEquip();
+      player.unEquipItem(item); // unEquipItemBySlot()
+    }
+
     if (this.slot === 0x0400) {
       const item = player.getItemByObjectId(player.chest.objectId);
       
