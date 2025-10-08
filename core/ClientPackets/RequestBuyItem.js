@@ -37,11 +37,11 @@ class RequestBuyItem {
     const player = playersManager.getPlayerByClient(this._client);
     const item = await itemsManager.createItem(this.itemId);
 
-    if (item.getPrice() > 1000) { // TODO for example
-      this._client.sendPacket(new serverPackets.SystemMessage(279))
+    // if (item.getPrice() > 1000) { // TODO for example
+    //   this._client.sendPacket(new serverPackets.SystemMessage(279))
 
-      return;
-    }
+    //   return;
+    // }
 
     player.addItem(item);
 
