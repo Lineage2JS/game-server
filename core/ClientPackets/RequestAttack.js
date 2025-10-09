@@ -1,4 +1,5 @@
-const ClientPacket = require("./ClientPacket");
+const ClientPacket = require('./ClientPacket');
+const serverPackets = require('./../ServerPackets/serverPackets');
 const playersManager = require('./../Managers/PlayersManager');
 
 class RequestAttack {
@@ -37,7 +38,14 @@ class RequestAttack {
 
   _init() {
     const player = playersManager.getPlayerByClient(this._client);
-    
+    const activeWeapon = player.getActiveWeapon();
+
+    if (activeWeapon && activeWeapon.getWeaponType() === "bow") { // TODO temp for beta
+      this._client.sendPacket(new serverPackets.ActionFailed());
+
+      return;
+    }
+
     if (!player.isAttacking) {
       player.isAttacking = true;
       

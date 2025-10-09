@@ -19,7 +19,7 @@ class RequestUnEquipItem {
   async _init() {
     const player = playersManager.getPlayerByClient(this._client);
 
-    if (this.slot === 0x0080) {
+    if (this.slot === 0x0080) { // SLOT_R_HAND
       const item = player.getItemByObjectId(player.hand.right.objectId);
       
       item.unEquip();

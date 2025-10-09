@@ -50,6 +50,7 @@ class Player extends Character {
     this.moveType = 1;
     this.waitType = 1;
     this._currentState = '';
+    this._activeWeapon = null;
     //
   }
 
@@ -64,6 +65,14 @@ class Player extends Character {
   // isDead() {
   //   return this.isState('dead');
   // }
+
+  setActiveWeapon(item) {
+    this._activeWeapon = item;
+  }
+
+  getActiveWeapon() {
+    return this._activeWeapon;
+  }
 
   getAdenaCount() {
     return this._inventory.getAdenaCount();
@@ -282,6 +291,8 @@ class Player extends Character {
 
       this.hand.right.objectId = item.getObjectId();
       this.hand.right.itemId = item.getItemId();
+
+      this.setActiveWeapon(item);
     }
 
     if (slot === 0x0100) { // SLOT_L_HAND
@@ -302,6 +313,8 @@ class Player extends Character {
 
       this.hand.left.objectId = item.getObjectId();
       this.hand.left.itemId = item.getItemId();
+
+      this.setActiveWeapon(item);
     }
 
     if (slot === 0x0400) { // SLOT_CHEST
@@ -386,6 +399,8 @@ class Player extends Character {
 
       this.hand.leftAndRight.objectId = item.getObjectId();
       this.hand.leftAndRight.itemId = item.getItemId();
+
+      this.setActiveWeapon(item);
     }
 
     item.equip();
@@ -397,16 +412,22 @@ class Player extends Character {
     if (slot === 0x0080) { // SLOT_R_HAND
       this.hand.right.objectId = 0;
       this.hand.right.itemId = 0;
+
+      this.setActiveWeapon(null);
     }
 
     if (slot === 0x0100) { // SLOT_L_HAND
       this.hand.left.objectId = 0;
       this.hand.left.itemId = 0;
+
+      this.setActiveWeapon(null);
     }
 
     if (slot === 0x4000) { // SLOT_LR_HAND
       this.hand.leftAndRight.objectId = 0;
       this.hand.leftAndRight.itemId = 0;
+
+      this.setActiveWeapon(null);
     }
 
     if (slot === 0x0400) { // SLOT_CHEST

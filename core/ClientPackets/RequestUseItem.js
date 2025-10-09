@@ -1,6 +1,7 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
 const ClientPacket = require("./ClientPacket");
 const playersManager = require('./../Managers/PlayersManager');
+const ItemWeapon = require('./../Models/ItemWeapon');
 
 class RequestUseItem {
   constructor(client, packet) {
