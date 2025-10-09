@@ -3,6 +3,7 @@ const ClientPacket = require("./ClientPacket");
 const playersManager = require('./../Managers/PlayersManager');
 const itemsManager = require('./../Managers/ItemsManager');
 const npcManager = require('./../Managers/NpcManager');
+const ItemEtc = require('./../Models/ItemEtc');
 
 class RequestBuyItem {
   constructor(client, packet) {
@@ -42,6 +43,12 @@ class RequestBuyItem {
 
     //   return;
     // }
+
+    if (item instanceof ItemEtc) {
+      if (item.isStackable) {
+        item.setCount(this.itemCount);
+      }
+    }
 
     player.addItem(item);
 

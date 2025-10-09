@@ -12,12 +12,12 @@ class Item {
     this._isEquipped = false;
   }
 
-  setObjectId(objectId) {
-    this._objectId = objectId;
-  }
-
   getObjectId() {
     return this._objectId;
+  }
+
+  setObjectId(objectId) {
+    this._objectId = objectId;
   }
 
   getItemId() {
@@ -50,6 +50,10 @@ class Item {
 
   getCount() {
     return this._count;
+  }
+
+  setCount(count) {
+    return this._count = count;
   }
 
   equip() {

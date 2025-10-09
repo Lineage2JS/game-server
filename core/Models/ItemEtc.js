@@ -15,6 +15,10 @@ class ItemEtc extends Item {
   getStackable() {
     return this._stackable;
   }
+
+  get isStackable() {
+    return this._stackable;
+  }
 }
 
 module.exports = ItemEtc;
