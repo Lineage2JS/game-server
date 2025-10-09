@@ -99,14 +99,36 @@ class Player extends Character {
     }
   }
 
-  deleteItemByObjectId(objectId) {
+  deleteItemByObjectId(objectId, count = 1) {
     const items = this._inventory.getItems();
-    const foundItem = items.find(item => item.objectId === objectId);
+    const foundItem = items.find(item => item.getObjectId() === objectId);
 
-    if (foundItem) {
+    if (!foundItem) {
+      return
+    }
+
+    if (!foundItem.isStackable) {
       const index = items.indexOf(foundItem);
 
       items.splice(index, 1);
+
+      return;
+    }
+
+    if (foundItem.getCount() > count) {
+      const currentCount = foundItem.getCount();
+
+      foundItem.setCount(currentCount - count);
+
+      return;
+    }
+
+    if (foundItem.getCount() === count) {
+      const index = items.indexOf(foundItem);
+
+      items.splice(index, 1);
+
+      return;
     }
   }
 

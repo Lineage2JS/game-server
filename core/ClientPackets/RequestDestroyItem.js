@@ -25,7 +25,7 @@ class RequestDestroyItem {
     const player = playersManager.getPlayerByClient(this._client);
     const item = player.getItemByObjectId(this.objectId);
 
-    player.deleteItemByObjectId(item.objectId);
+    player.deleteItemByObjectId(item.getObjectId(), this.count);
 
     const items = player.getItems();
 

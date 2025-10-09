@@ -293,7 +293,7 @@ class Database {
       INSERT INTO items(object_id, item_id, item_count, location, owner_object_id, equip_slot)
       VALUES($1, $2, $3, $4, $5, $6)
     `, [
-      item.objectId,
+      item.objectId, // TODO getObjectId()?
       item.itemId,
       item.itemCount,
       item.location,

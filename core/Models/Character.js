@@ -5,7 +5,7 @@ class Character extends EventEmitter {
   constructor() {
     super();
     
-    this.objectId = null;
+    this.objectId = null; // getObjectId()
     this.login = null;
     this.characterName = null;
     this.title = "";
