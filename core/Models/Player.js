@@ -88,7 +88,7 @@ class Player extends Character {
     }
   }
 
-  deleteItemByName(itemName) {
+  deleteItemByName(itemName) { // TODO deleteItem, удалять по ID и сделать 1 метод вместо 2-х? или только по ObjectId
     const items = this._inventory.getItems();
     const foundItem = items.find(item => item.itemName === itemName);
 
@@ -364,19 +364,29 @@ class Player extends Character {
   unEquipItem(item) {
     const slot = item.getBodyPart();
     
-    if (slot === 0x0080) {
+    if (slot === 0x0080) { // SLOT_R_HAND
       this.hand.right.objectId = 0;
       this.hand.right.itemId = 0;
     }
 
-    if (slot === 0x0100) {
+    if (slot === 0x0100) { // SLOT_L_HAND
       this.hand.left.objectId = 0;
       this.hand.left.itemId = 0;
     }
 
-    if (slot === 0x4000) {
+    if (slot === 0x4000) { // SLOT_LR_HAND
       this.hand.leftAndRight.objectId = 0;
       this.hand.leftAndRight.itemId = 0;
+    }
+
+    if (slot === 0x0400) { // SLOT_CHEST
+      this.chest.objectId = 0;
+      this.chest.itemId = 0;
+    }
+
+    if (slot === 0x0800) { // SLOT_LEGS
+      this.legs.objectId = 0;
+      this.legs.itemId = 0;
     }
 
     item.unEquip();

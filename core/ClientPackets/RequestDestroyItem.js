@@ -27,7 +27,9 @@ class RequestDestroyItem {
 
     player.deleteItemByObjectId(item.objectId);
 
-    this._client.sendPacket(new serverPackets.ItemList(player.getItems()));
+    const items = player.getItems();
+
+    this._client.sendPacket(new serverPackets.ItemList(items));
   }
 }
 
