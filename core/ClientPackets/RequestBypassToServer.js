@@ -141,14 +141,22 @@ class RequestBypassToServer {
     }
 
     if (this.command.includes('admin_create_item')) {
-      const params = this.command.split("?")[1];
-      const [key, value] = params.split("=").map(i => i.trim());
+      const queryParams = this.command.split('?')[1];
+      const params = queryParams.split('&').map(i => {
+        const [key, value] = i.split('=');
+    
+        return { [key.trim()]: Number(value) };
+      }).reduce((a, b) => { return {...a, ...b} });
 
-      if (key === 'id') {
-        const item = await itemsManager.createItem(Number(value));
+      const item = await itemsManager.createItem(params.itemId);
 
-        player.addItem(item);
+      if (item.isStackable) {
+        if (params.itemCount && params.itemCount > 0) {
+          item.setCount(params.itemCount);
+        }
       }
+
+      player.addItem(item);
 
       const items = player.getItems();
 

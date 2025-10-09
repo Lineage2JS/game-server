@@ -1,4 +1,5 @@
 const database = require('./../../database');
+const ItemAsset = require('./../Models/ItemAsset');
 const ItemEtc = require('./../Models/ItemEtc');
 const ItemArmor = require('./../Models/ItemArmor');
 const ItemWeapon = require('./../Models/ItemWeapon');
@@ -76,6 +77,10 @@ class ItemsManager {
     const itemTemplate = this._getItemTemplate(itemId);
     const objectId = await database.getNextObjectId();
 
+    if (itemTemplate instanceof ItemAsset) {
+      return this._createItemAsset(itemTemplate, objectId);
+    }
+
     if (itemTemplate instanceof ItemEtc) {
       return this._createItemEtc(itemTemplate, objectId);
     }
@@ -92,6 +97,10 @@ class ItemsManager {
   getItem(itemId, objectId) {
     const itemTemplate = this._getItemTemplate(itemId);
 
+    if (itemTemplate instanceof ItemAsset) {
+      return this._createItemAsset(itemTemplate, objectId);
+    }
+
     if (itemTemplate instanceof ItemEtc) {
       return this._createItemEtc(itemTemplate, objectId);
     }
@@ -107,6 +116,25 @@ class ItemsManager {
 
   getItemIdByName(itemName) {
     return itemsIdMap[itemName];
+  }
+
+  _createItemAsset(itemTemplate, objectId) {
+    const data = {
+      itemId: itemTemplate.getItemId(),
+      name: itemTemplate.getName(),
+      etcItemType: itemTemplate.getEtcItemType(),
+      type1: itemTemplate.getType1(),
+      type2: itemTemplate.getType2(),
+      bodyPart: itemTemplate.getBodyPart(),
+      weight: itemTemplate.getWeight(),
+      price: itemTemplate.getPrice(),
+      stackable: itemTemplate.getStackable(),
+    }
+    const itemAsset = new ItemAsset(data);
+
+    itemAsset.setObjectId(objectId);
+
+    return itemAsset;
   }
 
   _createItemEtc(itemTemplate, objectId) {
@@ -168,7 +196,10 @@ class ItemsManager {
     for(const itemData of itemsList) {
       //accessary
       //questitem
-      //asset - adena
+
+      if (itemData.item_type === "asset") {
+        this._createItemAssetTemplate(itemData);
+      }
 
       if (itemData.item_type === "etcitem") {
         this._createItemEtcTemplate(itemData);
@@ -182,6 +213,23 @@ class ItemsManager {
         this._createItemWeaponTemplate(itemData);
       }
     }
+  }
+
+  _createItemAssetTemplate(itemData) {
+    const data = {
+      itemId: itemData.id,
+      name: itemData.name,
+      etcItemType: TYPE_MONEY,
+      type1: TYPE1_ITEM_QUESTITEM_ADENA,
+      type2: TYPE2_MONEY,
+      bodyPart: SLOT_NONE,
+      weight: itemData.weight,
+      price: itemData.default_price,
+      stackable: true,
+    }
+    const itemAsset = new ItemAsset(data);
+
+    this._addItem(itemAsset.getItemId(), itemAsset);
   }
 
   _createItemEtcTemplate(itemData) {

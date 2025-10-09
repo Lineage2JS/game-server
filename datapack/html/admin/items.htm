@@ -4,7 +4,10 @@
     Item ID:
     <edit var="itemId" width="50" type="numder">
     <br>
-    <button value="Create" action="bypass -h admin_create_item?id= $itemId" width="50" height="15">
+    Item count:
+    <edit var="itemCount" width="50" type="numder">
+    <br>
+    <button value="Create" action="bypass -h admin_create_item?itemId= $itemId &itemCount= $itemCount" width="50" height="15">
     <br>
     <center>
       <button value="Back" action="bypass -h admin_show_panel" width="40" height="15">
