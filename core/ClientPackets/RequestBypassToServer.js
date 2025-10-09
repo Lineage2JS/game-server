@@ -78,12 +78,13 @@ class RequestBypassToServer {
       ]
 
       for(let i = 0; i < sellList.length; i++) {
-        const item = await itemsManager.createItemByName(sellList[i]);
+        const itemId = itemsManager.getItemIdByName(sellList[i]);
+        const item = await itemsManager.createItem(itemId);
 
         items.push(item);
       }
 
-      this._client.sendPacket(new serverPackets.BuyList(items));
+      this._client.sendPacket(new serverPackets.BuyList(0, items)); // TODO 0?
 
       return;
     }

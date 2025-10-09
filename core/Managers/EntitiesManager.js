@@ -88,9 +88,10 @@ class EntitiesManager {
     });
 
     npcManager.on('dropItems', async (npc, drop) => {
-      console.log(npc.id, drop); // fix drop name var?
+      console.log(npc.id, drop); // fix drop name var?  
 
-      const createdItem = await itemsManager.createItemByName(drop.itemName);
+      const itemId = itemsManager.getItemIdByName(drop.itemName);
+      const createdItem = await itemsManager.createItem(itemId);
       const droppedItem = await dropItemsManager.createDropItem(createdItem, npc.x, npc.y, npc.z + 300);
 
       this._entities.push(droppedItem);
@@ -359,7 +360,8 @@ class EntitiesManager {
     });
 
     aiManager.on('giveItem', async (talker, itemName, itemCount) => {
-      const item = await itemsManager.createItemByName(itemName);
+      const itemId = itemsManager.getItemIdByName(itemName);
+      const item = await itemsManager.createItem(itemId);
 
       talker.addItem(item);
       

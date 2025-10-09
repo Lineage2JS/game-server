@@ -8,7 +8,7 @@ class DropItemsManager {
 
   async createDropItem(item, x, y, z) {
     const objectId = await database.getNextObjectId();
-    const dropItem = new DropItem(objectId, item.itemId, item, x, y, z);
+    const dropItem = new DropItem(objectId, item.getItemId(), item, x, y, z);
 
     return dropItem;
   }
