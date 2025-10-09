@@ -69,6 +69,10 @@ class Player extends Character {
     return this._inventory.getAdenaCount();
   }
 
+  reduceAdena(adenaCount) {
+    this._inventory.reduceAdena(adenaCount);
+  }
+
   setActiveSoulShot() {
     this._activeSoulShot = true;
   }

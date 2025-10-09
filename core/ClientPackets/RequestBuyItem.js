@@ -50,6 +50,7 @@ class RequestBuyItem {
       }
     }
 
+    player.reduceAdena(item.getPrice());
     player.addItem(item);
 
     const items = player.getItems();

@@ -20,6 +20,20 @@ class Inventory {
 
     return item.getCount();
   }
+
+  reduceAdena(adenaCount) {
+    const item = this._items.find(item => item.getItemId() === 57);
+
+    if (!item) {
+      return;
+    }
+
+    const currentAdenaCount = item.getCount();
+
+    if (currentAdenaCount > adenaCount) {
+      item.setCount(currentAdenaCount - adenaCount);
+    }
+  }
 }
 
 module.exports = Inventory;
