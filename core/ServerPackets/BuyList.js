@@ -1,13 +1,13 @@
 const ServerPacket = require('./ServerPacket.js');
 
 class BuyList {
-  constructor(items) {
+  constructor(adenaCount, items) {
     this._packet = new ServerPacket();
     this._packet
       .writeC(0x1D)
-      .writeD(1000) // money
+      .writeD(adenaCount)
       .writeD(8) // buyListId ?
-      .writeH(items.length); // items length
+      .writeH(items.length);
 
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
@@ -27,7 +27,7 @@ class BuyList {
         .writeH(0); // TODO ?
       }
 
-      this._packet.writeD(item.getPrice()) // price
+      this._packet.writeD(item.getPrice())
     } 
   }
 

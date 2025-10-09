@@ -35,13 +35,13 @@ class RequestUseItem {
     //   return;
     // }
     
-    // if (item.itemName === 'world_map') {
+    // if (item.itemName === 'world_map') { // TODO ItemHandler Map
     //   this._client.sendPacket(new serverPackets.ShowMiniMap(item.itemId));
 
     //   return;
     // }
     
-    if (item.isEquipped) {
+    if (item.isEquipped) { // TODO не надевать адену и стрелы
       player.unEquipItem(item);
     } else {
       player.equipItem(item);

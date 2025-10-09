@@ -389,7 +389,7 @@ class EntitiesManager {
         items.push(item);
       }
 
-      const packet = new serverPackets.BuyList(items);
+      const packet = new serverPackets.BuyList(talker.getAdenaCount(), items);
 
       playersManager.emit('notify', packet);
     });

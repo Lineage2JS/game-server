@@ -65,6 +65,10 @@ class Player extends Character {
   //   return this.isState('dead');
   // }
 
+  getAdenaCount() {
+    return this._inventory.getAdenaCount();
+  }
+
   setActiveSoulShot() {
     this._activeSoulShot = true;
   }
