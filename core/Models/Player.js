@@ -66,7 +66,7 @@ class Player extends Character {
   //   return this.isState('dead');
   // }
 
-  setActiveWeapon(item) {
+  setActiveWeapon(item) { // делать запрос через activeWeapon проверяя this.hand...
     this._activeWeapon = item;
   }
 
@@ -75,11 +75,29 @@ class Player extends Character {
   }
 
   getAdenaCount() {
-    return this._inventory.getAdenaCount();
+    const items = this._inventory.getItems();
+    const item = items.find(item => item.getItemId() === 57); // TODO const ?
+
+    if (!item) {
+      return 0;
+    }
+
+    return item.getCount();
   }
 
   reduceAdena(adenaCount) {
-    this._inventory.reduceAdena(adenaCount);
+    const items = this._inventory.getItems();
+    const item = items.find(item => item.getItemId() === 57);
+
+    if (!item) {
+      return;
+    }
+
+    const currentAdenaCount = item.getCount();
+
+    if (currentAdenaCount > adenaCount) {
+      item.setCount(currentAdenaCount - adenaCount);
+    }
   }
 
   setActiveSoulShot() {
