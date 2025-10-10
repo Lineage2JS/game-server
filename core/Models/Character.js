@@ -77,7 +77,7 @@ class Character extends EventEmitter {
     
     this.items = [];
 
-    this.underwear = { objectId: 0, itemId: 0 }
+    this.underwear = { objectId: 0, itemId: 0 } // TODO papperdoll system?
     this.ear = {
       left: { objectId: 0, itemId: 0 },
       right: { objectId: 0, itemId: 0 }
@@ -92,7 +92,7 @@ class Character extends EventEmitter {
       left: { objectId: 0, itemId: 0 },
       right: { objectId: 0, itemId: 0 },
       leftAndRight: { objectId: 0, itemId: 0 }
-    }
+    } // leftHand, rightHand, twoHand?
     this.gloves = { objectId: 0, itemId: 0 }
     this.chest = { objectId: 0, itemId: 0 }
     this.legs = { objectId: 0, itemId: 0 }

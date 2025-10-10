@@ -132,8 +132,15 @@ class RequestCharacterCreate {
     // add character to database
     const createdCharacter = await database.createCharacter(character);
 
+    // TODO
+    const classIds = new Map();
+
+    classIds.set(0, 'humanFighter');
+    classIds.set(10, 'humanMagician');
+    //
+
     //fix humanFighter
-    const initialEquipmentIds = initialParametersManager.getInitialEquipmentIds('humanFighter');
+    const initialEquipmentIds = initialParametersManager.getInitialEquipmentIds(classIds.get(this.classId));
 
     for (let i = 0; i < initialEquipmentIds.length; i++) {
       const itemId = initialEquipmentIds[i];
