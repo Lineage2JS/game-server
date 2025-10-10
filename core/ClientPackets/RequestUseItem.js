@@ -41,6 +41,10 @@ class RequestUseItem {
 
     //   return;
     // }
+
+    if (!item.isEquipable) {
+      return;
+    }
     
     if (item.isEquipped) { // TODO не надевать адену и стрелы
       player.unEquipItem(item);

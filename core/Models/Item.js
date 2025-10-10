@@ -68,18 +68,13 @@ class Item {
     return this._isEquipped;
   }
 
-  // get isEquippable() {
-  //   if (this.equipSlot !== 'none') {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
-
-  // updateCount(value) {
-  //   this._count = value;
-  // }
+  get isEquipable() {
+    if (this._bodyPart !== 0) { // TODO SLOT_NONE
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 
 module.exports = Item;
