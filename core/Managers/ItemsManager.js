@@ -1,5 +1,6 @@
 const database = require('./../../database');
 const ItemAsset = require('./../Models/ItemAsset');
+const ItemAccessary = require('./../Models/ItemAccessary');
 const ItemEtc = require('./../Models/ItemEtc');
 const ItemArmor = require('./../Models/ItemArmor');
 const ItemWeapon = require('./../Models/ItemWeapon');
@@ -81,6 +82,10 @@ class ItemsManager {
       return this._createItemAsset(itemTemplate, objectId);
     }
 
+    if (itemTemplate instanceof ItemAccessary) {
+      return this._createItemAccessary(itemTemplate, objectId);
+    }
+
     if (itemTemplate instanceof ItemEtc) {
       return this._createItemEtc(itemTemplate, objectId);
     }
@@ -99,6 +104,10 @@ class ItemsManager {
 
     if (itemTemplate instanceof ItemAsset) {
       return this._createItemAsset(itemTemplate, objectId);
+    }
+
+    if (itemTemplate instanceof ItemAccessary) {
+      return this._createItemAccessary(itemTemplate, objectId);
     }
 
     if (itemTemplate instanceof ItemEtc) {
@@ -135,6 +144,23 @@ class ItemsManager {
     itemAsset.setObjectId(objectId);
 
     return itemAsset;
+  }
+
+  _createItemAccessary(itemTemplate, objectId) {
+    const data = {
+      itemId: itemTemplate.getItemId(),
+      name: itemTemplate.getName(),
+      type1: itemTemplate.getType1(),
+      type2: itemTemplate.getType2(),
+      bodyPart: itemTemplate.getBodyPart(),
+      weight: itemTemplate.getWeight(),
+      price: itemTemplate.getPrice(),
+    }
+    const itemAccessary = new ItemAccessary(data);
+
+    itemAccessary.setObjectId(objectId);
+
+    return itemAccessary;
   }
 
   _createItemEtc(itemTemplate, objectId) {
@@ -194,11 +220,14 @@ class ItemsManager {
 
   _loadItemTemplates() {
     for(const itemData of itemsList) {
-      //accessary
       //questitem
 
       if (itemData.item_type === "asset") {
         this._createItemAssetTemplate(itemData);
+      }
+
+      if (itemData.item_type === "accessary") {
+        this._createItemAccessaryTemplate(itemData);
       }
 
       if (itemData.item_type === "etcitem") {
@@ -230,6 +259,21 @@ class ItemsManager {
     const itemAsset = new ItemAsset(data);
 
     this._addItem(itemAsset.getItemId(), itemAsset);
+  }
+
+  _createItemAccessaryTemplate(itemData) {
+    const data = {
+      itemId: itemData.id,
+      name: itemData.name,
+      type1: TYPE1_WEAPON_RING_EARRING_NECKLACE,
+      type2: TYPE2_ACCESSORY,
+      bodyPart: SLOT_NECK, // TODO NECK, EAR, FINGER
+      weight: itemData.weight,
+      price: itemData.default_price,
+    }
+    const itemAccessary = new ItemAccessary(data);
+
+    this._addItem(itemAccessary.getItemId(), itemAccessary);
   }
 
   _createItemEtcTemplate(itemData) {
@@ -306,13 +350,12 @@ class ItemsManager {
 
   _createItemArmorTemplate(itemData) {
     const slot = slots[itemData.slot_bit_type];
-    const armorTypeConfig = this._getArmorTypeConfig(slot);
     const data = {
       itemId: itemData.id,
       name: itemData.name,
       armorType: itemData.armor_type === null ? "none" : itemData.armor_type,
-      type1: armorTypeConfig.type1,
-      type2: armorTypeConfig.type2,
+      type1: TYPE1_SHIELD_ARMOR,
+      type2: TYPE2_SHIELD_ARMOR,
       bodyPart: slot,
       weight: itemData.weight,
       price: itemData.default_price,
@@ -346,25 +389,6 @@ class ItemsManager {
   _getItemTemplate(itemId) {
     return this._itemsTable.get(itemId);
   }
-
-  _getArmorTypeConfig(slot) {
-    const isAccessory = (slot === SLOT_NECK || 
-      (slot & SLOT_L_EAR) !== 0 ||
-      (slot & SLOT_L_FINGER) !== 0);
-    
-    if (isAccessory) {
-      return {
-        type1: TYPE1_WEAPON_RING_EARRING_NECKLACE,
-        type2: TYPE2_ACCESSORY
-      }
-    } else {
-      return {
-        type1: TYPE1_SHIELD_ARMOR,
-        type2: TYPE2_SHIELD_ARMOR
-      }
-    }
-  }
-
   // TODO loadItem from CharacterSelected
 }
 

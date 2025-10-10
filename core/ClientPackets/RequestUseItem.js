@@ -52,35 +52,6 @@ class RequestUseItem {
       player.equipItem(item);
     }
 
-    // if (item.isEquippable) {
-    //   if (item.equipSlot === 'chest') {
-    //     player.chest.objectId = item.objectId;
-    //     player.chest.itemId = item.itemId;
-        
-    //     item.toggleEquip();
-    //   }
-
-    //   if (item.equipSlot === 'legs') {
-    //     player.legs.objectId = item.objectId;
-    //     player.legs.itemId = item.itemId;
-        
-    //     item.toggleEquip();
-    //   }
-      
-    //   if (item.equipSlot === 'rhand') {
-    //     if (player.hand.right.objectId !== 0) {
-    //       const equippedItem = player.getItemByObjectId(player.hand.right.objectId);
-
-    //       equippedItem.toggleEquip();
-    //     }
-
-    //     player.hand.right.objectId = item.objectId;
-    //     player.hand.right.itemId = item.itemId;
-        
-    //     item.toggleEquip();
-    //   }
-    // }
-
     this._client.sendPacket(new serverPackets.UserInfo(player));
 		this._client.sendPacket(new serverPackets.ItemList(player.getItems()));
   }
