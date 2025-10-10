@@ -75,7 +75,9 @@ class ClientPacket {
       this._buffer.toString("ucs2", this._offset, i)
     );
     
-    this._offset += i + 1;
+    const bytesRead = i - this._offset + 2; // +2 for null terminator
+    
+    this._offset += bytesRead;
 
     return this;
   }

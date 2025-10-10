@@ -13,33 +13,7 @@ class RequestSkillList {
   _init() {
     const player = playersManager.getPlayerByClient(this._client);
 
-    this._client.sendPacket(new serverPackets.SkillList([
-      {
-        passive: false,
-        level: 1,
-        id: 3
-      },
-      {
-        passive: false,
-        level: 1,
-        id: 56
-      },
-      {
-        passive: false,
-        level: 1,
-        id: 16
-      },
-      {
-        passive: false,
-        level: 1,
-        id: 1177
-      },
-      {
-        passive: false,
-        level: 1,
-        id: 1216
-      },
-    ]));
+    this._client.sendPacket(new serverPackets.SkillList([]));
   }
 }
 
