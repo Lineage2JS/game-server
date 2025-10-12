@@ -12,8 +12,9 @@ class RequestSkillList {
 
   _init() {
     const player = playersManager.getPlayerByClient(this._client);
+    const skills = player.getSkills();
 
-    this._client.sendPacket(new serverPackets.SkillList([]));
+    this._client.sendPacket(new serverPackets.SkillList(skills));
   }
 }
 

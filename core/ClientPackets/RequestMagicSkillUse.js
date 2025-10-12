@@ -114,7 +114,7 @@ class RequestMagicSkillUse {
       return;
     }
 
-    player.isAttacking = true;
+    player.isAttacking = true; // TODO забирать из состояния state атакует или нет
 
     player.job = 'cast';
     player.changeState('cast', {

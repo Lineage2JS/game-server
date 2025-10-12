@@ -1,6 +1,7 @@
 const Character = require('./Character');
 const Inventory = require('./../Systems/Inventory');
 const Quests = require('./../Systems/Quests');
+const Skills = require('./../Systems/Skills');
 const MoveState = require('./../states/MoveState');
 const StopState = require('./../states/StopState');
 const AttackState = require('./../states/AttackState');
@@ -36,6 +37,7 @@ class Player extends Character {
     //
     this._inventory = new Inventory();
     this._quests = new Quests();
+    this._skills = new Skills();
     this.lastTalkedNpcId = null;
     this.pickupItem = null; // хранить objectId? как target?
     this._activeSoulShot = false;
@@ -65,6 +67,10 @@ class Player extends Character {
   // isDead() {
   //   return this.isState('dead');
   // }
+
+  getSkills() {
+    return this._skills.getSkills();
+  }
 
   setActiveWeapon(item) { // делать запрос через activeWeapon проверяя this.hand...
     this._activeWeapon = item;

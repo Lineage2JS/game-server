@@ -10,9 +10,9 @@ class CastState extends BaseState {
   }
 
   update() {
-    if (this.character.target === this.character.objectId) {
-      return;
-    }
+    // if (this.character.target === this.character.objectId) {
+    //   return;
+    // }
 
     if (this.character.isCasting) {
       if ((Date.now() - this.character.lastAttackTimestamp) > 1000) {
@@ -57,6 +57,10 @@ class CastState extends BaseState {
     this.character.lastAttackTimestamp = Date.now();
     this.character.isCasting = true;
     this.character.emit('cast', this.payload.skillId);
+
+    // TODO применять эффект скила после того как прошло время
+    // if (elapsedTime >= this.castDuration && !this.effectApplied) {
+    //   this.applySkillEffect(); // ПРИМЕНЯЕМ ЭФФЕКТ
   }
 
   leave() {
