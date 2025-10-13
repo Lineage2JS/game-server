@@ -273,8 +273,8 @@ class EntitiesManager {
       const packet = new serverPackets.MagicSkillUse(player, {
         id: skillId,
         level: 1,
-        hitTime: 1000, //1.08,
-        reuseDelay: 1000 //13
+        hitTime: 5000, //1.08, // TODO
+        reuseDelay: 10000 //13
       });
 
       playersManager.emit('notify', packet);

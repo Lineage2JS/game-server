@@ -42,6 +42,7 @@ class Player extends Character {
     this.pickupItem = null; // хранить objectId? как target?
     this._activeSoulShot = false;
     this.lastAttackTimestamp = 0;
+    this.castTimestamp = 0;
     this.lastRegenerateTimestamp = 0;
     this.baseAttackSpeed = 330
     //

@@ -15,9 +15,14 @@ class CastState extends BaseState {
     // }
 
     if (this.character.isCasting) {
-      if ((Date.now() - this.character.lastAttackTimestamp) > 1000) {
+      if ((Date.now() - this.character.castTimestamp) > 5000) { // ?
         this.character.job = '';
         this.character.changeState('stop');
+
+        // TODO temporaty
+        this.character.hp += 20;
+        this.character.emit('regenerate');
+        //
       }
 
       return;
@@ -54,7 +59,7 @@ class CastState extends BaseState {
       return;
     }
     
-    this.character.lastAttackTimestamp = Date.now();
+    this.character.castTimestamp = Date.now();
     this.character.isCasting = true;
     this.character.emit('cast', this.payload.skillId);
 
