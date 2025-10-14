@@ -9,6 +9,7 @@ const CastState = require('./../states/CastState');
 const FollowState = require('./../states/FollowState');
 const PickupState = require('./../states/PickupState');
 const TalkState = require('./../states/TalkState');
+const CastPayload = require('./../payloads/CastPayload');
 
 class Player extends Character {
   constructor(client) {
@@ -48,6 +49,10 @@ class Player extends Character {
     //
     this.payloadAttack = null; // fix
 
+    //
+    this._actionPayload = null;
+    //
+
     this.lastUpdateTimestamp = 0;
     this.isDamage = false;
     this.moveType = 1;
@@ -59,6 +64,14 @@ class Player extends Character {
 
   getClient() {
     return this._client;
+  }
+
+  setActionPayload(payload) {
+    this._actionPayload = payload;
+  }
+
+  getActionPayload() {
+    return this._actionPayload;
   }
 
   // isState(state) {
@@ -210,6 +223,13 @@ class Player extends Character {
         this.changeState('pickup', payload);
 
         break;
+      case 'cast':
+          const castPayload = new CastPayload(payload);
+
+          this.setActionPayload(castPayload);
+          this.changeState('cast');
+  
+          break;
     }
   }
 
@@ -220,7 +240,10 @@ class Player extends Character {
 
     const state = this._states[stateName];
 
-    state.payload = payload;
+    state.payload = payload; // remove
+    //
+    
+    //
     this._currentState = state;
     
     state.enter();

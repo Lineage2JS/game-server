@@ -119,11 +119,16 @@ class RequestMagicSkillUse {
 
     const skill = skillsManager.getSkill(this.skillId);
     
-    player.job = 'cast';
-    player.changeState('cast', {
+    // player.job = 'cast';
+    // player.changeState('cast', {
+    //   target: player.target,
+    //   skill: skill // p.setCastSkill ?
+    // });
+
+    player.updateJob('cast', {
       target: player.target,
-      skill: skill // p.setCastSkill ?
-    });
+      skill: skill
+    })
 
     // if (npc.job === 'patrol') {
     //   setTimeout(() => {

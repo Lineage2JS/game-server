@@ -1,4 +1,5 @@
 const BaseState = require("./BaseState");
+const CastPayload = require('./../payloads/CastPayload')
 
 //
 const entitiesManager = require('./../Managers/EntitiesManager');
@@ -16,6 +17,12 @@ class CastState extends BaseState {
 
     // check if skill self target or no(enemy?)
 
+    const payload = this.character.getActionPayload();
+
+    if (!payload instanceof CastPayload) {
+      return
+    }
+
     if (this.character.isCasting) {
       if ((Date.now() - this.character.castTimestamp) > 5000) { // ?
         this.character.job = '';
@@ -30,7 +37,7 @@ class CastState extends BaseState {
       return;
     }
 
-    const entity = entitiesManager.getEntityByObjectId(this.payload.target);
+    const entity = entitiesManager.getEntityByObjectId(payload.getTarget());
 
     if (!entity) { // fix
       return;
@@ -63,7 +70,7 @@ class CastState extends BaseState {
     
     this.character.castTimestamp = Date.now();
     this.character.isCasting = true;
-    this.character.emit('cast', this.payload.skill.getSkillId());
+    this.character.emit('cast', payload.getSkill().getSkillId()); // TODO
 
     // TODO применять эффект скила после того как прошло время
     // if (elapsedTime >= this.castDuration && !this.effectApplied) {
