@@ -17,10 +17,10 @@ class StopState extends BaseState { // IdleState
     }
 
     if (this.character.job === 'cast') {
-      this.character.changeState('cast', {
-        target: this.character.target,
-        skillId: 3 // fix где хранить?
-      });
+      // this.character.changeState('cast', {
+      //   target: this.character.target,
+      //   skill: this.character.payload.skill // fix где хранить?
+      // });
     }
   }
 

@@ -1,6 +1,7 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
 const ClientPacket = require("./ClientPacket");
 const playersManager = require('./../Managers/PlayersManager');
+const skillsManager = require('./../Managers/SkillsManager');
 
 //
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
@@ -116,10 +117,12 @@ class RequestMagicSkillUse {
 
     player.isAttacking = true; // TODO забирать из состояния state атакует или нет
 
+    const skill = skillsManager.getSkill(this.skillId);
+    
     player.job = 'cast';
     player.changeState('cast', {
       target: player.target,
-      skillId: this.skillId // p.setCastSkill ?
+      skill: skill // p.setCastSkill ?
     });
 
     // if (npc.job === 'patrol') {

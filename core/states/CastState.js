@@ -14,6 +14,8 @@ class CastState extends BaseState {
     //   return;
     // }
 
+    // check if skill self target or no(enemy?)
+
     if (this.character.isCasting) {
       if ((Date.now() - this.character.castTimestamp) > 5000) { // ?
         this.character.job = '';
@@ -61,7 +63,7 @@ class CastState extends BaseState {
     
     this.character.castTimestamp = Date.now();
     this.character.isCasting = true;
-    this.character.emit('cast', this.payload.skillId);
+    this.character.emit('cast', this.payload.skill.getSkillId());
 
     // TODO применять эффект скила после того как прошло время
     // if (elapsedTime >= this.castDuration && !this.effectApplied) {

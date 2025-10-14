@@ -2,6 +2,12 @@ class Skills {
     constructor() {
       this._skills = new Map();
 
+      this._skills.set(1177, {
+        id: 1177,
+        level: 1,
+        passive: false,
+      });
+
       this._skills.set(1216, {
         id: 1216,
         level: 1,
