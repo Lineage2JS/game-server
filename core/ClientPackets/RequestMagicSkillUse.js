@@ -116,14 +116,9 @@ class RequestMagicSkillUse {
     }
 
     player.isAttacking = true; // TODO забирать из состояния state атакует или нет
+    // К тому же он устаналивается в Action из-за чего я не могу атаковать после каста
 
     const skill = skillsManager.getSkill(this.skillId);
-    
-    // player.job = 'cast';
-    // player.changeState('cast', {
-    //   target: player.target,
-    //   skill: skill // p.setCastSkill ?
-    // });
 
     player.updateJob('cast', {
       target: player.target,

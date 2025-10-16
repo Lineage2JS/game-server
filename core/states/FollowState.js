@@ -2,11 +2,6 @@ const BaseState = require("./BaseState");
 
 //
 const entitiesManager = require('./../Managers/EntitiesManager');
-const serverPackets = require('./../ServerPackets/serverPackets');
-//
-
-//
-//const database = require('./../../database');
 //
 
 function moveCloser(x1, y1, x2, y2, distance) {
@@ -36,10 +31,6 @@ class FollowState extends BaseState {
       this.character.positionUpdateTimestamp = Date.now();
       this.character.isMoving = true;
     }
-
-    //
-    //this._objId = await database.getNextObjectId();
-    //
   }
 
   update() {     
@@ -57,14 +48,6 @@ class FollowState extends BaseState {
 
     this.character.emit('move');
     this.character.updatePosition(this.character.lastUpdateTimestamp);
-
-    // this.character._client.sendPacket(new serverPackets.DropItem(this.character, {
-    //   objectId: this._objId++,
-    //   itemId: 57,
-    //   x: this.character.x,
-    //   y: this.character.y,
-    //   z: this.character.z
-    // }));
   }
 
   leave() {

@@ -4,7 +4,7 @@ class StopState extends BaseState { // IdleState
   enter() {
     this.character.isMoving = false;
 
-    if (this.character.job === 'attack') { // если follow прекратился то потом атака. Нужен какой-то jobflow?
+    if (this.character.job === 'attack') {
       this.character.changeState('attack', this.character.target); //
     }
 
@@ -17,10 +17,7 @@ class StopState extends BaseState { // IdleState
     }
 
     if (this.character.job === 'cast') {
-      // this.character.changeState('cast', {
-      //   target: this.character.target,
-      //   skill: this.character.payload.skill // fix где хранить?
-      // });
+      this.character.changeState('cast');
     }
   }
 

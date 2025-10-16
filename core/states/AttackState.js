@@ -98,15 +98,16 @@ class AttackState extends BaseState { // fix много в коде
 
         entity.emit('damaged');
 
-        this.character.isDamage = false;
+        this.character.isDamage = false; // TODO зачем это
       }
 
       if (entity.hp <= 0) {
         entity.job = 'dead';
         entity.changeState('stop');
         entity.emit('died');
-        entity.emit('dropItems');
+        entity.emit('dropItems'); // TODO тут и NPC и Character в entity
         entity.isDead = true;
+        entity.target = null;
 
         // if character of npc
         this.character.job = 'patrol';

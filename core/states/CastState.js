@@ -7,6 +7,7 @@ const entitiesManager = require('./../Managers/EntitiesManager');
 
 class CastState extends BaseState {
   enter() {
+    this.payload = this.character.getJobPayload();
     this.character.isCasting = false;
   }
 
@@ -17,29 +18,62 @@ class CastState extends BaseState {
 
     // check if skill self target or no(enemy?)
 
-    const payload = this.character.getActionPayload();
+    if (!this.payload instanceof CastPayload) {
+      //this.character.clearJob(); ?
+      //this.character.changeState('stop'); ?
 
-    if (!payload instanceof CastPayload) {
       return
     }
 
-    if (this.character.isCasting) {
-      if ((Date.now() - this.character.castTimestamp) > 5000) { // ?
-        this.character.job = '';
-        this.character.changeState('stop');
-
-        // TODO temporaty
-        this.character.hp += 20;
-        this.character.emit('regenerate');
-        //
-      }
-
+    if (!this.character.target) {
+      this.character.job = null;
+      this.character.changeState('stop');
+      
       return;
     }
 
-    const entity = entitiesManager.getEntityByObjectId(payload.getTarget());
+    const skillId = this.payload.getSkill().getSkillId();
+    const entity = entitiesManager.getEntityByObjectId(this.payload.getTarget());
 
-    if (!entity) { // fix
+    // if (!entity) { // fix
+    //   return;
+    // }
+
+    if (this.character.isCasting) {
+      if ((Date.now() - this.character.castTimestamp) > 5000) { // ?
+        if (skillId === 1177) {
+          entity.hp = entity.hp - 10;
+
+          entity.emit('damaged');
+          // for attack
+          entity.lastAttackTimestamp = Date.now() - (((500000 / entity.baseAttackSpeed) - (500000 / this.character.baseAttackSpeed)) + ((500000 / this.character.baseAttackSpeed) / 2));
+          entity.job = 'attack';
+          entity.isRunning = true;
+          entity.emit('changeMove');
+          //entity.state = 'attack';
+          entity.target = this.character.objectId;
+          //entity.payloadAttack = this.character.objectId;
+          entity.changeState('attack', this.character.objectId);
+          
+          // clearJob
+          this.character.job = null;
+          //
+          this.character.changeState('stop');
+          
+          return;
+        }
+
+        if (skillId === 1216) {
+          this.character.job = '';
+          this.character.changeState('stop');
+
+          // TODO temporaty
+          this.character.hp += 20;
+          this.character.emit('regenerate');
+          //
+        }
+      }
+
       return;
     }
 
@@ -63,14 +97,14 @@ class CastState extends BaseState {
     const distance = Math.sqrt(dx * dx + dy * dy) - 20;
 
     if (distance > 29) { // 29 - attack range + collision radius
-      this.character.changeState('follow', this.character.path);
+      this.character.changeState('follow');
 
       return;
     }
     
     this.character.castTimestamp = Date.now();
     this.character.isCasting = true;
-    this.character.emit('cast', payload.getSkill().getSkillId()); // TODO
+    this.character.emit('cast', this.payload.getSkill().getSkillId()); // TODO
 
     // TODO применять эффект скила после того как прошло время
     // if (elapsedTime >= this.castDuration && !this.effectApplied) {

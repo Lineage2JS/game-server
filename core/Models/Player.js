@@ -50,7 +50,7 @@ class Player extends Character {
     this.payloadAttack = null; // fix
 
     //
-    this._actionPayload = null;
+    this._jobPayload = null;
     //
 
     this.lastUpdateTimestamp = 0;
@@ -66,12 +66,12 @@ class Player extends Character {
     return this._client;
   }
 
-  setActionPayload(payload) {
-    this._actionPayload = payload;
+  setJobPayload(payload) {
+    this._jobPayload = payload;
   }
 
-  getActionPayload() {
-    return this._actionPayload;
+  getJobPayload() {
+    return this._jobPayload;
   }
 
   // isState(state) {
@@ -206,8 +206,8 @@ class Player extends Character {
     return this._quests.getQuests();
   }
 
-  updateJob(job, payload) {
-    this.job = job;
+  updateJob(job, payload) { // setAction
+    this.job = job; // jobType
 
     switch(job) {
       case 'move':
@@ -224,12 +224,12 @@ class Player extends Character {
 
         break;
       case 'cast':
-          const castPayload = new CastPayload(payload);
+        const castPayload = new CastPayload(payload);
 
-          this.setActionPayload(castPayload);
-          this.changeState('cast');
-  
-          break;
+        this.setJobPayload(castPayload);
+        this.changeState('cast');
+
+        break;
     }
   }
 

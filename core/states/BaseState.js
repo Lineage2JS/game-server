@@ -1,19 +1,7 @@
 class BaseState {
-  constructor(character, payload = {}) {
+  constructor(character) {
     this.character = character;
-    this.payload = payload;
-
-    /*
-    payload = {
-      state: 'cast',
-      data
-    }
-
-    Нужна модель
-
-    class BasePayload {}
-    class CastPayload extends BasePayload {}
-    */
+    this.payload = null;
   }
 
   enter() {
