@@ -40,13 +40,13 @@ class CastState extends BaseState {
     // }
 
     if (this.character.isCasting) {
-      if ((Date.now() - this.character.castTimestamp) > 5000) { // ?
+      if ((Date.now() - this.character.castTimestamp) > 4000 * 0.87264) { // ? AtkSpdMultiplier
         if (skillId === 1177) {
-          entity.hp = entity.hp - 10;
+          entity.hp = entity.hp - 30;
 
           entity.emit('damaged');
           // for attack
-          entity.lastAttackTimestamp = Date.now() - (((500000 / entity.baseAttackSpeed) - (500000 / this.character.baseAttackSpeed)) + ((500000 / this.character.baseAttackSpeed) / 2));
+          //entity.lastAttackTimestamp = Date.now() - (((500000 / entity.baseAttackSpeed) - (500000 / this.character.baseAttackSpeed)) + ((500000 / this.character.baseAttackSpeed) / 2));
           entity.job = 'attack';
           entity.isRunning = true;
           entity.emit('changeMove');
@@ -59,6 +59,16 @@ class CastState extends BaseState {
           this.character.job = null;
           //
           this.character.changeState('stop');
+
+          if (entity.hp <= 0) {
+            entity.job = 'dead';
+            entity.changeState('stop');
+            entity.emit('died');
+            entity.emit('dropItems'); // TODO тут и NPC и Character в entity
+            entity.isDead = true;
+            entity.target = null;
+            this.character.target = null;
+          }
           
           return;
         }
@@ -96,7 +106,7 @@ class CastState extends BaseState {
     const dy = this.character.path.target.y - this.character.y;
     const distance = Math.sqrt(dx * dx + dy * dy) - 20;
 
-    if (distance > 29) { // 29 - attack range + collision radius
+    if (distance > 600) { // 29 - attack range + collision radius
       this.character.changeState('follow');
 
       return;
