@@ -40,7 +40,7 @@ class CastState extends BaseState {
     // }
 
     if (this.character.isCasting) {
-      if ((Date.now() - this.character.castTimestamp) > 4000 * 0.87264) { // ? AtkSpdMultiplier
+      if ((Date.now() - this.character.castTimestamp) > 4000 * (1.1 - (0.0006 * 333))) { // ? AtkSpdMultiplier // (baseCastTime * (1.1 - 0.0006 * magicSpeed));?
         if (skillId === 1177) {
           entity.hp = entity.hp - 30;
 
