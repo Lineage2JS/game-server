@@ -19,6 +19,7 @@ class EntitiesManager {
     const itemsManager = require('./ItemsManager');
     const botsManager = require('./BotsManager');
     const visibilityManager = require('./VisibilityManager');
+    const announcementsManager = require('./AnnouncementsManager');
     const aiManager = require('./AiManager');
     const dropItemsManager = require('./DropItemsManager');
     const movingManager = require('./MovingManager');
@@ -124,6 +125,14 @@ class EntitiesManager {
       this._entities.push(player);
 
       visibilityManager.addPlayer(player);
+
+      const announcements = announcementsManager.getAnnouncements();
+
+      announcements.forEach(announcement => {
+        const packet = new serverPackets.CreateSay(player, 10, announcement); // TODO ANNOUNCEMENT = 10
+      
+        playersManager.emit('notify', packet);
+      });      
     });
 
     playersManager.on('move', player => {

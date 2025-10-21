@@ -2,6 +2,7 @@ const Server = require('./core/Server');
 const npcManager = require('./core/Managers/NpcManager');
 const itemsManager = require('./core/Managers/ItemsManager');
 const initialParametersManager = require('./core/Managers/InitialParametersManager');
+const announcementsManager = require('./core/Managers/AnnouncementsManager');
 const skillsManager = require('./core/Managers/SkillsManager');
 const botsManager = require('./core/Managers/BotsManager');
 const movingManager = require('./core/Managers/MovingManager');
@@ -65,6 +66,7 @@ async function run() {
 
       itemsManager.enable();
       initialParametersManager.enable();
+      announcementsManager.enable();
       skillsManager.enable();
       entitiesManager.enable();
       await npcManager.enable();

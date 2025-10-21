@@ -18,7 +18,7 @@ class RequestUnEquipItem {
 
   async _init() {
     const player = playersManager.getPlayerByClient(this._client);
-
+    // TODO Переработать систему с слотами и убрать magic numbers
     if (this.slot === 0x0080) { // SLOT_R_HAND
       const item = player.getItemByObjectId(player.hand.right.objectId);
       
