@@ -1,6 +1,6 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
 const ClientPacket = require("./ClientPacket");
-const characterTemplates = require('./../data/characterTemplates.json');
+const characterTemplates = require('./../../datapack/characterTemplates.json');
 
 class NewCharacter {
   constructor(client, packet) {

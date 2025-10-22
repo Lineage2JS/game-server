@@ -5,7 +5,7 @@ const entitiesManager = require('./../Managers/EntitiesManager');
 const aiManager = require('./../Managers/AiManager');
 const serverPackets = require('./../ServerPackets/serverPackets');
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
-const levelExpTable = require('./../data/exp.json');
+const levelExpTable = require('./../../datapack/exp.json');
 //
 
 //

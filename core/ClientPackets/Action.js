@@ -2,7 +2,7 @@ const serverPackets = require('./../ServerPackets/serverPackets');
 const ClientPacket = require("./ClientPacket");
 const entitiesManager = require('./../Managers/EntitiesManager');
 const playersManager = require('./../Managers/PlayersManager');
-const npcHtmlMessagesManager = require('./../Managers/NpcHtmlMessagesManager');
+const Player = require('./../Models/Player');
 const Npc = require('./../Models/Npc');
 const DropItem = require('./../Models/DropItem');
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
@@ -45,30 +45,29 @@ class Action {
     const player = playersManager.getPlayerByClient(this._client);
     const entity = entitiesManager.getEntityByObjectId(this.objectId);
 
-    if (player.objectId === this.objectId) {
-      this._client.sendPacket(new serverPackets.TargetSelected(this.objectId));
+    if (player.target === null) { // TODO if entity not dead
+      this._client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
 
-      player.target = this.objectId;
+      player.target = entity.objectId;
+
+      return;
+    }
+
+    if (player.target !== entity.objectId) {
+      this._client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
+
+      player.target = entity.objectId;
+
+      return;
+    }
+
+    if (entity instanceof Player) {
+      
+      return;
     }
 
     if (entity instanceof Npc) {
-      if (entity.type === 'citizen' && player.target == null) {
-        this._client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
-
-        player.target = this.objectId;
-        
-        return;
-      }
-
-      if (entity.canBeAttacked === 0 && player.target !== entity.objectId) {
-        this._client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
-
-        player.target = this.objectId;
-        
-        return;
-      }
-
-      if (entity.canBeAttacked === 0 && player.target === entity.objectId) {
+      if (entity.canBeAttacked === 0) {
         const path = {
           target: {
             x: entity.x,
@@ -94,26 +93,26 @@ class Action {
         return;
       }
 
-      if (entity.canBeAttacked === 1 && player.target !== null && !player.isAttacking) {
+      if (entity.canBeAttacked === 1 && !player.isAttacking) { // TODO isAttacking опирается на state
+        this._client.sendPacket(new serverPackets.StatusUpdate(entity.objectId, [
+          {
+            id: characterStatusEnums.CUR_HP,
+            value: entity.hp,
+          },
+          {
+            id: characterStatusEnums.MAX_HP,
+            value: entity.maximumHp,
+          }
+        ]));
+        
         player.isAttacking = true;
 
         player.updateJob('attack', this.objectId);
+
         return;
       }
 
-      this._client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
-      this._client.sendPacket(new serverPackets.StatusUpdate(entity.objectId, [
-        {
-          id: characterStatusEnums.CUR_HP,
-          value: entity.hp,
-        },
-        {
-          id: characterStatusEnums.MAX_HP,
-          value: entity.maximumHp,
-        }
-      ]));
-
-      player.target = this.objectId;
+      return;
     }
 
     if (entity instanceof DropItem) {

@@ -4,10 +4,12 @@ const botsManager = require('./BotsManager');
 
 class VisibilityManager {
   constructor() {
-    this._npcs = [];
+    //this._npcs = [];
     this._players = [];
 
     // listVisibleObjects
+    this._VISIBILITY_RANGE = 1500;
+    this._UPDATE_INTERVAL_MS = 3000;
   }
 
   addPlayer(player) {
@@ -15,81 +17,96 @@ class VisibilityManager {
   }
 
   enable() {
-    setInterval(() => {
-      for (let i = 0; i < this._players.length; i++) {
-        const player = this._players[i];
-        const client = player.getClient();
-        const spawnedNpcs = npcManager.getSpawnedNpcs();
+    this._update();
+  }
+  
+  _update() {
+    for (let i = 0; i < this._players.length; i++) {
+      const player = this._players[i];
+      const client = player.getClient();
+      const spawnedNpcs = npcManager.getSpawnedNpcs();
 
-        spawnedNpcs.forEach(npc => {
-          //
-          const dx = npc.x - player.x;
-          const dy = npc.y - player.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-        
-          if (dist < 1500) {
-            const packet = new serverPackets.NpcInfo(npc);
+      spawnedNpcs.forEach(npc => {        
+        if (this._isObjectVisible(npc, player)) {
+          const packet = new serverPackets.NpcInfo(npc);
 
-            client.sendPacket(packet);
+          client.sendPacket(packet);
 
-            if (npc.state === 'move') {
-              const path = {
-                target: {
-                  x: npc.path.target.x,
-                  y: npc.path.target.y,
-                  z: npc.z
-                },
-                origin: {
-                  x: npc.x,
-                  y: npc.y,
-                  z: npc.z
-                }
-              }
-      
-              client.sendPacket(new serverPackets.MoveToLocation(path, npc.objectId));
-            }
-          } else {
-            const packet = new serverPackets.DeleteObject(npc.objectId);
+          if (npc.state === 'move') {
+            const path = this._createMovePath(npc);
+    
+            client.sendPacket(new serverPackets.MoveToLocation(path, npc.objectId));
+          }
+        } else {
+          const packet = new serverPackets.DeleteObject(npc.objectId);
 
-            client.sendPacket(packet);
+          client.sendPacket(packet);
+
+          // TODO remove target
+          if (player.target === npc.objectId) {
+            player.target = null;
           }
           //
-        });
+        }
+        //
+      });
 
-        botsManager._bots.forEach(bot => {
-          const dx = bot.x - player.x;
-          const dy = bot.y - player.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+      botsManager._bots.forEach(bot => {
+        if (this._isObjectVisible(bot, player)) {
+          const packet = new serverPackets.CharacterInfo(bot);
 
-          if (dist < 1500) {
-            const packet = new serverPackets.CharacterInfo(bot);
+          client.sendPacket(packet);
 
-            client.sendPacket(packet);
-
-            if (bot.state === 'move') {
-              const path = {
-                target: {
-                  x: bot.path.target.x,
-                  y: bot.path.target.y,
-                  z: bot.z
-                },
-                origin: {
-                  x: bot.x,
-                  y: bot.y,
-                  z: bot.z
-                }
-              }
-      
-              client.sendPacket(new serverPackets.MoveToLocation(path, bot.objectId));
-            }
-          } else {
-            const packet = new serverPackets.DeleteObject(bot.objectId);
-
-            client.sendPacket(packet);
+          if (bot.state === 'move') {
+            const path = this._createMovePath(bot);
+    
+            client.sendPacket(new serverPackets.MoveToLocation(path, bot.objectId));
           }
-        })
+        } else {
+          const packet = new serverPackets.DeleteObject(bot.objectId);
+
+          client.sendPacket(packet);
+
+          // TODO remove target
+          if (player.target === npc.objectId) {
+            player.target = null;
+          }
+          //
+        }
+      })
+    }
+
+    setTimeout(() => {
+      this._update();
+    }, this._UPDATE_INTERVAL_MS);
+  }
+
+  _calculateDistance(obj1, obj2) {
+    const dx = obj1.x - obj2.x;
+    const dy = obj1.y - obj2.y;
+    
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  _isObjectVisible(obj1, obj2) {
+    return this._calculateDistance(obj1, obj2) < this._VISIBILITY_RANGE;
+  }
+
+  _createMovePath(object) {
+    const path = {
+      target: {
+        x: object.path.target.x,
+        y: object.path.target.y,
+        z: object.z
+      },
+      origin: {
+        x: object.x,
+        y: object.y,
+        z: object.z
       }
-    }, 3000);
+    }
+
+    return path;
   }
 }
 

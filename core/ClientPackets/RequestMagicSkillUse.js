@@ -5,7 +5,7 @@ const skillsManager = require('./../Managers/SkillsManager');
 
 //
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
-const levelExpTable = require('./../data/exp.json');
+const levelExpTable = require('./../../datapack/exp.json');
 const npcManager = require('./../Managers/NpcManager');
 const aiManager = require('./../Managers/AiManager');
 //

@@ -1,4 +1,4 @@
-const baseStats = require('./../data/baseStats.json');
+const baseStats = require('./../../datapack/baseStats.json');
 const EventEmitter = require('events');
 
 class Character extends EventEmitter {
