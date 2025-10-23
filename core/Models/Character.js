@@ -76,6 +76,18 @@ class Character extends EventEmitter {
     this.femaleCollisionHeight = null;
     
     this.items = [];
+    this.path = {
+      target: {
+        x: null,
+        y: null,
+        z: null
+      },
+      origin: {
+        x: null,
+        y: null,
+        z: null
+      }
+    }
 
     this.underwear = { objectId: 0, itemId: 0 } // TODO papperdoll system?
     this.ear = {

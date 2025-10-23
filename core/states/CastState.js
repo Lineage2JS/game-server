@@ -45,8 +45,6 @@ class CastState extends BaseState {
           entity.hp = entity.hp - 30;
 
           entity.emit('damaged');
-          // for attack
-          //entity.lastAttackTimestamp = Date.now() - (((500000 / entity.baseAttackSpeed) - (500000 / this.character.baseAttackSpeed)) + ((500000 / this.character.baseAttackSpeed) / 2));
           entity.job = 'attack';
           entity.isRunning = true;
           entity.emit('changeMove');
@@ -100,11 +98,9 @@ class CastState extends BaseState {
       }
     }
 
-    this.character.path = path;
-
-    const dx = this.character.path.target.x - this.character.x;
-    const dy = this.character.path.target.y - this.character.y;
-    const distance = Math.sqrt(dx * dx + dy * dy) - 20;
+    const dx = path.target.x - path.origin.x;
+    const dy = path.target.y - path.origin.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
 
     if (distance > 600) { // 29 - attack range + collision radius
       this.character.changeState('follow');

@@ -28,7 +28,7 @@ class FollowState extends BaseState {
     if (!this.character.isMoving) {
       this.character.emit('startedMoving');
 
-      this.character.positionUpdateTimestamp = Date.now();
+      this.character.positionUpdateTimestamp = Date.now(); // TODO что за позиция? что тут делает
       this.character.isMoving = true;
     }
   }
@@ -41,7 +41,8 @@ class FollowState extends BaseState {
     this.character.path.target.x = entity.x;
     this.character.path.target.y = entity.y;
 
-    const p = moveCloser(this.character.path.origin.x, this.character.path.origin.y, this.character.path.target.x, this.character.path.target.y, 20);
+    const range = entity.canBeAttacked === 0 ? 100 : 20; // TODO
+    const p = moveCloser(this.character.path.origin.x, this.character.path.origin.y, this.character.path.target.x, this.character.path.target.y, range);
 
     this.character.path.target.x = p.x;
     this.character.path.target.y = p.y;

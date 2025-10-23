@@ -39,7 +39,7 @@ class Player extends Character {
     this._inventory = new Inventory();
     this._quests = new Quests();
     this._skills = new Skills();
-    this.lastTalkedNpcId = null;
+    this.lastTalkedNpcId = null; // TODO сделать _lastTalkedNpcId а запрос через getter
     this.pickupItem = null; // хранить objectId? как target?
     this._activeSoulShot = false;
     this.lastAttackTimestamp = 0;
@@ -72,6 +72,14 @@ class Player extends Character {
 
   getJobPayload() {
     return this._jobPayload;
+  }
+
+  setLastTalkedNpcId(npcId) {
+    this.lastTalkedNpcId = npcId; // TODO лучше хранить objectId?
+  }
+
+  getLastTalkedNpcId() {
+    return this.lastTalkedNpcId;
   }
 
   // isState(state) {
@@ -209,7 +217,7 @@ class Player extends Character {
   updateJob(job, payload) { // setAction
     this.job = job; // jobType
 
-    switch(job) {
+    switch(job) { // TODO _handleTalkJob можно сделать вычисления перед задачей
       case 'move':
         this.changeState('move', payload);
         
@@ -230,7 +238,29 @@ class Player extends Character {
         this.changeState('cast');
 
         break;
+      case 'talk':
+        const entity = payload;
+
+        this.setLastTalkedNpcId(entity.id);
+
+        if (this._isObjectInRange(this, entity, 100)) {
+          this.changeState('talk');
+        } else {
+          this.changeState('follow');
+        }
     }
+  }
+
+  // TODO сделать utils
+  _calculateDistance(obj1, obj2) {
+    const dx = obj1.x - obj2.x;
+    const dy = obj1.y - obj2.y;
+    
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  _isObjectInRange(obj1, obj2, range) {
+    return this._calculateDistance(obj1, obj2) < range;
   }
 
   changeState(stateName, payload) {

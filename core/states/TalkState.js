@@ -3,7 +3,7 @@ const entitiesManager = require('./../Managers/EntitiesManager');
 
 class TalkState extends BaseState {
   enter() {
-    const entity = entitiesManager.getEntityById(this.character.lastTalkedNpcId);
+    const entity = entitiesManager.getEntityById(this.character.getLastTalkedNpcId());
 
     entity.ai.talk(this.character);
   }

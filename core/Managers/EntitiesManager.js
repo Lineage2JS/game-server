@@ -296,6 +296,8 @@ class EntitiesManager {
 
         playersManager.emit('notify', packet);
       }
+
+      playersManager.emit('notify', new serverPackets.SetupGauge(0, 4000));
     });
 
     botsManager.on('spawn', bot => {

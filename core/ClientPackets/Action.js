@@ -68,25 +68,7 @@ class Action {
 
     if (entity instanceof Npc) {
       if (entity.canBeAttacked === 0) {
-        const path = {
-          target: {
-            x: entity.x,
-            y: entity.y,
-            z: entity.z
-          },
-          origin: {
-            x: player.x,
-            y: player.y,
-            z: player.z
-          }
-        }
-    
-        //
-        player.lastTalkedNpcId = entity.id; // fix pack to method setLastTalkedNpcId()
-        //
-        player.path = path;
-        player.job = 'talk';
-        player.changeState('follow', player.path);
+        player.updateJob('talk', entity);
 
         this._client.sendPacket(new serverPackets.ActionFailed()); // fix?
 
