@@ -25,21 +25,32 @@ function moveCloser(x1, y1, x2, y2, distance) {
 
 class FollowState extends BaseState {
   async enter() {
-    if (!this.character.isMoving) {
-      this.character.emit('startedMoving');
+    // const entity = entitiesManager.getEntityByObjectId(this.character.target);
 
-      this.character.positionUpdateTimestamp = Date.now(); // TODO что за позиция? что тут делает
-      this.character.isMoving = true;
-    }
+    // this.character.path.origin.x = this.character.x;
+    // this.character.path.origin.y = this.character.y;
+    // this.character.path.target.x = entity.x;
+    // this.character.path.target.y = entity.y;
+
+    // if (!this.character.isMoving) {
+    //   this.character.emit('move');
+
+    //   this.character.positionUpdateTimestamp = Date.now(); // TODO что за позиция? что тут делает
+    //   this.character.isMoving = true;
+    // }
+
+    this.character.positionUpdateTimestamp = this.character.lastUpdateTimestamp;
   }
 
-  update() {     
+  update() {
     const entity = entitiesManager.getEntityByObjectId(this.character.target);
 
     this.character.path.origin.x = this.character.x;
     this.character.path.origin.y = this.character.y;
+    this.character.path.origin.z = this.character.z;
     this.character.path.target.x = entity.x;
     this.character.path.target.y = entity.y;
+    this.character.path.target.z = entity.z;
 
     const range = entity.canBeAttacked === 0 ? 100 : 20; // TODO
     const p = moveCloser(this.character.path.origin.x, this.character.path.origin.y, this.character.path.target.x, this.character.path.target.y, range);
@@ -48,7 +59,7 @@ class FollowState extends BaseState {
     this.character.path.target.y = p.y;
 
     this.character.emit('move');
-    this.character.updatePosition(this.character.lastUpdateTimestamp);
+    this.character.updatePosition();
   }
 
   leave() {

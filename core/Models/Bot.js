@@ -3,7 +3,6 @@ const serverPackets = require('./../ServerPackets/serverPackets');
 
 //
 const database = require('./../../database');
-const movingManager = require('./../Managers/MovingManager');
 const npcManager = require('./../Managers/NpcManager');
 const itemsManager = require('../Managers/ItemsManager');
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
@@ -164,8 +163,6 @@ class Bot extends Character {
     this.path = path;
 
     if (!this.isMoving) {
-      movingManager.registerMovingObject(this);
-
       this.positionUpdateTimestamp = Date.now();
       this.isMoving = true;
     }
@@ -300,9 +297,7 @@ class Bot extends Character {
     }
   }
 
-  stop() {
-    movingManager.unregisterMovingObject(this);
-    
+  stop() {    
     this.isMoving = false;
 
     // fix дождатся остановки перемещения(удаления из таймера)
@@ -391,11 +386,11 @@ class Bot extends Character {
     }
   }
 
-  updatePosition(tick) {
+  updatePosition() {
     const dx = this.path.target.x - this.x;
     const dy = this.path.target.y - this.y;
     const distance = Math.sqrt(dx * dx + dy * dy) - 9;
-    const time = (tick  - this.positionUpdateTimestamp) / 1000;
+    const time = (this.lastUpdateTimestamp  - this.positionUpdateTimestamp) / 1000;
     
     if (distance < (this.runSpeed / 10)) {  
       const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
@@ -406,7 +401,7 @@ class Bot extends Character {
         z: this.z
       });
   
-      this.positionUpdateTimestamp = tick;
+      this.positionUpdateTimestamp = this.lastUpdateTimestamp;
 
       this.updateState('stop');
 
@@ -422,7 +417,7 @@ class Bot extends Character {
       z: this.z
     });
 
-    this.positionUpdateTimestamp = tick;
+    this.positionUpdateTimestamp = this.lastUpdateTimestamp;
   }
 
   // create math utils

@@ -63,7 +63,7 @@
     "critical": 40,
     "evasion": 28,
     "baseRunSpeed": 120,
-    "baseWalkSpeed": 84,
+    "baseWalkSpeed": 78,
     "swimsSpeed": 50,
     "maximumLoad": 62500,
     "x": -90256,

@@ -75,7 +75,7 @@ class DefaultNpc {
   }
 
   addFleeDesire(attacker) {    
-    this._npc.changeState('stop');
+    this._npc.changeState('idle');
     // fix
     const positions = this._npc._getRandomPos(this._npc.coordinates);
 

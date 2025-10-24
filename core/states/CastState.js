@@ -20,14 +20,14 @@ class CastState extends BaseState {
 
     if (!this.payload instanceof CastPayload) {
       //this.character.clearJob(); ?
-      //this.character.changeState('stop'); ?
+      //this.character.changeState('idle'); ?
 
       return
     }
 
     if (!this.character.target) {
       this.character.job = null;
-      this.character.changeState('stop');
+      this.character.changeState('idle');
       
       return;
     }
@@ -56,11 +56,11 @@ class CastState extends BaseState {
           // clearJob
           this.character.job = null;
           //
-          this.character.changeState('stop');
+          this.character.changeState('idle');
 
           if (entity.hp <= 0) {
             entity.job = 'dead';
-            entity.changeState('stop');
+            entity.changeState('idle');
             entity.emit('died');
             entity.emit('dropItems'); // TODO тут и NPC и Character в entity
             entity.isDead = true;
@@ -73,7 +73,7 @@ class CastState extends BaseState {
 
         if (skillId === 1216) {
           this.character.job = '';
-          this.character.changeState('stop');
+          this.character.changeState('idle');
 
           // TODO temporaty
           this.character.hp += 20;

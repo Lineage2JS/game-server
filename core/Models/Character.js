@@ -126,10 +126,10 @@ class Character extends EventEmitter {
   }
 
   get movementMultiplier() {
-   const multiplier = this.runSpeed / this.baseRunSpeed;
-   const roundedMultiplier = multiplier.toFixed(1);
-
-   return parseFloat(roundedMultiplier);
+    const multiplier = this.runSpeed / this.baseRunSpeed;
+    const roundedMultiplier = multiplier.toFixed(1);
+    
+    return parseFloat(roundedMultiplier);
   };
 
   static create(template) {

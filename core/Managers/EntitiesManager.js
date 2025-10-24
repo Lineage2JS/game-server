@@ -22,7 +22,6 @@ class EntitiesManager {
     const announcementsManager = require('./AnnouncementsManager');
     const aiManager = require('./AiManager');
     const dropItemsManager = require('./DropItemsManager');
-    const movingManager = require('./MovingManager');
     const serverPackets = require('./../ServerPackets/serverPackets');
 
     //
@@ -246,18 +245,6 @@ class EntitiesManager {
         y: droppedItem.y,
         z: droppedItem.z
       }));
-    });
-
-    playersManager.on('startedMoving', async (player) => {
-      //movingManager.registerMovingObject(player);
-
-      const packet = new serverPackets.MoveToLocation(player.path, player.objectId);
-      
-      playersManager.emit('notify', packet);
-    });
-
-    playersManager.on('endMoving', async (player) => {
-      //movingManager.unregisterMovingObject(player);
     });
 
     playersManager.on('attack', async (player, targetObjectId) => {

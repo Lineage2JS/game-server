@@ -1,11 +1,13 @@
 const BaseState = require("./BaseState");
 
-class StopState extends BaseState { // IdleState
+class IdleState extends BaseState { // IdleState
   enter() {
     this.character.isMoving = false;
+  }
 
+  update() {
     if (this.character.job === 'attack') {
-      this.character.changeState('attack', this.character.target); //
+      this.character.changeState('attack', this.character.target); // TODO нужен ли тут payload?
     }
 
     if (this.character.job === 'pickup') {
@@ -21,13 +23,9 @@ class StopState extends BaseState { // IdleState
     }
   }
 
-  update() {
-    
-  }
-
   leave() {
     
   }
 }
 
-module.exports = StopState;
+module.exports = IdleState;

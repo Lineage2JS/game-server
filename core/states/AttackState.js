@@ -40,35 +40,20 @@ class AttackState extends BaseState { // fix много в коде
     if (entity.isDead) {
       // if character of npc
       this.character.job = 'patrol';
-      this.character.changeState('stop');
+      this.character.changeState('idle');
 
       return;
     }
 
     if ((Date.now() - this.character.lastAttackTimestamp) > (500000 / 330)) {
       this.character.isDamage = true;
+  
+      const dx = entity.x - this.character.x;
+      const dy = entity.y - this.character.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
 
-      const path = {
-        target: {
-          x: entity.x,
-          y: entity.y,
-          z: entity.z
-        },
-        origin: {
-          x: this.character.x,
-          y: this.character.y,
-          z: this.character.z
-        }
-      }
-  
-      this.character.path = path;
-  
-      const dx = this.character.path.target.x - this.character.x;
-      const dy = this.character.path.target.y - this.character.y;
-      const distance = Math.sqrt(dx * dx + dy * dy) - 20;
-  
-      if (distance > 29) { // 29 - attack range + collision radius
-        this.character.changeState('follow', this.character.path);
+      if (distance > 30) { // 29 - attack range + collision radius
+        this.character.changeState('follow');
   
         return;
       }
@@ -103,7 +88,7 @@ class AttackState extends BaseState { // fix много в коде
 
       if (entity.hp <= 0) {
         entity.job = 'dead';
-        entity.changeState('stop');
+        entity.changeState('idle');
         entity.emit('died');
         entity.emit('dropItems'); // TODO тут и NPC и Character в entity
         entity.isDead = true;
@@ -133,7 +118,7 @@ class AttackState extends BaseState { // fix много в коде
         this.character.target = null;
         this.character.isAttacking = false;
 
-        this.character.changeState('stop');
+        this.character.changeState('idle');
       }
     }
   }

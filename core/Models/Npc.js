@@ -1,12 +1,11 @@
 const Character = require('./Character');
 const MoveState = require('./../states/MoveState');
-const StopState = require('./../states/StopState');
+const IdleState = require('./../states/IdleState');
 const AttackState = require('./../states/AttackState');
 const FollowState = require('./../states/FollowState');
 const PickupState = require('./../states/PickupState');
 
 //
-//const movingManager = require('./../Managers/MovingManager');
 //const entitiesManager = require('./../Managers/EntitiesManager'); // fix?
 
 //
@@ -51,7 +50,7 @@ class Npc extends Character {
 
     this._states = {
       'move': new MoveState(this),
-      'stop': new StopState(this),
+      'idle': new IdleState(this),
       'attack': new AttackState(this),
       'follow': new FollowState(this),
       'pickup': new PickupState(this),
@@ -151,7 +150,7 @@ class Npc extends Character {
 
   update() {
     this.lastUpdateTimestamp = Date.now();
-
+    
     if (this._currentState) {
       this._currentState.update();
     }
@@ -173,11 +172,10 @@ class Npc extends Character {
     }
   }
 
-  updatePosition(tick) {
+  updatePosition() {
     const dx = this.path.target.x - this.x;
     const dy = this.path.target.y - this.y;
     const distance = Math.sqrt(dx * dx + dy * dy) - 9;
-    const time = (tick  - this.positionUpdateTimestamp) / 1000;
     
     if (distance < (this.runSpeed / 10)) {  
       const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
@@ -188,13 +186,14 @@ class Npc extends Character {
         z: this.z
       });
   
-      this.positionUpdateTimestamp = tick;
+      //this.positionUpdateTimestamp = this.lastUpdateTimestamp;
 
-      this.changeState('stop');
+      this.changeState('idle');
 
       return;
     }
 
+    const time = (this.lastUpdateTimestamp - this.positionUpdateTimestamp) / 1000;
     const step = this.runSpeed * time;
     const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
 
@@ -204,7 +203,7 @@ class Npc extends Character {
       z: this.z
     });
 
-    this.positionUpdateTimestamp = tick;
+    this.positionUpdateTimestamp = this.lastUpdateTimestamp;
 
     this.emit('move'); // ?
   }

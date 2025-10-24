@@ -81,8 +81,8 @@ class UserInfo {
       .writeD(0)
       .writeD(player.karma)
 
-      .writeD(115) // baseRunSpeed
-      .writeD(80) // baseWalkSpeed
+      .writeD(player.baseRunSpeed)
+      .writeD(player.baseWalkSpeed)
       .writeD(player.swimSpeed)
       .writeD(player.swimSpeed)
       .writeD(player.runSpeed) // getFloatingRunSpeed

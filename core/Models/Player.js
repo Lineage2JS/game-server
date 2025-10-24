@@ -3,7 +3,7 @@ const Inventory = require('./../Systems/Inventory');
 const Quests = require('./../Systems/Quests');
 const Skills = require('./../Systems/Skills');
 const MoveState = require('./../states/MoveState');
-const StopState = require('./../states/StopState');
+const IdleState = require('./../states/IdleState');
 const AttackState = require('./../states/AttackState');
 const CastState = require('./../states/CastState');
 const FollowState = require('./../states/FollowState');
@@ -27,7 +27,7 @@ class Player extends Character {
 
     this._states = {
       'move': new MoveState(this),
-      'stop': new StopState(this),
+      'idle': new IdleState(this),
       'attack': new AttackState(this),
       'cast': new CastState(this),
       'follow': new FollowState(this),
@@ -271,9 +271,6 @@ class Player extends Character {
     const state = this._states[stateName];
 
     state.payload = payload; // remove
-    //
-    
-    //
     this._currentState = state;
     
     state.enter();
@@ -303,12 +300,12 @@ class Player extends Character {
     }
   }
 
-  updatePosition(tick) {
+  async updatePosition() {
     const dx = this.path.target.x - this.x;
     const dy = this.path.target.y - this.y;
     const distance = Math.sqrt(dx * dx + dy * dy) - 9;
     
-    if (distance < (this.runSpeed / 10)) {  
+    if (distance < (this.runSpeed / 10)) {
       const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
 
       this.updateParams({
@@ -317,24 +314,24 @@ class Player extends Character {
         z: this.z
       });
   
-      this.positionUpdateTimestamp = tick;
+      //this.positionUpdateTimestamp = this.lastUpdateTimestamp;
 
-      this.changeState('stop');
+      this.changeState('idle');
 
       return;
     }
 
-    const time = (tick  - this.positionUpdateTimestamp) / 1000;
+    const time = (this.lastUpdateTimestamp - this.positionUpdateTimestamp) / 1000;
     const step = this.runSpeed * time;
     const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
-
+    
     this.updateParams({
       x: parseFloat((this.x + (Math.cos(angle) * step)).toFixed(1)),
       y: parseFloat((this.y + (Math.sin(angle) * step)).toFixed(1)),
       z: this.z
     });
 
-    this.positionUpdateTimestamp = tick;
+    this.positionUpdateTimestamp = this.lastUpdateTimestamp;
 
     this.emit('move'); // ?
   }
