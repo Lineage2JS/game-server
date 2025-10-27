@@ -128,7 +128,7 @@ class EntitiesManager {
       const announcements = announcementsManager.getAnnouncements();
 
       announcements.forEach(announcement => {
-        const packet = new serverPackets.CreateSay(player, 10, announcement); // TODO ANNOUNCEMENT = 10
+        const packet = new serverPackets.CreateSay(0, player.characterName, 10, announcement); // TODO ANNOUNCEMENT = 10
       
         playersManager.emit('notify', packet);
       });      

@@ -7,6 +7,56 @@ const playersManager = require('./../Managers/PlayersManager');
 const itemsManager = require('./../Managers/ItemsManager');
 const initialParametersManager = require('./../Managers/InitialParametersManager');
 
+function getRandomPointInPolygon(points) {
+    // Находим ограничивающий прямоугольник (bounding box)
+    let minX = Infinity, maxX = -Infinity;
+    let minY = Infinity, maxY = -Infinity;
+    
+    for (const point of points) {
+        minX = Math.min(minX, point[0]);
+        maxX = Math.max(maxX, point[0]);
+        minY = Math.min(minY, point[1]);
+        maxY = Math.max(maxY, point[1]);
+    }
+    
+    // Округляем границы в большую сторону
+    minX = Math.floor(minX);
+    maxX = Math.ceil(maxX);
+    minY = Math.floor(minY);
+    maxY = Math.ceil(maxY);
+    
+    // Генерируем случайные точки пока не найдем внутри полигона
+    let randomPoint, isInside;
+    do {
+        const x = Math.random() * (maxX - minX) + minX;
+        const y = Math.random() * (maxY - minY) + minY;
+        // Округляем координаты в большую сторону
+        randomPoint = [Math.ceil(x), Math.ceil(y), points[0][2]]; // Сохраняем Z-координату
+        
+        isInside = isPointInPolygon(randomPoint, points);
+    } while (!isInside);
+    
+    return randomPoint;
+}
+
+// Функция проверки нахождения точки внутри полигона (алгоритм ray casting)
+function isPointInPolygon(point, polygon) {
+    const x = point[0], y = point[1];
+    let inside = false;
+    
+    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+        const xi = polygon[i][0], yi = polygon[i][1];
+        const xj = polygon[j][0], yj = polygon[j][1];
+        
+        const intersect = ((yi > y) !== (yj > y)) &&
+            (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+        
+        if (intersect) inside = !inside;
+    }
+    
+    return inside;
+}
+
 class RequestCharacterCreate {
   constructor(client, packet) {
     this._client = client;
@@ -129,15 +179,31 @@ class RequestCharacterCreate {
     character.face = this.face;
     character.createdAt = Date.now();
 
-    // add character to database
-    const createdCharacter = await database.createCharacter(character);
-
     // TODO
     const classIds = new Map();
 
     classIds.set(0, 'humanFighter');
     classIds.set(10, 'humanMagician');
+
+    classIds.set(18, 'elfFighter');
+    classIds.set(25, 'elfMagician');
+    classIds.set(31, 'darkelfFighter');
+    classIds.set(38, 'darkelfMagician');
+    classIds.set(44, 'orcFighter');
+    classIds.set(49, 'orcShaman');
+    classIds.set(53, 'dwarfApprentice');
     //
+
+    // TODO set start points
+    const startPoints = initialParametersManager.getInitialStartPoint(classIds.get(this.classId));
+    const randomPoint = getRandomPointInPolygon(startPoints);
+
+    character.x = randomPoint[0];
+    character.y = randomPoint[1];
+    character.z = randomPoint[2];
+
+    // add character to database
+    const createdCharacter = await database.createCharacter(character);
 
     //fix humanFighter
     const initialEquipmentIds = initialParametersManager.getInitialEquipmentIds(classIds.get(this.classId));

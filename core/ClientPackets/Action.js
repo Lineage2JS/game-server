@@ -45,28 +45,38 @@ class Action {
     const player = playersManager.getPlayerByClient(this._client);
     const entity = entitiesManager.getEntityByObjectId(this.objectId);
 
-    if (player.target === null) { // TODO if entity not dead
-      this._client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
-
-      player.target = entity.objectId;
-
-      return;
-    }
-
-    if (player.target !== entity.objectId) {
-      this._client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
-
-      player.target = entity.objectId;
-
-      return;
-    }
-
     if (entity instanceof Player) {
-      
       return;
     }
 
     if (entity instanceof Npc) {
+      this._client.sendPacket(new serverPackets.StatusUpdate(entity.objectId, [
+        {
+          id: characterStatusEnums.CUR_HP,
+          value: entity.hp,
+        },
+        {
+          id: characterStatusEnums.MAX_HP,
+          value: entity.maximumHp,
+        }
+      ]));
+
+      if (player.target === null) { // TODO if entity not dead
+        this._client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
+
+        player.target = entity.objectId;
+
+        return;
+      }
+
+      if (player.target !== entity.objectId) {
+        this._client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
+
+        player.target = entity.objectId;
+
+        return;
+      }
+
       if (entity.canBeAttacked === 0) {
         player.updateJob('talk', entity);
 
@@ -75,18 +85,7 @@ class Action {
         return;
       }
 
-      if (entity.canBeAttacked === 1 && !player.isAttacking) { // TODO isAttacking опирается на state
-        this._client.sendPacket(new serverPackets.StatusUpdate(entity.objectId, [
-          {
-            id: characterStatusEnums.CUR_HP,
-            value: entity.hp,
-          },
-          {
-            id: characterStatusEnums.MAX_HP,
-            value: entity.maximumHp,
-          }
-        ]));
-        
+      if (entity.canBeAttacked === 1 && !player.isAttacking) { // TODO isAttacking опирается на state        
         player.isAttacking = true;
 
         player.updateJob('attack', this.objectId);

@@ -26,7 +26,7 @@ class ValidatePosition {
   }
 
   async _init() {
-    
+    // TODO
   }
 }
 
