@@ -11,7 +11,7 @@ class MoveState extends BaseState {
       this.character.isMoving = true;
     }
 
-    if (this.character.job === 'move') {
+    if (this.character.action === 'move') {
       this.character.isAttacking = false;
     }
   }

@@ -57,7 +57,7 @@ class Npc extends Character {
     }
 
     this.state = '';
-    this.job = '';
+    this.action = '';
     this.isAttacking = false;
     this.isMoving = false;
     this.isRunning = false;
@@ -111,14 +111,14 @@ class Npc extends Character {
       }
     }
     
-    this.job = 'patrol';
+    this.action = 'patrol';
     //this.changeState('move', path);
   }
 
-  updateJob(job, payload) {
-    this.job = job;
+  setAction(action, payload) {
+    this.action = action;
 
-    switch(job) {
+    switch(action) {
       case 'move':
         this.changeState('move', payload);
         

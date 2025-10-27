@@ -49,7 +49,7 @@ class RequestAttack {
     if (!player.isAttacking) {
       player.isAttacking = true;
       
-      player.updateJob('attack', this.objectId);
+      player.setAction('attack', this.objectId);
     }
   }
 }

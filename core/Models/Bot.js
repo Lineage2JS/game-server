@@ -70,7 +70,7 @@ class Bot extends Character {
     //   }
     // }
 
-    // this.updateJob('move', path);
+    // this.setAction('move', path);
     // this.emit('move');
 
     // const spawnedNpcs = npcManager.getSpawnedNpcs();
@@ -78,7 +78,7 @@ class Bot extends Character {
     // this.target = spawnedNpcs[Math.floor(Math.random() * spawnedNpcs.length)].objectId;
 
     // setTimeout(() => {
-    //   this.updateJob('attack', this.target);
+    //   this.setAction('attack', this.target);
     // }, 10000)
 
     //this.ai.name
@@ -101,7 +101,7 @@ class Bot extends Character {
         }
       }
 
-      this.updateJob('move', path);
+      this.setAction('move', path);
       this.emit('move');
     });
   }
@@ -110,7 +110,7 @@ class Bot extends Character {
     return this._client;
   }
 
-  updateJob(job, payload) {
+  setAction(job, payload) {
     this.job = job;
 
     switch(job) {
@@ -259,7 +259,7 @@ class Bot extends Character {
           setTimeout(() => {
             const lastItem = itemsManager._items[itemsManager._items.length - 1];
 
-            this.updateJob('pickup', lastItem);
+            this.setAction('pickup', lastItem);
           }, 1000);
           //
           this.target = null;
@@ -366,7 +366,7 @@ class Bot extends Character {
 
       this.target = spawnedNpcs[Math.floor(Math.random() * spawnedNpcs.length)].objectId;
 
-      this.updateJob('attack', this.target);
+      this.setAction('attack', this.target);
     }, 2000);
   }
 

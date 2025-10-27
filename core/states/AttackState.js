@@ -39,7 +39,7 @@ class AttackState extends BaseState { // fix много в коде
 
     if (entity.isDead) {
       // if character of npc
-      this.character.job = 'patrol';
+      this.character.action = 'patrol';
       this.character.changeState('idle');
 
       return;
@@ -65,9 +65,9 @@ class AttackState extends BaseState { // fix много в коде
       //this.character._activeSoulShot = false;
       
       // if entity instanceof Npc
-      if (entity.job === 'patrol') {
+      if (entity.action === 'patrol') {
         entity.lastAttackTimestamp = Date.now() - (((500000 / entity.baseAttackSpeed) - (500000 / this.character.baseAttackSpeed)) + ((500000 / this.character.baseAttackSpeed) / 2));
-        entity.job = 'attack';
+        entity.action = 'attack';
         entity.isRunning = true;
         entity.emit('changeMove');
         //entity.state = 'attack';
@@ -87,7 +87,7 @@ class AttackState extends BaseState { // fix много в коде
       }
 
       if (entity.hp <= 0) {
-        entity.job = 'dead';
+        entity.action = 'dead';
         entity.changeState('idle');
         entity.emit('died');
         entity.emit('dropItems'); // TODO тут и NPC и Character в entity
@@ -95,7 +95,7 @@ class AttackState extends BaseState { // fix много в коде
         entity.target = null;
 
         // if character of npc
-        this.character.job = 'patrol';
+        this.character.action = 'patrol';
         
         // if character of player
         //this.character.exp += 100;

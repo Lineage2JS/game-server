@@ -6,19 +6,19 @@ class IdleState extends BaseState { // IdleState
   }
 
   update() {
-    if (this.character.job === 'attack') {
+    if (this.character.action === 'attack') {
       this.character.changeState('attack', this.character.target); // TODO нужен ли тут payload?
     }
 
-    if (this.character.job === 'pickup') {
+    if (this.character.action === 'pickup') {
       this.character.changeState('pickup', this.character.target); //
     }
 
-    if (this.character.job === 'talk') {
+    if (this.character.action === 'talk') {
       this.character.changeState('talk');
     }
 
-    if (this.character.job === 'cast') {
+    if (this.character.action === 'cast') {
       this.character.changeState('cast');
     }
   }

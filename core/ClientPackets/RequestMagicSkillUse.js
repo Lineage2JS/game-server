@@ -62,7 +62,7 @@ class RequestMagicSkillUse {
 
     const skill = skillsManager.getSkill(this.skillId);
 
-    player.updateJob('cast', {
+    player.setAction('cast', {
       target: player.target,
       skill: skill
     })

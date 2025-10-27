@@ -92,7 +92,7 @@ class DefaultNpc {
       }
     }
 
-    this._npc.job = 'patrol';
+    this._npc.action = 'patrol';
     this._npc.changeState('move', path);
 
     console.log(this._npc);

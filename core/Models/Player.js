@@ -19,7 +19,7 @@ class Player extends Character {
     this.target = null;
     this.positionUpdateTimestamp = 0;
     this.state = '';
-    this.job = '';
+    this.action = '';
     this.isMoving = false;
     this.isAttacking = false;
     this.isCasting = false;
@@ -50,7 +50,7 @@ class Player extends Character {
     this.payloadAttack = null; // fix
 
     //
-    this._jobPayload = null;
+    this._actionPayload = null;
     //
 
     this.lastUpdateTimestamp = 0;
@@ -66,12 +66,12 @@ class Player extends Character {
     return this._client;
   }
 
-  setJobPayload(payload) {
-    this._jobPayload = payload;
+  setActionPayload(payload) {
+    this._actionPayload = payload;
   }
 
-  getJobPayload() {
-    return this._jobPayload;
+  getActionPayload() {
+    return this._actionPayload;
   }
 
   setLastTalkedNpcId(npcId) {
@@ -214,10 +214,10 @@ class Player extends Character {
     return this._quests.getQuests();
   }
 
-  updateJob(job, payload) { // setAction
-    this.job = job; // jobType
+  setAction(action, payload) {
+    this.action = action;
 
-    switch(job) { // TODO _handleTalkJob можно сделать вычисления перед задачей
+    switch(action) { // TODO _handleTalkAction можно сделать вычисления перед задачей
       case 'move':
         this.changeState('move', payload);
         
@@ -234,7 +234,7 @@ class Player extends Character {
       case 'cast':
         const castPayload = new CastPayload(payload);
 
-        this.setJobPayload(castPayload);
+        this.setActionPayload(castPayload);
         this.changeState('cast');
 
         break;

@@ -7,7 +7,7 @@ const entitiesManager = require('./../Managers/EntitiesManager');
 
 class CastState extends BaseState {
   enter() {
-    this.payload = this.character.getJobPayload();
+    this.payload = this.character.getActionPayload();
     this.character.isCasting = false;
   }
 
@@ -19,14 +19,14 @@ class CastState extends BaseState {
     // check if skill self target or no(enemy?)
 
     if (!this.payload instanceof CastPayload) {
-      //this.character.clearJob(); ?
+      //this.character.clearAction(); ?
       //this.character.changeState('idle'); ?
 
       return
     }
 
     if (!this.character.target) {
-      this.character.job = null;
+      this.character.action = null;
       this.character.changeState('idle');
       
       return;
@@ -45,7 +45,7 @@ class CastState extends BaseState {
           entity.hp = entity.hp - 30;
 
           entity.emit('damaged');
-          entity.job = 'attack';
+          entity.action = 'attack';
           entity.isRunning = true;
           entity.emit('changeMove');
           //entity.state = 'attack';
@@ -53,13 +53,13 @@ class CastState extends BaseState {
           //entity.payloadAttack = this.character.objectId;
           entity.changeState('attack', this.character.objectId);
           
-          // clearJob
-          this.character.job = null;
+          // clearAction
+          this.character.action = null;
           //
           this.character.changeState('idle');
 
           if (entity.hp <= 0) {
-            entity.job = 'dead';
+            entity.action = 'dead';
             entity.changeState('idle');
             entity.emit('died');
             entity.emit('dropItems'); // TODO тут и NPC и Character в entity
@@ -72,7 +72,7 @@ class CastState extends BaseState {
         }
 
         if (skillId === 1216) {
-          this.character.job = '';
+          this.character.action = '';
           this.character.changeState('idle');
 
           // TODO temporaty

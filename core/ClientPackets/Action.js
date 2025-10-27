@@ -78,7 +78,7 @@ class Action {
       }
 
       if (entity.canBeAttacked === 0) {
-        player.updateJob('talk', entity);
+        player.setAction('talk', entity);
 
         this._client.sendPacket(new serverPackets.ActionFailed()); // fix?
 
@@ -88,7 +88,7 @@ class Action {
       if (entity.canBeAttacked === 1 && !player.isAttacking) { // TODO isAttacking опирается на state        
         player.isAttacking = true;
 
-        player.updateJob('attack', this.objectId);
+        player.setAction('attack', this.objectId);
 
         return;
       }
@@ -97,7 +97,7 @@ class Action {
     }
 
     if (entity instanceof DropItem) {
-      player.updateJob('pickup', entity);
+      player.setAction('pickup', entity);
     }
   }
 }

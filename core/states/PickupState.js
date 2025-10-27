@@ -34,7 +34,7 @@ class PickupState extends BaseState {
 
     this.character.emit('pickup', this.character.pickupItem); //fix?
     //
-    this.character.job = 'stop';
+    this.character.action = 'stop';
     this.character.changeState('idle');
     //
   }

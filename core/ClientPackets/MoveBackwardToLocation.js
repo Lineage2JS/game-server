@@ -60,7 +60,7 @@ class MoveBackwardToLocation {
       y: this.originY,
       z: this.originZ
     });
-    player.updateJob('move', path);
+    player.setAction('move', path);
   }
 }
 
