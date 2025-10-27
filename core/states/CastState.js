@@ -102,7 +102,7 @@ class CastState extends BaseState {
     const dy = path.target.y - path.origin.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
 
-    if (distance > 600) { // 29 - attack range + collision radius
+    if (distance > 629) { // 29 - attack range + collision radius
       this.character.changeState('follow');
 
       return;

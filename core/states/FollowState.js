@@ -52,7 +52,20 @@ class FollowState extends BaseState {
     this.character.path.target.y = entity.y;
     this.character.path.target.z = entity.z;
 
-    const range = entity.canBeAttacked === 0 ? 100 : 20; // TODO
+    let range = 20;
+
+    if (this.character.action === 'talk') {
+      range = 100;
+    }
+
+    if (this.character.action === 'attack') {
+      range = 20;
+    }
+
+    if (this.character.action === 'cast') {
+      range = 600;
+    }
+
     const p = moveCloser(this.character.path.origin.x, this.character.path.origin.y, this.character.path.target.x, this.character.path.target.y, range);
 
     this.character.path.target.x = p.x;
