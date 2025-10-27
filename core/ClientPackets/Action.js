@@ -46,6 +46,34 @@ class Action {
     const entity = entitiesManager.getEntityByObjectId(this.objectId);
 
     if (entity instanceof Player) {
+      // TODO\
+      this._client.sendPacket(new serverPackets.StatusUpdate(entity.objectId, [
+        {
+          id: characterStatusEnums.CUR_HP,
+          value: entity.hp,
+        },
+        {
+          id: characterStatusEnums.MAX_HP,
+          value: entity.maximumHp,
+        }
+      ]));
+
+      if (player.target === null) { // TODO if entity not dead
+        this._client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
+
+        player.target = entity.objectId;
+
+        return;
+      }
+
+      if (player.target !== entity.objectId) {
+        this._client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
+
+        player.target = entity.objectId;
+
+        return;
+      }
+
       return;
     }
 
