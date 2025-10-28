@@ -8,12 +8,12 @@ class Lector extends Merchant {
       {"small_sword": 15},
       {"club": 15},
       {"bone_dagger": 15},
-      {"short_bow": 15},
+      //{"short_bow": 15},
       {"broad_sword": 15},
       {"heavy_chisel": 15},
       {"knife": 15},
       {"doomed_dagger": 15},
-      {"bow": 15},
+      //{"bow": 15},
       {"mace": 15},
       {"sickle": 15},
       {"brandish": 15},
@@ -22,10 +22,10 @@ class Lector extends Merchant {
       {"handmade_sword": 15},
       {"dwarven_mace": 15},
       {"dirk": 15},
-      {"hunting_bow": 15},
+      //{"hunting_bow": 15},
       {"long_sword": 15},
       {"throw_knife": 15},
-      {"bow_of_forest": 15},
+      //{"bow_of_forest": 15},
       {"short_spear": 15},
       {"pants": 15},
       {"shirt": 15},
@@ -57,8 +57,8 @@ class Lector extends Merchant {
       {"leather_cap": 15},
       {"wooden_helmet": 15},
       {"leather_helmet": 15},
-      {"wooden_arrow": 15},
-      {"bone_arrow": 15},
+      // {"wooden_arrow": 15},
+      // {"bone_arrow": 15},
     ];
     this.sellList1 = [
       {"apprentice's_rod": 15},
@@ -97,8 +97,8 @@ class Lector extends Merchant {
       {"leather_cap": 15},
       {"wooden_helmet": 15},
       {"leather_helmet": 15},
-      {"wooden_arrow": 15},
-      {"bone_arrow": 15}
+      // {"wooden_arrow": 15},
+      // {"bone_arrow": 15}
     ];
   }
 }

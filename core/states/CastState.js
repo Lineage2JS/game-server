@@ -3,6 +3,8 @@ const CastPayload = require('./../payloads/CastPayload')
 
 //
 const entitiesManager = require('./../Managers/EntitiesManager');
+const characterStatusEnums = require('./../../enums/characterStatusEnums.js');
+const serverPackets = require('./../ServerPackets/serverPackets.js');
 //
 
 class CastState extends BaseState {
@@ -76,7 +78,14 @@ class CastState extends BaseState {
           this.character.changeState('idle');
 
           // TODO temporaty
-          this.character.hp += 20;
+          const diffHp = this.character.maximumHp - this.character.hp;
+
+          if (diffHp < 20) {
+            this.character.hp = this.character.maximumHp;
+          } else {
+            this.character.hp += 20;
+          }
+          
           this.character.emit('regenerate');
           //
         }
@@ -107,10 +116,26 @@ class CastState extends BaseState {
 
       return;
     }
+
+    if (this.character.mp < 20) { // TODO magic number
+      return;
+    }
     
     this.character.castTimestamp = Date.now();
     this.character.isCasting = true;
     this.character.emit('cast', this.payload.getSkill().getSkillId()); // TODO
+    this.character.mp = this.character.mp - 20;
+
+    this.character.getClient().sendPacket(new serverPackets.StatusUpdate(this.character.objectId, [
+      {
+        id: characterStatusEnums.CUR_MP,
+        value: this.character.mp,
+      },
+      {
+        id: characterStatusEnums.MAX_MP,
+        value: this.character.maximumMp,
+      }
+    ]));
 
     // TODO применять эффект скила после того как прошло время
     // if (elapsedTime >= this.castDuration && !this.effectApplied) {

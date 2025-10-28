@@ -48,8 +48,12 @@ class RequestBypassToServer {
     if (this.command.includes('admin_teleport')) {
       const [x, y, z] = this.command.split(' ').slice(1).map(i => Number(i)); // fix
       
-      this._client.sendPacket(new serverPackets.TeleportToLocation(player.objectId, x, y, z));
+      player.x = x;
+      player.y = y;
+      player.z = z;
 
+      this._client.sendPacket(new serverPackets.TeleportToLocation(player.objectId, player.x, player.y, player.z));
+      
       return;
     }
 
@@ -204,7 +208,11 @@ class RequestBypassToServer {
     if (this.command.includes('teleport')) { // fix collision? admin_teleport / teleport
       const [x, y, z] = this.command.split(' ').slice(1).map(i => Number(i)); // fix
 
-      this._client.sendPacket(new serverPackets.TeleportToLocation(player.objectId, x, y, z));
+      player.x = x;
+      player.y = y;
+      player.z = z;
+
+      this._client.sendPacket(new serverPackets.TeleportToLocation(player.objectId, player.x, player.y, player.z));
 
       return;
     }

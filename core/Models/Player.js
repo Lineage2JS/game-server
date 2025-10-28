@@ -45,7 +45,7 @@ class Player extends Character {
     this.lastAttackTimestamp = 0;
     this.castTimestamp = 0;
     this.lastRegenerateTimestamp = 0;
-    this.baseAttackSpeed = 330
+    this.baseAttackSpeed = 300; // TODO
     //
     this.payloadAttack = null; // fix
 
@@ -287,7 +287,7 @@ class Player extends Character {
       this.emit('endAttack');
     }
 
-    if (this.hp < this.maximumHp) {
+    if (this.hp < this.maximumHp || this.mp < this.maximumMp) {
       this.regenerate(); 
     }
   }
@@ -338,7 +338,14 @@ class Player extends Character {
 
   regenerate() {
     if ((Date.now() - this.lastRegenerateTimestamp) > 3000) {
-      this.hp += 1;
+      if (this.hp < this.maximumHp) {
+        this.hp += 1;
+      }
+      
+      if (this.mp < this.maximumMp) {
+        this.mp += 1;
+      }
+      
       this.lastRegenerateTimestamp = Date.now();
 
       this.emit('regenerate');

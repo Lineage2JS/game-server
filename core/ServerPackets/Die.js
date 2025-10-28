@@ -6,12 +6,12 @@ class Die {
     this._packet
       .writeC(0x0B)
       .writeD(objectId)
-      .writeD(1)
-      .writeD(1)
-      .writeD(1)
-      .writeD(1)
-      .writeD(0)
-      .writeD(1)
+      .writeD(1) // to nearest village // TODO
+      .writeD(0) // to hide away
+      .writeD(0) // to castle
+      .writeD(0) // to siege HQ
+      .writeD(0) // sweepable (blue glow, spoil)
+      .writeD(0) // fixed(stand now) for GM
   }
 
   getBuffer() {

@@ -193,6 +193,14 @@ class EntitiesManager {
         {
           id: characterStatusEnums.MAX_HP,
           value: player.maximumHp,
+        },
+        {
+          id: characterStatusEnums.CUR_MP,
+          value: player.mp,
+        },
+        {
+          id: characterStatusEnums.MAX_MP,
+          value: player.maximumMp,
         }
       ]);
     

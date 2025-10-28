@@ -47,7 +47,7 @@ class CharacterInfo {
     // male
     if(player.gender === 0) {
       this._packet
-        .writeF(player.maleAttackSpeedMultiplier)
+        .writeF(player.maleAttackSpeedMultiplier) // TODO местами поменять как в l2jc1
         .writeF((player.pSpd / 500) / 0.555)
         .writeF(player.maleCollisionRadius)
         .writeF(player.maleCollisionHeight)

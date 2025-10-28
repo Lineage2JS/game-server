@@ -45,7 +45,7 @@ class AttackState extends BaseState { // fix много в коде
       return;
     }
 
-    if ((Date.now() - this.character.lastAttackTimestamp) > (500000 / 330)) {
+    if ((Date.now() - this.character.lastAttackTimestamp) > (500000 / this.character.attackSpeed)) {
       this.character.isDamage = true;
   
       const dx = entity.x - this.character.x;
@@ -66,7 +66,7 @@ class AttackState extends BaseState { // fix много в коде
       
       // if entity instanceof Npc
       if (entity.action === 'patrol') {
-        entity.lastAttackTimestamp = Date.now() - (((500000 / entity.baseAttackSpeed) - (500000 / this.character.baseAttackSpeed)) + ((500000 / this.character.baseAttackSpeed) / 2));
+        entity.lastAttackTimestamp = Date.now() - (((500000 / entity.baseAttackSpeed) - (500000 / this.character.attackSpeed)) + ((500000 / this.character.attackSpeed) / 2));
         entity.action = 'attack';
         entity.isRunning = true;
         entity.emit('changeMove');
@@ -77,7 +77,7 @@ class AttackState extends BaseState { // fix много в коде
       }
     }
 
-    if ((Date.now() - this.character.lastAttackTimestamp) > (500000 / 330 / 2) && this.character.isDamage) {
+    if ((Date.now() - this.character.lastAttackTimestamp) > (500000 / this.character.attackSpeed / 2) && this.character.isDamage) {
       if (entity.hp > 0) {
         entity.hp = entity.hp - 10;
 

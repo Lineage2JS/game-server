@@ -67,7 +67,7 @@ class UserInfo {
       .writeD(player.hand.leftAndRight.itemId)
 
       .writeD(player.pAtk)
-      .writeD(player.pSpd)
+      .writeD(player.attackSpeed)
       .writeD(player.pDef)
       .writeD(player.evasion)
       .writeD(player.accuracy)
@@ -75,7 +75,7 @@ class UserInfo {
 
       .writeD(player.mAtk)
       .writeD(player.mSpd)
-      .writeD(player.pSpd)
+      .writeD(player.pSpd) // TODO дубль?
       .writeD(player.mDef)
 
       .writeD(0)
@@ -89,12 +89,12 @@ class UserInfo {
       .writeD(player.walkSpeed) // getFloatingWalkSpeed
       .writeD(player.runSpeed) // getFlyingRunSpeed
       .writeD(player.walkSpeed) // getFlyingWalkSpeed
-      .writeF(player.movementMultiplier);
-
+      .writeF(player.movementMultiplier)
+      .writeF(player.attackSpeedMultiplier);
+      
       // male
     if(player.gender === 0) {
       this._packet
-        .writeF(player.maleAttackSpeedMultiplier)
         .writeF(player.maleCollisionRadius)
         .writeF(player.maleCollisionHeight);
     }
@@ -102,7 +102,6 @@ class UserInfo {
     // female
     if(player.gender === 1) {
       this._packet
-        .writeF(player.femaleAttackSpeedMultiplier)
         .writeF(player.femaleCollisionRadius)
         .writeF(player.femaleCollisionHeight);
     }
@@ -111,7 +110,7 @@ class UserInfo {
       .writeD(player.hairStyle)
       .writeD(player.hairColor)
       .writeD(player.face)
-      .writeD(1)
+      .writeD(0) // isGM
       .writeS(player.title)
       .writeD(player.clanId)
       .writeD(player.clanCrestId)

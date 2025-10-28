@@ -132,6 +132,17 @@ class Character extends EventEmitter {
     return parseFloat(roundedMultiplier);
   };
 
+  get attackSpeed() {
+    return Math.round(this.baseAttackSpeed * baseStats.DEX[this.dex]);
+  }
+
+  get attackSpeedMultiplier() {
+    const multiplier = ((1.1) * this.attackSpeed / this.baseAttackSpeed)
+    const roundedMultiplier = multiplier.toFixed(1);
+    
+    return parseFloat(roundedMultiplier);
+  };
+
   static create(template) {
     const character = new Character();
 
