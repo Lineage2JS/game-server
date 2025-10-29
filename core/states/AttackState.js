@@ -78,43 +78,15 @@ class AttackState extends BaseState { // fix много в коде
     }
 
     if ((Date.now() - this.character.lastAttackTimestamp) > (500000 / this.character.attackSpeed / 2) && this.character.isDamage) {
-      if (entity.hp > 0) {
-        entity.hp = entity.hp - 10;
-
-        entity.emit('damaged');
+      if (entity.hp > 0 && entity.action !== 'dead') { // TODO !entity.isDead()
+        entity.takeDamage(this.character, 10);
 
         this.character.isDamage = false; // TODO зачем это
       }
 
       if (entity.hp <= 0) {
-        entity.action = 'dead';
-        entity.changeState('idle');
-        entity.emit('died');
-        entity.emit('dropItems'); // TODO тут и NPC и Character в entity
-        entity.isDead = true;
-        entity.target = null;
-
         // if character of npc
-        this.character.action = 'patrol';
-        
-        // if character of player
-        //this.character.exp += 100;
-        //this.character.emit('updateExp');
-
-        // {
-        //   const level = findLevel(this.character.exp);
-          
-        //   if (this.character.level < level) {
-        //     this.character.level = level;
-
-        //     this.character.emit('updateLevel');
-        //   }
-        // }
-
-        // { // fix test
-        //   aiManager.onMyDying(entity.ai.name, this);
-        // }
-        
+        this.character.action = 'patrol';        
         this.character.target = null;
         this.character.isAttacking = false;
 

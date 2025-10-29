@@ -112,9 +112,26 @@ class Character extends EventEmitter {
     this.back = { objectId: 0, itemId: 0 }
 
     //
-    this.target = null;
+    this.target = null; // target and aggroTarget?
     this.createdAt = null;
+    this._attackers = new Set();
     //
+  }
+
+  takeDamage(character, damage) {
+    this.addAttacker(character);
+    
+    this.hp = this.hp - damage;
+
+    this.emit('damaged');
+  }
+
+  addAttacker(character) {
+    this._attackers.add(character)
+  }
+
+  getAttackers() {
+    return this._attackers;
   }
 
   get runSpeed() {

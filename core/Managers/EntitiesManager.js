@@ -1,5 +1,24 @@
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
 
+//
+const levelExpTable = require('./../../datapack/exp.json')
+
+function findLevel(exp) { // оптимизировать get level by exp
+  let level = 1;
+  
+  // Перебираем уровни, пока не найдем нужный
+  for (let i = 1; i <= 60; i++) {
+    if (exp >= levelExpTable[i]) {
+      level = i;
+    } else {
+      break;
+    }
+  }
+  
+  return level;
+}
+//
+
 class EntitiesManager {
   constructor() {
     this._entities = [];
@@ -85,6 +104,24 @@ class EntitiesManager {
       setTimeout(() => {
         playersManager.emit('notify', new serverPackets.DeleteObject(npc.objectId));
       }, 3000);
+
+      // get exp
+      const attackers = npc.getAttackers();
+
+      attackers.forEach(attacker => {
+        attacker.exp += 100;
+        attacker.emit('updateExp'); // TODO 'updateStatus'
+        
+        const level = findLevel(attacker.exp);
+        
+        if (attacker.level < level) {
+          attacker.level = level;
+          attacker.emit('updateLevel'); // updateState('levelUp')
+        }
+      });
+
+      //aiManager.onMyDying(npc.ai.name, player);
+      //npc.ai.dying()?
     });
 
     npcManager.on('dropItems', async (npc, drop) => {

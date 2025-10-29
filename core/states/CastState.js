@@ -44,9 +44,9 @@ class CastState extends BaseState {
     if (this.character.isCasting) {
       if ((Date.now() - this.character.castTimestamp) > (4000 / 333) * 333 ) { // (HitTime / CastSpeed) * 333
         if (skillId === 1177) {
-          entity.hp = entity.hp - 30;
+          entity.takeDamage(this.character, 30);
 
-          entity.emit('damaged');
+          // TODO перенести в takeDamage?
           entity.action = 'attack';
           entity.isRunning = true;
           entity.emit('changeMove');
@@ -61,12 +61,6 @@ class CastState extends BaseState {
           this.character.changeState('idle');
 
           if (entity.hp <= 0) {
-            entity.action = 'dead';
-            entity.changeState('idle');
-            entity.emit('died');
-            entity.emit('dropItems'); // TODO тут и NPC и Character в entity
-            entity.isDead = true;
-            entity.target = null;
             this.character.target = null;
           }
           

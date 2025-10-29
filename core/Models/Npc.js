@@ -159,8 +159,18 @@ class Npc extends Character {
       this.emit('endAttack');
     }
 
-    if (this.hp < this.maximumHp) {
+    if (this.hp > 0 && this.hp < this.maximumHp && this.action !== 'dead') {
       this.regenerate(); 
+    }
+
+    if (this.hp <= 0 && this.action !== 'dead') {
+      this.hp = 0;
+      this.action = 'dead';
+      this.changeState('idle');
+      this.emit('died');
+      this.emit('dropItems'); // TODO тут и NPC и Character в entity
+      this.isDead = true;
+      this.target = null;
     }
   }
 
