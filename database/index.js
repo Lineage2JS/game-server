@@ -373,6 +373,37 @@ class Database {
       AND payload::jsonb @> $2::jsonb;
     `, [type, payload]);
   }
+
+  async createSkill(skill, characterObjectId) {
+    await this._client.query(`
+      INSERT INTO skills(skill_id, skill_level, owner_object_id)
+      VALUES($1, $2, $3)
+    `, [
+      skill.id,
+      skill.level,
+      characterObjectId
+    ]);
+  }
+
+  async getCharacterSkills(characterObjectId) {
+    const result = await this._client.query(`
+      SELECT
+        skill_id AS "skillId",
+        skill_level AS "skillLevel"
+      FROM skills
+      WHERE owner_object_id = $1
+    `, [characterObjectId]);
+    const skills = result.rows;
+
+    return skills;
+  }
+
+  async deleteCharacterSkills(objectId) {
+    await this._client.query(`
+      DELETE FROM skills
+      WHERE owner_object_id = $1
+    `, [objectId]);
+  }
 }
 
 module.exports = new Database();

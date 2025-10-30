@@ -22,10 +22,10 @@ class CharacterSelected {
     const player = playersManager.getPlayerByClient(this._client);
     const characters = await database.getCharactersByLogin(player.login);
     const character = characters[this.characterSlot];
-    const inventoryItems = await database.getCharacterInventoryItems(character.objectId);
 
     player.updateParams(character);
 
+    const inventoryItems = await database.getCharacterInventoryItems(character.objectId);
     // fix
     for (let i = 0; i < inventoryItems.length; i++) {
       const inventoryItem = inventoryItems[i];
@@ -37,6 +37,14 @@ class CharacterSelected {
       // );
 
       player.addItem(item);
+    }
+
+    const skills = await database.getCharacterSkills(character.objectId);
+
+    for (let i = 0; i < skills.length; i++) {
+      const skill = skills[i];
+
+      player.addSkill(skill);
     }
     
     this._client.sendPacket(new serverPackets.CharacterSelected(character));

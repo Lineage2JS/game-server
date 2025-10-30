@@ -223,6 +223,19 @@ class RequestCharacterCreate {
       await database.createItem(dbItem);
     }
 
+    // create base skill for beta release // TODO
+    const magicClasses = ['humanMagician', 'elfMagician', 'darkelfMagician'];
+    
+    if (magicClasses.includes(classIds.get(this.classId))) {
+      const skills = [{ id: 1177, level: 1,}, { id: 1216, level: 1,}];
+
+      for(let i = 0; i < skills.length; i++) {
+        const skill = skills[i];
+
+        await database.createSkill(skill, createdCharacter.object_id);
+      }
+    }
+
     // get all characters on user account
     const characters = await database.getCharactersByLogin(player.login);
     

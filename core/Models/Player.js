@@ -94,6 +94,10 @@ class Player extends Character {
     return this._skills.getSkills();
   }
 
+  addSkill(skill) {
+    this._skills.addSkill(skill)
+  }
+
   setActiveWeapon(item) { // делать запрос через activeWeapon проверяя this.hand...
     this._activeWeapon = item;
   }

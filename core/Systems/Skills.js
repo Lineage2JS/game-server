@@ -1,23 +1,15 @@
 class Skills {
     constructor() {
       this._skills = new Map();
-
-      this._skills.set(1177, {
-        id: 1177,
-        level: 1,
-        passive: false,
-      });
-
-      this._skills.set(1216, {
-        id: 1216,
-        level: 1,
+    }
+  
+    addSkill(skill) {  
+      this._skills.set(skill.skillId, {
+        id: skill.skillId,
+        level: skill.skillLevel,
         passive: false,
       });
     }
-  
-    // addSkill(skill) {  
-    //   this._skills.push(skill);
-    // }
   
     getSkills() {
       return Array.from(this._skills.values());
