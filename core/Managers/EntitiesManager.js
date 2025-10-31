@@ -1,7 +1,7 @@
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
 
 //
-const levelExpTable = require('./../../datapack/exp.json')
+const levelExpTable = require('./../../datapack/exp.json');
 
 function findLevel(exp) { // оптимизировать get level by exp
   let level = 1;
@@ -63,8 +63,20 @@ class EntitiesManager {
       playersManager.emit('notify', packet);
     });
 
-    npcManager.on('move', npc => {
-      const packet = new serverPackets.MoveToLocation(npc.path, npc.objectId);
+    npcManager.on('move', async npc => {
+      const path = {
+        target: {
+          x: npc.path.target.x,
+          y: npc.path.target.y,
+          z: npc.path.target.z
+        },
+        origin: {
+          x: npc.x,
+          y: npc.y,
+          z: npc.z
+        }
+      }
+      const packet = new serverPackets.MoveToLocation(path, npc.objectId);
       
       playersManager.emit('notify', packet);
     });

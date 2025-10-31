@@ -1,4 +1,4 @@
-// const XOR = require('./libs/XOR.js');
+// const XOR = require('./../utils/XOR.js');
 // const xor = new XOR([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
 const clientPackets = require('./ClientPackets/clientPackets');
 

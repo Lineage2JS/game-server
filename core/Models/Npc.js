@@ -86,23 +86,15 @@ class Npc extends Character {
     //
   }
 
-  get runSpeed() {
-    return this.baseRunSpeed * 1.1;
-  }
-
-  get walkSpeed() {
-    return this.baseWalkSpeed * 1.1;
-  }
-
-  async enable() {
+  enable() {
     //
     const positions = this._getRandomPos(this.coordinates);
 
-    let path = {
+    const path = {
       target: {
         x: positions[0],
         y: positions[1],
-        z: -3115
+        z: this.z
       },
       origin: {
         x: this.x,
@@ -112,7 +104,11 @@ class Npc extends Character {
     }
     
     this.action = 'patrol';
-    //this.changeState('move', path);
+    
+    // setTimeout(() => { // lastUpdateTimestamp срабатывает через 100мс после добавление в EntitiesManager иначе npc идет на млрд расстояния
+    //   this.action = 'patrol';
+    //   this.changeState('move', path);
+    // }, 15000);
   }
 
   setAction(action, payload) {
@@ -187,7 +183,7 @@ class Npc extends Character {
     const dy = this.path.target.y - this.y;
     const distance = Math.sqrt(dx * dx + dy * dy) - 9;
     
-    if (distance < (this.runSpeed / 10)) {  
+    if (distance < (this.walkSpeed / 10)) { // walkSpeed change to moveSpeed (run or walk)
       const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
 
       this.updateParams({
@@ -195,8 +191,6 @@ class Npc extends Character {
         y: parseFloat((this.y + (Math.sin(angle) * distance)).toFixed(1)),
         z: this.z
       });
-  
-      //this.positionUpdateTimestamp = this.lastUpdateTimestamp;
 
       this.changeState('idle');
 
@@ -204,7 +198,7 @@ class Npc extends Character {
     }
 
     const time = (this.lastUpdateTimestamp - this.positionUpdateTimestamp) / 1000;
-    const step = this.runSpeed * time;
+    const step = this.walkSpeed * time;
     const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
 
     this.updateParams({

@@ -294,6 +294,15 @@ class Player extends Character {
     if (this.hp < this.maximumHp || this.mp < this.maximumMp) {
       this.regenerate(); 
     }
+
+    if (this.hp <= 0 && this.action !== 'dead') {
+      this.hp = 0;
+      this.action = 'dead';
+      this.changeState('idle');
+      this.emit('died');
+      this.isDead = true;
+      this.target = null;
+    }
   }
 
   updateParams(data) {
@@ -304,7 +313,7 @@ class Player extends Character {
     }
   }
 
-  async updatePosition() {
+  updatePosition() {
     const dx = this.path.target.x - this.x;
     const dy = this.path.target.y - this.y;
     const distance = Math.sqrt(dx * dx + dy * dy) - 9;
@@ -317,8 +326,6 @@ class Player extends Character {
         y: parseFloat((this.y + (Math.sin(angle) * distance)).toFixed(1)),
         z: this.z
       });
-  
-      //this.positionUpdateTimestamp = this.lastUpdateTimestamp;
 
       this.changeState('idle');
 
@@ -328,7 +335,7 @@ class Player extends Character {
     const time = (this.lastUpdateTimestamp - this.positionUpdateTimestamp) / 1000;
     const step = this.runSpeed * time;
     const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
-    
+
     this.updateParams({
       x: parseFloat((this.x + (Math.cos(angle) * step)).toFixed(1)),
       y: parseFloat((this.y + (Math.sin(angle) * step)).toFixed(1)),

@@ -1,5 +1,6 @@
 const ClientPacket = require("./ClientPacket");
 const playersManager = require('./../Managers/PlayersManager');
+const serverPackets = require('./../ServerPackets/serverPackets');
 
 class MoveBackwardToLocation {
   constructor(client, packet) {
@@ -53,6 +54,16 @@ class MoveBackwardToLocation {
         y: this.originY,
         z: this.originZ
       }
+    }
+
+    const dx = path.origin.x - path.target.x;
+    const dy = path.origin.y - path.target.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (dist < 25) { // TODO fix magic number
+      this._client.sendPacket(new serverPackets.ActionFailed());
+
+      return;
     }
 
     player.updateParams({

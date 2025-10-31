@@ -52,7 +52,7 @@ class AttackState extends BaseState { // fix много в коде
       const dy = entity.y - this.character.y;
       const distance = Math.sqrt(dx * dx + dy * dy);
 
-      if (distance > 30) { // 29 - attack range + collision radius
+      if (distance > 40) { // 29 - attack range + collision radius TODO magic number
         this.character.changeState('follow');
   
         return;
@@ -68,8 +68,8 @@ class AttackState extends BaseState { // fix много в коде
       if (entity.action === 'patrol') {
         entity.lastAttackTimestamp = Date.now() - (((500000 / entity.baseAttackSpeed) - (500000 / this.character.attackSpeed)) + ((500000 / this.character.attackSpeed) / 2));
         entity.action = 'attack';
-        entity.isRunning = true;
-        entity.emit('changeMove');
+        //entity.isRunning = true;
+        //entity.emit('changeMove');
         //entity.state = 'attack';
         entity.target = this.character.objectId;
         //entity.payloadAttack = this.character.objectId;
