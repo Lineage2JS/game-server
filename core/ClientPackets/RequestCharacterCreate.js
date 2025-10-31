@@ -108,7 +108,7 @@ class RequestCharacterCreate {
   }
 
   _checkCharacterNameLetters(name) {
-    const regexp = /^[0-9A-Za-z]*$/gi;
+    const regexp = /^[0-9A-Za-z]*$/i;
 
     if (regexp.test(name)) {
       return true;
