@@ -2,7 +2,7 @@ const BaseState = require("./BaseState");
 
 class MoveState extends BaseState {
   async enter() {
-    this.character.path = this.payload;
+    this.character.path = this.payload; // TODO path неочевидно работает. target, origin. Может систему сделать?
 
     if (!this.character.isMoving) {
       this.character.emit('move');

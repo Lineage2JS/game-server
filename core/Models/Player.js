@@ -344,7 +344,7 @@ class Player extends Character {
 
     this.positionUpdateTimestamp = this.lastUpdateTimestamp;
 
-    this.emit('move'); // ?
+    this.emit('move'); // TODO ?
   }
 
   regenerate() {

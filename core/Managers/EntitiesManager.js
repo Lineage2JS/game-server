@@ -355,7 +355,20 @@ class EntitiesManager {
     });
 
     botsManager.on('move', bot => {
-      const packet = new serverPackets.MoveToLocation(bot.path, bot.objectId);
+      const path = {
+        target: {
+          x: bot.path.target.x,
+          y: bot.path.target.y,
+          z: bot.path.target.z
+        },
+        origin: {
+          x: bot.x,
+          y: bot.y,
+          z: bot.z
+        }
+      }
+      
+      const packet = new serverPackets.MoveToLocation(path, bot.objectId);
       
       playersManager.emit('notify', packet);
     });

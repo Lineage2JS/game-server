@@ -5,6 +5,7 @@ const playersManager = require('./../Managers/PlayersManager');
 const Player = require('./../Models/Player');
 const Npc = require('./../Models/Npc');
 const DropItem = require('./../Models/DropItem');
+const Bot = require('./../Models/Bot');
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
 
 class Action {
@@ -126,6 +127,10 @@ class Action {
 
     if (entity instanceof DropItem) {
       player.setAction('pickup', entity);
+    }
+
+    if (entity instanceof Bot) {
+      this._client.sendPacket(new serverPackets.ActionFailed()); // fix?
     }
   }
 }

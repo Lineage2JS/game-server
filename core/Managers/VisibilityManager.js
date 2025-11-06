@@ -68,7 +68,7 @@ class VisibilityManager {
           client.sendPacket(packet);
 
           // TODO remove target
-          if (player.target === npc.objectId) {
+          if (player.target === bot.objectId) {
             player.target = null;
           }
           //

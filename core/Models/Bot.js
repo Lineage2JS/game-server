@@ -1,32 +1,14 @@
 const Character = require('./Character');
-const serverPackets = require('./../ServerPackets/serverPackets');
-
+const MoveState = require('./../states/MoveState');
+const IdleState = require('./../states/IdleState');
+const AttackState = require('./../states/AttackState');
+const CastState = require('./../states/CastState');
+const FollowState = require('./../states/FollowState');
+const PickupState = require('./../states/PickupState');
+const TalkState = require('./../states/TalkState');
 //
-const database = require('./../../database');
 const npcManager = require('./../Managers/NpcManager');
-const itemsManager = require('../Managers/ItemsManager');
-const characterStatusEnums = require('./../../enums/characterStatusEnums');
-let objectId;
 //
-
-function moveCloser(x1, y1, x2, y2, distance) {
-  // Вычисляем разницу между координатами
-  let dx = x2 - x1;
-  let dy = y2 - y1;
-
-  // Вычисляем расстояние между точками
-  let dist = Math.sqrt(dx * dx + dy * dy);
-
-  // Нормализуем вектор разницы
-  let nx = dx / dist;
-  let ny = dy / dist;
-
-  // Перемещаем точку (x2, y2) ближе на заданное расстояние
-  let newX = x2 - nx * distance;
-  let newY = y2 - ny * distance;
-
-  return { x: newX, y: newY };
-}
 
 class Bot extends Character {
   constructor(client) {
@@ -36,22 +18,41 @@ class Bot extends Character {
     this.target = null;
     this.positionUpdateTimestamp = 0;
     this.state = '';
-    this.job = '';
+    this.action = '';
     this.isMoving = false;
     this.isAttacking = false;
+    this.isCasting = false;
+    this.isDead = false;
+
+    this._states = {
+      'move': new MoveState(this),
+      'idle': new IdleState(this),
+      'attack': new AttackState(this),
+      'cast': new CastState(this),
+      'follow': new FollowState(this),
+      'pickup': new PickupState(this),
+      'talk': new TalkState(this),
+    }
 
     //
     this.pickupItem = null; // хранить objectId? как target?
     this.ai = {
       script: 'DefaultBot'
     };
+    this.lastAttackTimestamp = 0;
+    this.castTimestamp = 0;
+    this.lastRegenerateTimestamp = 0;
+    this.baseAttackSpeed = 300; // TODO
     //
-
-    this._init();
-  }
-
-  async _init() {
-    objectId = await database.getNextObjectId();
+    this._actionPayload = null;
+    //
+    this.lastUpdateTimestamp = 0;
+    this.isDamage = false;
+    this.moveType = 1;
+    this.waitType = 1;
+    this._currentState = '';
+    this._activeWeapon = null;
+    //
   }
 
   enable() {
@@ -87,7 +88,7 @@ class Bot extends Character {
 
     runningBot.created();
 
-    runningBot.on('move', (x, y) => {
+    runningBot.on('run', (x, y) => {
       let path = {
         target: {
           x: x,
@@ -102,7 +103,7 @@ class Bot extends Character {
       }
 
       this.setAction('move', path);
-      this.emit('move');
+      //this.emit('move');
     });
   }
 
@@ -110,271 +111,52 @@ class Bot extends Character {
     return this._client;
   }
 
-  setAction(job, payload) {
-    this.job = job;
+  setActionPayload(payload) {
+    this._actionPayload = payload;
+  }
 
-    switch(job) {
+  getActionPayload() {
+    return this._actionPayload;
+  }
+
+  setAction(action, payload) {
+    this.action = action;
+
+    switch(action) {
       case 'move':
-        this.updateState('move', payload);
+        this.changeState('move', payload);
         
         break;
       case 'attack':
-        this.updateState('attack', payload);
+        this.changeState('attack', payload);
 
         break;
       case 'pickup':
         this.pickupItem = payload;
-        this.updateState('pickup');
+        this.changeState('pickup', payload);
 
         break;
     }
   }
 
-  updateState(state, payload) {
-    this.state = state;
-
-    //console.log(` --- bot ${this.characterName} state`, state);
-
-    switch(state) {
-      case 'move':
-        this.move(payload);
-        
-        break;
-      case 'follow':
-        this.follow(payload);
-
-        break;
-      case 'attack':
-        this.attack(payload);
-
-        break;
-      case 'stop':
-        this.stop();
-
-        break;
-      case 'pickup':
-        this.pickup();
-
-        break;
-    }
-  }
-
-  move(path) {
-    this.path = path;
-
-    if (!this.isMoving) {
-      this.positionUpdateTimestamp = Date.now();
-      this.isMoving = true;
+  changeState(stateName, payload) {
+    if (this._currentState) {
+      this._currentState.leave();
     }
 
-    // cancel job if change job. Stop attack if attack => move;
-    if (this.job === 'move') {
-      this.isAttacking = false;
-    }
-  }
+    const state = this._states[stateName];
 
-  follow(path) { // objectId // наверное надо в follow переместить updateState('stop') а не в updatePosition хранить
-    this.move(path);
-    this.emit('move')
-
-    function tick() {
-      if (this.state !== 'follow') {
-        return;
-      }
-      
-      const npc = npcManager.getNpcByObjectId(this.target);
-
-      this.path.origin.x = this.x;
-      this.path.origin.y = this.y;
-      this.path.target.x = npc.x;
-      this.path.target.y = npc.y;
-
-      const p = moveCloser(this.path.origin.x, this.path.origin.y, this.path.target.x, this.path.target.y, 20);
-
-      this.path.target.x = p.x;
-      this.path.target.y = p.y;
-
-      this.emit('move');
-
-      if (this.state === 'follow') {
-        setTimeout(tick.bind(this), 100);
-      }
-    }
-
-    tick.bind(this)();
-  }
-
-  attack(objectId) {
-    if (this.job !== 'attack') {
-      return; // fix?
-    }
-
-    const npc = npcManager.getNpcByObjectId(objectId);
-    const path = {
-      target: {
-        x: npc.x,
-        y: npc.y,
-        z: npc.z
-      },
-      origin: {
-        x: this.x,
-        y: this.y,
-        z: this.z
-      }
-    }
-
-    this.path = path;
-
-    const dx = this.path.target.x - this.x;
-    const dy = this.path.target.y - this.y;
-    const distance = Math.sqrt(dx * dx + dy * dy) - 20;
-
-    if (distance > 29) { // 29 - attack range + collision radius
-      this.updateState('follow', this.path);
-
-      return;
-    }
-
-    this.emit('attack');
-
-    if (npc.job === 'patrol') {
-      setTimeout(() => {
-        npc.job = 'attack';
-        npc.target = this.objectId;
-        npc.updateState('stop'); // attack, if attack = stop > attack or follow
-      }, 500000 / 330 / 2);
-    }
-
-    if (npc.hp >= 0) {
-      setTimeout(() => {
-        npc.hp = npc.hp - 10;
-
-        //
-        if (npc.hp <= 0) {
-          npc.job = 'dead';
-          npc.updateState('stop');
-          npc.emit('died');
-          
-          //
-          setTimeout(() => {
-            const lastItem = itemsManager._items[itemsManager._items.length - 1];
-
-            this.setAction('pickup', lastItem);
-          }, 1000);
-          //
-          this.target = null;
-          this.isAttacking = false;
+    state.payload = payload; // remove
+    this._currentState = state;
     
-          setTimeout(() => {
-            this._client.sendPacket(new serverPackets.AutoAttackStop(this.objectId));
-          }, 3000);
-    
-          return;
-        }
-        //
-
-        this._client.sendPacket(new serverPackets.StatusUpdate(objectId, [
-          {
-            id: characterStatusEnums.CUR_HP,
-            value: npc.hp,
-          },
-          {
-            id: characterStatusEnums.MAX_HP,
-            value: npc.maximumHp,
-          }
-        ]));
-      }, 500000 / 330 / 2);
-  
-      setTimeout(() => {
-        if (npc.hp <= 0) {
-          this._client.sendPacket(new serverPackets.AutoAttackStop(this.objectId));
-
-          return;
-        }
-
-        this.updateState('attack', this.target);
-      }, 500000 / 330);
-    }
+    state.enter();
   }
 
-  stop() {    
-    this.isMoving = false;
+  update() {
+    this.lastUpdateTimestamp = Date.now();
 
-    // fix дождатся остановки перемещения(удаления из таймера)
-    setTimeout(() => {
-      if (this.job === 'attack') {
-        this.updateState('attack', this.target);
-      }
-
-      if (this.job === 'pickup') {
-        this.updateState('pickup');
-      }
-
-      // if (this.job === 'move') {
-      //   const positions = this._getRandomPos();
-
-      //   let path = {
-      //     target: {
-      //       x: positions[0],
-      //       y: positions[1],
-      //       z: -3115
-      //     },
-      //     origin: {
-      //       x: this.x,
-      //       y: this.y,
-      //       z: this.z
-      //     }
-      //   }
-
-      //   this.updateState('move', path);
-      //   this.emit('move');
-      // }
-    }, 200);
-  }
-
-  pickup() {
-    const path = {
-      target: {
-        x: this.pickupItem.x,
-        y: this.pickupItem.y,
-        z: this.pickupItem.z
-      },
-      origin: {
-        x: this.x,
-        y: this.y,
-        z: this.z
-      }
-    }
-
-    this.path = path;
-
-    const dx = this.path.target.x - this.x;
-    const dy = this.path.target.y - this.y;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-
-    if (distance > 10) { // fix?
-      this.updateState('move', this.path);
-      this.emit('move');
-
-      return;
-    }
-
-    this.emit('pickup', this.pickupItem); //fix?
-
-    setTimeout(() => {
-      const spawnedNpcs = npcManager.getSpawnedNpcs();
-
-      this.target = spawnedNpcs[Math.floor(Math.random() * spawnedNpcs.length)].objectId;
-
-      this.setAction('attack', this.target);
-    }, 2000);
-  }
-
-  update(data) { // remove
-    for(const key in data) {
-      if (this.hasOwnProperty(key)) {
-        this[key] = data[key];
-      }
+    if (this._currentState) {
+      this._currentState.update();
     }
   }
 
@@ -390,7 +172,6 @@ class Bot extends Character {
     const dx = this.path.target.x - this.x;
     const dy = this.path.target.y - this.y;
     const distance = Math.sqrt(dx * dx + dy * dy) - 9;
-    const time = (this.lastUpdateTimestamp  - this.positionUpdateTimestamp) / 1000;
     
     if (distance < (this.runSpeed / 10)) {  
       const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
@@ -400,14 +181,13 @@ class Bot extends Character {
         y: parseFloat((this.y + (Math.sin(angle) * distance)).toFixed(1)),
         z: this.z
       });
-  
-      this.positionUpdateTimestamp = this.lastUpdateTimestamp;
 
-      this.updateState('stop');
+      this.changeState('idle');
 
       return;
     }
 
+    const time = (this.lastUpdateTimestamp - this.positionUpdateTimestamp) / 1000;
     const step = this.runSpeed * time;
     const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
 
@@ -418,6 +198,8 @@ class Bot extends Character {
     });
 
     this.positionUpdateTimestamp = this.lastUpdateTimestamp;
+
+    this.emit('move'); // TODO ?
   }
 
   // create math utils

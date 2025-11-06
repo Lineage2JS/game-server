@@ -69,7 +69,7 @@ async function run() {
       skillsManager.enable();
       entitiesManager.enable();
       await npcManager.enable();
-      //await botsManager.enable();
+      await botsManager.enable();
       visibilityManager.enable();
       npcHtmlMessagesManager.enable();
       await schedulerManager.enable();

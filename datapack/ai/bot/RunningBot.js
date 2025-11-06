@@ -1,7 +1,7 @@
 const DefaultBot = require('./DefaultBot');
 
 class RunningBot extends DefaultBot {
-  created() {
+  created() { // TODO created?
     const waypoints = [
       [{ x: -84999, y: 243217 }, { x: -84652, y: 242917 }, { x: -84382, y: 243289 }, { x: -84883, y: 243651 }],
       [{ x: -84521, y: 242841 }, { x: -84367, y: 242692 }, { x: -84534, y: 242464 }, { x: -84763, y: 242692 }],
@@ -20,8 +20,8 @@ class RunningBot extends DefaultBot {
 
       waypointIndex++;
       
-      this.emit('move', positions[0], positions[1]);
-    }.bind(this), Math.floor(Math.floor(Math.random() * (15000 - 5000 + 1)) + 5000));
+      this.emit('run', positions[0], positions[1]);
+    }.bind(this), Math.floor(Math.floor(Math.random() * (20000 - 10000 + 1)) + 10000));
   }
 
   _getRandomPos(coordinates) {
