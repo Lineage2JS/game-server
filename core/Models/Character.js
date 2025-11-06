@@ -115,6 +115,7 @@ class Character extends EventEmitter {
     this.target = null; // target and aggroTarget?
     this.createdAt = null;
     this._attackers = new Set();
+    this._moveType = 0;
     //
   }
 
@@ -132,6 +133,22 @@ class Character extends EventEmitter {
 
   getAttackers() {
     return this._attackers;
+  }
+
+  getMoveType() {
+    return this._moveType;
+  }
+
+  setMoveType(moveType) {
+    this._moveType = moveType;
+  }
+
+  getMoveSpeed() {
+    if (this.getMoveType() === 1) { // TODO magic number
+      return this.runSpeed;
+    } else {
+      return this.walkSpeed;
+    }
   }
 
   get runSpeed() {
