@@ -73,16 +73,16 @@ class NpcManager extends EventEmitter {
             const dropItems = []
 
             npc.additionalMakeMultiList.forEach(list => {
-              const randomChangeGroup = Math.floor(Math.random() * 100);
+              const randomChanceGroup = Math.floor(Math.random() * 100);
 
-              if (randomChangeGroup > list.change) {
+              if (randomChanceGroup > list.chance) {
                 return;
               }
 
               list.group.forEach(item => {
-                const randomChangeItem = Math.floor(Math.random() * 100);
+                const randomChanceItem = Math.floor(Math.random() * 100);
 
-                if (randomChangeItem > item.change) {
+                if (randomChanceItem > item.chance) {
                   return;
                 }
 
