@@ -66,15 +66,31 @@ class NpcManager extends EventEmitter {
           });
 
           npc.on('dropItems', () => {
-            if (npc.additionalMakeMultiList.length > 0) {
-              //
-              const listLength = npc.additionalMakeMultiList.length;
-              const randomListIndex = Math.floor(Math.random() * listLength);
-              const groupLength = npc.additionalMakeMultiList[randomListIndex].group.length;
-              const randomGroupIndex = Math.floor(Math.random() * groupLength);
-
-              this.emit('dropItems', npc, npc.additionalMakeMultiList[randomListIndex].group[randomGroupIndex]) // fix
+            if (npc.additionalMakeMultiList.length === 0) {
+              return;
             }
+
+            const dropItems = []
+
+            npc.additionalMakeMultiList.forEach(list => {
+              const randomChangeGroup = Math.floor(Math.random() * 100);
+
+              if (randomChangeGroup > list.change) {
+                return;
+              }
+
+              list.group.forEach(item => {
+                const randomChangeItem = Math.floor(Math.random() * 100);
+
+                if (randomChangeItem > item.change) {
+                  return;
+                }
+
+                dropItems.push(item);
+              });
+            });
+
+            this.emit('dropItems', npc, dropItems)
           });
 
           npc.updateParams(npcData);

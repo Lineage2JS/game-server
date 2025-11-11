@@ -136,22 +136,28 @@ class EntitiesManager {
       //npc.ai.dying()?
     });
 
-    npcManager.on('dropItems', async (npc, drop) => {
-      console.log(npc.id, drop); // fix drop name var?  
+    npcManager.on('dropItems', async (npc, dropItems) => {
+      console.log(npc.id, dropItems); // fix drop name var?  
 
-      const itemId = itemsManager.getItemIdByName(drop.itemName);
-      const createdItem = await itemsManager.createItem(itemId);
-      const droppedItem = await dropItemsManager.createDropItem(createdItem, npc.x, npc.y, npc.z + 300);
+      //dropItems.forEach(async dropItem => {
+      for (let i = 0; i < dropItems.length; i++) {
+        const dropItem = dropItems[i];
+        const itemId = itemsManager.getItemIdByName(dropItem.itemName);
+        const createdItem = await itemsManager.createItem(itemId);
+        const droppedItemX = Math.floor(Math.random() * 50);
+        const droppedItemY = Math.floor(Math.random() * 50);
+        const droppedItem = await dropItemsManager.createDropItem(createdItem, npc.x + droppedItemX, npc.y + droppedItemY, npc.z + 300);
 
-      this._entities.push(droppedItem);
+        this._entities.push(droppedItem);
 
-      playersManager.emit('notify', new serverPackets.DropItem(npc, {
-        objectId: droppedItem.objectId,
-        itemId: droppedItem.itemId,
-        x: droppedItem.x,
-        y: droppedItem.y,
-        z: droppedItem.z
-      }));
+        playersManager.emit('notify', new serverPackets.DropItem(npc, {
+          objectId: droppedItem.objectId,
+          itemId: droppedItem.itemId,
+          x: droppedItem.x,
+          y: droppedItem.y,
+          z: droppedItem.z
+        }));
+      }
     });
 
     npcManager.on('damaged', (npc) => {
