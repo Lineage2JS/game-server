@@ -144,9 +144,11 @@ class EntitiesManager {
         const dropItem = dropItems[i];
         const itemId = itemsManager.getItemIdByName(dropItem.itemName);
         const createdItem = await itemsManager.createItem(itemId);
-        const droppedItemX = Math.floor(Math.random() * 50);
-        const droppedItemY = Math.floor(Math.random() * 50);
-        const droppedItem = await dropItemsManager.createDropItem(createdItem, npc.x + droppedItemX, npc.y + droppedItemY, npc.z + 300);
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = Math.random() * 30;
+        const droppedItemX = Math.floor(npc.x + Math.cos(angle) * distance);
+        const droppedItemY = Math.floor(npc.y + Math.sin(angle) * distance);
+        const droppedItem = await dropItemsManager.createDropItem(createdItem, droppedItemX, droppedItemY, npc.z + 300);
 
         this._entities.push(droppedItem);
 
