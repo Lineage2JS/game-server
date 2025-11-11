@@ -49,6 +49,7 @@ class CastState extends BaseState {
           // TODO перенести в takeDamage?
           entity.action = 'attack';
           entity.isRunning = true;
+          entity.setMoveType(1); // TODO Enums magic number
           entity.emit('changeMove');
           //entity.state = 'attack';
           entity.target = this.character.objectId;
