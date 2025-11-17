@@ -44,7 +44,7 @@ async function run() {
       // console.log('########################################');
       // console.log('\n');
 
-      const isGameServerExists = await database.checkGameServerExistsById(config.gameserver.id);
+      const isGameServerExists = await database.checkGameServerExists(config.gameserver.id);
       
       if (!isGameServerExists) {
         await database.addGameServer({

@@ -222,7 +222,7 @@ class Database {
     const result = await this._client.query(`
       SELECT *
       FROM object_id_registry
-      WHERE registry_id = 0
+      WHERE registry_id = 1
     `);
 
     const objectId = result.rows[0].last_object_id;
@@ -231,14 +231,14 @@ class Database {
       UPDATE object_id_registry
       SET last_object_id = $1
       WHERE registry_id = $2
-    `, [objectId + 1, 0]);
+    `, [objectId + 1, 1]);
 
     return objectId;
   }
 
   async addGameServer(params) {
     await this._client.query(`
-      INSERT INTO gameservers (id, host, port, age_limit, is_pvp, max_players, server_status, server_type)
+      INSERT INTO gameservers (gameserver_id, host, port, age_limit, is_pvp, max_players, server_status, server_type)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     `, [
       params.id, 
@@ -267,12 +267,12 @@ class Database {
     }
   }
 
-  async checkGameServerExistsById(gameServerId) {
+  async checkGameServerExists(gameServerId) {
     const result = await this._client.query(`
       SELECT EXISTS(
         SELECT 1 
         FROM gameservers 
-        WHERE id = $1
+        WHERE gameserver_id = $1
       )
     `, [gameServerId]);
     const isGameServerExisting = result.rows[0].exists;
