@@ -1,6 +1,6 @@
 // const XOR = require('./../utils/XOR.js');
 // const xor = new XOR([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
-const clientPackets = require('./ClientPackets/clientPackets');
+const clientPackets = require('./clientPackets/clientPackets');
 
 class Client {
   constructor(socket) {

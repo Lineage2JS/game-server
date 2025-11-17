@@ -3,8 +3,8 @@ const CastPayload = require('./../payloads/CastPayload')
 
 //
 const entitiesManager = require('./../Managers/EntitiesManager');
-const characterStatusEnums = require('./../../enums/characterStatusEnums.js');
-const serverPackets = require('./../ServerPackets/serverPackets.js');
+const characterStatusEnums = require('./../../enums/characterStatusEnums');
+const serverPackets = require('./../ServerPackets/serverPackets');
 //
 
 class CastState extends BaseState {
