@@ -11,8 +11,8 @@ class DropItem {
       .writeD(item.x)
       .writeD(item.y)
       .writeD(item.z)
-      .writeD(0) // stackable
-      .writeD(1) // count
+      .writeD(item.itemId === 57 ? 1 : 0) // stackable TODO
+      .writeD(item.itemCount) // count
       .writeD(1) // unknow
   }
 

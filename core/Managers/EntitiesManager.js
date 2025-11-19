@@ -143,7 +143,8 @@ class EntitiesManager {
       for (let i = 0; i < dropItems.length; i++) {
         const dropItem = dropItems[i];
         const itemId = itemsManager.getItemIdByName(dropItem.itemName);
-        const createdItem = await itemsManager.createItem(itemId);
+        const itemCount = dropItem.count;
+        const createdItem = await itemsManager.createItem(itemId, itemCount);
         const angle = Math.random() * 2 * Math.PI;
         const distance = Math.random() * 30;
         const droppedItemX = Math.floor(npc.x + Math.cos(angle) * distance);
@@ -155,6 +156,7 @@ class EntitiesManager {
         playersManager.emit('notify', new serverPackets.DropItem(npc, {
           objectId: droppedItem.objectId,
           itemId: droppedItem.itemId,
+          itemCount: droppedItem.itemCount,
           x: droppedItem.x,
           y: droppedItem.y,
           z: droppedItem.z

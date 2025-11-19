@@ -86,7 +86,13 @@ class NpcManager extends EventEmitter {
                   return;
                 }
 
-                dropItems.push(item);
+                const count = Math.floor(Math.random() * (item.max - item.min + 1)) + item.min;
+                const dropItem = {
+                  itemName: item.itemName,
+                  count,
+                }
+
+                dropItems.push(dropItem);
               });
             });
 

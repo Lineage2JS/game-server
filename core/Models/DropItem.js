@@ -1,7 +1,8 @@
 class DropItem {
-  constructor(objectId, itemId, item, x, y, z) {
+  constructor(objectId, itemId, itemCount, item, x, y, z) {
     this.objectId = objectId;
     this.itemId = itemId;
+    this.itemCount = itemCount;
     this.x = x;
     this.y = y;
     this.z = z;

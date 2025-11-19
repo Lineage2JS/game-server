@@ -74,12 +74,12 @@ class ItemsManager {
     this._loadItemTemplates();
   }
 
-  async createItem(itemId) {
+  async createItem(itemId, count = 1) {
     const itemTemplate = this._getItemTemplate(itemId);
     const objectId = await database.getNextObjectId();
 
     if (itemTemplate instanceof ItemAsset) {
-      return this._createItemAsset(itemTemplate, objectId);
+      return this._createItemAsset(itemTemplate, objectId, count);
     }
 
     if (itemTemplate instanceof ItemAccessary) {
@@ -99,11 +99,11 @@ class ItemsManager {
     }
   }
 
-  getItem(itemId, objectId) {
+  getItem(itemId, objectId, count = 1) {
     const itemTemplate = this._getItemTemplate(itemId);
 
     if (itemTemplate instanceof ItemAsset) {
-      return this._createItemAsset(itemTemplate, objectId);
+      return this._createItemAsset(itemTemplate, objectId, count);
     }
 
     if (itemTemplate instanceof ItemAccessary) {
@@ -127,7 +127,7 @@ class ItemsManager {
     return itemsIdMap[itemName];
   }
 
-  _createItemAsset(itemTemplate, objectId) {
+  _createItemAsset(itemTemplate, objectId, count) {
     const data = {
       itemId: itemTemplate.getItemId(),
       name: itemTemplate.getName(),
@@ -142,6 +142,7 @@ class ItemsManager {
     const itemAsset = new ItemAsset(data);
 
     itemAsset.setObjectId(objectId);
+    itemAsset.setCount(count);
 
     return itemAsset;
   }
