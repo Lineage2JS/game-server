@@ -8,6 +8,7 @@ class Item {
     this._type2 = data.type2;
     this._weight = data.weight;
     this._price = data.price;
+    this._stackable = data.stackable || false;
     this._count = 1;
     this._isEquipped = false;
   }
@@ -56,6 +57,10 @@ class Item {
     return this._count = count;
   }
 
+  getStackable() {
+    return this._stackable;
+  }
+
   equip() {
     this._isEquipped = true;
   }
@@ -66,6 +71,10 @@ class Item {
 
   get isEquipped() {
     return this._isEquipped;
+  }
+
+  get isStackable() {
+    return this._stackable;
   }
 
   get isEquipable() {

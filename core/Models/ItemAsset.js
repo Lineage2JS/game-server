@@ -5,19 +5,10 @@ class ItemAsset extends Item {
     super(data);
 
     this._etcItemType = data.etcItemType;
-    this._stackable = data.stackable;
   }
 
   getEtcItemType() {
     return this._etcItemType;
-  }
-
-  getStackable() {
-    return this._stackable;
-  }
-
-  get isStackable() {
-    return this._stackable;
   }
 }
 
