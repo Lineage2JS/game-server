@@ -1,5 +1,7 @@
 # Game server.
 
+![logo](gs.png)
+
 <b>Game server</b> - dedicated server for simulating the game world.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/Lineage2JS/game-server/blob/main/LICENSE)
