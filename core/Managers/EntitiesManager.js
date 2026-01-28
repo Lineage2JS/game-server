@@ -129,6 +129,9 @@ class EntitiesManager {
         if (attacker.level < level) {
           attacker.level = level;
           attacker.emit('updateLevel'); // updateState('levelUp')
+          attacker.hp = attacker.maximumHp;
+          attacker.mp = attacker.maximumMp;
+          attacker.emit('regenerate');
         }
       });
 
@@ -219,7 +222,6 @@ class EntitiesManager {
       ]);
       
       playersManager.emit('notify', packet);
-
       playersManager.emit('notify', new serverPackets.SocialAction(player.objectId, 15)); // fix
     });
 
