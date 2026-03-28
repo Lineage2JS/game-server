@@ -94,7 +94,7 @@ class Client {
 
         break;
       case 0x0D:
-        new clientPackets.CharacterSelected(this, payloadPacket);
+        packet = new clientPackets.CharacterSelected(this, payloadPacket);
 
         break;
       case 0x63:
