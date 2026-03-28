@@ -1,22 +1,15 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
-const ClientPacket = require("./ClientPacket");
-const playersManager = require('./../Managers/PlayersManager');
+const ClientPacketNew = require("./ClientPacketNew");
 
-class RequestQuestList {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-
-    this._init();
-  }
-
-  _init() {
-    const player = playersManager.getPlayerByClient(this._client);
+class RequestQuestList extends ClientPacketNew {
+  handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
     
     //this._client.sendPacket(new serverPackets.QuestList(player.getQuests()));
 
     // fix
-    this._client.sendPacket(new serverPackets.QuestList(player.getQuests().filter(quest => quest.isCompleted === false)));
+    client.sendPacket(new serverPackets.QuestList(player.getQuests().filter(quest => quest.isCompleted === false)));
   }
 }
 

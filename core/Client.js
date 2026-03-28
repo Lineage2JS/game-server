@@ -98,7 +98,7 @@ class Client {
 
         break;
       case 0x63:
-        new clientPackets.RequestQuestList(this, payloadPacket);
+        packet = new clientPackets.RequestQuestList(this, payloadPacket);
 
         break;
       case 0x03:
