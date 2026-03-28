@@ -6,7 +6,7 @@ class AnnouncementsManager {
   constructor() {
     this._announcements = [];
 
-    eventBusNew.on('player:enter', this._onPlayerEnter);
+    eventBusNew.on('player:enter', this._onPlayerEnter.bind(this));
   }
 
   enable() {

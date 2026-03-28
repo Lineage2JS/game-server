@@ -12,7 +12,7 @@ class VisibilityManager {
     this._VISIBILITY_RANGE = 1500;
     this._UPDATE_INTERVAL_MS = 3000;
 
-    eventBusNew.on('player:enter', this._onPlayerEnter);
+    eventBusNew.on('player:enter', this._onPlayerEnter.bind(this));
   }
 
   addPlayer(player) {

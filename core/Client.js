@@ -90,7 +90,7 @@ class Client {
 
         break;
       case 0x08:
-        new clientPackets.RequestAuthLogin(this, payloadPacket);
+        packet = new clientPackets.RequestAuthLogin(this, payloadPacket);
 
         break;
       case 0x0D:

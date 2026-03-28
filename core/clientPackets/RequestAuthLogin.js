@@ -1,58 +1,33 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
-const ClientPacket = require("./ClientPacket");
+const ClientPacketNew = require("./ClientPacketNew");
 const database = require('./../../database');
-const playersManager = require('./../Managers/PlayersManager');
 const config = require('./../../config');
 
-class RequestAuthLogin {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-    this._data
-      .readS()
-      .readD()
-      .readD()
-      .readD()
-      .readD();
+class RequestAuthLogin extends ClientPacketNew {
+  async handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
+    const login = this.readS();
+    const sessionKey1 = [
+      this.readD().toString(16),
+      this.readD().toString(16)
+    ];
+    const sessionKey2 = [
+      this.readD().toString(16),
+      this.readD().toString(16)
+    ];
 
-    this._init();
-  }
-
-  get login() {
-    return this._data.getData()[0];
-  }
-
-  get sessionKey1() {
-    const sessionKey1 = [];
-
-    sessionKey1[0] = this._data.getData()[3].toString(16);
-    sessionKey1[1] = this._data.getData()[4].toString(16);
-
-    return sessionKey1;
-  }
-
-  get sessionKey2() {
-    const sessionKey2 = [];
-
-    sessionKey2[0] = this._data.getData()[2].toString(16);
-    sessionKey2[1] = this._data.getData()[1].toString(16);
-
-    return sessionKey2;
-  }
-
-  async _init() {
-    if (this._client.getProtocolVersion() !== config.main.CLIENT_PROTOCOL_VERSION) {
+    if (client.getProtocolVersion() !== config.main.CLIENT_PROTOCOL_VERSION) {
       return;
     }
 
-    const player = playersManager.getPlayerByClient(this._client);
-    const characters = await database.getCharactersByLogin(this.login); // fix
+    const characters = await database.getCharactersByLogin(login); // TODO в логин я могу передать все что угодно, by player?
 
-    player.updateParams({
-      login: this.login
-    }); // fix?
+    player.updateParams({ // TODO тут какая-то неразбериха, логин из пакета берем, зачем-то обновляем.
+      login: login
+    });
 
-    this._client.sendPacket(new serverPackets.CharacterSelectInfo(player.login, characters));
+    client.sendPacket(new serverPackets.CharacterSelectInfo(player.login, characters));
   }
 }
 

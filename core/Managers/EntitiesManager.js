@@ -181,7 +181,7 @@ class EntitiesManager {
       playersManager.emit('notify', packet);
     });
 
-    eventBusNew.on('player:enter', this._onPlayerEnter);
+    eventBusNew.on('player:enter', this._onPlayerEnter.bind(this));
 
     playersManager.on('move', player => {
       const packet = new serverPackets.MoveToLocation(player.path, player.objectId);
