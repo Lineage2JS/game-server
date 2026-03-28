@@ -38,8 +38,6 @@ class EntitiesManager {
     const playersManager = require('./PlayersManager');
     const itemsManager = require('./ItemsManager');
     const botsManager = require('./BotsManager');
-    const visibilityManager = require('./VisibilityManager');
-    const announcementsManager = require('./AnnouncementsManager');
     const aiManager = require('./AiManager');
     const dropItemsManager = require('./DropItemsManager');
     const serverPackets = require('./../ServerPackets/serverPackets');

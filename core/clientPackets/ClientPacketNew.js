@@ -10,8 +10,11 @@ class ClientPacketNew {
     this._client = client;
     this._player = client.getPlayer();
     this._buffer = buffer;
-    this._data = [];
     this._offset = 0;
+  }
+
+  getClient() {
+    return this._client;
   }
 
   getPlayer() {
@@ -19,53 +22,43 @@ class ClientPacketNew {
   }
 
   readC() {
-    this._data.push(
-      this._buffer.readUInt8(this._offset)
-    );
+    const value = this._buffer.readUInt8(this._offset);
 
     this._offset++;
 
-    return this;
+    return value;
   }
 
   readH() {
-    this._data.push(
-      this._buffer.readUInt16LE(this._offset)
-    );
+    const value = this._buffer.readUInt16LE(this._offset);
 
     this._offset += 2;
 
-    return this;
+    return value;
   }
 
   readD() {
-    this._data.push(
-      this._buffer.readInt32LE(this._offset)
-    );
+    const value = this._buffer.readInt32LE(this._offset);
 
     this._offset += 4;
 
-    return this;
+    return value;
   }
 
   readF() {
-    this._data.push(
-      this._buffer.readDoubleLE(this._offset)
-    );
+    const value = this._buffer.readDoubleLE(this._offset);
 
     this._offset += 8;
 
-    return this;
+    return value;
   }
 
   readB(length) {
-    this._data.push(
-      this._buffer.slice(this._offset, this._offset + length)
-    );
+    const value = this._buffer.slice(this._offset, this._offset + length);
 
     this._offset += length;
 
-    return this;
+    return value;
   }
 
   readS() {
@@ -77,19 +70,12 @@ class ClientPacketNew {
       }
     }
 
-    this._data.push(
-      this._buffer.toString("ucs2", this._offset, i)
-    );
-    
+    const value = this._buffer.toString("ucs2", this._offset, i);
     const bytesRead = i - this._offset + 2; // +2 for null terminator
     
     this._offset += bytesRead;
 
-    return this;
-  }
-
-  getData() {
-    return this._data;
+    return value;
   }
 }
 
