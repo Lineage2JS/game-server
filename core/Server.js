@@ -28,7 +28,10 @@ class Server {
 
   _handler(socket) {
     const client = new Client(socket);
-    const player = new Player(client);
+    const player = new Player();
+
+    client.setPlayer(player);
+    player.setClient(client);
 
     playersManager.add(player);
   }

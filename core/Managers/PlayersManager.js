@@ -1,6 +1,8 @@
 const EventEmitter = require('events');
 const schedulerManager = require('./SchedulerManager');
 const database = require('./../../database');
+const serverPackets = require('./../ServerPackets/serverPackets');
+const eventBusNew = require('./../Events/EventBusNew');
 
 class PlayersManager extends EventEmitter {
   constructor() {
@@ -23,6 +25,17 @@ class PlayersManager extends EventEmitter {
         await database.deleteCharacterSkills(task.payload.characterObjectId);
       }
     });
+
+    //
+    eventBusNew.on('player:enter', (player) => {
+      player.mSpd = 333; // TODO?
+      const client = player.getClient();
+
+      client.sendPacket(new serverPackets.UserInfo(player));
+      client.sendPacket(new serverPackets.SunRise()); // TimeManager?
+      client.sendPacket(new serverPackets.SystemMessage(34)); // fix
+    });
+    //
   }
 
   add(player) {

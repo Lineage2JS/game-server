@@ -12,10 +12,10 @@ const TalkState = require('./../states/TalkState');
 const CastPayload = require('./../payloads/CastPayload');
 
 class Player extends Character {
-  constructor(client) {
+  constructor() {
     super();
 
-    this._client = client;
+    this._client = null;
     this.target = null;
     this.positionUpdateTimestamp = 0;
     this.state = '';
@@ -64,6 +64,10 @@ class Player extends Character {
 
   getClient() {
     return this._client;
+  }
+
+  setClient(client) {
+    this._client = client;
   }
 
   setActionPayload(payload) {

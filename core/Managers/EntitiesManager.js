@@ -1,4 +1,5 @@
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
+const eventBusNew = require('./../Events/EventBusNew');
 
 //
 const levelExpTable = require('./../../datapack/exp.json');
@@ -182,18 +183,8 @@ class EntitiesManager {
       playersManager.emit('notify', packet);
     });
 
-    playersManager.on('spawn', player => {
+    eventBusNew.on('player:enter', player => {
       this._entities.push(player);
-
-      visibilityManager.addPlayer(player);
-
-      const announcements = announcementsManager.getAnnouncements();
-
-      announcements.forEach(announcement => {
-        const packet = new serverPackets.CreateSay(0, player.characterName, 10, announcement); // TODO ANNOUNCEMENT = 10
-      
-        playersManager.emit('notify', packet);
-      });      
     });
 
     playersManager.on('move', player => {

@@ -6,8 +6,17 @@ class Client {
   constructor(socket) {
     this._socket = socket;
     this._protocolVersion = null;
+    this._player = null;
     
     this._init();
+  }
+
+  getPlayer() {
+    return this._player;
+  }
+
+  setPlayer(player) {
+    this._player = player;
   }
 
   sendPacket(packetInstance, encoding = true) {
@@ -67,6 +76,7 @@ class Client {
     const decryptedPacket = this._getDecryptedPacket(croppedPacket);
     const opcode = this._getOpcode(decryptedPacket);
     const payloadPacket = this._getPayloadPacket(decryptedPacket);
+    let packet;
 
     console.log(`opcode: [0x${opcode.toString(16).toUpperCase().padStart(2, '0')}]`);
 
@@ -92,7 +102,7 @@ class Client {
 
         break;
       case 0x03:
-        new clientPackets.EnterWorld(this, payloadPacket);
+        packet = new clientPackets.EnterWorld(this, payloadPacket);
   
         break;
       case 0x0E:
@@ -248,6 +258,12 @@ class Client {
 
         break;
     }
+
+    if (!packet) {
+      return;
+    }
+
+    packet.handle();
   }
 
   _onClose() {

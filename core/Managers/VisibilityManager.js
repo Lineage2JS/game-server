@@ -1,6 +1,7 @@
 const npcManager = require('./NpcManager');
 const serverPackets = require('./../ServerPackets/serverPackets');
 const botsManager = require('./BotsManager');
+const eventBusNew = require('./../Events/EventBusNew');
 
 class VisibilityManager {
   constructor() {
@@ -10,6 +11,10 @@ class VisibilityManager {
     // listVisibleObjects
     this._VISIBILITY_RANGE = 1500;
     this._UPDATE_INTERVAL_MS = 3000;
+
+    eventBusNew.on('player:enter', (player) => {
+      this._players.push(player);
+    });
   }
 
   addPlayer(player) {
