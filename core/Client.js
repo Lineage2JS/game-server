@@ -118,7 +118,7 @@ class Client {
 
         break;
       case 0x01:
-        new clientPackets.MoveBackwardToLocation(this, payloadPacket);
+        packet = new clientPackets.MoveBackwardToLocation(this, payloadPacket);
   
         break;
       case 0x0A:
@@ -166,7 +166,7 @@ class Client {
 
         break;
       case 0x48:
-        new clientPackets.ValidatePosition(this, payloadPacket);
+        packet = new clientPackets.ValidatePosition(this, payloadPacket);
 
         break;
       case 0x45:

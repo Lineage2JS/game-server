@@ -21,6 +21,10 @@ class ClientPacketNew {
     return this._player;
   }
 
+  handle() {
+    throw new Error('handle() must be implemented');
+  }
+
   readC() {
     const value = this._buffer.readUInt8(this._offset);
 
