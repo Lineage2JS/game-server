@@ -1,30 +1,14 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
-const ClientPacket = require("./ClientPacket");
-const playersManager = require('./../Managers/PlayersManager');
+const ClientPacketNew = require("./ClientPacketNew");
 
-class StartRotating {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-    this._data
-      .readD()
-      .readD();
-
-    this._init();
-  }
-
-  get degree() {
-    return this._data.getData()[0];
-  }
-
-  get side() {
-    return this._data.getData()[1];
-  }
-
-  async _init() {
-    const player = playersManager.getPlayerByClient(this._client);
+class StartRotating extends ClientPacketNew {
+  async handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
+    const degree = this.readD();
+    const side = this.readD();
     
-    this._client.sendPacket(new serverPackets.StartRotating(player, this.degree, this.side));
+    client.sendPacket(new serverPackets.StartRotating(player, degree, side));
   }
 }
 

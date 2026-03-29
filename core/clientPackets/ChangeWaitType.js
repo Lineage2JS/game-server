@@ -1,25 +1,13 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
-const ClientPacket = require("./ClientPacket");
-const playersManager = require('./../Managers/PlayersManager');
+const ClientPacketNew = require("./ClientPacketNew");
 
-class ChangeWaitType {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-    this._data
-      .readD();
+class ChangeWaitType extends ClientPacketNew {
+  async handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
+    const type = this.readD();
 
-    this._init();
-  }
-
-  get type() {
-    return this._data.getData()[0];
-  }
-
-  async _init() {
-    const player = playersManager.getPlayerByClient(this._client);
-
-    this._client.sendPacket(new serverPackets.ChangeWaitType(player, this.type));
+    client.sendPacket(new serverPackets.ChangeWaitType(player, type));
   }
 }
 

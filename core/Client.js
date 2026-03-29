@@ -242,19 +242,19 @@ class Client {
 
         break;
       case 0x4A:
-        new clientPackets.StartRotating(this, payloadPacket);
+        packet = new clientPackets.StartRotating(this, payloadPacket);
 
         break;
       case 0x4B:
-        new clientPackets.FinishRotating(this, payloadPacket);
+        packet = new clientPackets.FinishRotating(this, payloadPacket);
 
         break;
       case 0x1C:
-        new clientPackets.ChangeMoveType(this, payloadPacket);
+        packet = new clientPackets.ChangeMoveType(this, payloadPacket);
 
         break;
       case 0x1D:
-        new clientPackets.ChangeWaitType(this, payloadPacket);
+        packet = new clientPackets.ChangeWaitType(this, payloadPacket);
 
         break;
     }
