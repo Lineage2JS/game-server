@@ -1,21 +1,14 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
-const ClientPacket = require("./ClientPacket");
+const ClientPacketNew = require("./ClientPacketNew");
 const communityBoardManager = require('./../Managers/CommunityBoardManager');
 
-class RequestShowBoard {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-    this._data
-      .readD();
-
-    this._init();
-  }
-
-  async _init() {
+class RequestShowBoard extends ClientPacketNew {
+  async handle() {
+    const client = this.getClient();
+    const unknown = this.readD(); // TODO
     const htmlMessage = communityBoardManager.getHtmlMessageByFileName('main');
 
-    this._client.sendPacket(new serverPackets.ShowBoard(htmlMessage));
+    client.sendPacket(new serverPackets.ShowBoard(htmlMessage));
   }
 }
 

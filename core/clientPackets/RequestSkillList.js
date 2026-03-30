@@ -1,20 +1,13 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
-const ClientPacket = require("./ClientPacket");
-const playersManager = require('./../Managers/PlayersManager');
+const ClientPacketNew = require("./ClientPacketNew");
 
-class RequestSkillList {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-
-    this._init();
-  }
-
-  _init() {
-    const player = playersManager.getPlayerByClient(this._client);
+class RequestSkillList extends ClientPacketNew {
+  handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
     const skills = player.getSkills();
 
-    this._client.sendPacket(new serverPackets.SkillList(skills));
+    client.sendPacket(new serverPackets.SkillList(skills));
   }
 }
 

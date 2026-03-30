@@ -1,25 +1,13 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
-const ClientPacket = require("./ClientPacket");
-const playersManager = require('./../Managers/PlayersManager');
+const ClientPacketNew = require("./ClientPacketNew");
 
-class RequestSocialAction {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-    this._data
-      .readD();
+class RequestSocialAction extends ClientPacketNew {
+  async handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
+    const actionId = this.readD();
 
-    this._init();
-  }
-
-  get actionId() {
-    return this._data.getData()[0];
-  }
-
-  async _init() {
-    const player = playersManager.getPlayerByClient(this._client);
-
-    this._client.sendPacket(new serverPackets.SocialAction(player.objectId, this.actionId));
+    client.sendPacket(new serverPackets.SocialAction(player.objectId, actionId));
   }
 }
 

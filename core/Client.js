@@ -150,7 +150,7 @@ class Client {
 
         break;
       case 0x3F:
-        new clientPackets.RequestSkillList(this, payloadPacket);
+        packet = new clientPackets.RequestSkillList(this, payloadPacket);
 
         break;
       case 0x2F:
@@ -158,11 +158,11 @@ class Client {
 
         break;
       case 0x57:
-        new clientPackets.RequestShowBoard(this, payloadPacket);
+        packet = new clientPackets.RequestShowBoard(this, payloadPacket);
 
         break;
       case 0x1B:
-        new clientPackets.RequestSocialAction(this, payloadPacket);
+        packet = new clientPackets.RequestSocialAction(this, payloadPacket);
 
         break;
       case 0x48:
