@@ -1,47 +1,20 @@
-const ClientPacket = require('./ClientPacket');
+const ClientPacketNew = require('./ClientPacketNew');
 const serverPackets = require('./../ServerPackets/serverPackets');
-const playersManager = require('./../Managers/PlayersManager');
 
-class RequestAttack {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-    this._data
-      .readD()
-      .readD()
-      .readD()
-      .readD()
-      .readC();
+class RequestAttack extends ClientPacketNew {
+  handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
+    const objectId = this.readD();
+    const x = this.readD();
+    const y = this.readD();
+    const z = this.readD();
+    const attackId = this.readC(); // 0 - click, 1 - shift click
 
-    this._init();
-  }
-
-  get objectId() {
-    return this._data.getData()[0];
-  }
-
-  get x() {
-    return this._data.getData()[1];
-  }
-
-  get y() {
-    return this._data.getData()[2];
-  }
-
-  get z() {
-    return this._data.getData()[3];
-  }
-
-  get attackId() {
-    return this._data.getData()[4]; // 0 - click, 1 - shift click
-  }
-
-  _init() {
-    const player = playersManager.getPlayerByClient(this._client);
     const activeWeapon = player.getActiveWeapon();
 
     if (activeWeapon && activeWeapon.getWeaponType() === "bow") { // TODO temp for beta
-      this._client.sendPacket(new serverPackets.ActionFailed());
+      client.sendPacket(new serverPackets.ActionFailed());
 
       return;
     }
@@ -49,7 +22,7 @@ class RequestAttack {
     if (!player.isAttacking) {
       player.isAttacking = true;
       
-      player.setAction('attack', this.objectId);
+      player.setAction('attack', objectId); // TODO setAction > doAction
     }
   }
 }

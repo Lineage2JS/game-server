@@ -122,15 +122,15 @@ class Client {
   
         break;
       case 0x0A:
-        new clientPackets.RequestAttack(this, payloadPacket);
+        packet = new clientPackets.RequestAttack(this, payloadPacket);
 
         break;
       case 0x09:
-        new clientPackets.Logout(this, payloadPacket);
+        packet = new clientPackets.Logout(this, payloadPacket);
   
         break;
       case 0x46:
-        new clientPackets.RequestRestart(this, payloadPacket);
+        packet = new clientPackets.RequestRestart(this, payloadPacket);
 
         break;
       case 0x37:

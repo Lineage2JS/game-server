@@ -1,18 +1,11 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
-const ClientPacket = require("./ClientPacket");
+const ClientPacketNew = require("./ClientPacketNew");
 const database = require('./../../database');
-const playersManager = require('./../Managers/PlayersManager');
 
-class Logout {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-
-    this._init();
-  }
-
-  async _init() {
-    const player = playersManager.getPlayerByClient(this._client);
+class Logout extends ClientPacketNew {
+  async handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
     const character = await database.getCharacter(player.objectId);
 
     if (character) { // сохранять точно не тут. В каком-нибудь менеджере.
@@ -23,7 +16,7 @@ class Logout {
       await database.updateCharacter(character.objectId, character);
     }
 
-    this._client.sendPacket(new serverPackets.LeaveWorld());
+    client.sendPacket(new serverPackets.LeaveWorld());
   }
 }
 
