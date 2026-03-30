@@ -134,15 +134,15 @@ class Client {
 
         break;
       case 0x37:
-        new clientPackets.RequestTargetCancel(this, payloadPacket);
+        packet = new clientPackets.RequestTargetCancel(this, payloadPacket);
 
         break;
       case 0x0F:
-        new clientPackets.RequestItemList(this, payloadPacket);
+        packet = new clientPackets.RequestItemList(this, payloadPacket);
 
         break;
       case 0x33:
-        new clientPackets.RequestShortCutReg(this, payloadPacket);
+        packet = new clientPackets.RequestShortCutReg(this, payloadPacket);
 
         break;
       case 0x21:

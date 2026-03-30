@@ -1,19 +1,12 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
-const ClientPacket = require("./ClientPacket");
-const playersManager = require('./../Managers/PlayersManager');
+const ClientPacketNew = require("./ClientPacketNew");
 
-class RequestTargetCanceled {
-	constructor(client, packet) {
-		this._client = client;
-    this._data = new ClientPacket(packet);
+class RequestTargetCanceled extends ClientPacketNew {
+	handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
 
-		this._init();
-	}
-
-	_init() {
-    const player = playersManager.getPlayerByClient(this._client);
-
-    this._client.sendPacket(new serverPackets.TargetUnselected(player));
+    client.sendPacket(new serverPackets.TargetUnselected(player));
 
 		player.target = null;
 	}

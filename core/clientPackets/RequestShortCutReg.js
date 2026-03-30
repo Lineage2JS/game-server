@@ -1,39 +1,16 @@
-const ClientPacket = require("./ClientPacket");
+const ClientPacketNew = require("./ClientPacketNew");
 const serverPackets = require('./../ServerPackets/serverPackets');
 
-class RequestShortCutReg {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-    this._data
-      .readD()
-      .readD()
-      .readD()
-      .readD();
+class RequestShortCutReg extends ClientPacketNew {
+  handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
+    const type = this.readD();
+    const slot = this.readD();
+    const id = this.readD();
+    const unk = this.readD(); // TODO characterType?
 
-    this._init();
-  }
-
-  get type() {
-    return this._data.getData()[0];
-  }
-
-  get slot() {
-    return this._data.getData()[1];
-  }
-
-  get id() {
-    return this._data.getData()[2];
-  }
-
-  get unk() { // characterType ? fix
-    return this._data.getData()[3];
-  }
-
-  _init() {
-    //const player = playersManager.getPlayerByClient(this._client);
-
-    this._client.sendPacket(new serverPackets.ShortCutRegister(this.slot, this.type, this.id, -1, this.unk))
+    client.sendPacket(new serverPackets.ShortCutRegister(slot, type, id, -1, unk))
   }
 }
 
