@@ -1,9 +1,8 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
-const ClientPacket = require("./ClientPacket");
+const ClientPacketNew = require("./ClientPacketNew");
 const Character = require('./../Models/Character');
 const database = require('./../../database');
 const characterTemplates = require('./../../datapack/characterTemplates.json');
-const playersManager = require('./../Managers/PlayersManager');
 const itemsManager = require('./../Managers/ItemsManager');
 const initialParametersManager = require('./../Managers/InitialParametersManager');
 
@@ -57,56 +56,7 @@ function isPointInPolygon(point, polygon) {
     return inside;
 }
 
-class RequestCharacterCreate {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-    this._data
-      .readS()
-      .readD()
-      .readD()
-      .readD()
-      .readD()
-      .readD()
-      .readD()
-      .readD()
-      .readD()
-      .readD()
-      .readD()
-      .readD()
-      .readD();
-
-    this._init();
-  }
-
-  get name() {
-    return this._data.getData()[0];
-  }
-
-  get race() {
-    return this._data.getData()[1];
-  }
-
-  get gender() {
-    return this._data.getData()[2];
-  }
-
-  get classId() {
-    return this._data.getData()[3];
-  }
-
-  get hairStyle() {
-    return this._data.getData()[10];
-  }
-
-  get hairColor() {
-    return this._data.getData()[11];
-  }
-
-  get face() {
-    return this._data.getData()[12];
-  }
-
+class RequestCharacterCreate extends ClientPacketNew {
   _checkCharacterNameLetters(name) {
     const regexp = /^[0-9A-Za-z]*$/i;
 
@@ -128,37 +78,51 @@ class RequestCharacterCreate {
     }
   }
 
-  async _init() {
+  async handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
+    const name = this.readS();
+    const race = this.readD();
+    const gender = this.readD();
+    const classId = this.readD();
+    const int = this.readD();
+    const str = this.readD();
+    const con = this.readD();
+    const men = this.readD();
+    const dex = this.readD();
+    const wit = this.readD();
+    const hairStyle = this.readD();
+    const hairColor = this.readD();
+    const face = this.readD();
     const MAXIMUM_LENGTH_CHARACTER_NAME = 16;
-    const player = playersManager.getPlayerByClient(this._client);
     const isManyCharacters = await this.checkAvailableNumberCharacters(player.login);
     
     // check how many characters are on the account
     if (isManyCharacters) {
-      this._client.sendPacket(new serverPackets.CharacterCreateFail(serverPackets.CharacterCreateFail.reason.REASON_TOO_MANY_CHARACTERS))
+      client.sendPacket(new serverPackets.CharacterCreateFail(serverPackets.CharacterCreateFail.reason.REASON_TOO_MANY_CHARACTERS))
       
       return;
     }
 
     // check character name for length and regular expression
-    if(this.name <= 0 || this.name.length >= MAXIMUM_LENGTH_CHARACTER_NAME || !this._checkCharacterNameLetters(this.name)) {
-      this._client.sendPacket(new serverPackets.CharacterCreateFail(serverPackets.CharacterCreateFail.reason.REASON_16_ENG_CHARS))
+    if(name <= 0 || name.length >= MAXIMUM_LENGTH_CHARACTER_NAME || !this._checkCharacterNameLetters(name)) {
+      client.sendPacket(new serverPackets.CharacterCreateFail(serverPackets.CharacterCreateFail.reason.REASON_16_ENG_CHARS))
 
       return;
     }
 
-    const isCharacterNameTaken = await database.isCharacterNameTaken(this.name);
+    const isCharacterNameTaken = await database.isCharacterNameTaken(name);
 
     // check character name for availability
     if (isCharacterNameTaken) {
-      this._client.sendPacket(new serverPackets.CharacterCreateFail(serverPackets.CharacterCreateFail.reason.REASON_NAME_ALREADY_EXISTS))
+      client.sendPacket(new serverPackets.CharacterCreateFail(serverPackets.CharacterCreateFail.reason.REASON_NAME_ALREADY_EXISTS))
       
       return;
     }
 
     // Get character template by classId (classId is unique)
     const characterTemplate = characterTemplates.find(characterTemplate => {
-      if (characterTemplate.classId === this.classId) {
+      if (characterTemplate.classId === classId) {
         return true;
       } else {
         return false;
@@ -168,15 +132,15 @@ class RequestCharacterCreate {
     // create character
     const character = Character.create(characterTemplate);
 
-    character.characterName = this.name;
-    character.gender = this.gender;
+    character.characterName = name;
+    character.gender = gender;
     character.objectId = await database.getNextObjectId();
     character.login = player.login;
     character.maximumHp = character.hp;
     character.maximumMp = character.mp;
-    character.hairStyle = this.hairStyle;
-    character.hairColor = this.hairColor;
-    character.face = this.face;
+    character.hairStyle = hairStyle;
+    character.hairColor = hairColor;
+    character.face = face;
     character.createdAt = Date.now();
 
     // TODO
@@ -195,7 +159,7 @@ class RequestCharacterCreate {
     //
 
     // TODO set start points
-    const startPoints = initialParametersManager.getInitialStartPoint(classIds.get(this.classId));
+    const startPoints = initialParametersManager.getInitialStartPoint(classIds.get(classId));
     const randomPoint = getRandomPointInPolygon(startPoints);
 
     character.x = randomPoint[0];
@@ -206,7 +170,7 @@ class RequestCharacterCreate {
     const createdCharacter = await database.createCharacter(character);
 
     //fix humanFighter
-    const initialEquipmentIds = initialParametersManager.getInitialEquipmentIds(classIds.get(this.classId));
+    const initialEquipmentIds = initialParametersManager.getInitialEquipmentIds(classIds.get(classId));
 
     for (let i = 0; i < initialEquipmentIds.length; i++) {
       const itemId = initialEquipmentIds[i];
@@ -226,7 +190,7 @@ class RequestCharacterCreate {
     // create base skill for beta release // TODO
     const magicClasses = ['humanMagician', 'elfMagician', 'darkelfMagician'];
     
-    if (magicClasses.includes(classIds.get(this.classId))) {
+    if (magicClasses.includes(classIds.get(classId))) {
       const skills = [{ id: 1177, level: 1,}, { id: 1216, level: 1,}];
 
       for(let i = 0; i < skills.length; i++) {
@@ -239,8 +203,8 @@ class RequestCharacterCreate {
     // get all characters on user account
     const characters = await database.getCharactersByLogin(player.login);
     
-    this._client.sendPacket(new serverPackets.CharacterCreateSuccess());
-    this._client.sendPacket(new serverPackets.CharacterSelectInfo(player.login, characters));
+    client.sendPacket(new serverPackets.CharacterCreateSuccess());
+    client.sendPacket(new serverPackets.CharacterSelectInfo(player.login, characters));
   }
 }
 

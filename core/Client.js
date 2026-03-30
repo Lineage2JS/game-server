@@ -106,15 +106,15 @@ class Client {
   
         break;
       case 0x0E:
-        new clientPackets.NewCharacter(this, payloadPacket);
+        packet = new clientPackets.NewCharacter(this, payloadPacket);
 
         break;
       case 0x0B:
-        new clientPackets.RequestCharacterCreate(this, payloadPacket);
+        packet = new clientPackets.RequestCharacterCreate(this, payloadPacket);
 
         break;
       case 0x0C:
-        new clientPackets.RequestCharacterDelete(this, payloadPacket);
+        packet = new clientPackets.RequestCharacterDelete(this, payloadPacket);
 
         break;
       case 0x01:
