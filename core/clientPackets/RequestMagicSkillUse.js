@@ -1,40 +1,20 @@
-const ClientPacket = require("./ClientPacket");
-const playersManager = require('./../Managers/PlayersManager');
+const ClientPacketNew = require("./ClientPacketNew");
 const skillsManager = require('./../Managers/SkillsManager');
 const serverPackets = require('./../ServerPackets/serverPackets');
 const entitiesManager = require('./../Managers/EntitiesManager');
 
-class RequestMagicSkillUse {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-    this._data
-      .readD()
-      .readD()
-      .readC();
-
-    this._init();
-  }
-
-  get skillId() {
-    return this._data.getData()[0];
-  }
-
-  get data0() { // fix?
-    return this._data.getData()[1];
-  }
-
-  get data1() {
-    return this._data.getData()[2];
-  }
-
-  async _init() {
-    const player = playersManager.getPlayerByClient(this._client);
+class RequestMagicSkillUse extends ClientPacketNew {
+  async handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
+    const skillId = this.readD();
+    const data0 = this.readD();
+    const data1 = this.readC(); // TODO ?
     const entity = entitiesManager.getEntityByObjectId(player.target);
     //const npc = npcManager.getNpcByObjectId(player.target);
     
     if (entity.canBeAttacked === 0) {
-      this._client.sendPacket(new serverPackets.ActionFailed()); // fix?
+      client.sendPacket(new serverPackets.ActionFailed()); // fix?
 
       return;
     }
@@ -46,7 +26,7 @@ class RequestMagicSkillUse {
     player.isAttacking = true; // TODO забирать из состояния state атакует или нет
     // К тому же он устаналивается в Action из-за чего я не могу атаковать после каста
 
-    const skill = skillsManager.getSkill(this.skillId);
+    const skill = skillsManager.getSkill(skillId);
 
     player.setAction('cast', {
       target: player.target,

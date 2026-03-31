@@ -154,7 +154,7 @@ class Client {
 
         break;
       case 0x2F:
-        new clientPackets.RequestMagicSkillUse(this, payloadPacket);
+        packet = new clientPackets.RequestMagicSkillUse(this, payloadPacket);
 
         break;
       case 0x57:
@@ -190,11 +190,11 @@ class Client {
 
         break;
       case 0x11:
-        new clientPackets.RequestUnEquipItem(this, payloadPacket);
+        packet = new clientPackets.RequestUnEquipItem(this, payloadPacket);
 
         break;
       case 0x36:
-        new clientPackets.CanNotMoveAnymore(this, payloadPacket);
+        packet = new clientPackets.CanNotMoveAnymore(this, payloadPacket);
 
         break;
       case 0x1F:
