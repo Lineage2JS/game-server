@@ -214,11 +214,11 @@ class Client {
 
         break;
       case 0x12:
-        new clientPackets.RequestDropItem(this, payloadPacket);
+        packet = new clientPackets.RequestDropItem(this, payloadPacket);
 
         break;
       case 0x59:
-        new clientPackets.RequestDestroyItem(this, payloadPacket);
+        packet = new clientPackets.RequestDestroyItem(this, payloadPacket);
 
         break;
       case 0x64:
@@ -234,7 +234,7 @@ class Client {
 
         break;
       case 0xA8:
-        new clientPackets.NetPing(this, payloadPacket);
+        packet = new clientPackets.NetPing(this, payloadPacket);
 
         break;
       case 0x62:
