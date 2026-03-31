@@ -1,25 +1,15 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
-const ClientPacket = require("./ClientPacket");
+const ClientPacketNew = require("./ClientPacketNew");
 const npcHtmlMessagesManager = require('../Managers/NpcHtmlMessagesManager');
 
-class RequestLinkHtml {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-    this._data
-      .readS();
+class RequestLinkHtml extends ClientPacketNew {
+  async handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
+    const link = this.readS();
+    const htmlMessage = npcHtmlMessagesManager.getHtmlMessageByFileName(link);
 
-    this._init();
-  }
-
-  get link () {
-    return this._data.getData()[0];
-  }
-
-  async _init() {
-    const htmlMessage = npcHtmlMessagesManager.getHtmlMessageByFileName(this.link);
-
-    this._client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
+    client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
   }
 }
 

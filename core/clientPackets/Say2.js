@@ -1,6 +1,5 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
-const ClientPacket = require("./ClientPacket");
-const playersManager = require('./../Managers/PlayersManager');
+const ClientPacketNew = require("./ClientPacketNew");
 
 const ALL = 0;
 const SHOUT = 1;
@@ -13,36 +12,22 @@ const TRADE = 8;
 const GM_MESSAGE = 9;
 const ANNOUNCEMENT = 10;
 
-class Say2 {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-    this._data
-      .readS()
-      .readD();
+class Say2 extends ClientPacketNew {
+  async handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
+    const text = this.readS();
+    const type = this.readD();
+    let target = null;
 
-    this._init();
-  }
+    if (type == TELL) {
+      target = this.readS();
+    }
 
-  get text() {
-    return this._data.getData()[0];
-  }
-	
-  get type() {
-    return this._data.getData()[1];
-  }
-  
-  get target() {
-    return this._data.getData()[2];
-  }
-
-  async _init() {
-    if (this.type == ALL || this.type == SHOUT || this.type == TRADE) { // TODO for beta release
-      const player = playersManager.getPlayerByClient(this._client);
-
-      this._client.sendPacket(new serverPackets.CreateSay(player.objectId, player.characterName, this.type, this.text)); 
+    if (type == ALL || type == SHOUT || type == TRADE) { // TODO for beta release
+      client.sendPacket(new serverPackets.CreateSay(player.objectId, player.characterName, type, text)); 
     } else {
-      this._client.sendPacket(new serverPackets.ActionFailed());
+      client.sendPacket(new serverPackets.ActionFailed());
 
       return;
     }

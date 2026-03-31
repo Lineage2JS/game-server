@@ -174,7 +174,7 @@ class Client {
 
         break;
       case 0x38:
-        new clientPackets.Say2(this, payloadPacket);
+        packet = new clientPackets.Say2(this, payloadPacket);
 
         break;
       case 0x5B:
@@ -182,11 +182,11 @@ class Client {
 
         break;
       case 0x20:
-        new clientPackets.RequestLinkHtml(this, payloadPacket);
+        packet = new clientPackets.RequestLinkHtml(this, payloadPacket);
   
         break;
       case 0x14:
-        new clientPackets.RequestUseItem(this, payloadPacket);
+        packet = new clientPackets.RequestUseItem(this, payloadPacket);
 
         break;
       case 0x11:

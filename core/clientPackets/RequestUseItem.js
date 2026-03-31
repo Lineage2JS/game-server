@@ -1,31 +1,19 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
-const ClientPacket = require("./ClientPacket");
-const playersManager = require('./../Managers/PlayersManager');
+const ClientPacketNew = require("./ClientPacketNew");
 const ItemWeapon = require('./../Models/ItemWeapon');
 
-class RequestUseItem {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-    this._data
-      .readD();
-
-    this._init();
-  }
-
-  get objectId() {
-    return this._data.getData()[0];
-  }
-
-  async _init() {
-    const player = playersManager.getPlayerByClient(this._client);
-    const item = player.getItemByObjectId(this.objectId);
+class RequestUseItem extends ClientPacketNew {
+  async handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
+    const objectId = this.readD();
+    const item = player.getItemByObjectId(objectId);
 
     // if (item.itemName === 'soulshot_none') {
     //   player.deleteItemByName(item.itemName);
     //   player.target = player.objectId; // fix? вернуть обратно
     //   player.setActiveSoulShot();
-    //   this._client.sendPacket(new serverPackets.MagicSkillUse(player, {
+    //   client.sendPacket(new serverPackets.MagicSkillUse(player, {
     //     id: 2039,
     //     level: 1,
     //     hitTime: 0,
@@ -37,7 +25,7 @@ class RequestUseItem {
     // }
     
     // if (item.itemName === 'world_map') { // TODO ItemHandler Map
-    //   this._client.sendPacket(new serverPackets.ShowMiniMap(item.itemId));
+    //   client.sendPacket(new serverPackets.ShowMiniMap(item.itemId));
 
     //   return;
     // }
@@ -52,8 +40,8 @@ class RequestUseItem {
       player.equipItem(item);
     }
 
-    this._client.sendPacket(new serverPackets.UserInfo(player));
-		this._client.sendPacket(new serverPackets.ItemList(player.getItems()));
+    client.sendPacket(new serverPackets.UserInfo(player));
+    client.sendPacket(new serverPackets.ItemList(player.getItems()));
   }
 }
 
