@@ -1,54 +1,26 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
-const ClientPacket = require("./ClientPacket");
+const ClientPacketNew = require("./ClientPacketNew");
 const entitiesManager = require('./../Managers/EntitiesManager');
-const playersManager = require('./../Managers/PlayersManager');
 const Player = require('./../Models/Player');
 const Npc = require('./../Models/Npc');
 const DropItem = require('./../Models/DropItem');
 const Bot = require('./../Models/Bot');
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
 
-class Action {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-    this._data
-      .readD()
-      .readD()
-      .readD()
-      .readD()
-      .readC();
-
-    this._init();
-  }
-
-  get objectId() {
-    return this._data.getData()[0];
-  }
-
-  get originX() {
-    return this._data.getData()[1];
-  }
-
-  get originY() {
-    return this._data.getData()[2];
-  }
-
-  get originZ() {
-    return this._data.getData()[3];
-  }
-
-  get actionId() {
-    return this._data.getData()[4]; // 0 - click, 1 - shift click
-  }
-
-  _init() {
-    const player = playersManager.getPlayerByClient(this._client);
-    const entity = entitiesManager.getEntityByObjectId(this.objectId);
+class Action extends ClientPacketNew {
+  handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
+    const objectId = this.readD();
+    const originX = this.readD();
+    const originY = this.readD();
+    const originZ = this.readD();
+    const actionId = this.readC(); // 0 - click, 1 - shift click
+    const entity = entitiesManager.getEntityByObjectId(objectId);
 
     if (entity instanceof Player) {
       // TODO\
-      this._client.sendPacket(new serverPackets.StatusUpdate(entity.objectId, [
+      client.sendPacket(new serverPackets.StatusUpdate(entity.objectId, [
         {
           id: characterStatusEnums.CUR_HP,
           value: entity.hp,
@@ -60,7 +32,7 @@ class Action {
       ]));
 
       if (player.target === null) { // TODO if entity not dead
-        this._client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
+        client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
 
         player.target = entity.objectId;
 
@@ -68,7 +40,7 @@ class Action {
       }
 
       if (player.target !== entity.objectId) {
-        this._client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
+        client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
 
         player.target = entity.objectId;
 
@@ -79,7 +51,7 @@ class Action {
     }
 
     if (entity instanceof Npc) {
-      this._client.sendPacket(new serverPackets.StatusUpdate(entity.objectId, [
+      client.sendPacket(new serverPackets.StatusUpdate(entity.objectId, [
         {
           id: characterStatusEnums.CUR_HP,
           value: entity.hp,
@@ -91,7 +63,7 @@ class Action {
       ]));
 
       if (player.target === null) { // TODO if entity not dead
-        this._client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
+        client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
 
         player.target = entity.objectId;
 
@@ -99,7 +71,7 @@ class Action {
       }
 
       if (player.target !== entity.objectId) {
-        this._client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
+        client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
 
         player.target = entity.objectId;
 
@@ -109,7 +81,7 @@ class Action {
       if (entity.canBeAttacked === 0) {
         player.setAction('talk', entity);
 
-        this._client.sendPacket(new serverPackets.ActionFailed()); // fix?
+        client.sendPacket(new serverPackets.ActionFailed()); // fix?
 
         return;
       }
@@ -117,7 +89,7 @@ class Action {
       if (entity.canBeAttacked === 1 && !player.isAttacking) { // TODO isAttacking опирается на state        
         player.isAttacking = true;
 
-        player.setAction('attack', this.objectId);
+        player.setAction('attack', objectId);
 
         return;
       }
@@ -130,7 +102,7 @@ class Action {
     }
 
     if (entity instanceof Bot) {
-      this._client.sendPacket(new serverPackets.ActionFailed()); // fix?
+      client.sendPacket(new serverPackets.ActionFailed()); // fix?
     }
   }
 }

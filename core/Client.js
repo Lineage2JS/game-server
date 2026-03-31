@@ -86,7 +86,7 @@ class Client {
 
         break;
       case 0x04:
-        new clientPackets.Action(this, payloadPacket);
+        packet = new clientPackets.Action(this, payloadPacket);
 
         break;
       case 0x08:
@@ -238,7 +238,7 @@ class Client {
 
         break;
       case 0x62:
-        new clientPackets.RequestCharacterRestore(this, payloadPacket);
+        packet = new clientPackets.RequestCharacterRestore(this, payloadPacket);
 
         break;
       case 0x4A:

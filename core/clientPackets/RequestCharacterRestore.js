@@ -1,30 +1,19 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
-const ClientPacket = require("./ClientPacket");
+const ClientPacketNew = require("./ClientPacketNew");
 const database = require('./../../database');
 const playersManager = require('./../Managers/PlayersManager');
 
-class RequestCharacterRestore {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-    this._data
-      .readD();
-
-    this._init();
-  }
-
-  get characterSlot () {
-    return this._data.getData()[0];
-  }
-
-  async _init() {
-    const player = playersManager.getPlayerByClient(this._client);
+class RequestCharacterRestore extends ClientPacketNew {
+  async handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
+    const characterSlot = this.readD();
     const characters = await database.getCharactersByLogin(player.login);
-    const character = characters[this.characterSlot];
+    const character = characters[characterSlot];
 
     await playersManager.restoreCharacter(character.objectId);
 
-    this._client.sendPacket(new serverPackets.CharacterSelectInfo(player.login, await database.getCharactersByLogin(player.login)));
+    client.sendPacket(new serverPackets.CharacterSelectInfo(player.login, await database.getCharactersByLogin(player.login)));
   }
 }
 
