@@ -222,7 +222,7 @@ class Player extends Character {
     return this._quests.getQuests();
   }
 
-  setAction(action, payload) {
+  doAction(action, payload) {
     this.action = action;
 
     switch(action) { // TODO _handleTalkAction можно сделать вычисления перед задачей

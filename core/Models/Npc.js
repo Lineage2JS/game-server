@@ -111,7 +111,7 @@ class Npc extends Character {
     // }, 15000);
   }
 
-  setAction(action, payload) {
+  doAction(action, payload) {
     this.action = action;
 
     switch(action) {

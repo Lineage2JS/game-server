@@ -22,7 +22,7 @@ class RequestAttack extends ClientPacketNew {
     if (!player.isAttacking) {
       player.isAttacking = true;
       
-      player.setAction('attack', objectId); // TODO setAction > doAction
+      player.doAction('attack', objectId);
     }
   }
 }

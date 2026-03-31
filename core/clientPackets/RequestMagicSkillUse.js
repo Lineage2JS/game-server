@@ -28,7 +28,7 @@ class RequestMagicSkillUse extends ClientPacketNew {
 
     const skill = skillsManager.getSkill(skillId);
 
-    player.setAction('cast', {
+    player.doAction('cast', {
       target: player.target,
       skill: skill
     });

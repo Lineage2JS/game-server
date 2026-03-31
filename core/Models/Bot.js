@@ -71,7 +71,7 @@ class Bot extends Character {
     //   }
     // }
 
-    // this.setAction('move', path);
+    // this.doAction('move', path);
     // this.emit('move');
 
     // const spawnedNpcs = npcManager.getSpawnedNpcs();
@@ -79,7 +79,7 @@ class Bot extends Character {
     // this.target = spawnedNpcs[Math.floor(Math.random() * spawnedNpcs.length)].objectId;
 
     // setTimeout(() => {
-    //   this.setAction('attack', this.target);
+    //   this.doAction('attack', this.target);
     // }, 10000)
 
     //this.ai.name
@@ -102,7 +102,7 @@ class Bot extends Character {
         }
       }
 
-      this.setAction('move', path);
+      this.doAction('move', path);
       //this.emit('move');
     });
   }
@@ -119,7 +119,7 @@ class Bot extends Character {
     return this._actionPayload;
   }
 
-  setAction(action, payload) {
+  doAction(action, payload) {
     this.action = action;
 
     switch(action) {

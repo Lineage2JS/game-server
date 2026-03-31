@@ -38,7 +38,7 @@ class MoveBackwardToLocation extends ClientPacketNew {
       y: originY,
       z: originZ
     });
-    player.setAction('move', path);
+    player.doAction('move', path);
   }
 }
 

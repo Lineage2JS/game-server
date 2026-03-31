@@ -79,7 +79,7 @@ class Action extends ClientPacketNew {
       }
 
       if (entity.canBeAttacked === 0) {
-        player.setAction('talk', entity);
+        player.doAction('talk', entity);
 
         client.sendPacket(new serverPackets.ActionFailed()); // fix?
 
@@ -89,7 +89,7 @@ class Action extends ClientPacketNew {
       if (entity.canBeAttacked === 1 && !player.isAttacking) { // TODO isAttacking опирается на state        
         player.isAttacking = true;
 
-        player.setAction('attack', objectId);
+        player.doAction('attack', objectId);
 
         return;
       }
@@ -98,7 +98,7 @@ class Action extends ClientPacketNew {
     }
 
     if (entity instanceof DropItem) {
-      player.setAction('pickup', entity);
+      player.doAction('pickup', entity);
     }
 
     if (entity instanceof Bot) {
