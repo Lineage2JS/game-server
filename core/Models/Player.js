@@ -222,12 +222,12 @@ class Player extends Character {
     return this._quests.getQuests();
   }
 
-  doAction(action, payload) {
+  doAction(action, ...payload) {
     this.action = action;
 
     switch(action) { // TODO _handleTalkAction можно сделать вычисления перед задачей
       case 'move':
-        this.changeState('move', payload);
+        this.changeState('move', ...payload);
         
         break;
       case 'attack':
@@ -271,17 +271,16 @@ class Player extends Character {
     return this._calculateDistance(obj1, obj2) < range;
   }
 
-  changeState(stateName, payload) {
+  changeState(stateName, ...payload) {
     if (this._currentState) {
       this._currentState.leave();
     }
 
     const state = this._states[stateName];
 
-    state.payload = payload; // remove
     this._currentState = state;
     
-    state.enter();
+    state.enter(...payload);
   }
 
   update() {
@@ -317,39 +316,39 @@ class Player extends Character {
     }
   }
 
-  updatePosition() {
-    const dx = this.path.target.x - this.x;
-    const dy = this.path.target.y - this.y;
-    const distance = Math.sqrt(dx * dx + dy * dy) - 9;
+  // updatePosition() {
+  //   const dx = this.path.target.x - this.x;
+  //   const dy = this.path.target.y - this.y;
+  //   const distance = Math.sqrt(dx * dx + dy * dy) - 9;
     
-    if (distance < (this.runSpeed / 10)) {
-      const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
+  //   if (distance < (this.runSpeed / 10)) {
+  //     const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
 
-      this.updateParams({
-        x: parseFloat((this.x + (Math.cos(angle) * distance)).toFixed(1)),
-        y: parseFloat((this.y + (Math.sin(angle) * distance)).toFixed(1)),
-        z: this.z
-      });
+  //     this.updateParams({
+  //       x: parseFloat((this.x + (Math.cos(angle) * distance)).toFixed(1)),
+  //       y: parseFloat((this.y + (Math.sin(angle) * distance)).toFixed(1)),
+  //       z: this.z
+  //     });
 
-      this.changeState('idle');
+  //     this.changeState('idle');
 
-      return;
-    }
+  //     return;
+  //   }
 
-    const time = (this.lastUpdateTimestamp - this.positionUpdateTimestamp) / 1000;
-    const step = this.runSpeed * time;
-    const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
+  //   const time = (this.lastUpdateTimestamp - this.positionUpdateTimestamp) / 1000;
+  //   const step = this.runSpeed * time;
+  //   const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
 
-    this.updateParams({
-      x: parseFloat((this.x + (Math.cos(angle) * step)).toFixed(1)),
-      y: parseFloat((this.y + (Math.sin(angle) * step)).toFixed(1)),
-      z: this.z
-    });
+  //   this.updateParams({
+  //     x: parseFloat((this.x + (Math.cos(angle) * step)).toFixed(1)),
+  //     y: parseFloat((this.y + (Math.sin(angle) * step)).toFixed(1)),
+  //     z: this.z
+  //   });
 
-    this.positionUpdateTimestamp = this.lastUpdateTimestamp;
+  //   this.positionUpdateTimestamp = this.lastUpdateTimestamp;
 
-    this.emit('move'); // TODO ?
-  }
+  //   this.emit('move'); // TODO ?
+  // }
 
   regenerate() {
     if ((Date.now() - this.lastRegenerateTimestamp) > 3000) {

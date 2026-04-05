@@ -183,8 +183,8 @@ class EntitiesManager {
 
     eventBusNew.on('player:enter', this._onPlayerEnter.bind(this));
 
-    playersManager.on('move', player => {
-      const packet = new serverPackets.MoveToLocation(player.path, player.objectId);
+    playersManager.on('move', (player, targetX, targetY, targetZ) => {
+      const packet = new serverPackets.MoveToLocation(player.objectId, targetX, targetY, targetZ, player.x, player.y, player.z);
       
       playersManager.emit('notify', packet);
     });

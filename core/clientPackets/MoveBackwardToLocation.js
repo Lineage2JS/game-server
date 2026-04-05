@@ -11,20 +11,8 @@ class MoveBackwardToLocation extends ClientPacketNew {
     const originX = this.readD();
     const originY = this.readD();
     const originZ = this.readD();
-    const path = {
-      target: {
-        x: targetX,
-        y: targetY,
-        z: targetZ
-      },
-      origin: {
-        x: originX,
-        y: originY,
-        z: originZ
-      }
-    }
-    const dx = path.origin.x - path.target.x;
-    const dy = path.origin.y - path.target.y;
+    const dx = originX - targetX;
+    const dy = originY - targetY;
     const dist = Math.sqrt(dx * dx + dy * dy);
 
     if (dist < 25) { // TODO fix magic number
@@ -38,7 +26,7 @@ class MoveBackwardToLocation extends ClientPacketNew {
       y: originY,
       z: originZ
     });
-    player.doAction('move', path);
+    player.doAction('move', targetX, targetY, targetZ);
   }
 }
 

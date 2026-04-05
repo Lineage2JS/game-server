@@ -41,8 +41,8 @@ class PlayersManager extends EventEmitter {
   add(player) {
     this._players.push(player);
 
-    player.on('move', () => {
-      this.emit('move', player);
+    player.on('move', (...args) => {
+      this.emit('move', player, ...args);
     })
 
     player.on('pickup', (item) => {
