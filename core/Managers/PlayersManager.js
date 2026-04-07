@@ -41,9 +41,11 @@ class PlayersManager extends EventEmitter {
   add(player) {
     this._players.push(player);
 
-    player.on('move', (...args) => {
-      this.emit('move', player, ...args);
-    })
+    player.on('move', (targetX, targetY, targetZ) => {
+      const packet = new serverPackets.MoveToLocation(player.objectId, targetX, targetY, targetZ, player.x, player.y, player.z);
+      
+      this.broadcast(packet);
+    });
 
     player.on('pickup', (item) => {
       this.emit('pickup', player, item); // fix?
@@ -91,6 +93,14 @@ class PlayersManager extends EventEmitter {
 
     player.on('cast', (skillId) => {
       this.emit('cast', player, skillId);
+    });
+  }
+
+  broadcast(packet) {
+    this._players.forEach(player => {
+      const client = player.getClient();
+
+      client.sendPacket(packet);
     });
   }
 
