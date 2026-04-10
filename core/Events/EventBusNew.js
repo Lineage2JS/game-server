@@ -35,6 +35,10 @@ class EventBusNew {
 
 module.exports = new EventBusNew();
 
+// Сейчас есть
+// player:enter
+// player:move
+
 // const Events = {
 //   // Игрок
 //   PLAYER_ENTER_WORLD: 'player:enterWorld',

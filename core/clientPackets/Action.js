@@ -79,6 +79,7 @@ class Action extends ClientPacketNew {
       }
 
       if (entity.canBeAttacked === 0) {
+        player.setLastTalkedNpcId(entity.id);
         player.doAction('talk', entity);
 
         client.sendPacket(new serverPackets.ActionFailed()); // fix?

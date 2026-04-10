@@ -14,6 +14,7 @@ const config = require('./config');
 const serverStatus = require('./enums/serverStatus');
 const serverTypes = require('./enums/serverTypes');
 const server = new Server();
+const isDebug = process.argv.includes('--debug');
 
 async function run() {
   try {
@@ -69,7 +70,7 @@ async function run() {
       skillsManager.enable();
       entitiesManager.enable();
       await npcManager.enable();
-      await botsManager.enable();
+      //await botsManager.enable();
       visibilityManager.enable();
       npcHtmlMessagesManager.enable();
       await schedulerManager.enable();
@@ -87,5 +88,9 @@ process.on('SIGINT', async () => {
 
   process.exit(0);
 });
+
+if (isDebug) {
+  const debug = require('./core/Debug');
+}
 
 run();

@@ -45,6 +45,7 @@ class PlayersManager extends EventEmitter {
       const packet = new serverPackets.MoveToLocation(player.objectId, targetX, targetY, targetZ, player.x, player.y, player.z);
       
       this.broadcast(packet);
+      eventBusNew.emit('player:move', player);
     });
 
     player.on('pickup', (item) => {

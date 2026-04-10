@@ -25,32 +25,23 @@ function moveCloser(x1, y1, x2, y2, distance) {
 
 class FollowState extends BaseState {
   async enter() {
-    // const entity = entitiesManager.getEntityByObjectId(this.character.target);
-
-    // this.character.path.origin.x = this.character.x;
-    // this.character.path.origin.y = this.character.y;
-    // this.character.path.target.x = entity.x;
-    // this.character.path.target.y = entity.y;
-
-    // if (!this.character.isMoving) {
-    //   this.character.emit('move');
-
-    //   this.character.positionUpdateTimestamp = Date.now(); // TODO что за позиция? что тут делает
-    //   this.character.isMoving = true;
-    // }
-
-    this.character.positionUpdateTimestamp = this.character.lastUpdateTimestamp;
+    this.originX = null;
+    this.originY = null;
+    this.originZ = null;
+    this.targetX = null;
+    this.targetY = null;
+    this.targetZ = null;
   }
 
   update() {
     const entity = entitiesManager.getEntityByObjectId(this.character.target);
 
-    this.character.path.origin.x = this.character.x;
-    this.character.path.origin.y = this.character.y;
-    this.character.path.origin.z = this.character.z;
-    this.character.path.target.x = entity.x;
-    this.character.path.target.y = entity.y;
-    this.character.path.target.z = entity.z;
+    this.originX = this.character.x;
+    this.originY = this.character.y;
+    this.originZ = this.character.z;
+    this.targetX = entity.x;
+    this.targetY = entity.y;
+    this.targetZ = entity.z;
 
     let range = 20;
 
@@ -66,13 +57,20 @@ class FollowState extends BaseState {
       range = 600;
     }
 
-    const p = moveCloser(this.character.path.origin.x, this.character.path.origin.y, this.character.path.target.x, this.character.path.target.y, range);
+    const p = moveCloser(this.originX, this.originY, this.targetX, this.targetY, range);
 
-    this.character.path.target.x = p.x;
-    this.character.path.target.y = p.y;
+    this.targetX = p.x;
+    this.targetY = p.y;
 
-    this.character.emit('move');
-    this.character.updatePosition();
+    const arrived = this.character.moveTo(this.targetX, this.targetY, this.targetZ);
+
+    if (arrived) {
+      this.character.changeState('idle');
+      
+      return;
+    }
+
+    this.character.emit('move', this.targetX, this.targetY, this.targetZ);
   }
 
   leave() {

@@ -43,6 +43,7 @@ class Player extends Character {
     this.pickupItem = null; // хранить objectId? как target?
     this._activeSoulShot = false;
     this.lastAttackTimestamp = 0;
+    this.lastMoveTimestamp = 0;
     this.castTimestamp = 0;
     this.lastRegenerateTimestamp = 0;
     this.baseAttackSpeed = 300; // TODO
@@ -247,37 +248,20 @@ class Player extends Character {
 
         break;
       case 'talk':
-        const entity = payload;
+        this.changeState('talk', ...payload);
 
-        this.setLastTalkedNpcId(entity.id);
-
-        if (this._isObjectInRange(this, entity, 100)) {
-          this.changeState('talk');
-        } else {
-          this.changeState('follow');
-        }
+        break;
     }
-  }
-
-  // TODO сделать utils
-  _calculateDistance(obj1, obj2) {
-    const dx = obj1.x - obj2.x;
-    const dy = obj1.y - obj2.y;
-    
-    return Math.sqrt(dx * dx + dy * dy);
-  }
-
-  _isObjectInRange(obj1, obj2, range) {
-    return this._calculateDistance(obj1, obj2) < range;
   }
 
   changeState(stateName, ...payload) {
     if (this._currentState) {
       this._currentState.leave();
     }
-
+    
     const state = this._states[stateName];
 
+    this.state = stateName;
     this._currentState = state;
     
     state.enter(...payload);
@@ -316,39 +300,35 @@ class Player extends Character {
     }
   }
 
-  // updatePosition() {
-  //   const dx = this.path.target.x - this.x;
-  //   const dy = this.path.target.y - this.y;
-  //   const distance = Math.sqrt(dx * dx + dy * dy) - 9;
-    
-  //   if (distance < (this.runSpeed / 10)) {
-  //     const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
+  moveTo(targetX, targetY, targetZ) {
+    if (this.lastMoveTimestamp === 0) {
+      this.lastMoveTimestamp = Date.now();
+    }
 
-  //     this.updateParams({
-  //       x: parseFloat((this.x + (Math.cos(angle) * distance)).toFixed(1)),
-  //       y: parseFloat((this.y + (Math.sin(angle) * distance)).toFixed(1)),
-  //       z: this.z
-  //     });
+    const now = Date.now();
+    const delta = (now - this.lastMoveTimestamp) / 1000;
+    const step = this.runSpeed * delta;
+    const dx = targetX - this.x;
+    const dy = targetY - this.y;
+    const distance = Math.sqrt(dx * dx + dy * dy) - 9;
 
-  //     this.changeState('idle');
+    this.lastMoveTimestamp = now;
 
-  //     return;
-  //   }
+    if (distance < 10) {
+      this.x = targetX;
+      this.y = targetY;
+      this.lastMoveTimestamp = 0;
+      
+      return true;
+    }
 
-  //   const time = (this.lastUpdateTimestamp - this.positionUpdateTimestamp) / 1000;
-  //   const step = this.runSpeed * time;
-  //   const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
+    const angle = Math.atan2(dy, dx);
 
-  //   this.updateParams({
-  //     x: parseFloat((this.x + (Math.cos(angle) * step)).toFixed(1)),
-  //     y: parseFloat((this.y + (Math.sin(angle) * step)).toFixed(1)),
-  //     z: this.z
-  //   });
+    this.x += Math.cos(angle) * step;
+    this.y += Math.sin(angle) * step;
 
-  //   this.positionUpdateTimestamp = this.lastUpdateTimestamp;
-
-  //   this.emit('move'); // TODO ?
-  // }
+    return false;
+  }
 
   regenerate() {
     if ((Date.now() - this.lastRegenerateTimestamp) > 3000) {
