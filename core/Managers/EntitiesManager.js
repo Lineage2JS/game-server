@@ -29,10 +29,6 @@ class EntitiesManager {
     return this._entities.find(entity => entity.objectId === objectId);
   }
 
-  getEntityById(id) {
-    return this._entities.find(entity => entity.id === id);
-  }
-
   async enable() { // fix, load
     const npcManager = require('./NpcManager');
     const playersManager = require('./PlayersManager');

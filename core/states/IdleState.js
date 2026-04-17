@@ -1,17 +1,17 @@
 const BaseState = require("./BaseState");
 
-class IdleState extends BaseState { // IdleState
+class IdleState extends BaseState {
   enter() {
     this.character.isMoving = false;
   }
 
   update() {
     if (this.character.action === 'attack') {
-      this.character.changeState('attack', this.character.target); // TODO нужен ли тут payload?
+      this.character.changeState('attack');
     }
 
     if (this.character.action === 'pickup') {
-      this.character.changeState('pickup', this.character.target); //
+      this.character.changeState('pickup');
     }
 
     if (this.character.action === 'talk') {

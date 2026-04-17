@@ -47,8 +47,13 @@ class Player extends Character {
     this.castTimestamp = 0;
     this.lastRegenerateTimestamp = 0;
     this.baseAttackSpeed = 300; // TODO
-    //
-    this.payloadAttack = null; // fix
+    this.actionParams = {
+      targetX: null,
+      targetY: null,
+      targetZ: null,
+      targetId: null,
+      //itemId: null,
+    }
 
     //
     this._actionPayload = null;
@@ -61,6 +66,22 @@ class Player extends Character {
     this._currentState = '';
     this._activeWeapon = null;
     //
+  }
+
+  get targetX() {
+    return this.actionParams.targetX;
+  }
+
+  get targetY() {
+    return this.actionParams.targetY;
+  }
+
+  get targetZ() {
+    return this.actionParams.targetZ;
+  }
+
+  get targetId() {
+    return this.actionParams.targetId;
   }
 
   getClient() {
@@ -79,13 +100,13 @@ class Player extends Character {
     return this._actionPayload;
   }
 
-  setLastTalkedNpcId(npcId) {
-    this.lastTalkedNpcId = npcId; // TODO лучше хранить objectId?
-  }
+  // setLastTalkedNpcId(npcId) {
+  //   this.lastTalkedNpcId = npcId; // TODO лучше хранить objectId?
+  // }
 
-  getLastTalkedNpcId() {
-    return this.lastTalkedNpcId;
-  }
+  // getLastTalkedNpcId() {
+  //   return this.lastTalkedNpcId;
+  // }
 
   // isState(state) {
   //   return this.getState() === stateName;
@@ -226,13 +247,15 @@ class Player extends Character {
   doAction(action, ...payload) {
     this.action = action;
 
-    switch(action) { // TODO _handleTalkAction можно сделать вычисления перед задачей
+    switch(action) {
       case 'move':
-        this.changeState('move', ...payload);
+        this.actionParams = { targetX: payload[0], targetY: payload[1], targetZ: payload[2] };
+        this.changeState('move');
         
         break;
       case 'attack':
-        this.changeState('attack', payload);
+        this.actionParams = { targetId: payload[0] };
+        this.changeState('attack');
 
         break;
       case 'pickup':
@@ -248,13 +271,14 @@ class Player extends Character {
 
         break;
       case 'talk':
-        this.changeState('talk', ...payload);
+        this.actionParams = { targetId: payload[0] };
+        this.changeState('talk');
 
         break;
     }
   }
 
-  changeState(stateName, ...payload) {
+  changeState(stateName) {
     if (this._currentState) {
       this._currentState.leave();
     }
@@ -264,7 +288,7 @@ class Player extends Character {
     this.state = stateName;
     this._currentState = state;
     
-    state.enter(...payload);
+    state.enter();
   }
 
   update() {

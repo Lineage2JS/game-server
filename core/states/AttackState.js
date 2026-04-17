@@ -27,17 +27,16 @@ function findLevel(exp) { // оптимизировать get level by exp
 
 class AttackState extends BaseState { // fix много в коде
   enter() {
+    this.entity = entitiesManager.getEntityByObjectId(this.character.targetId);
     this.character.isDamage = false;
   }
 
   update() {
-    const entity = entitiesManager.getEntityByObjectId(this.payload);
-
-    if (!entity) { // fix
+    if (!this.entity) { // fix
       return;
     }
 
-    if (entity.isDead) {
+    if (this.entity.isDead) {
       // if character of npc
       this.character.action = 'patrol';
       this.character.changeState('idle');
@@ -48,8 +47,8 @@ class AttackState extends BaseState { // fix много в коде
     if ((Date.now() - this.character.lastAttackTimestamp) > (500000 / this.character.attackSpeed)) {
       this.character.isDamage = true;
   
-      const dx = entity.x - this.character.x;
-      const dy = entity.y - this.character.y;
+      const dx = this.entity.x - this.character.x;
+      const dy = this.entity.y - this.character.y;
       const distance = Math.sqrt(dx * dx + dy * dy);
 
       if (distance > 40) { // 29 - attack range + collision radius TODO magic number
@@ -60,31 +59,31 @@ class AttackState extends BaseState { // fix много в коде
       
       this.character.lastAttackTimestamp = Date.now();
   
-      this.character.emit('attack', entity.objectId);
+      this.character.emit('attack', this.entity.objectId);
 
       //this.character._activeSoulShot = false;
       
       // if entity instanceof Npc
-      if (entity.action === 'patrol') {
-        entity.lastAttackTimestamp = Date.now() - (((500000 / entity.baseAttackSpeed) - (500000 / this.character.attackSpeed)) + ((500000 / this.character.attackSpeed) / 2));
-        entity.action = 'attack';
-        entity.setMoveType(1); // TODO Enums magic number
-        entity.emit('changeMove');
-        //entity.state = 'attack';
-        entity.target = this.character.objectId;
-        //entity.payloadAttack = this.character.objectId;
-        entity.changeState('attack', this.character.objectId);
+      if (this.entity.action === 'patrol') {
+        this.entity.lastAttackTimestamp = Date.now() - (((500000 / this.entity.baseAttackSpeed) - (500000 / this.character.attackSpeed)) + ((500000 / this.character.attackSpeed) / 2));
+        this.entity.action = 'attack';
+        this.entity.setMoveType(1); // TODO Enums magic number
+        this.entity.emit('changeMove');
+        //this.entity.state = 'attack';
+        this.entity.target = this.character.objectId;
+        //this.entity.payloadAttack = this.character.objectId;
+        this.entity.changeState('attack', this.character.objectId);
       }
     }
 
     if ((Date.now() - this.character.lastAttackTimestamp) > (500000 / this.character.attackSpeed / 2) && this.character.isDamage) {
-      if (entity.hp > 0 && entity.action !== 'dead') { // TODO !entity.isDead()
-        entity.takeDamage(this.character, 10);
+      if (this.entity.hp > 0 && this.entity.action !== 'dead') { // TODO !this.entity.isDead()
+        this.entity.takeDamage(this.character, 10);
 
         this.character.isDamage = false; // TODO зачем это
       }
 
-      if (entity.hp <= 0) {
+      if (this.entity.hp <= 0) {
         // if character of npc
         this.character.action = 'patrol';        
         this.character.target = null;

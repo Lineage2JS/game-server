@@ -34,7 +34,7 @@ class FollowState extends BaseState {
   }
 
   update() {
-    const entity = entitiesManager.getEntityByObjectId(this.character.target);
+    const entity = entitiesManager.getEntityByObjectId(this.character.targetId);
 
     this.originX = this.character.x;
     this.originY = this.character.y;

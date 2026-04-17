@@ -79,8 +79,7 @@ class Action extends ClientPacketNew {
       }
 
       if (entity.canBeAttacked === 0) {
-        player.setLastTalkedNpcId(entity.id);
-        player.doAction('talk', entity);
+        player.doAction('talk', entity.objectId);
 
         client.sendPacket(new serverPackets.ActionFailed()); // fix?
 
@@ -90,7 +89,7 @@ class Action extends ClientPacketNew {
       if (entity.canBeAttacked === 1 && !player.isAttacking) { // TODO isAttacking опирается на state        
         player.isAttacking = true;
 
-        player.doAction('attack', objectId);
+        player.doAction('attack', entity.objectId);
 
         return;
       }

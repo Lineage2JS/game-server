@@ -1,12 +1,10 @@
 const BaseState = require("./BaseState");
 
 class MoveState extends BaseState {
-  async enter(targetX, targetY, targetZ) {
-    this.targetX = targetX;
-    this.targetY = targetY;
-    this.targetZ = targetZ;
-    this.startX = this.character.x;
-    this.startY = this.character.y;
+  async enter() {
+    this.targetX = this.character.targetX;
+    this.targetY = this.character.targetY;
+    this.targetZ = this.character.targetZ;
   }
 
   update() {
