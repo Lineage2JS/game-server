@@ -84,6 +84,14 @@ class Player extends Character {
     return this.actionParams.targetId;
   }
 
+  get timeSinceLastAttack() {
+    return Date.now() - this.lastAttackTimestamp;
+  }
+
+  get attackDelay() {
+    return 500000 / this.attackSpeed;
+  }
+
   getClient() {
     return this._client;
   }
@@ -352,6 +360,12 @@ class Player extends Character {
     this.y += Math.sin(angle) * step;
 
     return false;
+  }
+
+  attack(entity) {
+    if (entity.hp > 0 && entity.action !== 'dead') {
+      entity.takeDamage(10);
+    }
   }
 
   regenerate() {

@@ -119,8 +119,8 @@ class Character extends EventEmitter {
     //
   }
 
-  takeDamage(character, damage) {
-    this.addAttacker(character);
+  takeDamage(damage) {
+    //this.addAttacker(character);
     
     this.hp = this.hp - damage;
 
