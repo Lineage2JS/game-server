@@ -119,7 +119,7 @@ class Character extends EventEmitter {
     //
 
     this.on('attacked', (data) => {
-      if (this.hp > 0 && this.action !== 'dead') {
+      if (this.hp > 0 && this.action !== 'dead') {я
         this.takeDamage(data.damage);
       }
     })
