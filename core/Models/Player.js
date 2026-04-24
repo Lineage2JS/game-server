@@ -363,9 +363,11 @@ class Player extends Character {
   }
 
   attack(entity) {
-    if (entity.hp > 0 && entity.action !== 'dead') {
-      entity.takeDamage(10);
-    }
+    // Тут может быть расчет урона
+    entity.emit('attacked', {
+      attacker: this,
+      damage: 10
+    });
   }
 
   regenerate() {

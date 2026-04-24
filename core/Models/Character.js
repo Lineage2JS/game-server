@@ -117,6 +117,12 @@ class Character extends EventEmitter {
     this._attackers = new Set();
     this._moveType = 0;
     //
+
+    this.on('attacked', (data) => {
+      if (this.hp > 0 && this.action !== 'dead') {
+        this.takeDamage(data.damage);
+      }
+    })
   }
 
   takeDamage(damage) {
