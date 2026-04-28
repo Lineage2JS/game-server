@@ -17,7 +17,7 @@ class Action extends ClientPacketNew {
     const originZ = this.readD();
     const actionId = this.readC(); // 0 - click, 1 - shift click
     const entity = entitiesManager.getEntityByObjectId(objectId);
-
+    
     if (entity instanceof Player) {
       // TODO\
       client.sendPacket(new serverPackets.StatusUpdate(entity.objectId, [
@@ -80,29 +80,32 @@ class Action extends ClientPacketNew {
 
       if (entity.canBeAttacked === 0) {
         player.doAction('talk', entity.objectId);
-
         client.sendPacket(new serverPackets.ActionFailed()); // fix?
 
         return;
       }
 
-      if (entity.canBeAttacked === 1 && !player.isAttacking) { // TODO isAttacking опирается на state        
-        player.isAttacking = true;
-
+      if (!player.isAttacking && !entity.isDead && entity.canBeAttacked === 1) {
         player.doAction('attack', entity.objectId);
 
         return;
       }
+      
+      client.sendPacket(new serverPackets.ActionFailed());
 
       return;
     }
 
     if (entity instanceof DropItem) {
       player.doAction('pickup', entity);
+
+      return;
     }
 
     if (entity instanceof Bot) {
-      client.sendPacket(new serverPackets.ActionFailed()); // fix?
+      client.sendPacket(new serverPackets.ActionFailed());
+
+      return;
     }
   }
 }

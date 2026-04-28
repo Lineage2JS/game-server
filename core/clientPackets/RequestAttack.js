@@ -1,5 +1,8 @@
 const ClientPacketNew = require('./ClientPacketNew');
 const serverPackets = require('./../ServerPackets/serverPackets');
+const entitiesManager = require('./../Managers/EntitiesManager');
+const Player = require('./../Models/Player');
+const Npc = require('./../Models/Npc');
 
 class RequestAttack extends ClientPacketNew {
   handle() {
@@ -10,7 +13,7 @@ class RequestAttack extends ClientPacketNew {
     const y = this.readD();
     const z = this.readD();
     const attackId = this.readC(); // 0 - click, 1 - shift click
-
+    const entity = entitiesManager.getEntityByObjectId(objectId);
     const activeWeapon = player.getActiveWeapon();
 
     if (activeWeapon && activeWeapon.getWeaponType() === "bow") { // TODO temp for beta
@@ -18,12 +21,14 @@ class RequestAttack extends ClientPacketNew {
 
       return;
     }
+    
+    if (!player.isAttacking && !entity.isDead && entity.canBeAttacked === 1) {
+      player.doAction('attack', entity.objectId);
 
-    if (!player.isAttacking) {
-      player.isAttacking = true;
-      
-      player.doAction('attack', objectId);
+      return;
     }
+    
+    client.sendPacket(new serverPackets.ActionFailed());
   }
 }
 

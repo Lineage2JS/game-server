@@ -4,6 +4,7 @@ const IdleState = require('./../states/IdleState');
 const AttackState = require('./../states/AttackState');
 const FollowState = require('./../states/FollowState');
 const PickupState = require('./../states/PickupState');
+const DeadState = require('./../states/DeadState');
 
 //
 //const entitiesManager = require('./../Managers/EntitiesManager'); // fix?
@@ -54,6 +55,7 @@ class Npc extends Character {
       'attack': new AttackState(this),
       'follow': new FollowState(this),
       'pickup': new PickupState(this),
+      'dead': new DeadState(this),
     }
 
     this.state = '';
@@ -81,9 +83,12 @@ class Npc extends Character {
     this.positionUpdateTimestamp = 0;
     this.lastRegenerateTimestamp = 0;
     this.lastUpdateTimestamp = 0;
-    this.isDamage = false;
     this._currentState = '';
     //
+  }
+
+  get isDead() {
+    return this.state === 'dead';
   }
 
   enable() {
@@ -138,10 +143,10 @@ class Npc extends Character {
 
     const state = this._states[stateName];
 
-    state.payload = payload;
+    this.state = stateName;
     this._currentState = state;
     
-    state.enter();
+    this._currentState.enter();
   }
 
   update() {
@@ -155,18 +160,12 @@ class Npc extends Character {
       this.emit('endAttack');
     }
 
-    if (this.hp > 0 && this.hp < this.maximumHp && this.action !== 'dead') {
+    if (this.hp > 0 && this.hp < this.maximumHp && !this.isDead) {
       this.regenerate(); 
     }
 
-    if (this.hp <= 0 && this.action !== 'dead') {
-      this.hp = 0;
-      this.action = 'dead';
-      this.changeState('idle');
-      this.emit('died');
-      this.emit('dropItems'); // TODO тут и NPC и Character в entity
-      this.isDead = true;
-      this.target = null;
+    if (this.hp <= 0 && !this.isDead) {
+      this.changeState('dead');
     }
   }
 

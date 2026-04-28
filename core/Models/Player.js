@@ -21,7 +21,6 @@ class Player extends Character {
     this.state = '';
     this.action = '';
     this.isMoving = false;
-    this.isAttacking = false;
     this.isCasting = false;
     this.isDead = false;
 
@@ -90,6 +89,10 @@ class Player extends Character {
 
   get attackDelay() {
     return 500000 / this.attackSpeed;
+  }
+
+  get isAttacking() {
+    return this.state === 'attack';
   }
 
   getClient() {
@@ -295,8 +298,8 @@ class Player extends Character {
 
     this.state = stateName;
     this._currentState = state;
-    
-    state.enter();
+
+    this._currentState.enter();
   }
 
   update() {
