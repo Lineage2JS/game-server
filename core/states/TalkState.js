@@ -5,7 +5,7 @@ const { inRange } = require('./../../utils/distance');
 class TalkState extends BaseState {
   enter() {
     const entity = entitiesManager.getEntityByObjectId(this.character.targetId); // если target будет null? Вернуть getLastTalk?
-
+    
     if (!inRange(this.character, entity, 100)) {
       this.character.changeState('follow');
 
@@ -16,7 +16,7 @@ class TalkState extends BaseState {
   }
 
   update() {
-    
+
   }
 
   leave() {

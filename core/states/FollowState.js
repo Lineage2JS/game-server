@@ -46,7 +46,7 @@ class FollowState extends BaseState {
     let range = 20;
 
     if (this.character.action === 'talk') {
-      range = 100;
+      range = 80;
     }
 
     if (this.character.action === 'attack') {

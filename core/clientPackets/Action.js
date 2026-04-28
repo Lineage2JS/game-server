@@ -80,7 +80,7 @@ class Action extends ClientPacketNew {
 
       if (entity.canBeAttacked === 0) {
         player.doAction('talk', entity.objectId);
-        client.sendPacket(new serverPackets.ActionFailed()); // fix?
+        //client.sendPacket(new serverPackets.ActionFailed()); // fix?
 
         return;
       }
@@ -90,7 +90,7 @@ class Action extends ClientPacketNew {
 
         return;
       }
-      
+
       client.sendPacket(new serverPackets.ActionFailed());
 
       return;
