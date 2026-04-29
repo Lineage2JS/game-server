@@ -1,7 +1,6 @@
 class BaseState {
   constructor(character) {
     this.character = character;
-    this.payload = null;
   }
 
   enter() {

@@ -114,31 +114,41 @@ class Character extends EventEmitter {
     //
     this.target = null; // target and aggroTarget?
     this.createdAt = null;
-    this._attackers = new Set();
+    this._hitHistoryMap = new Map();
     this._moveType = 0;
     //
 
     this.on('attacked', (data) => {
-      if (this.hp > 0 && this.action !== 'dead') {
-        this.takeDamage(data.damage);
+      if (this.isDead) {
+        return
       }
-    })
+
+      this.takeDamage(data.damage);
+      this.recordHit(data.attacker, data.damage);
+    });
   }
 
-  takeDamage(damage) {
-    //this.addAttacker(character);
-    
+  takeDamage(damage) {    
     this.hp = this.hp - damage;
 
     this.emit('damaged');
   }
 
-  addAttacker(character) {
-    this._attackers.add(character)
+  recordHit(character, damage) {
+    const hit = this._hitHistoryMap.get(character.objectId);
+
+    if (hit) {
+      hit.damage += damage;
+    } else {
+      this._hitHistoryMap.set(character.objectId, {
+        character,
+        damage
+      });
+    }
   }
 
-  getAttackers() {
-    return this._attackers;
+  getHitHistory() {
+    return this._hitHistoryMap;
   }
 
   getMoveType() {

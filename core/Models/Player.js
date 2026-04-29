@@ -366,10 +366,9 @@ class Player extends Character {
   }
 
   attack(entity) {
-    // Тут может быть расчет урона
     entity.emit('attacked', {
       attacker: this,
-      damage: 10
+      damage: 10 // TODO
     });
   }
 

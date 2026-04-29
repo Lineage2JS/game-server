@@ -113,9 +113,11 @@ class EntitiesManager {
       }, 3000);
 
       // get exp
-      const attackers = npc.getAttackers();
+      const hitHistory = npc.getHitHistory();
 
-      attackers.forEach(attacker => {
+      hitHistory.forEach(entry => {
+        const attacker = entry.character;
+
         attacker.exp += 100;
         attacker.emit('updateExp'); // TODO 'updateStatus'
         
