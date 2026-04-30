@@ -65,40 +65,6 @@ class NpcManager extends EventEmitter {
             }, 2000);
           });
 
-          npc.on('dropItems', () => {
-            // if (npc.additionalMakeMultiList.length === 0) {
-            //   return;
-            // }
-
-            // const dropItems = []
-
-            // npc.additionalMakeMultiList.forEach(list => {
-            //   const randomChanceGroup = Math.floor(Math.random() * 100);
-
-            //   if (randomChanceGroup > list.chance) {
-            //     return;
-            //   }
-
-            //   list.group.forEach(item => {
-            //     const randomChanceItem = Math.floor(Math.random() * 100);
-
-            //     if (randomChanceItem > item.chance) {
-            //       return;
-            //     }
-
-            //     const count = Math.floor(Math.random() * (item.max - item.min + 1)) + item.min;
-            //     const dropItem = {
-            //       itemName: item.itemName,
-            //       count,
-            //     }
-
-            //     dropItems.push(dropItem);
-            //   });
-            // });
-
-            // this.emit('dropItems', npc, dropItems)
-          });
-
           npc.updateParams(npcData);
 
           npc.baseAttackSpeed = 330; // fix remove брать из датапака

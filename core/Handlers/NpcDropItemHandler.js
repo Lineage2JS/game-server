@@ -1,6 +1,6 @@
 const playersManager = require('./../Managers/PlayersManager');
-const itemsManager = require('./../Managers/itemsManager');
-const dropItemsManager = require('./../Managers/dropItemsManager');
+const itemsManager = require('./../Managers/ItemsManager');
+const dropItemsManager = require('./../Managers/DropItemsManager');
 const entitiesManager = require('./../Managers/EntitiesManager');
 const serverPackets = require('./../ServerPackets/serverPackets');
 
