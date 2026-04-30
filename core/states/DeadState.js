@@ -8,7 +8,7 @@ class DeadState extends BaseState {
     this.character.target = null;
     this.character.emit('died');
     eventBusNew.emit('npc:died', { character: this.character });
-    //this.character.emit('dropItems'); // TODO тут и NPC и Character в entity
+    eventBusNew.emit('npc:item:drop', { character: this.character }); // TODO тут и NPC и Character в entity
   }
 
   update() {
