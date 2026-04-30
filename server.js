@@ -9,6 +9,7 @@ const entitiesManager = require('./core/Managers/EntitiesManager');
 const visibilityManager = require('./core/Managers/VisibilityManager');
 const npcHtmlMessagesManager = require('./core/Managers/NpcHtmlMessagesManager');
 const schedulerManager = require('./core/Managers/SchedulerManager');
+const eventSubscribers = require('./core/Events/EventSubscribers');
 const database = require('./database');
 const config = require('./config');
 const serverStatus = require('./enums/serverStatus');
@@ -74,6 +75,8 @@ async function run() {
       visibilityManager.enable();
       npcHtmlMessagesManager.enable();
       await schedulerManager.enable();
+
+      eventSubscribers.subscribe();
     });
   } catch {
 

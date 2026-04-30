@@ -1,25 +1,6 @@
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
 const eventBusNew = require('./../Events/EventBusNew');
 
-//
-const levelExpTable = require('./../../datapack/exp.json');
-
-function findLevel(exp) { // оптимизировать get level by exp
-  let level = 1;
-  
-  // Перебираем уровни, пока не найдем нужный
-  for (let i = 1; i <= 60; i++) {
-    if (exp >= levelExpTable[i]) {
-      level = i;
-    } else {
-      break;
-    }
-  }
-  
-  return level;
-}
-//
-
 class EntitiesManager {
   constructor() {
     this._entities = [];
@@ -93,47 +74,6 @@ class EntitiesManager {
       const packet = new serverPackets.StopMove(npc.objectId, npc.x, npc.y, npc.z);
 
       playersManager.emit('notify', packet);
-    });
-
-    npcManager.on('died', async npc => {
-      playersManager.emit('notify', new serverPackets.StatusUpdate(npc.objectId, [
-        {
-          id: characterStatusEnums.CUR_HP,
-          value: 0,
-        },
-        {
-          id: characterStatusEnums.MAX_HP,
-          value: npc.maximumHp,
-        }
-      ]));
-      playersManager.emit('notify', new serverPackets.Die(npc.objectId));
-
-      setTimeout(() => {
-        playersManager.emit('notify', new serverPackets.DeleteObject(npc.objectId));
-      }, 3000);
-
-      // get exp
-      const hitHistory = npc.getHitHistory();
-
-      hitHistory.forEach(entry => {
-        const attacker = entry.character;
-
-        attacker.exp += 100;
-        attacker.emit('updateExp'); // TODO 'updateStatus'
-        
-        const level = findLevel(attacker.exp);
-        
-        if (attacker.level < level) {
-          attacker.level = level;
-          attacker.emit('updateLevel'); // updateState('levelUp')
-          attacker.hp = attacker.maximumHp;
-          attacker.mp = attacker.maximumMp;
-          attacker.emit('regenerate');
-        }
-      });
-
-      //aiManager.onMyDying(npc.ai.name, player);
-      //npc.ai.dying()?
     });
 
     npcManager.on('dropItems', async (npc, dropItems) => {

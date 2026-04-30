@@ -38,6 +38,10 @@ class PlayersManager extends EventEmitter {
     //
   }
 
+  getAllPlayers() {
+    return this._players;
+  }
+
   add(player) {
     this._players.push(player);
 
