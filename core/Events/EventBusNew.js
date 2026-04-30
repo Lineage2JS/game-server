@@ -38,6 +38,7 @@ module.exports = new EventBusNew();
 // Сейчас есть
 // player:enter
 // player:move
+// npc:died
 
 // const Events = {
 //   // Игрок
