@@ -13,7 +13,7 @@ class CastState extends BaseState {
     this.entity = entitiesManager.getEntityByObjectId(this.character.targetId);
     this.skill = skillsManager.getSkill(this.character.skillId);
     this.skillId = this.skill.getSkillId();
-    //this.character.isCasting = false;
+    this.canDamage = false;
   }
 
   update() {
@@ -34,29 +34,29 @@ class CastState extends BaseState {
     //   return;
     // }
 
-    if (this.character.isCasting) {
+    if (this.canDamage) {
       if ((Date.now() - this.character.castTimestamp) > (4000 / 333) * 333 ) { // (HitTime / CastSpeed) * 333
         if (this.skillId === 1177) {
           this.entity.takeDamage(this.character, 30);
 
-          // TODO перенести в takeDamage?
-          this.entity.action = 'attack';
-          this.entity.isRunning = true;
-          this.entity.setMoveType(1); // TODO Enums magic number
-          this.entity.emit('changeMove');
-          //entity.state = 'attack';
-          this.entity.target = this.character.objectId;
-          //entity.payloadAttack = this.character.objectId;
-          this.entity.changeState('attack', this.character.objectId);
+          // // TODO перенести в takeDamage?
+          // this.entity.action = 'attack';
+          // this.entity.isRunning = true;
+          // this.entity.setMoveType(1); // TODO Enums magic number
+          // this.entity.emit('changeMove');
+          // //entity.state = 'attack';
+          // this.entity.target = this.character.objectId;
+          // //entity.payloadAttack = this.character.objectId;
+          // this.entity.changeState('attack', this.character.objectId);
           
           // clearAction
           this.character.action = null;
           //
           this.character.changeState('idle');
 
-          if (this.entity.hp <= 0) {
-            this.character.target = null;
-          }
+          // if (this.entity.hp <= 0) {
+          //   this.character.target = null;
+          // }
           
           return;
         }
@@ -110,7 +110,7 @@ class CastState extends BaseState {
     }
     
     this.character.castTimestamp = Date.now();
-    //this.character.isCasting = true;
+    this.canDamage = true;
     this.character.emit('cast', this.skillId); // TODO
     this.character.mp = this.character.mp - 20;
 
