@@ -5,12 +5,15 @@ const CastPayload = require('./../payloads/CastPayload')
 const entitiesManager = require('./../Managers/EntitiesManager');
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
 const serverPackets = require('./../ServerPackets/serverPackets');
+const skillsManager = require('./../Managers/SkillsManager');
 //
 
 class CastState extends BaseState {
   enter() {
-    this.payload = this.character.getActionPayload();
-    this.character.isCasting = false;
+    this.entity = entitiesManager.getEntityByObjectId(this.character.targetId);
+    this.skill = skillsManager.getSkill(this.character.skillId);
+    this.skillId = this.skill.getSkillId();
+    //this.character.isCasting = false;
   }
 
   update() {
@@ -20,22 +23,12 @@ class CastState extends BaseState {
 
     // check if skill self target or no(enemy?)
 
-    if (!this.payload instanceof CastPayload) {
-      //this.character.clearAction(); ?
-      //this.character.changeState('idle'); ?
-
-      return
-    }
-
     if (!this.character.target) {
-      this.character.action = null;
+      this.character.clearAction();
       this.character.changeState('idle');
       
       return;
     }
-
-    const skillId = this.payload.getSkill().getSkillId();
-    const entity = entitiesManager.getEntityByObjectId(this.payload.getTarget());
 
     // if (!entity) { // fix
     //   return;
@@ -43,32 +36,32 @@ class CastState extends BaseState {
 
     if (this.character.isCasting) {
       if ((Date.now() - this.character.castTimestamp) > (4000 / 333) * 333 ) { // (HitTime / CastSpeed) * 333
-        if (skillId === 1177) {
-          entity.takeDamage(this.character, 30);
+        if (this.skillId === 1177) {
+          this.entity.takeDamage(this.character, 30);
 
           // TODO перенести в takeDamage?
-          entity.action = 'attack';
-          entity.isRunning = true;
-          entity.setMoveType(1); // TODO Enums magic number
-          entity.emit('changeMove');
+          this.entity.action = 'attack';
+          this.entity.isRunning = true;
+          this.entity.setMoveType(1); // TODO Enums magic number
+          this.entity.emit('changeMove');
           //entity.state = 'attack';
-          entity.target = this.character.objectId;
+          this.entity.target = this.character.objectId;
           //entity.payloadAttack = this.character.objectId;
-          entity.changeState('attack', this.character.objectId);
+          this.entity.changeState('attack', this.character.objectId);
           
           // clearAction
           this.character.action = null;
           //
           this.character.changeState('idle');
 
-          if (entity.hp <= 0) {
+          if (this.entity.hp <= 0) {
             this.character.target = null;
           }
           
           return;
         }
 
-        if (skillId === 1216) {
+        if (this.skillId === 1216) {
           this.character.action = '';
           this.character.changeState('idle');
 
@@ -91,9 +84,9 @@ class CastState extends BaseState {
 
     const path = {
       target: {
-        x: entity.x,
-        y: entity.y,
-        z: entity.z
+        x: this.entity.x,
+        y: this.entity.y,
+        z: this.entity.z
       },
       origin: {
         x: this.character.x,
@@ -117,8 +110,8 @@ class CastState extends BaseState {
     }
     
     this.character.castTimestamp = Date.now();
-    this.character.isCasting = true;
-    this.character.emit('cast', this.payload.getSkill().getSkillId()); // TODO
+    //this.character.isCasting = true;
+    this.character.emit('cast', this.skillId); // TODO
     this.character.mp = this.character.mp - 20;
 
     this.character.getClient().sendPacket(new serverPackets.StatusUpdate(this.character.objectId, [
@@ -138,7 +131,7 @@ class CastState extends BaseState {
   }
 
   leave() {
-    this.character.isCasting = false;
+
   }
 }
 

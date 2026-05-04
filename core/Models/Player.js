@@ -21,7 +21,6 @@ class Player extends Character {
     this.state = '';
     this.action = '';
     this.isMoving = false;
-    this.isCasting = false;
     this.isDead = false;
 
     this._states = {
@@ -51,6 +50,8 @@ class Player extends Character {
       targetY: null,
       targetZ: null,
       targetId: null,
+      itemId: null,
+      skillId: null,
     }
     this.lastUpdateTimestamp = 0;
     this.isDamage = false;
@@ -77,6 +78,14 @@ class Player extends Character {
     return this.actionParams.targetId;
   }
 
+  get itemId() {
+    return this.actionParams.itemId;
+  }
+
+  get skillId() {
+    return this.actionParams.skillId;
+  }
+
   get timeSinceLastAttack() {
     return Date.now() - this.lastAttackTimestamp;
   }
@@ -87,6 +96,10 @@ class Player extends Character {
 
   get isAttacking() {
     return this.state === 'attack';
+  }
+
+  get isCasting() {
+    return this.state === 'cast';
   }
 
   getClient() {
@@ -264,14 +277,12 @@ class Player extends Character {
 
         break;
       case 'pickup':
-        this.actionParams = { targetId: payload[0] };
+        this.actionParams = { itemId: payload[0] };
         this.changeState('pickup');
 
         break;
       case 'cast':
-        const castPayload = new CastPayload(payload);
-
-        this.setActionPayload(castPayload);
+        this.actionParams = { targetId: payload[0], skillId: payload[1] };
         this.changeState('cast');
 
         break;
@@ -290,6 +301,8 @@ class Player extends Character {
       targetY: null,
       targetZ: null,
       targetId: null,
+      itemId: null,
+      skillId: null,
     }
   }
 

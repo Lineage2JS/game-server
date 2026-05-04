@@ -1,5 +1,4 @@
 const ClientPacketNew = require("./ClientPacketNew");
-const skillsManager = require('./../Managers/SkillsManager');
 const serverPackets = require('./../ServerPackets/serverPackets');
 const entitiesManager = require('./../Managers/EntitiesManager');
 
@@ -11,7 +10,6 @@ class RequestMagicSkillUse extends ClientPacketNew {
     const data0 = this.readD();
     const data1 = this.readC(); // TODO ?
     const entity = entitiesManager.getEntityByObjectId(player.target);
-    //const npc = npcManager.getNpcByObjectId(player.target);
     
     if (entity.canBeAttacked === 0) {
       client.sendPacket(new serverPackets.ActionFailed()); // fix?
@@ -23,15 +21,7 @@ class RequestMagicSkillUse extends ClientPacketNew {
       return;
     }
 
-    player.isAttacking = true; // TODO забирать из состояния state атакует или нет
-    // К тому же он устаналивается в Action из-за чего я не могу атаковать после каста
-
-    const skill = skillsManager.getSkill(skillId);
-
-    player.doAction('cast', {
-      target: player.target,
-      skill: skill
-    });
+    player.doAction('cast', player.target, skillId);
   }
 }
 

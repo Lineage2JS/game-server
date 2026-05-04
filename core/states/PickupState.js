@@ -3,7 +3,7 @@ const entitiesManager = require('./../Managers/EntitiesManager');
 
 class PickupState extends BaseState {
   enter() {
-    this.entity = entitiesManager.getEntityByObjectId(this.character.targetId);
+    this.entity = entitiesManager.getEntityByObjectId(this.character.itemId);
     this.originX = this.character.x;
     this.originY = this.character.y;
     this.originZ = this.character.z;
