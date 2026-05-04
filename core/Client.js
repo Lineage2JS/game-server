@@ -146,7 +146,7 @@ class Client {
 
         break;
       case 0x21:
-        new clientPackets.RequestBypassToServer(this, payloadPacket);
+        packet = new clientPackets.RequestBypassToServer(this, payloadPacket);
 
         break;
       case 0x3F:

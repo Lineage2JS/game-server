@@ -1,79 +1,62 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
-const ClientPacket = require("./ClientPacket");
-const playersManager = require('./../Managers/PlayersManager');
-const npcManager = require('./../Managers/NpcManager');
+const ClientPacketNew = require("./ClientPacketNew");
+const entitiesManager = require('./../Managers/EntitiesManager');
 const aiManager = require('./../Managers/AiManager');
 const npcHtmlMessagesManager = require('./../Managers/NpcHtmlMessagesManager');
 const itemsManager = require('./../Managers/ItemsManager');
 const adminPanelManager = require('./../Managers/AdminPanelManager');
 
-// fix remove from global
-const waypoints = [];
-//
+class RequestBypassToServer extends ClientPacketNew {
+  async handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
+    const command = this.readS();
 
-class RequestBypassToServer {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-    this._data
-      .readS();
-
-    this._init();
-  }
-
-  get command() {
-    return this._data.getData()[0];
-  }
-
-
-  async _init() {
-    const player = playersManager.getPlayerByClient(this._client);
-
-    if (this.command === 'admin_show_panel') {
+    if (command === 'admin_show_panel') {
       const htmlMessage = adminPanelManager.getHtmlMessageByFileName('panel');
 
-      this._client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
+      client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
 
       return;
     }
     
-    if (this.command === 'admin_show_teleports') {
+    if (command === 'admin_show_teleports') {
       const htmlMessage = adminPanelManager.getHtmlMessageByFileName('teleports');
 
-      this._client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
+      client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
 
       return;
     }
 
-    if (this.command.includes('admin_teleport')) {
-      const [x, y, z] = this.command.split(' ').slice(1).map(i => Number(i)); // fix
+    if (command.includes('admin_teleport')) {
+      const [x, y, z] = command.split(' ').slice(1).map(i => Number(i)); // fix
       
       player.x = x;
       player.y = y;
       player.z = z;
 
-      this._client.sendPacket(new serverPackets.TeleportToLocation(player.objectId, player.x, player.y, player.z));
+      client.sendPacket(new serverPackets.TeleportToLocation(player.objectId, player.x, player.y, player.z));
       
       return;
     }
 
-    if (this.command === 'admin_show_items') {
+    if (command === 'admin_show_items') {
       const htmlMessage = adminPanelManager.getHtmlMessageByFileName('items');
 
-      this._client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
+      client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
 
       return;
     }
 
-    if (this.command === 'admin_show_bots') {
+    if (command === 'admin_show_bots') {
       const htmlMessage = adminPanelManager.getHtmlMessageByFileName('bots');
 
-      this._client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
+      client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
 
       return;
     }
 
-    if (this.command === 'admin_show_gmshop') {
+    if (command === 'admin_show_gmshop') {
       const items = [];
       const sellList = [
         "small_sword",
@@ -88,65 +71,39 @@ class RequestBypassToServer {
         items.push(item);
       }
 
-      this._client.sendPacket(new serverPackets.BuyList(0, items)); // TODO 0?
+      client.sendPacket(new serverPackets.BuyList(0, items)); // TODO 0?
 
       return;
     }
 
-    if (this.command === 'admin_show_other') {
+    if (command === 'admin_show_other') {
       const htmlMessage = adminPanelManager.getHtmlMessageByFileName('other');
 
-      this._client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
+      client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
 
       return;
     }
 
-    if (this.command === 'admin_bots_create_waypoint') {
-      const waypoint = { x: player.x, y: player.y };
-
-      waypoints.push(waypoint);
-
-      console.log(waypoints);
-
-      const htmlMessage = adminPanelManager.getHtmlMessageByFileName('bots');
-
-      this._client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
+    if (command === 'admin_other_ride_strider') {
+      client.sendPacket(new serverPackets.Ride(player, 1));
 
       return;
     }
 
-    if (this.command === 'admin_other_ride_strider') {
-      this._client.sendPacket(new serverPackets.Ride(player, 1));
+    if (command === 'admin_other_ride_wyvern') {
+      client.sendPacket(new serverPackets.Ride(player, 2));
 
       return;
     }
 
-    if (this.command === 'admin_other_ride_wyvern') {
-      this._client.sendPacket(new serverPackets.Ride(player, 2));
-
-      return;
-    }
-
-    if (this.command === 'admin_other_earthquake') {
-      this._client.sendPacket(new serverPackets.EarthQuake(player.x, player.y, player.z, 40, 10));
+    if (command === 'admin_other_earthquake') {
+      client.sendPacket(new serverPackets.EarthQuake(player.x, player.y, player.z, 40, 10));
       
       return;
     }
 
-    if (this.command === 'admin_bots_delete_waypoint') {
-      waypoints.splice(0, waypoints.length);
-
-      console.log(waypoints);
-      
-      const htmlMessage = adminPanelManager.getHtmlMessageByFileName('bots');
-
-      this._client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
-
-      return;
-    }
-
-    if (this.command.includes('admin_create_item')) {
-      const queryParams = this.command.split('?')[1];
+    if (command.includes('admin_create_item')) {
+      const queryParams = command.split('?')[1];
       const params = queryParams.split('&').map(i => {
         const [key, value] = i.split('=');
     
@@ -165,20 +122,20 @@ class RequestBypassToServer {
 
       const items = player.getItems();
 
-      this._client.sendPacket(new serverPackets.ItemList(items));
+      client.sendPacket(new serverPackets.ItemList(items));
 
       return;
     }
 
-    const npc = npcManager.getNpcById(player.lastTalkedNpcId);
+    const npc = entitiesManager.getEntityByObjectId(player.lastTalkedNpcId);
 
-    if (this.command === 'talk_select') {
+    if (command === 'talk_select') {
       npc.ai.talkSelect(player);
 
       return;
     }
 
-    if (this.command === 'learn_skill') {
+    if (command === 'learn_skill') {
       if (npc.ai.name === 'Minx') {
         aiManager.onLearnSkill(npc.ai.name, player);
       }
@@ -186,8 +143,8 @@ class RequestBypassToServer {
       return;
     }
 
-    if (this.command.includes('menu_select')) {
-      const queryParams = this.command.split('?')[1];
+    if (command.includes('menu_select')) {
+      const queryParams = command.split('?')[1];
       const params = queryParams.split('&').map(i => {
         const [key, value] = i.split('=');
     
@@ -199,28 +156,28 @@ class RequestBypassToServer {
       return;
     }
     
-    if (this.command === 'teleport_request') {
+    if (command === 'teleport_request') {
       npc.ai.teleportRequest(player);
 
       return;
     }
 
-    if (this.command.includes('teleport')) { // fix collision? admin_teleport / teleport
-      const [x, y, z] = this.command.split(' ').slice(1).map(i => Number(i)); // fix
+    if (command.includes('teleport')) { // fix collision? admin_teleport / teleport
+      const [x, y, z] = command.split(' ').slice(1).map(i => Number(i)); // fix
 
       player.x = x;
       player.y = y;
       player.z = z;
 
-      this._client.sendPacket(new serverPackets.TeleportToLocation(player.objectId, player.x, player.y, player.z));
+      client.sendPacket(new serverPackets.TeleportToLocation(player.objectId, player.x, player.y, player.z));
 
       return;
     }
 
     const htmlMessage = npcHtmlMessagesManager.getHtmlMessageByFileName('noquest.htm');
     
-    this._client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
-    this._client.sendPacket(new serverPackets.ActionFailed()); // fix?
+    client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
+    client.sendPacket(new serverPackets.ActionFailed()); // TODO
   }
 }
 
