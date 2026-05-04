@@ -120,7 +120,9 @@ class EntitiesManager {
       playersManager.emit('notify', new serverPackets.SocialAction(player.objectId, 15)); // fix
     });
 
-    playersManager.on('pickup', (player, dropItem) => {
+    playersManager.on('pickup', (player, objectId) => {
+      const dropItem = this.getEntityByObjectId(objectId);
+      
       {
         const packet = new serverPackets.GetItem(player, dropItem); // fix Может подписатся на event окончание доставки пактеа?
       

@@ -52,8 +52,8 @@ class PlayersManager extends EventEmitter {
       eventBusNew.emit('player:move', player);
     });
 
-    player.on('pickup', (item) => {
-      this.emit('pickup', player, item); // fix?
+    player.on('pickup', (objectId) => {
+      this.emit('pickup', player, objectId);
     });
 
     player.on('updateExp', () => {

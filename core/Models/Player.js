@@ -270,8 +270,8 @@ class Player extends Character {
 
         break;
       case 'pickup':
-        this.pickupItem = payload;
-        this.changeState('pickup', payload);
+        this.actionParams = { targetId: payload[0] };
+        this.changeState('pickup');
 
         break;
       case 'cast':

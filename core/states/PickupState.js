@@ -1,42 +1,28 @@
 const BaseState = require("./BaseState");
+const entitiesManager = require('./../Managers/EntitiesManager');
 
 class PickupState extends BaseState {
   enter() {
-
+    this.entity = entitiesManager.getEntityByObjectId(this.character.targetId);
+    this.originX = this.character.x;
+    this.originY = this.character.y;
+    this.originZ = this.character.z;
+    this.targetX = this.entity.x;
+    this.targetY = this.entity.y;
+    this.targetZ = this.entity.z;
   }
 
   update() {
-    const path = {
-      target: {
-        x: this.character.pickupItem.x, // fix как передавать payload между state
-        y: this.character.pickupItem.y,
-        z: this.character.pickupItem.z
-      },
-      origin: {
-        x: this.character.x,
-        y: this.character.y,
-        z: this.character.z
-      }
-    }
+    const arrived = this.character.moveTo(this.targetX, this.targetY, this.targetZ);
 
-    this.character.path = path;
-
-    const dx = this.character.path.target.x - this.character.x;
-    const dy = this.character.path.target.y - this.character.y;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-
-    if (distance > 10) { // fix?
-      this.character.changeState('move', this.character.path);
-      this.character.emit('move');
-
+    if (arrived) {
+      this.character.emit('pickup', this.entity.objectId);
+      this.character.changeState('idle');
+      
       return;
     }
 
-    this.character.emit('pickup', this.character.pickupItem); //fix?
-    //
-    this.character.action = 'stop';
-    this.character.changeState('idle');
-    //
+    this.character.emit('move', this.targetX, this.targetY, this.targetZ);
   }
 
   leave() {

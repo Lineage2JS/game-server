@@ -96,7 +96,7 @@ class Action extends ClientPacketNew {
     }
 
     if (entity instanceof DropItem) {
-      player.doAction('pickup', entity);
+      player.doAction('pickup', entity.objectId);
 
       return;
     }
