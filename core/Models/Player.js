@@ -51,13 +51,7 @@ class Player extends Character {
       targetY: null,
       targetZ: null,
       targetId: null,
-      //itemId: null,
     }
-
-    //
-    this._actionPayload = null;
-    //
-
     this.lastUpdateTimestamp = 0;
     this.isDamage = false;
     this.moveType = 1;
@@ -286,6 +280,16 @@ class Player extends Character {
         this.changeState('talk');
 
         break;
+    }
+  }
+
+  clearAction() {
+    this.action = null;
+    this.actionParams = {
+      targetX: null,
+      targetY: null,
+      targetZ: null,
+      targetId: null,
     }
   }
 

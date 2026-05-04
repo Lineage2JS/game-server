@@ -17,6 +17,7 @@ class PickupState extends BaseState {
 
     if (arrived) {
       this.character.emit('pickup', this.entity.objectId);
+      this.character.clearAction();
       this.character.changeState('idle');
       
       return;
