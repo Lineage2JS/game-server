@@ -49,14 +49,8 @@ class CastState extends BaseState {
           // //entity.payloadAttack = this.character.objectId;
           // this.entity.changeState('attack', this.character.objectId);
           
-          // clearAction
-          this.character.action = null;
-          //
+          this.character.clearAction();
           this.character.changeState('idle');
-
-          // if (this.entity.hp <= 0) {
-          //   this.character.target = null;
-          // }
           
           return;
         }
@@ -82,21 +76,8 @@ class CastState extends BaseState {
       return;
     }
 
-    const path = {
-      target: {
-        x: this.entity.x,
-        y: this.entity.y,
-        z: this.entity.z
-      },
-      origin: {
-        x: this.character.x,
-        y: this.character.y,
-        z: this.character.z
-      }
-    }
-
-    const dx = path.target.x - path.origin.x;
-    const dy = path.target.y - path.origin.y;
+    const dx = this.entity.x - this.character.x;
+    const dy = this.entity.y - this.character.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     if (distance > 629) { // 29 - attack range + collision radius
@@ -109,9 +90,9 @@ class CastState extends BaseState {
       return;
     }
     
-    this.character.castTimestamp = Date.now();
     this.canDamage = true;
-    this.character.emit('cast', this.skillId); // TODO
+    this.character.castTimestamp = Date.now();
+    this.character.emit('cast', this.skillId);
     this.character.mp = this.character.mp - 20;
 
     this.character.getClient().sendPacket(new serverPackets.StatusUpdate(this.character.objectId, [
