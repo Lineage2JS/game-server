@@ -37,7 +37,6 @@ class CastState extends BaseState {
     if (this.canDamage) {
       if ((Date.now() - this.character.castTimestamp) > (4000 / 333) * 333 ) { // (HitTime / CastSpeed) * 333
         if (this.skillId === 1177) {
-          console.log(123)
           this.entity.takeDamage(30);
 
           // // TODO перенести в takeDamage?
