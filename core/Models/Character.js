@@ -1,4 +1,5 @@
 const baseStats = require('./../../datapack/baseStats.json');
+const eventBusNew = require('./../Events/EventBusNew');
 const EventEmitter = require('events');
 
 class Character extends EventEmitter {
@@ -125,6 +126,7 @@ class Character extends EventEmitter {
 
       this.takeDamage(data.damage);
       this.recordHit(data.attacker, data.damage);
+      eventBusNew.emit('npc:attacked', { npc: this, attacker: data.attacker, damage: data.damage });
     });
   }
 
