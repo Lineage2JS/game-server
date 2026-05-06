@@ -1,46 +1,26 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
-const ClientPacket = require("./ClientPacket");
-const playersManager = require('./../Managers/PlayersManager');
+const ClientPacketNew = require("./ClientPacketNew");
 
-class RequestActionUse {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-    this._data
-      .readD()
-      .readD()
-      .readC();
+class RequestActionUse extends ClientPacketNew {
+  async handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
+    const actionId = this.readD();
+    const ctrlStatus = this.readD();
+    const shiftStatus = this.readC();
 
-    this._init();
-  }
-
-  get actionId() {
-    return this._data.getData()[0];
-  }
-  
-  get ctrlStatus() {
-    return this._data.getData()[1];
-  }
-  
-  get shiftStatus() {
-    return this._data.getData()[2];
-  }
-
-  async _init() {
-    const player = playersManager.getPlayerByClient(this._client);
-
-    if (this.actionId === 0) {
+    if (actionId === 0) {
       player.waitType = !player.waitType;
 
-      this._client.sendPacket(new serverPackets.ChangeWaitType(player, player.waitType));
+      client.sendPacket(new serverPackets.ChangeWaitType(player, player.waitType));
 
       return;
     }
 
-    if (this.actionId === 1) {
+    if (actionId === 1) {
       player.moveType = !player.moveType;
 
-      this._client.sendPacket(new serverPackets.ChangeMoveType(player.objectId, player.moveType));
+      client.sendPacket(new serverPackets.ChangeMoveType(player.objectId, player.moveType));
 
       return;
     }

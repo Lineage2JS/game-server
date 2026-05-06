@@ -170,7 +170,7 @@ class Client {
 
         break;
       case 0x45:
-        new clientPackets.RequestActionUse(this, payloadPacket);
+        packet = new clientPackets.RequestActionUse(this, payloadPacket);
 
         break;
       case 0x38:
