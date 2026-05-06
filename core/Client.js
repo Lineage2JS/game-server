@@ -198,7 +198,7 @@ class Client {
 
         break;
       case 0x1F:
-        new clientPackets.RequestBuyItem(this, payloadPacket);
+        packet = new clientPackets.RequestBuyItem(this, payloadPacket);
 
         break;
       case 0x6D:

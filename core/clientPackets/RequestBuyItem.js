@@ -1,65 +1,48 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
-const ClientPacket = require("./ClientPacket");
-const playersManager = require('./../Managers/PlayersManager');
+const ClientPacketNew = require("./ClientPacketNew");
 const itemsManager = require('./../Managers/ItemsManager');
 const npcManager = require('./../Managers/NpcManager');
 const ItemEtc = require('./../Models/ItemEtc');
 
-class RequestBuyItem {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-    this._data
-      .readD()
-      .readD()
-      .readD()
-      .readD();
+class RequestBuyItem extends ClientPacketNew {
+  async handle() {
+    const client = this.getClient();
+    const player = this.getPlayer();
+    const listId = this.readD();
+    const countItems = this.readD();
+    const itemId = this.readD();
+    const itemCount = this.readD();
 
-    this._init();
-  }
+    // for (let i = 0; i < countItems; i++) {
+    //   const itemId = this.readD();
+    //   const itemCount = this.readD();
+    // }
 
-  get listId() {
-    return this._data.getData()[0];
-  }
-
-  get countItems() {
-    return this._data.getData()[1];
-  }
-
-  get itemId() {
-    return this._data.getData()[2];
-  }
-
-  get itemCount() { // fix?
-    return this._data.getData()[3];
-  }
-
-  async _init() {
-    const player = playersManager.getPlayerByClient(this._client);
-    const item = await itemsManager.createItem(this.itemId);
+    const item = await itemsManager.createItem(itemId);
 
     if (player.getAdenaCount() < item.getPrice()) {
-      this._client.sendPacket(new serverPackets.SystemMessage(279))
+      client.sendPacket(new serverPackets.SystemMessage(279))
 
       return;
     }
 
-    if (item instanceof ItemEtc) {
-      if (item.isStackable) {
-        item.setCount(this.itemCount);
-      }
-    }
+    // if (item instanceof ItemEtc) {
+    //   if (item.isStackable) {
+    //     item.setCount(itemCount);
+    //   }
+    // }
 
     player.reduceAdena(item.getPrice());
     player.addItem(item);
 
     const items = player.getItems();
 
-    this._client.sendPacket(new serverPackets.ItemList(items, true));
+    client.sendPacket(new serverPackets.ItemList(items, true));
 
-    const npc = npcManager.getNpcById(player.lastTalkedNpcId);
+    // TODO тут можно вызывать eventBus с успешной покупкой
+    const npc = npcManager.getNpcByObjectId(player.lastTalkedNpcId);
 
-    npc.ai.talk(player); // TODO тут ли вызывать?
+    npc.ai.talk(player);
   }
 }
 
