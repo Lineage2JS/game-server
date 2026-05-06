@@ -136,9 +136,7 @@ class RequestBypassToServer extends ClientPacketNew {
     }
 
     if (command === 'learn_skill') {
-      if (npc.ai.name === 'Minx') {
-        aiManager.onLearnSkill(npc.ai.name, player);
-      }
+      //npc.ai.onLearnSkillRequested(player);
 
       return;
     }
