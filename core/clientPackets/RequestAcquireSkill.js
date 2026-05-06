@@ -1,27 +1,13 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
-const ClientPacket = require("./ClientPacket");
+const ClientPacketNew = require("./ClientPacketNew");
 
-class RequestAcquireSkill {
-  constructor(client, packet) {
-    this._client = client;
-    this._data = new ClientPacket(packet);
-    this._data
-      .readD()
-      .readD();
+class RequestAcquireSkill extends ClientPacketNew {
+  async handle() {
+    const client = this.getClient();
+    const skillId = this.readD();
+    const skillLevel = this.readD();
 
-    this._init();
-  }
-
-   get skillId() {
-    return this._data.getData()[0];
-  }
-
-  get skillLevel() {
-    return this._data.getData()[1];
-  }
-
-  async _init() {
-    this._client.sendPacket(new serverPackets.AcquireSkillDone());
+    client.sendPacket(new serverPackets.AcquireSkillDone());
   }
 }
 

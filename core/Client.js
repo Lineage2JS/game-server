@@ -206,11 +206,11 @@ class Client {
 
         break;
       case 0x6B:
-        new clientPackets.RequestAcquireSkillInfo(this, payloadPacket);
+        packet = new clientPackets.RequestAcquireSkillInfo(this, payloadPacket);
 
         break;
       case 0x6C:
-        new clientPackets.RequestAcquireSkill(this, payloadPacket);
+        packet = new clientPackets.RequestAcquireSkill(this, payloadPacket);
 
         break;
       case 0x12:
