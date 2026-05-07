@@ -2,7 +2,7 @@ const BaseState = require("./BaseState");
 
 class IdleState extends BaseState {
   enter() {
-    this.character.isMoving = false;
+    
   }
 
   update() {

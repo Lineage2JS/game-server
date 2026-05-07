@@ -9,7 +9,6 @@ const CastState = require('./../states/CastState');
 const FollowState = require('./../states/FollowState');
 const PickupState = require('./../states/PickupState');
 const TalkState = require('./../states/TalkState');
-const CastPayload = require('./../payloads/CastPayload');
 
 class Player extends Character {
   constructor() {
@@ -17,10 +16,8 @@ class Player extends Character {
 
     this._client = null;
     this.target = null;
-    this.positionUpdateTimestamp = 0;
     this.state = '';
     this.action = '';
-    this.isMoving = false;
     this.isDead = false;
 
     this._states = {
