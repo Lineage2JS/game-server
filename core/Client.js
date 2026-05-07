@@ -67,7 +67,7 @@ class Client {
     return packet[0];
   }
 
-  _getPayloadPacket(packet) {
+  _getPacketPayload(packet) {
     return packet.subarray(1);
   }
 
@@ -75,186 +75,186 @@ class Client {
     const croppedPacket = this._getCroppedPacket(data);
     const decryptedPacket = this._getDecryptedPacket(croppedPacket);
     const opcode = this._getOpcode(decryptedPacket);
-    const payloadPacket = this._getPayloadPacket(decryptedPacket);
+    const packetPayload = this._getPacketPayload(decryptedPacket);
     let packet;
 
     console.log(`opcode: [0x${opcode.toString(16).toUpperCase().padStart(2, '0')}]`);
 
     switch(opcode) {
       case 0x00:
-        packet = new clientPackets.SendProtocolVersion(this, payloadPacket);
+        packet = new clientPackets.SendProtocolVersion(this, packetPayload);
 
         break;
       case 0x04:
-        packet = new clientPackets.Action(this, payloadPacket);
+        packet = new clientPackets.Action(this, packetPayload);
 
         break;
       case 0x08:
-        packet = new clientPackets.RequestAuthLogin(this, payloadPacket);
+        packet = new clientPackets.RequestAuthLogin(this, packetPayload);
 
         break;
       case 0x0D:
-        packet = new clientPackets.CharacterSelected(this, payloadPacket);
+        packet = new clientPackets.CharacterSelected(this, packetPayload);
 
         break;
       case 0x63:
-        packet = new clientPackets.RequestQuestList(this, payloadPacket);
+        packet = new clientPackets.RequestQuestList(this, packetPayload);
 
         break;
       case 0x03:
-        packet = new clientPackets.EnterWorld(this, payloadPacket);
+        packet = new clientPackets.EnterWorld(this, packetPayload);
   
         break;
       case 0x0E:
-        packet = new clientPackets.NewCharacter(this, payloadPacket);
+        packet = new clientPackets.NewCharacter(this, packetPayload);
 
         break;
       case 0x0B:
-        packet = new clientPackets.RequestCharacterCreate(this, payloadPacket);
+        packet = new clientPackets.RequestCharacterCreate(this, packetPayload);
 
         break;
       case 0x0C:
-        packet = new clientPackets.RequestCharacterDelete(this, payloadPacket);
+        packet = new clientPackets.RequestCharacterDelete(this, packetPayload);
 
         break;
       case 0x01:
-        packet = new clientPackets.MoveBackwardToLocation(this, payloadPacket);
+        packet = new clientPackets.MoveBackwardToLocation(this, packetPayload);
   
         break;
       case 0x0A:
-        packet = new clientPackets.RequestAttack(this, payloadPacket);
+        packet = new clientPackets.RequestAttack(this, packetPayload);
 
         break;
       case 0x09:
-        packet = new clientPackets.Logout(this, payloadPacket);
+        packet = new clientPackets.Logout(this, packetPayload);
   
         break;
       case 0x46:
-        packet = new clientPackets.RequestRestart(this, payloadPacket);
+        packet = new clientPackets.RequestRestart(this, packetPayload);
 
         break;
       case 0x37:
-        packet = new clientPackets.RequestTargetCancel(this, payloadPacket);
+        packet = new clientPackets.RequestTargetCancel(this, packetPayload);
 
         break;
       case 0x0F:
-        packet = new clientPackets.RequestItemList(this, payloadPacket);
+        packet = new clientPackets.RequestItemList(this, packetPayload);
 
         break;
       case 0x33:
-        packet = new clientPackets.RequestShortCutReg(this, payloadPacket);
+        packet = new clientPackets.RequestShortCutReg(this, packetPayload);
 
         break;
       case 0x21:
-        packet = new clientPackets.RequestBypassToServer(this, payloadPacket);
+        packet = new clientPackets.RequestBypassToServer(this, packetPayload);
 
         break;
       case 0x3F:
-        packet = new clientPackets.RequestSkillList(this, payloadPacket);
+        packet = new clientPackets.RequestSkillList(this, packetPayload);
 
         break;
       case 0x2F:
-        packet = new clientPackets.RequestMagicSkillUse(this, payloadPacket);
+        packet = new clientPackets.RequestMagicSkillUse(this, packetPayload);
 
         break;
       case 0x57:
-        packet = new clientPackets.RequestShowBoard(this, payloadPacket);
+        packet = new clientPackets.RequestShowBoard(this, packetPayload);
 
         break;
       case 0x1B:
-        packet = new clientPackets.RequestSocialAction(this, payloadPacket);
+        packet = new clientPackets.RequestSocialAction(this, packetPayload);
 
         break;
       case 0x48:
-        packet = new clientPackets.ValidatePosition(this, payloadPacket);
+        packet = new clientPackets.ValidatePosition(this, packetPayload);
 
         break;
       case 0x45:
-        packet = new clientPackets.RequestActionUse(this, payloadPacket);
+        packet = new clientPackets.RequestActionUse(this, packetPayload);
 
         break;
       case 0x38:
-        packet = new clientPackets.Say2(this, payloadPacket);
+        packet = new clientPackets.Say2(this, packetPayload);
 
         break;
       case 0x5B:
-        packet = new clientPackets.SendBypassBuildCmd(this, payloadPacket);
+        packet = new clientPackets.SendBypassBuildCmd(this, packetPayload);
 
         break;
       case 0x20:
-        packet = new clientPackets.RequestLinkHtml(this, payloadPacket);
+        packet = new clientPackets.RequestLinkHtml(this, packetPayload);
   
         break;
       case 0x14:
-        packet = new clientPackets.RequestUseItem(this, payloadPacket);
+        packet = new clientPackets.RequestUseItem(this, packetPayload);
 
         break;
       case 0x11:
-        packet = new clientPackets.RequestUnEquipItem(this, payloadPacket);
+        packet = new clientPackets.RequestUnEquipItem(this, packetPayload);
 
         break;
       case 0x36:
-        packet = new clientPackets.CanNotMoveAnymore(this, payloadPacket);
+        packet = new clientPackets.CanNotMoveAnymore(this, packetPayload);
 
         break;
       case 0x1F:
-        packet = new clientPackets.RequestBuyItem(this, payloadPacket);
+        packet = new clientPackets.RequestBuyItem(this, packetPayload);
 
         break;
       case 0x6D:
-        new clientPackets.RequestRestartPoint(this, payloadPacket);
+        new clientPackets.RequestRestartPoint(this, packetPayload);
 
         break;
       case 0x6B:
-        packet = new clientPackets.RequestAcquireSkillInfo(this, payloadPacket);
+        packet = new clientPackets.RequestAcquireSkillInfo(this, packetPayload);
 
         break;
       case 0x6C:
-        packet = new clientPackets.RequestAcquireSkill(this, payloadPacket);
+        packet = new clientPackets.RequestAcquireSkill(this, packetPayload);
 
         break;
       case 0x12:
-        packet = new clientPackets.RequestDropItem(this, payloadPacket);
+        packet = new clientPackets.RequestDropItem(this, packetPayload);
 
         break;
       case 0x59:
-        packet = new clientPackets.RequestDestroyItem(this, payloadPacket);
+        packet = new clientPackets.RequestDestroyItem(this, packetPayload);
 
         break;
       case 0x64:
-        new clientPackets.RequestDestroyQuest(this, payloadPacket);
+        new clientPackets.RequestDestroyQuest(this, packetPayload);
 
         break;
       case 0x7D:
-        new clientPackets.RequestTutorialQuestionMarkPressed(this, payloadPacket);
+        new clientPackets.RequestTutorialQuestionMarkPressed(this, packetPayload);
 
         break;
       case 0x7B:
-        new clientPackets.RequestTutorialLinkHtml(this, payloadPacket);
+        new clientPackets.RequestTutorialLinkHtml(this, packetPayload);
 
         break;
       case 0xA8:
-        packet = new clientPackets.NetPing(this, payloadPacket);
+        packet = new clientPackets.NetPing(this, packetPayload);
 
         break;
       case 0x62:
-        packet = new clientPackets.RequestCharacterRestore(this, payloadPacket);
+        packet = new clientPackets.RequestCharacterRestore(this, packetPayload);
 
         break;
       case 0x4A:
-        packet = new clientPackets.StartRotating(this, payloadPacket);
+        packet = new clientPackets.StartRotating(this, packetPayload);
 
         break;
       case 0x4B:
-        packet = new clientPackets.FinishRotating(this, payloadPacket);
+        packet = new clientPackets.FinishRotating(this, packetPayload);
 
         break;
       case 0x1C:
-        packet = new clientPackets.ChangeMoveType(this, payloadPacket);
+        packet = new clientPackets.ChangeMoveType(this, packetPayload);
 
         break;
       case 0x1D:
-        packet = new clientPackets.ChangeWaitType(this, payloadPacket);
+        packet = new clientPackets.ChangeWaitType(this, packetPayload);
 
         break;
     }
