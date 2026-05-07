@@ -6,9 +6,6 @@ class RequestQuestList extends ClientPacketNew {
     const client = this.getClient();
     const player = this.getPlayer();
     
-    //this._client.sendPacket(new serverPackets.QuestList(player.getQuests()));
-
-    // fix
     client.sendPacket(new serverPackets.QuestList(player.getQuests().filter(quest => quest.isCompleted === false)));
   }
 }
