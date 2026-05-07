@@ -66,24 +66,48 @@ class Player extends Character {
     return this.actionParams.targetX;
   }
 
+  set targetX(value) {
+    this.actionParams.targetX = value;
+  }
+
   get targetY() {
     return this.actionParams.targetY;
+  }
+
+  set targetY(value) {
+    this.actionParams.targetY = value;
   }
 
   get targetZ() {
     return this.actionParams.targetZ;
   }
 
+  set targetZ(value) {
+    return this.actionParams.targetZ = value;
+  }
+
   get targetId() {
     return this.actionParams.targetId;
+  }
+
+  set targetId(value) {
+    this.actionParams.targetId = value;
   }
 
   get itemId() {
     return this.actionParams.itemId;
   }
 
+  set itemId(value) {
+    this.actionParams.itemId = value;
+  }
+
   get skillId() {
     return this.actionParams.skillId;
+  }
+
+  set skillId(value) {
+    this.actionParams.skillId = value;
   }
 
   get timeSinceLastAttack() {
@@ -267,27 +291,30 @@ class Player extends Character {
 
     switch(action) {
       case 'move':
-        this.actionParams = { targetX: payload[0], targetY: payload[1], targetZ: payload[2] };
+        this.targetX = payload[0];
+        this.targetY = payload[1];
+        this.targetZ = payload[2];
         this.changeState('move');
         
         break;
       case 'attack':
-        this.actionParams = { targetId: payload[0] };
+        this.targetId = payload[0];
         this.changeState('attack');
 
         break;
       case 'pickup':
-        this.actionParams = { itemId: payload[0] };
+        this.itemId = payload[0];
         this.changeState('pickup');
 
         break;
       case 'cast':
-        this.actionParams = { targetId: payload[0], skillId: payload[1] };
+        this.targetId = payload[0];
+        this.skillId = payload[1];
         this.changeState('cast');
 
         break;
       case 'talk':
-        this.actionParams = { targetId: payload[0] };
+        this.targetId = payload[0];
         this.changeState('talk');
 
         break;
@@ -296,14 +323,12 @@ class Player extends Character {
 
   clearAction() {
     this.action = null;
-    this.actionParams = {
-      targetX: null,
-      targetY: null,
-      targetZ: null,
-      targetId: null,
-      itemId: null,
-      skillId: null,
-    }
+    this.targetX = null;
+    this.targetY = null;
+    this.targetZ = null;
+    this.targetId = null;
+    this.targetItemId = null;
+    this.targetSkillId = null;
   }
 
   changeState(stateName) {
