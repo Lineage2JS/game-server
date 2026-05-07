@@ -3,7 +3,7 @@ const ClientPacketNew = require("./ClientPacketNew");
 const database = require('./../../database');
 const itemManager = require('./../Managers/ItemsManager');
 
-class CharacterSelected extends ClientPacketNew {
+class RequestGameStart extends ClientPacketNew {
   async handle() {
     const client = this.getClient();
     const player = this.getPlayer();
@@ -39,4 +39,4 @@ class CharacterSelected extends ClientPacketNew {
   }
 }
 
-module.exports = CharacterSelected;
+module.exports = RequestGameStart;

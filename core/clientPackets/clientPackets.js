@@ -1,6 +1,6 @@
 const SendProtocolVersion = require('./SendProtocolVersion');
 const RequestAuthLogin = require('./RequestAuthLogin');
-const CharacterSelected = require('./CharacterSelected');
+const RequestGameStart = require('./RequestGameStart');
 const RequestQuestList = require('./RequestQuestList');
 const EnterWorld = require('./EnterWorld');
 const NewCharacter = require('./NewCharacter');
@@ -46,7 +46,7 @@ const ChangeWaitType = require('./ChangeWaitType');
 module.exports = {
   SendProtocolVersion,
   RequestAuthLogin,
-  CharacterSelected,
+  RequestGameStart,
   RequestQuestList,
   EnterWorld,
   NewCharacter,

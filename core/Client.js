@@ -94,7 +94,7 @@ class Client {
 
         break;
       case 0x0D:
-        packet = new clientPackets.CharacterSelected(this, packetPayload);
+        packet = new clientPackets.RequestGameStart(this, packetPayload);
 
         break;
       case 0x63:

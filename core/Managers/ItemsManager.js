@@ -390,7 +390,7 @@ class ItemsManager {
   _getItemTemplate(itemId) {
     return this._itemsTable.get(itemId);
   }
-  // TODO loadItem from CharacterSelected
+  // TODO loadItem from RequestGameStart
 }
 
 module.exports = new ItemsManager();
