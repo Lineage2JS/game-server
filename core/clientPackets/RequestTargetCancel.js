@@ -8,7 +8,7 @@ class RequestTargetCanceled extends ClientPacketNew {
 
     client.sendPacket(new serverPackets.TargetUnselected(player));
 
-  player.target = null;
+    player.target = null;
   }
 }
 
