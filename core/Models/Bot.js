@@ -168,40 +168,6 @@ class Bot extends Character {
     }
   }
 
-  updatePosition() {
-    const dx = this.path.target.x - this.x;
-    const dy = this.path.target.y - this.y;
-    const distance = Math.sqrt(dx * dx + dy * dy) - 9;
-    
-    if (distance < (this.runSpeed / 10)) {  
-      const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
-
-      this.updateParams({
-        x: parseFloat((this.x + (Math.cos(angle) * distance)).toFixed(1)),
-        y: parseFloat((this.y + (Math.sin(angle) * distance)).toFixed(1)),
-        z: this.z
-      });
-
-      this.changeState('idle');
-
-      return;
-    }
-
-    const time = (this.lastUpdateTimestamp - this.positionUpdateTimestamp) / 1000;
-    const step = this.runSpeed * time;
-    const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
-
-    this.updateParams({
-      x: parseFloat((this.x + (Math.cos(angle) * step)).toFixed(1)),
-      y: parseFloat((this.y + (Math.sin(angle) * step)).toFixed(1)),
-      z: this.z
-    });
-
-    this.positionUpdateTimestamp = this.lastUpdateTimestamp;
-
-    this.emit('move'); // TODO ?
-  }
-
   // create math utils
   _getRandomPos() {
     let max = { x: -80000, y: 270000 };
