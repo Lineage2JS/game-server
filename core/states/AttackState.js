@@ -3,7 +3,7 @@ const entitiesManager = require('./../Managers/EntitiesManager');
 
 class AttackState extends BaseState {
   enter() {
-    this.entity = entitiesManager.getEntityByObjectId(this.character.targetId);
+    this.entity = entitiesManager.getEntityByObjectId(this.character.targetCharacterId);
     this.canDamage = false;
   }
 

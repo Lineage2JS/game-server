@@ -4,9 +4,9 @@ const { inRange } = require('./../../utils/distance');
 
 class TalkState extends BaseState {
   enter() {
-    const entity = entitiesManager.getEntityByObjectId(this.character.targetId); // если target будет null? Вернуть getLastTalk?
+    const entity = entitiesManager.getEntityByObjectId(this.character.targetCharacterId); // если target будет null? Вернуть getLastTalk?
     
-    this.character.lastTalkedNpcId = this.character.targetId; // TODO
+    this.character.lastTalkedNpcId = this.character.targetCharacterId; // TODO
 
     if (!inRange(this.character, entity, 100)) {
       this.character.changeState('follow');

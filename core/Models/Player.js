@@ -49,9 +49,9 @@ class Player extends Character {
       targetX: null,
       targetY: null,
       targetZ: null,
-      targetId: null,
-      itemId: null,
-      skillId: null,
+      targetCharacterId: null,
+      targetItemId: null,
+      targetSkillId: null,
     }
     this.lastUpdateTimestamp = 0;
     this.isDamage = false;
@@ -86,28 +86,28 @@ class Player extends Character {
     return this.actionParams.targetZ = value;
   }
 
-  get targetId() {
-    return this.actionParams.targetId;
+  get targetCharacterId() {
+    return this.actionParams.targetCharacterId;
   }
 
-  set targetId(value) {
-    this.actionParams.targetId = value;
+  set targetCharacterId(value) {
+    this.actionParams.targetCharacterId = value;
   }
 
-  get itemId() {
-    return this.actionParams.itemId;
+  get targetItemId() {
+    return this.actionParams.targetItemId;
   }
 
-  set itemId(value) {
-    this.actionParams.itemId = value;
+  set targetItemId(value) {
+    this.actionParams.targetItemId = value;
   }
 
-  get skillId() {
-    return this.actionParams.skillId;
+  get targetSkillId() {
+    return this.actionParams.targetSkillId;
   }
 
-  set skillId(value) {
-    this.actionParams.skillId = value;
+  set targetSkillId(value) {
+    this.actionParams.targetSkillId = value;
   }
 
   get timeSinceLastAttack() {
@@ -298,23 +298,23 @@ class Player extends Character {
         
         break;
       case 'attack':
-        this.targetId = payload[0];
+        this.targetCharacterId = payload[0];
         this.changeState('attack');
 
         break;
       case 'pickup':
-        this.itemId = payload[0];
+        this.targetItemId = payload[0];
         this.changeState('pickup');
 
         break;
       case 'cast':
-        this.targetId = payload[0];
-        this.skillId = payload[1];
+        this.targetCharacterId = payload[0];
+        this.targetSkillId = payload[1];
         this.changeState('cast');
 
         break;
       case 'talk':
-        this.targetId = payload[0];
+        this.targetCharacterId = payload[0];
         this.changeState('talk');
 
         break;
@@ -326,7 +326,7 @@ class Player extends Character {
     this.targetX = null;
     this.targetY = null;
     this.targetZ = null;
-    this.targetId = null;
+    this.targetCharacterId = null;
     this.targetItemId = null;
     this.targetSkillId = null;
   }

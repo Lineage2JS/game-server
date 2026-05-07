@@ -10,8 +10,8 @@ const skillsManager = require('./../Managers/SkillsManager');
 
 class CastState extends BaseState {
   enter() {
-    this.entity = entitiesManager.getEntityByObjectId(this.character.targetId);
-    this.skill = skillsManager.getSkill(this.character.skillId);
+    this.entity = entitiesManager.getEntityByObjectId(this.character.targetCharacterId);
+    this.skill = skillsManager.getSkill(this.character.targetSkillId);
     this.skillId = this.skill.getSkillId();
     this.canDamage = false;
   }
