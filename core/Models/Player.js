@@ -134,14 +134,6 @@ class Player extends Character {
     this._client = client;
   }
 
-  setActionPayload(payload) {
-    this._actionPayload = payload;
-  }
-
-  getActionPayload() {
-    return this._actionPayload;
-  }
-
   // setLastTalkedNpcId(npcId) {
   //   this.lastTalkedNpcId = npcId; // TODO лучше хранить objectId?
   // }
@@ -158,12 +150,12 @@ class Player extends Character {
     this._skills.addSkill(skill)
   }
 
-  setActiveWeapon(item) { // делать запрос через activeWeapon проверяя this.hand...
-    this._activeWeapon = item;
-  }
-
   getActiveWeapon() {
     return this._activeWeapon;
+  }
+
+  setActiveWeapon(item) { // делать запрос через activeWeapon проверяя this.hand...
+    this._activeWeapon = item;
   }
 
   getAdenaCount() {
