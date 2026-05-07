@@ -149,40 +149,6 @@ class Npc extends Character {
     }
   }
 
-  updatePosition() {
-    const dx = this.path.target.x - this.x;
-    const dy = this.path.target.y - this.y;
-    const distance = Math.sqrt(dx * dx + dy * dy) - 9;
-    
-    if (distance < (this.getMoveSpeed() / 10)) {
-      const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
-
-      this.updateParams({
-        x: parseFloat((this.x + (Math.cos(angle) * distance)).toFixed(1)),
-        y: parseFloat((this.y + (Math.sin(angle) * distance)).toFixed(1)),
-        z: this.z
-      });
-
-      this.changeState('idle');
-
-      return;
-    }
-
-    const time = (this.lastUpdateTimestamp - this.positionUpdateTimestamp) / 1000;
-    const step = this.getMoveSpeed() * time;
-    const angle = Math.atan2(this.path.target.y - this.path.origin.y, this.path.target.x - this.path.origin.x);
-
-    this.updateParams({
-      x: parseFloat((this.x + (Math.cos(angle) * step)).toFixed(1)),
-      y: parseFloat((this.y + (Math.sin(angle) * step)).toFixed(1)),
-      z: this.z
-    });
-
-    this.positionUpdateTimestamp = this.lastUpdateTimestamp;
-
-    this.emit('move'); // ?
-  }
-
   regenerate() {
     if ((Date.now() - this.lastRegenerateTimestamp) > 3000) {
       this.hp += 1;

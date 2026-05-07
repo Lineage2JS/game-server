@@ -36,10 +36,6 @@ class NpcManager extends EventEmitter {
             this.emit('move', npc);
           });
 
-          npc.on('updatePosition', () => {
-            this.emit('updatePosition', npc);
-          });
-
           npc.on('attack', (objectId) => {
             this.emit('attack', npc, objectId);
           });
@@ -121,10 +117,6 @@ class NpcManager extends EventEmitter {
 
     npc.on('move', () => {
       this.emit('move', npc);
-    });
-
-    npc.on('updatePosition', () => {
-      this.emit('updatePosition', npc);
     });
 
     npc.on('attack', (objectId) => {
