@@ -35,7 +35,6 @@ class Player extends Character {
     this._quests = new Quests();
     this._skills = new Skills();
     this.lastTalkedNpcId = null; // TODO сделать _lastTalkedNpcId а запрос через getter
-    this.pickupItem = null; // хранить objectId? как target?
     this._activeSoulShot = false;
     this.lastAttackTimestamp = 0;
     this.lastMoveTimestamp = 0;
@@ -50,8 +49,6 @@ class Player extends Character {
       targetItemId: null,
       targetSkillId: null,
     }
-    this.lastUpdateTimestamp = 0;
-    this.isDamage = false;
     this.moveType = 1;
     this.waitType = 1;
     this._currentState = '';
@@ -326,8 +323,6 @@ class Player extends Character {
   }
 
   update() {
-    this.lastUpdateTimestamp = Date.now();
-
     if (this._currentState) {
       this._currentState.update();
     }
