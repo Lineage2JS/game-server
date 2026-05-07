@@ -150,14 +150,6 @@ class Player extends Character {
   //   return this.lastTalkedNpcId;
   // }
 
-  // isState(state) {
-  //   return this.getState() === stateName;
-  // }
-
-  // isDead() {
-  //   return this.isState('dead');
-  // }
-
   getSkills() {
     return this._skills.getSkills();
   }
