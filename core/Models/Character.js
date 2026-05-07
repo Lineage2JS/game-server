@@ -75,8 +75,7 @@ class Character extends EventEmitter {
     this.femaleAttackSpeedMultiplier = null;
     this.femaleCollisionRadius = null;
     this.femaleCollisionHeight = null;
-    
-    this.items = [];
+
     this.path = {
       target: {
         x: null,
