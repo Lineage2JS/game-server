@@ -178,7 +178,7 @@ class Client {
 
         break;
       case 0x5B:
-        new clientPackets.SendBypassBuildCmd(this, payloadPacket);
+        packet = new clientPackets.SendBypassBuildCmd(this, payloadPacket);
 
         break;
       case 0x20:
