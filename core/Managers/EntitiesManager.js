@@ -46,9 +46,9 @@ class EntitiesManager {
     npcManager.on('move', async npc => {
       const path = {
         target: {
-          x: npc.path.target.x,
-          y: npc.path.target.y,
-          z: npc.path.target.z
+          x: npc.targetX,
+          y: npc.targetY,
+          z: npc.targetZ
         },
         origin: {
           x: npc.x,
@@ -266,9 +266,9 @@ class EntitiesManager {
     botsManager.on('move', bot => {
       const path = {
         target: {
-          x: bot.path.target.x,
-          y: bot.path.target.y,
-          z: bot.path.target.z
+          x: bot.targetX,
+          y: bot.targetY,
+          z: bot.targetZ
         },
         origin: {
           x: bot.x,

@@ -102,9 +102,9 @@ class VisibilityManager {
   _createMovePath(object) {
     const path = {
       target: {
-        x: object.path.target.x,
-        y: object.path.target.y,
-        z: object.z
+        x: object.targetX,
+        y: object.targetY,
+        z: object.targetZ
       },
       origin: {
         x: object.x,

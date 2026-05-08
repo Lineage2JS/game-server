@@ -76,19 +76,6 @@ class Character extends EventEmitter {
     this.femaleCollisionRadius = null;
     this.femaleCollisionHeight = null;
 
-    this.path = {
-      target: {
-        x: null,
-        y: null,
-        z: null
-      },
-      origin: {
-        x: null,
-        y: null,
-        z: null
-      }
-    }
-
     this.underwear = { objectId: 0, itemId: 0 } // TODO papperdoll system?
     this.ear = {
       left: { objectId: 0, itemId: 0 },
@@ -117,6 +104,14 @@ class Character extends EventEmitter {
     this._hitHistoryMap = new Map();
     this._moveType = 0;
     //
+    this.actionParams = {
+      targetX: null,
+      targetY: null,
+      targetZ: null,
+      targetCharacterId: null,
+      targetItemId: null,
+      targetSkillId: null,
+    }
 
     this.on('attacked', (data) => {
       if (this.isDead) {
@@ -127,6 +122,54 @@ class Character extends EventEmitter {
       this.recordHit(data.attacker, data.damage);
       eventBusNew.emit('npc:attacked', { npc: this, attacker: data.attacker, damage: data.damage });
     });
+  }
+
+  get targetX() {
+    return this.actionParams.targetX;
+  }
+
+  set targetX(value) {
+    this.actionParams.targetX = value;
+  }
+
+  get targetY() {
+    return this.actionParams.targetY;
+  }
+
+  set targetY(value) {
+    this.actionParams.targetY = value;
+  }
+
+  get targetZ() {
+    return this.actionParams.targetZ;
+  }
+
+  set targetZ(value) {
+    return this.actionParams.targetZ = value;
+  }
+
+  get targetCharacterId() {
+    return this.actionParams.targetCharacterId;
+  }
+
+  set targetCharacterId(value) {
+    this.actionParams.targetCharacterId = value;
+  }
+
+  get targetItemId() {
+    return this.actionParams.targetItemId;
+  }
+
+  set targetItemId(value) {
+    this.actionParams.targetItemId = value;
+  }
+
+  get targetSkillId() {
+    return this.actionParams.targetSkillId;
+  }
+
+  set targetSkillId(value) {
+    this.actionParams.targetSkillId = value;
   }
 
   takeDamage(damage) {    

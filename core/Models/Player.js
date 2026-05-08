@@ -41,67 +41,12 @@ class Player extends Character {
     this.castTimestamp = 0;
     this.lastRegenerateTimestamp = 0;
     this.baseAttackSpeed = 300; // TODO
-    this.actionParams = {
-      targetX: null,
-      targetY: null,
-      targetZ: null,
-      targetCharacterId: null,
-      targetItemId: null,
-      targetSkillId: null,
-    }
+    
     this.moveType = 1;
     this.waitType = 1;
     this._currentState = '';
     this._activeWeapon = null;
     //
-  }
-
-  get targetX() {
-    return this.actionParams.targetX;
-  }
-
-  set targetX(value) {
-    this.actionParams.targetX = value;
-  }
-
-  get targetY() {
-    return this.actionParams.targetY;
-  }
-
-  set targetY(value) {
-    this.actionParams.targetY = value;
-  }
-
-  get targetZ() {
-    return this.actionParams.targetZ;
-  }
-
-  set targetZ(value) {
-    return this.actionParams.targetZ = value;
-  }
-
-  get targetCharacterId() {
-    return this.actionParams.targetCharacterId;
-  }
-
-  set targetCharacterId(value) {
-    this.actionParams.targetCharacterId = value;
-  }
-
-  get targetItemId() {
-    return this.actionParams.targetItemId;
-  }
-
-  set targetItemId(value) {
-    this.actionParams.targetItemId = value;
-  }
-
-  get targetSkillId() {
-    return this.actionParams.targetSkillId;
-  }
-
-  set targetSkillId(value) {
-    this.actionParams.targetSkillId = value;
   }
 
   get timeSinceLastAttack() {
