@@ -5,7 +5,7 @@ const ItemEtc = require('./../Models/ItemEtc');
 const ItemArmor = require('./../Models/ItemArmor');
 const ItemWeapon = require('./../Models/ItemWeapon');
 const itemsList = require('./../../datapack/itemsList.json');
-const itemsIdMap = require('./../../datapack/itemsIdMap.json');
+const itemNamesMap = require('./../../datapack/itemNamesMap.json');
 
 const TYPE_ARROW = 0;
 const TYPE_MATERIAL = 1;
@@ -124,7 +124,7 @@ class ItemsManager {
   }
 
   getItemIdByName(itemName) {
-    return itemsIdMap[itemName];
+    return itemNamesMap[itemName];
   }
 
   _createItemAsset(itemTemplate, objectId, count) {
