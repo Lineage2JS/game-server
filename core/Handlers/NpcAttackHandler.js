@@ -5,8 +5,6 @@ class NpcAttackHandler {
   handle(data) {
     const npc = data.npc;
     const attacker = data.attacker;
-
-    console.log(123, npc, attacker)
   }
 }
 

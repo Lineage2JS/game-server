@@ -16,7 +16,7 @@ class Player extends Character {
 
     this._client = null;
     this.target = null;
-    this.state = '';
+    this._stateName = '';
     this.action = '';
     this.isDead = false;
 
@@ -58,11 +58,11 @@ class Player extends Character {
   }
 
   get isAttacking() {
-    return this.state === 'attack';
+    return this._stateName === 'attack';
   }
 
   get isCasting() {
-    return this.state === 'cast';
+    return this._stateName === 'cast';
   }
 
   getClient() {
@@ -258,11 +258,9 @@ class Player extends Character {
     if (this._currentState) {
       this._currentState.leave();
     }
-    
-    const state = this._states[stateName];
 
-    this.state = stateName;
-    this._currentState = state;
+    this._stateName = stateName;
+    this._currentState = this._states[stateName];
 
     this._currentState.enter();
   }
