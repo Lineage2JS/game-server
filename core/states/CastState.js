@@ -5,6 +5,7 @@ const entitiesManager = require('./../Managers/EntitiesManager');
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
 const serverPackets = require('./../ServerPackets/serverPackets');
 const skillsManager = require('./../Managers/SkillsManager');
+const { calculateDistance } = require('./../../utils/distance');
 //
 
 class CastState extends BaseState {
@@ -81,9 +82,7 @@ class CastState extends BaseState {
       return;
     }
 
-    const dx = this.entity.x - this.character.x;
-    const dy = this.entity.y - this.character.y;
-    const distance = Math.sqrt(dx * dx + dy * dy);
+    const distance = calculateDistance(this.entity, this.character);
 
     if (distance > 629) { // 29 - attack range + collision radius
       this.character.changeState('follow');

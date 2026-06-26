@@ -1,6 +1,11 @@
 const ServerPacket = require('./ServerPacket.js'); 
 
 class Ride {
+  /**
+   * 
+   * @param {*} character 
+   * @param {*} typePet 
+   */
   constructor(character, typePet) {
     this._packet = new ServerPacket();
     this._packet

@@ -1,5 +1,6 @@
 const BaseState = require("./BaseState");
 const entitiesManager = require('./../Managers/EntitiesManager');
+const { calculateDistance } = require('./../../utils/distance');
 
 class AttackState extends BaseState {
   /** @returns {void} */
@@ -26,10 +27,8 @@ class AttackState extends BaseState {
 
     if (this.character.timeSinceLastAttack > this.character.attackDelay) {
       this.canDamage = true;
-  
-      const dx = this.entity.x - this.character.x;
-      const dy = this.entity.y - this.character.y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      const distance = calculateDistance(this.entity, this.character);
 
       if (distance > 40) { // 29 - attack range + collision radius TODO magic number
         this.character.changeState('follow');

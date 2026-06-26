@@ -2,12 +2,20 @@ const fs = require('fs');
 const path = require('path');
 
 class TutorialHtmlMessagesManager {
+  /**
+   * @param {string} fileName
+   * @returns {string}
+   */
   getHtmlMessageByFileName(fileName) {
     const htmlMessage = this._getFileContentByFileName(fileName);
 
     return htmlMessage;
   }
 
+  /**
+   * @param {string} fileName
+   * @returns {string}
+   */
   _getFileContentByFileName(fileName) {
     const dir = path.join(process.cwd(), 'datapack/html/tutorial');
     const content = fs.readFileSync(path.join(dir, `${fileName}.htm`), 'utf8');

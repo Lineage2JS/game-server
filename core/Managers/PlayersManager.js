@@ -4,10 +4,16 @@ const database = require('./../../database');
 const serverPackets = require('./../ServerPackets/serverPackets');
 const eventBusNew = require('./../Events/EventBusNew');
 
+/** @typedef {import('./../Models/Player')} Player */
+/** @typedef {import('./../Client')} Client */
+/** @typedef {import('./../ServerPackets/ServerPacket')} ServerPacket */
+/** @typedef {{ type: string, status: string, payload: string, scheduledAt: number, createdAccountId: string, createdType: string }} ScheduledTask */
+
 class PlayersManager extends EventEmitter {
   constructor() {
     super();
     
+    /** @type {Player[]} */
     this._players = [];
 
     this.on('notify', packet => { // nofity = send, broadcast? fix
@@ -38,10 +44,15 @@ class PlayersManager extends EventEmitter {
     //
   }
 
+  /** @returns {Player[]} */
   getAllPlayers() {
     return this._players;
   }
 
+  /**
+   * @param {Player} player
+   * @returns {void}
+   */
   add(player) {
     this._players.push(player);
 
@@ -101,6 +112,10 @@ class PlayersManager extends EventEmitter {
     });
   }
 
+  /**
+   * @param {ServerPacket} packet
+   * @returns {void}
+   */
   broadcast(packet) {
     this._players.forEach(player => {
       const client = player.getClient();
@@ -109,6 +124,10 @@ class PlayersManager extends EventEmitter {
     });
   }
 
+  /**
+   * @param {Client} client
+   * @returns {Player | undefined}
+   */
   getPlayerByClient(client) {
     const player = this._players.find((player) => {
       if (player.getClient() === client) {
@@ -121,7 +140,13 @@ class PlayersManager extends EventEmitter {
     return player;
   }
 
+  /**
+   * @param {string} playerLogin
+   * @param {number} characterObjectId
+   * @returns {Promise<void>}
+   */
   async deleteCharacter(playerLogin, characterObjectId) {
+    /** @type {ScheduledTask} */
     const task = {
       type: 'character-deletion',
       status: 'new',
@@ -136,6 +161,10 @@ class PlayersManager extends EventEmitter {
     await schedulerManager.createTask(task);
   }
 
+  /**
+   * @param {number} characterObjectId
+   * @returns {Promise<void>}
+   */
   async restoreCharacter(characterObjectId) { // fix взаимодействие через scheduler?
     await database.deleteScheduledTask('character-deletion', {"characterObjectId": characterObjectId});
   }

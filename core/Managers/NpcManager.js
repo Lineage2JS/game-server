@@ -4,23 +4,33 @@ const database = require('./../../database');
 const npcsList = require('./../../datapack/npcsList.json');
 const spawnList = require('./../../datapack/spawnList.json');
 
+/** @typedef {{ x: number, y: number, zMin: number, zMax: number }} TerritoryCoordinate */
+/** @typedef {[number, number]} Position2D */
+
 class NpcManager extends EventEmitter {
   constructor() {
     super();    
 
+    /** @type {Npc[]} */
     this._npcs = [];
   }
 
+  /**
+   * @param {Npc} npc
+   * @returns {void}
+   */
   spawn(npc) {
     this._npcs.push(npc);
     console.log(this._npcs.length)
     this.emit('spawn', npc);
   }
 
+  /** @returns {Promise<void>} */
   async enable() {
     await this.spawnNpcs();
   }
 
+  /** @returns {Promise<void>} */
   async spawnNpcs() {    
     for (let i = 0; i < spawnList.length; i++) {
       const spawnData = spawnList[i];
@@ -109,6 +119,11 @@ class NpcManager extends EventEmitter {
     console.log('spawn end')
   }
 
+  /**
+   * @param {number} id
+   * @param {TerritoryCoordinate[]} coordinates
+   * @returns {Promise<void>}
+   */
   async spawnNpc(id, coordinates) {
     const npcData = npcsList.find(npcItem => npcItem.id === id);
     const npc = new Npc();
@@ -159,30 +174,49 @@ class NpcManager extends EventEmitter {
     npc.enable();
   }
 
+  /**
+   * @param {Npc} npc
+   * @returns {void}
+   */
   remove(npc) { // fix так же удалять из EntitiesManager
     const npcRemove = this._npcs.indexOf(npc);
 
     this._npcs.splice(npcRemove, 1);
   }
   
+  /** @returns {Npc[]} */
   getSpawnedNpcs() {
     return this._npcs;
   }
 
+  /**
+   * @param {number} objectId
+   * @returns {Npc | undefined}
+   */
   getNpcByObjectId(objectId) {
     const npc = this._npcs.find(npc => npc.objectId === objectId);
 
     return npc;
   }
 
+  /**
+   * @param {number} id
+   * @returns {Npc | undefined}
+   */
   getNpcById(id) {
     const npc = this._npcs.find(npc => npc.id === id);
 
     return npc;
   }
 
+  /**
+   * @param {TerritoryCoordinate[]} coordinates
+   * @returns {Position2D}
+   */
   _getRandomPos(coordinates) {
+    /** @type {number[]} */
     let xp = coordinates.map(i => i.x);
+    /** @type {number[]} */
     let yp = coordinates.map(i => i.y);
 
 		let max = { x: Math.max(...xp), y: Math.max(...yp) };
@@ -199,6 +233,13 @@ class NpcManager extends EventEmitter {
 		return [x, y];
 	}
 
+  /**
+   * @param {number[]} xp
+   * @param {number[]} yp
+   * @param {number} x
+   * @param {number} y
+   * @returns {boolean}
+   */
   _inPoly(xp, yp, x, y){
 		let npol = xp.length;
 		let j = npol - 1;

@@ -19,7 +19,7 @@ class RequestBypassToServer extends ClientPacketNew {
 
       return;
     }
-    
+
     if (command === 'admin_show_teleports') {
       const htmlMessage = adminPanelManager.getHtmlMessageByFileName('teleports');
 
@@ -30,13 +30,15 @@ class RequestBypassToServer extends ClientPacketNew {
 
     if (command.includes('admin_teleport')) {
       const [x, y, z] = command.split(' ').slice(1).map(i => Number(i)); // fix
-      
+
+      if (!player) return;
+
       player.x = x;
       player.y = y;
       player.z = z;
 
       client.sendPacket(new serverPackets.TeleportToLocation(player.objectId, player.x, player.y, player.z));
-      
+
       return;
     }
 
@@ -97,8 +99,10 @@ class RequestBypassToServer extends ClientPacketNew {
     }
 
     if (command === 'admin_other_earthquake') {
+      if (!player) return;
+
       client.sendPacket(new serverPackets.EarthQuake(player.x, player.y, player.z, 40, 10));
-      
+
       return;
     }
 
@@ -106,17 +110,21 @@ class RequestBypassToServer extends ClientPacketNew {
       const queryParams = command.split('?')[1];
       const params = queryParams.split('&').map(i => {
         const [key, value] = i.split('=');
-    
+
         return { [key.trim()]: Number(value) };
       }).reduce((a, b) => { return {...a, ...b} });
 
       const item = await itemsManager.createItem(params.itemId);
+
+      if (!item) return;
 
       if (item.isStackable) {
         if (params.itemCount && params.itemCount > 0) {
           item.setCount(params.itemCount);
         }
       }
+
+      if (!player) return;
 
       player.addItem(item);
 
@@ -127,7 +135,12 @@ class RequestBypassToServer extends ClientPacketNew {
       return;
     }
 
+    /**
+     * @type {import('../Models/Npc') | undefined}
+     */
     const npc = entitiesManager.getEntityByObjectId(player.lastTalkedNpcId);
+
+    if (!npc) return;
 
     if (command === 'talk_select') {
       npc.ai.talkSelect(player);

@@ -7,6 +7,9 @@ const ItemWeapon = require('./../Models/ItemWeapon');
 const itemsList = require('./../../datapack/itemsList.json');
 const itemNamesMap = require('./../../datapack/itemNamesMap.json');
 
+/** @typedef {ItemAsset | ItemAccessary | ItemEtc | ItemArmor | ItemWeapon} ItemTemplate */
+/** @typedef {{ id: number, name: string, item_type: string, etcitem_type?: string | null, consume_type?: string | null, armor_type?: string | null, weapon_type?: string | null, slot_bit_type?: string | null, weight: number, default_price: number }} ItemData */
+
 const TYPE_ARROW = 0;
 const TYPE_MATERIAL = 1;
 const TYPE_PET_COLLAR = 2;
@@ -67,15 +70,25 @@ const slots = {
 
 class ItemsManager {
   constructor() {
+    /** @type {Map<number, ItemTemplate>} */
     this._itemsTable = new Map();
   }
 
+  /** @returns {void} */
   enable() {
     this._loadItemTemplates();
   }
 
+  /**
+   * @param {number} itemId
+   * @param {number} [count=1]
+   * @returns {Promise<ItemTemplate | undefined>}
+   */
   async createItem(itemId, count = 1) {
     const itemTemplate = this._getItemTemplate(itemId);
+    if (!itemTemplate) {
+      return undefined;
+    }
     const objectId = await database.getNextObjectId();
 
     if (itemTemplate instanceof ItemAsset) {
@@ -97,10 +110,21 @@ class ItemsManager {
     if (itemTemplate instanceof ItemWeapon) {
       return this._createItemWeapon(itemTemplate, objectId);
     }
+
+    return undefined;
   }
 
+  /**
+   * @param {number} itemId
+   * @param {number} objectId
+   * @param {number} [count=1]
+   * @returns {ItemTemplate | undefined}
+   */
   getItem(itemId, objectId, count = 1) {
     const itemTemplate = this._getItemTemplate(itemId);
+    if (!itemTemplate) {
+      return undefined;
+    }
 
     if (itemTemplate instanceof ItemAsset) {
       return this._createItemAsset(itemTemplate, objectId, count);
@@ -121,12 +145,24 @@ class ItemsManager {
     if (itemTemplate instanceof ItemWeapon) {
       return this._createItemWeapon(itemTemplate, objectId);
     }
+
+    return undefined;
   }
 
+  /**
+   * @param {string} itemName
+   * @returns {number}
+   */
   getItemIdByName(itemName) {
-    return itemNamesMap[itemName];
+    return /** @type {number} */ (itemNamesMap[itemName]);
   }
 
+  /**
+   * @param {ItemAsset} itemTemplate
+   * @param {number} objectId
+   * @param {number} count
+   * @returns {ItemAsset}
+   */
   _createItemAsset(itemTemplate, objectId, count) {
     const data = {
       itemId: itemTemplate.getItemId(),
@@ -147,6 +183,11 @@ class ItemsManager {
     return itemAsset;
   }
 
+  /**
+   * @param {ItemAccessary} itemTemplate
+   * @param {number} objectId
+   * @returns {ItemAccessary}
+   */
   _createItemAccessary(itemTemplate, objectId) {
     const data = {
       itemId: itemTemplate.getItemId(),
@@ -164,6 +205,11 @@ class ItemsManager {
     return itemAccessary;
   }
 
+  /**
+   * @param {ItemEtc} itemTemplate
+   * @param {number} objectId
+   * @returns {ItemEtc}
+   */
   _createItemEtc(itemTemplate, objectId) {
     const data = {
       itemId: itemTemplate.getItemId(),
@@ -183,6 +229,11 @@ class ItemsManager {
     return itemEtc;
   }
 
+  /**
+   * @param {ItemArmor} itemTemplate
+   * @param {number} objectId
+   * @returns {ItemArmor}
+   */
   _createItemArmor(itemTemplate, objectId) {
     const data = {
       itemId: itemTemplate.getItemId(),
@@ -201,6 +252,11 @@ class ItemsManager {
     return itemArmor;
   }
 
+  /**
+   * @param {ItemWeapon} itemTemplate
+   * @param {number} objectId
+   * @returns {ItemWeapon}
+   */
   _createItemWeapon(itemTemplate, objectId) {
     const data = {
       itemId: itemTemplate.getItemId(),
@@ -219,8 +275,9 @@ class ItemsManager {
     return itemWeapon;
   }
 
+  /** @returns {void} */
   _loadItemTemplates() {
-    for(const itemData of itemsList) {
+    for(const itemData of /** @type {ItemData[]} */ (itemsList)) {
       //questitem
 
       if (itemData.item_type === "asset") {
@@ -245,6 +302,10 @@ class ItemsManager {
     }
   }
 
+  /**
+   * @param {ItemData} itemData
+   * @returns {void}
+   */
   _createItemAssetTemplate(itemData) {
     const data = {
       itemId: itemData.id,
@@ -262,6 +323,10 @@ class ItemsManager {
     this._addItem(itemAsset.getItemId(), itemAsset);
   }
 
+  /**
+   * @param {ItemData} itemData
+   * @returns {void}
+   */
   _createItemAccessaryTemplate(itemData) {
     const data = {
       itemId: itemData.id,
@@ -277,6 +342,10 @@ class ItemsManager {
     this._addItem(itemAccessary.getItemId(), itemAccessary);
   }
 
+  /**
+   * @param {ItemData} itemData
+   * @returns {void}
+   */
   _createItemEtcTemplate(itemData) {
     let type2 = TYPE2_OTHER;
     let etcItemType = TYPE_OTHER
@@ -349,6 +418,10 @@ class ItemsManager {
     this._addItem(itemEtc.getItemId(), itemEtc);
   }
 
+  /**
+   * @param {ItemData} itemData
+   * @returns {void}
+   */
   _createItemArmorTemplate(itemData) {
     const slot = slots[itemData.slot_bit_type];
     const data = {
@@ -366,6 +439,10 @@ class ItemsManager {
     this._addItem(itemArmor.getItemId(), itemArmor);
   }
 
+  /**
+   * @param {ItemData} itemData
+   * @returns {void}
+   */
   _createItemWeaponTemplate(itemData) {
     const slot = slots[itemData.slot_bit_type];
     const data = {
@@ -383,10 +460,19 @@ class ItemsManager {
     this._addItem(itemWeapon.getItemId(), itemWeapon);
   }
 
+  /**
+   * @param {number} itemId
+   * @param {ItemTemplate} item
+   * @returns {void}
+   */
   _addItem(itemId, item) {
     this._itemsTable.set(itemId, item);
   }
 
+  /**
+   * @param {number} itemId
+   * @returns {ItemTemplate | undefined}
+   */
   _getItemTemplate(itemId) {
     return this._itemsTable.get(itemId);
   }

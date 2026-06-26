@@ -1,25 +1,38 @@
 const itemsManager = require('./ItemsManager');
 const settings = require('./../../datapack/settings.json');
+/** @typedef {[number, number, number]} StartPoint */
 
 class InitialParametersManager {
   constructor() {
+    /** @type {Map<string, number[]>} */
     this._initialEquipment = new Map();
+    /** @type {Map<string, StartPoint>} */
     this._initialStartPoint = new Map();
   }
   
+  /** @returns {void} */
   enable() {
     this._loadInitialEquipment();
     this._loadInitialStartPoint();
   }
 
+  /**
+   * @param {string} className
+   * @returns {number[] | undefined}
+   */
   getInitialEquipmentIds(className) {
     return this._initialEquipment.get(className);
   }
 
+  /**
+   * @param {string} className
+   * @returns {StartPoint | undefined}
+   */
   getInitialStartPoint(className) {
     return this._initialStartPoint.get(className);
   }
 
+  /** @returns {void} */
   _loadInitialEquipment() {
     const initialEquipment = settings["initialEquipment"];
 
@@ -35,6 +48,7 @@ class InitialParametersManager {
     }
   }
 
+  /** @returns {void} */
   _loadInitialStartPoint() {
     const initialStartPoint = settings["initialStartPoint"];
 

@@ -1,19 +1,36 @@
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
 const eventBusNew = require('./../Events/EventBusNew');
 
+/** @typedef {import('./../Models/Player')} Player */
+/** @typedef {import('./../Models/Npc')} Npc */
+/** @typedef {import('./../Models/Bot')} Bot */
+/** @typedef {import('./../Models/DropItem')} DropItem */
+/** @typedef {Player | Npc | Bot | DropItem} Entity */
+
 class EntitiesManager {
   constructor() {
+    /** @type {Entity[]} */
     this._entities = [];
   }
 
+  /**
+   * @param {Entity} entity
+   * @returns {void}
+   */
   addEntity(entity) {
     this._entities.push(entity);
   }
 
+  /**
+   * @param {number | null | undefined} objectId
+   * @returns {Entity | undefined}
+   */
   getEntityByObjectId(objectId) {
+    if (typeof objectId !== 'number') return;
     return this._entities.find(entity => entity.objectId === objectId);
   }
 
+  /** @returns {Promise<void>} */
   async enable() { // fix, load
     const npcManager = require('./NpcManager');
     const playersManager = require('./PlayersManager');
@@ -405,6 +422,10 @@ class EntitiesManager {
     });
   }
 
+  /**
+   * @param {Player} player
+   * @returns {void}
+   */
   _onPlayerEnter(player) {
     this._entities.push(player);
   }

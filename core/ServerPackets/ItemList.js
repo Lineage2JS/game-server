@@ -4,7 +4,7 @@ const equipmentSlotEnums = require('./../../enums/equipmentSlotEnums');
 //
 const slot = {
 		"chest": equipmentSlotEnums.SLOT_CHEST,
-		"chest_full": equipmentSlotEnums.SLOT_FULL_ARMOR, 
+		"chest_full": equipmentSlotEnums.SLOT_FULL_ARMOR,
 		"head": equipmentSlotEnums.SLOT_HEAD,
 		"underwear": equipmentSlotEnums.SLOT_UNDERWEAR,
 		"back": equipmentSlotEnums.SLOT_BACK,

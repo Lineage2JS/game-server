@@ -2,6 +2,10 @@ const EventEmitter = require('events');
 const ai = require('./../../datapack/ai');
 const npcHtmlMessagesManager = require('./NpcHtmlMessagesManager');
 const npcEventBus = require('./../Events/NpcEventBus');
+/** @typedef {import('./../Models/Npc')} Npc */
+/** @typedef {import('./../Models/Player')} Player */
+
+/** @typedef {{ x: number, y: number, z: number }} Position */
 
 class AiManager extends EventEmitter {
   constructor() {
@@ -32,7 +36,7 @@ class AiManager extends EventEmitter {
     npcEventBus.on('giveItem', (talker, itemName, itemCount) => {
       this.emit('giveItem', talker, itemName, itemCount);
     });
-    
+
     npcEventBus.on('deleteItem', (talker, itemName, itemCount) => {
       this.emit('deleteItem', talker, itemName, itemCount);
     });
@@ -50,20 +54,43 @@ class AiManager extends EventEmitter {
     });
   }
 
+  /**
+   * @param {string} aiName
+   * @param {Player} talker
+   * @returns {void}
+   */
   onTalkSelect(aiName, talker) {
     const carl = new ai.Carl();
 
     carl.onTalkSelected(talker);
   }
 
+  /**
+   * @param {string} aiName
+   * @param {Player} talker
+   * @returns {void}
+   */
   onMyDying(aiName, talker) { // talker = attacker
     //ai.TutoKeltir.onMyDying(talker);
   }
 
+  /**
+   * @param {string} aiName
+   * @param {Player} talker
+   * @param {number} ask
+   * @param {number} reply
+   * @returns {void}
+   */
   menuSelect(aiName, talker, ask, reply) {
     ai[aiName].onMenuSelected(talker, ask, reply);
   }
 
+  /**
+   * @param {Npc} npc
+   * @param {string} aiName
+   * @param {Player} attacker
+   * @returns {void}
+   */
   onAttacked(npc, aiName, attacker) {
     if (aiName === 'Elpy') {
       const elpy = new ai.Elpy(npc);
@@ -72,6 +99,11 @@ class AiManager extends EventEmitter {
     }
   }
 
+  /**
+   * @param {string} aiName
+   * @param {Player} talker
+   * @returns {void}
+   */
   onLearnSkill(aiName, talker) { // scriptName?
     const minx = new ai.Minx();
 

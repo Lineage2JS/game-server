@@ -9,6 +9,7 @@ const CastState = require('./../states/CastState');
 const FollowState = require('./../states/FollowState');
 const PickupState = require('./../states/PickupState');
 const TalkState = require('./../states/TalkState');
+const { calculateDistance } = require('./../../utils/distance');
 
 class Player extends Character {
   constructor() {
@@ -356,7 +357,7 @@ class Player extends Character {
     const step = this.runSpeed * delta;
     const dx = targetX - this.x;
     const dy = targetY - this.y;
-    const distance = Math.sqrt(dx * dx + dy * dy) - 9;
+    const distance = calculateDistance({ x: targetX, y: targetY }, { x: this.x, y: this.y }) - 9;
 
     this.lastMoveTimestamp = now;
 
@@ -364,7 +365,7 @@ class Player extends Character {
       this.x = targetX;
       this.y = targetY;
       this.lastMoveTimestamp = 0;
-      
+
       return true;
     }
 

@@ -4,16 +4,30 @@ const dropItemsManager = require('./../Managers/DropItemsManager');
 const entitiesManager = require('./../Managers/EntitiesManager');
 const serverPackets = require('./../ServerPackets/serverPackets');
 
+/** @typedef {import('./../Models/Npc')} Npc */
+/** @typedef {{ itemName: string, chance: number, min: number, max: number }} DropGroupItem */
+/** @typedef {{ chance: number, group: DropGroupItem[] }} DropGroup */
+/** @typedef {{ additionalMakeMultiList: DropGroup[], id: number, x: number, y: number, z: number }} NpcWithDropList */
+/** @typedef {{ character: NpcWithDropList }} NpcDropItemEvent */
+/** @typedef {{ itemName: string, count: number }} DropItemData */
+
 class NpcDropItemHandler {
+  /**
+   * @param {NpcDropItemEvent} data
+   * @returns {Promise<void>}
+   */
   async handle(data) {
+    /** @type {NpcWithDropList} */
     const npc = data.character;
 
     if (npc.additionalMakeMultiList.length === 0) {
       return;
     }
 
+    /** @type {DropItemData[]} */
     const dropItems = []
 
+    /** @param {DropGroup} list */
     npc.additionalMakeMultiList.forEach(list => {
       const randomChanceGroup = Math.floor(Math.random() * 100);
 
@@ -21,6 +35,7 @@ class NpcDropItemHandler {
         return;
       }
 
+      /** @param {DropGroupItem} item */
       list.group.forEach(item => {
         const randomChanceItem = Math.floor(Math.random() * 100);
 
@@ -41,6 +56,7 @@ class NpcDropItemHandler {
     console.log(npc.id, dropItems);
 
     for (let i = 0; i < dropItems.length; i++) {
+      /** @type {DropItemData} */
       const dropItem = dropItems[i];
       const itemId = itemsManager.getItemIdByName(dropItem.itemName);
       const itemCount = dropItem.count;
