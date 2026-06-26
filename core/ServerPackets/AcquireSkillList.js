@@ -1,12 +1,15 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class AcquireSkillList {
+  /**
+   * @param {any[]} skills
+   */
   constructor(skills) {
     this._packet = new ServerPacket();
     this._packet
       .writeC(0xA3)
       .writeD(skills.length);
-    
+
     for (let i = 0; i < skills.length; i++) {
       const skill = skills[i];
 

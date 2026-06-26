@@ -17,7 +17,7 @@ class Action extends ClientPacketNew {
     const originZ = this.readD();
     const actionId = this.readC(); // 0 - click, 1 - shift click
     const entity = entitiesManager.getEntityByObjectId(objectId);
-    
+
     if (entity instanceof Player) {
       // TODO\
       client.sendPacket(new serverPackets.StatusUpdate(entity.objectId, [

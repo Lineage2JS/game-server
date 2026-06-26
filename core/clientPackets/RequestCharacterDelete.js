@@ -8,8 +8,13 @@ class RequestCharacterDelete extends ClientPacketNew {
     const client = this.getClient();
     const player = this.getPlayer();
     const characterSlot = this.readD();
+
+    if (!player || !player.login) return;
+
     const characters = await database.getCharactersByLogin(player.login);
     const character = characters[characterSlot];
+
+    if (!character || !character.objectId) return;
 
     await playersManager.deleteCharacter(player.login, character.objectId);
 

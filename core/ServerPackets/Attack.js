@@ -1,6 +1,11 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class Attack {
+  /**
+   * @param {import('../Models/Player.js')} player
+   * @param {number} targetObjectId
+   * @param {boolean} soulshot
+   */
   constructor(player, targetObjectId, soulshot = false) {
     this._packet = new ServerPacket();
     this._packet

@@ -23,8 +23,6 @@ class Player extends Character {
     this._stateName = '';
     /** @type {string | null} */
     this.action = '';
-    /** @type {boolean} */
-    this.isDead = false;
 
     /** @type {Record<string, import('../states/BaseState')>} */
     this._states = {

@@ -5,7 +5,7 @@ const EventEmitter = require('events');
 class Character extends EventEmitter {
   constructor() {
     super();
-    
+
     /** @type {number | null} */
     this.objectId = null; // getObjectId()
     /** @type {string | null} */
@@ -26,6 +26,8 @@ class Character extends EventEmitter {
     this.face = null;
     /** @type {number} */
     this.heading = 0;
+    /** @type {boolean} */
+    this.isDead = false;
     /** @type {number} */
     this.accessLevel = 0;
     /** @type {boolean} */
@@ -64,7 +66,7 @@ class Character extends EventEmitter {
     this.className = null;
     /** @type {number | null} */
     this.raceId = null;
-    
+
     /** @type {number | null} */
     this.str = null;
     /** @type {number | null} */
@@ -114,24 +116,24 @@ class Character extends EventEmitter {
     this.swimSpeed = null;
     /** @type {number | null} */
     this.maximumLoad = null;
-    
+
     /** @type {number | null} */
     this.x = null;
     /** @type {number | null} */
     this.y = null;
     /** @type {number | null} */
     this.z = null;
-    
+
     /** @type {boolean | null} */
     this.canCraft = null;
-    
+
     /** @type {number | null} */
     this.maleAttackSpeedMultiplier = null;
     /** @type {number | null} */
     this.maleCollisionRadius = null;
     /** @type {number | null} */
     this.maleCollisionHeight = null;
-    
+
     /** @type {number | null} */
     this.femaleAttackSpeedMultiplier = null;
     /** @type {number | null} */
@@ -175,7 +177,7 @@ class Character extends EventEmitter {
     //
     /** @type {Character | null} */
     this.target = null; // target and aggroTarget?
-    /** @type {Date | null} */
+    /** @type {number | null} */
     this.createdAt = null;
     /** @type {Map<number, { character: Character, damage: number }>} */
     this._hitHistoryMap = new Map();
@@ -227,7 +229,7 @@ class Character extends EventEmitter {
 
   /** @param {number | null} value */
   set targetZ(value) {
-    return this.actionParams.targetZ = value;
+    this.actionParams.targetZ = value;
   }
 
   get targetCharacterId() {
@@ -258,7 +260,7 @@ class Character extends EventEmitter {
   }
 
   /** @param {number} damage */
-  takeDamage(damage) {    
+  takeDamage(damage) {
     this.hp = this.hp - damage;
 
     this.emit('damaged');
@@ -269,6 +271,10 @@ class Character extends EventEmitter {
    * @param {number} damage
    */
   recordHit(character, damage) {
+    if (!character || !character.objectId) {
+      return;
+    }
+
     const hit = this._hitHistoryMap.get(character.objectId);
 
     if (hit) {

@@ -39,9 +39,9 @@ class Item {
     this._isEquipped = false;
   }
 
-  /** @returns {number | null} */
+  /** @returns {number} */
   getObjectId() {
-    return this._objectId;
+    return /** @type {number} */ (this._objectId);
   }
 
   /** @param {number} objectId */

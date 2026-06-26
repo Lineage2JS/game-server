@@ -1,15 +1,15 @@
 const itemsManager = require('./ItemsManager');
 const settings = require('./../../datapack/settings.json');
-/** @typedef {[number, number, number]} StartPoint */
+/** @typedef {[number, number, number]} Point */
 
 class InitialParametersManager {
   constructor() {
     /** @type {Map<string, number[]>} */
     this._initialEquipment = new Map();
-    /** @type {Map<string, StartPoint>} */
+    /** @type {Map<string, Point>} */
     this._initialStartPoint = new Map();
   }
-  
+
   /** @returns {void} */
   enable() {
     this._loadInitialEquipment();
@@ -26,7 +26,7 @@ class InitialParametersManager {
 
   /**
    * @param {string} className
-   * @returns {StartPoint | undefined}
+   * @returns {Point | undefined}
    */
   getInitialStartPoint(className) {
     return this._initialStartPoint.get(className);
@@ -37,8 +37,8 @@ class InitialParametersManager {
     const initialEquipment = settings["initialEquipment"];
 
     for(const className in initialEquipment) {
-      const itemsName = initialEquipment[className];
-      const itemsId = itemsName.map(itemName => {
+      const itemNames = (initialEquipment[/** @type {keyof typeof initialEquipment} */ (className)]);
+      const itemsId = itemNames.map(itemName => {
         const itemId = itemsManager.getItemIdByName(itemName);
 
         return itemId;
@@ -53,7 +53,7 @@ class InitialParametersManager {
     const initialStartPoint = settings["initialStartPoint"];
 
     for(const className in initialStartPoint) {
-      const points = initialStartPoint[className];
+      const points = initialStartPoint[/** @type {keyof typeof initialStartPoint} */ (className)];
 
       this._initialStartPoint.set(className, points);
     }
