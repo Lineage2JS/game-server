@@ -8,13 +8,19 @@ const skillsManager = require('./../Managers/SkillsManager');
 //
 
 class CastState extends BaseState {
+  /** @returns {void} */
   enter() {
+    /** @type {import('../Models/Character') | null} */
     this.entity = entitiesManager.getEntityByObjectId(this.character.targetCharacterId);
+    /** @type {import('../Models/Skill')} */
     this.skill = skillsManager.getSkill(this.character.targetSkillId);
+    /** @type {number} */
     this.skillId = this.skill.getSkillId();
+    /** @type {boolean} */
     this.canDamage = false;
   }
 
+  /** @returns {void} */
   update() {
     // if (this.character.target === this.character.objectId) {
     //   return;
@@ -110,6 +116,7 @@ class CastState extends BaseState {
     //   this.applySkillEffect(); // ПРИМЕНЯЕМ ЭФФЕКТ
   }
 
+  /** @returns {void} */
   leave() {
 
   }

@@ -3,6 +3,7 @@ const entitiesManager = require('./../Managers/EntitiesManager');
 const { inRange } = require('./../../utils/distance');
 
 class TalkState extends BaseState {
+  /** @returns {void} */
   enter() {
     const entity = entitiesManager.getEntityByObjectId(this.character.targetCharacterId); // если target будет null? Вернуть getLastTalk?
     
@@ -17,10 +18,12 @@ class TalkState extends BaseState {
     entity.ai.talk(this.character);
   }
 
+  /** @returns {void} */
   update() {
 
   }
 
+  /** @returns {void} */
   leave() {
     
   }

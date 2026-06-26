@@ -3,6 +3,7 @@ const eventBusNew = require('./../Events/EventBusNew');
 const BaseState = require('./BaseState');
 
 class DeadState extends BaseState {
+  /** @returns {void} */
   enter() {
     this.character.hp = 0;
     this.character.target = null;
@@ -11,10 +12,12 @@ class DeadState extends BaseState {
     eventBusNew.emit('npc:item:drop', { character: this.character }); // TODO тут и NPC и Character в entity
   }
 
+  /** @returns {void} */
   update() {
     
   }
 
+  /** @returns {void} */
   leave() {
     
   }

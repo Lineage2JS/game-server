@@ -14,12 +14,18 @@ class Player extends Character {
   constructor() {
     super();
 
+    /** @type {import('../Client') | null} */
     this._client = null;
+    /** @type {import('./Character') | null} */
     this.target = null;
+    /** @type {string} */
     this._stateName = '';
+    /** @type {string | null} */
     this.action = '';
+    /** @type {boolean} */
     this.isDead = false;
 
+    /** @type {Record<string, import('../states/BaseState')>} */
     this._states = {
       'move': new MoveState(this),
       'idle': new IdleState(this),
@@ -31,20 +37,34 @@ class Player extends Character {
     }
 
     //
+    /** @type {Inventory} */
     this._inventory = new Inventory();
+    /** @type {Quests} */
     this._quests = new Quests();
+    /** @type {Skills} */
     this._skills = new Skills();
+    /** @type {number | null} */
     this.lastTalkedNpcId = null; // TODO сделать _lastTalkedNpcId а запрос через getter
+    /** @type {boolean} */
     this._activeSoulShot = false;
+    /** @type {number} */
     this.lastAttackTimestamp = 0;
+    /** @type {number} */
     this.lastMoveTimestamp = 0;
+    /** @type {number} */
     this.castTimestamp = 0;
+    /** @type {number} */
     this.lastRegenerateTimestamp = 0;
+    /** @type {number} */
     this.baseAttackSpeed = 300; // TODO
-    
+
+    /** @type {number} */
     this.moveType = 1;
+    /** @type {number} */
     this.waitType = 1;
-    this._currentState = '';
+    /** @type {import('../states/BaseState') | null} */
+    this._currentState = null;
+    /** @type {import('./Item') | null} */
     this._activeWeapon = null;
     //
   }
@@ -65,10 +85,16 @@ class Player extends Character {
     return this._stateName === 'cast';
   }
 
+  /**
+   * @returns {import('../Client') | null}
+   */
   getClient() {
     return this._client;
   }
 
+  /**
+   * @param {import('../Client')} client
+   */
   setClient(client) {
     this._client = client;
   }
@@ -85,6 +111,7 @@ class Player extends Character {
     return this._skills.getSkills();
   }
 
+  /** @param {{ skillId: number, skillLevel: number }} skill */
   addSkill(skill) {
     this._skills.addSkill(skill)
   }
@@ -93,6 +120,7 @@ class Player extends Character {
     return this._activeWeapon;
   }
 
+  /** @param {import('./Item') | null} item */
   setActiveWeapon(item) { // делать запрос через activeWeapon проверяя this.hand...
     this._activeWeapon = item;
   }
@@ -108,6 +136,7 @@ class Player extends Character {
     return item.getCount();
   }
 
+  /** @param {number} adenaCount */
   reduceAdena(adenaCount) {
     const items = this._inventory.getItems();
     const item = items.find(item => item.getItemId() === 57);
@@ -127,6 +156,7 @@ class Player extends Character {
     this._activeSoulShot = true;
   }
 
+  /** @param {import('./Item')} item */
   addItem(item) {
     this._inventory.addItem(item);
   }
@@ -135,6 +165,7 @@ class Player extends Character {
     return this._inventory.getItems();
   }
 
+  /** @param {number} objectId */
   getItemByObjectId(objectId) {
     const items = this._inventory.getItems();
     const foundItem = items.find(item => item.getObjectId() === objectId);
@@ -146,9 +177,10 @@ class Player extends Character {
     }
   }
 
+  /** @param {string} itemName */
   deleteItemByName(itemName) { // TODO deleteItem, удалять по ID и сделать 1 метод вместо 2-х? или только по ObjectId
     const items = this._inventory.getItems();
-    const foundItem = items.find(item => item.itemName === itemName);
+    const foundItem = items.find(item => item.getName() === itemName);
 
     if (foundItem) {
       const index = items.indexOf(foundItem);
@@ -157,6 +189,10 @@ class Player extends Character {
     }
   }
 
+  /**
+   * @param {number} objectId
+   * @param {number} [count=1]
+   */
   deleteItemByObjectId(objectId, count = 1) {
     const items = this._inventory.getItems();
     const foundItem = items.find(item => item.getObjectId() === objectId);
@@ -190,10 +226,12 @@ class Player extends Character {
     }
   }
 
+  /** @param {number} id */
   addQuest(id) {
     this._quests.addQuest(id);
   }
 
+  /** @param {number} questId */
   deleteQuestById(questId) {
     const quests = this._quests.getQuests();
     const foundItem = quests.find(quest => quest.id === questId);
@@ -209,6 +247,10 @@ class Player extends Character {
     return this._quests.getQuests();
   }
 
+  /**
+   * @param {'move' | 'attack' | 'pickup' | 'cast' | 'talk'} action
+   * @param {...number} payload
+   */
   doAction(action, ...payload) {
     this.action = action;
 
@@ -254,6 +296,7 @@ class Player extends Character {
     this.targetSkillId = null;
   }
 
+  /** @param {'move' | 'idle' | 'attack' | 'cast' | 'follow' | 'pickup' | 'talk'} stateName */
   changeState(stateName) {
     if (this._currentState) {
       this._currentState.leave();
@@ -275,7 +318,7 @@ class Player extends Character {
     }
 
     if (this.hp < this.maximumHp || this.mp < this.maximumMp) {
-      this.regenerate(); 
+      this.regenerate();
     }
 
     if (this.hp <= 0 && this.action !== 'dead') {
@@ -288,14 +331,21 @@ class Player extends Character {
     }
   }
 
+  /** @param {Record<string, unknown>} data */
   updateParams(data) {
     for(const key in data) {
       if (this.hasOwnProperty(key)) {
-        this[key] = data[key];
+        Reflect.set(this, key, data[key]);
       }
     }
   }
 
+  /**
+   * @param {number} targetX
+   * @param {number} targetY
+   * @param {number} targetZ
+   * @returns {boolean}
+   */
   moveTo(targetX, targetY, targetZ) {
     if (this.lastMoveTimestamp === 0) {
       this.lastMoveTimestamp = Date.now();
@@ -326,6 +376,7 @@ class Player extends Character {
     return false;
   }
 
+  /** @param {import('./Character')} entity */
   attack(entity) {
     entity.emit('attacked', {
       attacker: this,
@@ -349,6 +400,7 @@ class Player extends Character {
     }
   }
 
+  /** @param {import('./Item')} item */
   equipItem(item) {
     const slot = item.getBodyPart();
 
@@ -485,6 +537,7 @@ class Player extends Character {
     item.equip();
   }
 
+  /** @param {import('./Item')} item */
   unEquipItem(item) {
     const slot = item.getBodyPart();
     

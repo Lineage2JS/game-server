@@ -10,20 +10,34 @@ const TalkState = require('./../states/TalkState');
 const npcManager = require('./../Managers/NpcManager');
 //
 
+/** @typedef {{ x: number | null, y: number | null, z: number | null }} PathPoint */
+/** @typedef {{ target: PathPoint, origin: PathPoint }} Path */
+
 class Bot extends Character {
+  /** @param {import('../Client')} client */
   constructor(client) {
     super();
 
+    /** @type {import('../Client')} */
     this._client = client;
+    /** @type {import('./Character') | null} */
     this.target = null;
+    /** @type {number} */
     this.positionUpdateTimestamp = 0;
+    /** @type {'move' | 'idle' | 'attack' | 'cast' | 'follow' | 'pickup' | 'talk' | ''} */
     this.state = '';
+    /** @type {'move' | 'attack' | 'pickup' | ''} */
     this.action = '';
+    /** @type {boolean} */
     this.isMoving = false;
+    /** @type {boolean} */
     this.isAttacking = false;
+    /** @type {boolean} */
     this.isCasting = false;
+    /** @type {boolean} */
     this.isDead = false;
 
+    /** @type {Record<'move' | 'idle' | 'attack' | 'cast' | 'follow' | 'pickup' | 'talk', import('../states/BaseState') & { payload?: unknown }>} */
     this._states = {
       'move': new MoveState(this),
       'idle': new IdleState(this),
@@ -35,22 +49,35 @@ class Bot extends Character {
     }
 
     //
+    /** @type {unknown | null} */
     this.pickupItem = null; // хранить objectId? как target?
+    /** @type {{ script: string }} */
     this.ai = {
       script: 'DefaultBot'
     };
+    /** @type {number} */
     this.lastAttackTimestamp = 0;
+    /** @type {number} */
     this.castTimestamp = 0;
+    /** @type {number} */
     this.lastRegenerateTimestamp = 0;
+    /** @type {number} */
     this.baseAttackSpeed = 300; // TODO
     //
+    /** @type {unknown | null} */
     this._actionPayload = null;
     //
+    /** @type {number} */
     this.lastUpdateTimestamp = 0;
+    /** @type {boolean} */
     this.isDamage = false;
+    /** @type {number} */
     this.moveType = 1;
+    /** @type {number} */
     this.waitType = 1;
+    /** @type {import('../states/BaseState') | ''} */
     this._currentState = '';
+    /** @type {import('./Item') | null} */
     this._activeWeapon = null;
     //
   }
@@ -88,7 +115,8 @@ class Bot extends Character {
 
     runningBot.created();
 
-    runningBot.on('run', (x, y) => {
+    runningBot.on('run', /** @param {number} x @param {number} y */ (x, y) => {
+      /** @type {Path} */
       let path = {
         target: {
           x: x,
@@ -107,18 +135,25 @@ class Bot extends Character {
     });
   }
 
+  /** @returns {import('../Client')} */
   getClient() {
     return this._client;
   }
 
+  /** @param {unknown} payload */
   setActionPayload(payload) {
     this._actionPayload = payload;
   }
 
+  /** @returns {unknown | null} */
   getActionPayload() {
     return this._actionPayload;
   }
 
+  /**
+   * @param {'move' | 'attack' | 'pickup'} action
+   * @param {unknown} payload
+   */
   doAction(action, payload) {
     this.action = action;
 
@@ -139,6 +174,10 @@ class Bot extends Character {
     }
   }
 
+  /**
+   * @param {'move' | 'idle' | 'attack' | 'cast' | 'follow' | 'pickup' | 'talk'} stateName
+   * @param {unknown} payload
+   */
   changeState(stateName, payload) {
     if (this._currentState) {
       this._currentState.leave();
@@ -160,15 +199,17 @@ class Bot extends Character {
     }
   }
 
+  /** @param {Record<string, unknown>} data */
   updateParams(data) {
     for(const key in data) {
       if (this.hasOwnProperty(key)) {
-        this[key] = data[key];
+        Reflect.set(this, key, data[key]);
       }
     }
   }
 
   // create math utils
+  /** @returns {[number, number]} */
   _getRandomPos() {
     let max = { x: -80000, y: 270000 };
     let min = { x: -60000, y: 250000 };
@@ -185,6 +226,13 @@ class Bot extends Character {
     return [x, y]
   }
 
+  /**
+   * @param {number[]} xp
+   * @param {number[]} yp
+   * @param {number} x
+   * @param {number} y
+   * @returns {boolean}
+   */
   _inPoly(xp, yp, x, y){
     let npol = xp.length;
     let j = npol - 1;

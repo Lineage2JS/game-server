@@ -2,11 +2,15 @@ const BaseState = require("./BaseState");
 const entitiesManager = require('./../Managers/EntitiesManager');
 
 class AttackState extends BaseState {
+  /** @returns {void} */
   enter() {
+    /** @type {import('../Models/Character') | null} */
     this.entity = entitiesManager.getEntityByObjectId(this.character.targetCharacterId);
+    /** @type {boolean} */
     this.canDamage = false;
   }
 
+  /** @returns {void} */
   update() {
     if (!this.entity) { // fix
       return;
@@ -56,6 +60,7 @@ class AttackState extends BaseState {
     }
   }
 
+  /** @returns {void} */
   leave() {
     
   }

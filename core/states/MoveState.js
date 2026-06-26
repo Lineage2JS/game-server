@@ -1,12 +1,17 @@
 const BaseState = require("./BaseState");
 
 class MoveState extends BaseState {
+  /** @returns {Promise<void>} */
   async enter() {
+    /** @type {number | null} */
     this.targetX = this.character.targetX;
+    /** @type {number | null} */
     this.targetY = this.character.targetY;
+    /** @type {number | null} */
     this.targetZ = this.character.targetZ;
   }
 
+  /** @returns {void} */
   update() {
     const arrived = this.character.moveTo(this.targetX, this.targetY, this.targetZ);
     
@@ -19,6 +24,7 @@ class MoveState extends BaseState {
     this.character.emit('move', this.targetX, this.targetY, this.targetZ);
   }
 
+  /** @returns {void} */
   leave() {
     
   }
