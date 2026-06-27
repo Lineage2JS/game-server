@@ -14,12 +14,12 @@ class DeadState extends BaseState {
 
   /** @returns {void} */
   update() {
-    
+
   }
 
   /** @returns {void} */
   leave() {
-    
+
   }
 }
 

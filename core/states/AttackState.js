@@ -32,13 +32,13 @@ class AttackState extends BaseState {
 
       if (distance > 40) { // 29 - attack range + collision radius TODO magic number
         this.character.changeState('follow');
-  
+
         return;
       }
 
       this.character.lastAttackTimestamp = Date.now();
       this.character.emit('attack', this.entity.objectId);
-      
+
       // if entity instanceof Npc
       // if (this.entity.action === 'patrol') {
       //   this.entity.lastAttackTimestamp = Date.now() - (((500000 / this.entity.baseAttackSpeed) - (500000 / this.character.attackSpeed)) + ((500000 / this.character.attackSpeed) / 2));
@@ -61,7 +61,7 @@ class AttackState extends BaseState {
 
   /** @returns {void} */
   leave() {
-    
+
   }
 }
 

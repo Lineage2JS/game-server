@@ -14,7 +14,7 @@ class MoveState extends BaseState {
   /** @returns {void} */
   update() {
     const arrived = this.character.moveTo(this.targetX, this.targetY, this.targetZ);
-    
+
     if (arrived) {
       this.character.changeState('idle');
 
@@ -26,7 +26,7 @@ class MoveState extends BaseState {
 
   /** @returns {void} */
   leave() {
-    
+
   }
 }
 

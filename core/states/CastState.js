@@ -32,7 +32,7 @@ class CastState extends BaseState {
     if (!this.character.target) {
       this.character.clearAction();
       this.character.changeState('idle');
-      
+
       return;
     }
 
@@ -54,10 +54,10 @@ class CastState extends BaseState {
           // this.entity.target = this.character.objectId;
           // //entity.payloadAttack = this.character.objectId;
           // this.entity.changeState('attack', this.character.objectId);
-          
+
           this.character.clearAction();
           this.character.changeState('idle');
-          
+
           return;
         }
 
@@ -73,7 +73,7 @@ class CastState extends BaseState {
           } else {
             this.character.hp += 20;
           }
-          
+
           this.character.emit('regenerate');
           //
         }
@@ -93,7 +93,7 @@ class CastState extends BaseState {
     if (this.character.mp < 20) { // TODO magic number
       return;
     }
-    
+
     this.canDamage = true;
     this.character.castTimestamp = Date.now();
     this.character.emit('cast', this.skillId);

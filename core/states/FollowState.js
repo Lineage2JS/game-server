@@ -88,7 +88,7 @@ class FollowState extends BaseState {
 
     if (arrived) {
       this.character.changeState('idle');
-      
+
       return;
     }
 
@@ -97,7 +97,7 @@ class FollowState extends BaseState {
 
   /** @returns {void} */
   leave() {
-    
+
   }
 }
 

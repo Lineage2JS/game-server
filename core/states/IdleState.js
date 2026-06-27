@@ -3,7 +3,7 @@ const BaseState = require("./BaseState");
 class IdleState extends BaseState {
   /** @returns {void} */
   enter() {
-    
+
   }
 
   /** @returns {void} */
@@ -27,7 +27,7 @@ class IdleState extends BaseState {
 
   /** @returns {void} */
   leave() {
-    
+
   }
 }
 
