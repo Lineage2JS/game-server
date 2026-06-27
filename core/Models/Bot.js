@@ -199,15 +199,6 @@ class Bot extends Character {
     }
   }
 
-  /** @param {Record<string, unknown>} data */
-  updateParams(data) {
-    for(const key in data) {
-      if (this.hasOwnProperty(key)) {
-        Reflect.set(this, key, data[key]);
-      }
-    }
-  }
-
   // create math utils
   /** @returns {[number, number]} */
   _getRandomPos() {

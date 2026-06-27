@@ -334,15 +334,6 @@ class Player extends Character {
     }
   }
 
-  /** @param {Partial<PlayerData>} data */
-  updateParams(data) {
-    for(const key in data) {
-      if (this.hasOwnProperty(key)) {
-        Reflect.set(this, key, data[/** @type {keyof PlayerData} */ (key)]);
-      }
-    }
-  }
-
   /**
    * @param {number} targetX
    * @param {number} targetY
