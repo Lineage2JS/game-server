@@ -43,9 +43,9 @@ class NpcDeathHandler {
 
       attacker.exp += 100;
       attacker.emit('updateExp'); // TODO 'updateStatus'
-      
+
       const level = expToLevel(attacker.exp);
-      
+
       if (attacker.level < level) {
         attacker.level = level;
         attacker.emit('updateLevel'); // updateState('levelUp')
@@ -54,7 +54,7 @@ class NpcDeathHandler {
         attacker.emit('regenerate');
       }
     });
-    
+
     //aiManager.onMyDying(npc.ai.name, player);
     //npc.ai.dying()?
   }

@@ -11,6 +11,8 @@ class RequestLinkHtml extends ClientPacketNew {
     const link = this.readS();
     const htmlMessage = npcHtmlMessagesManager.getHtmlMessageByFileName(link);
 
+    if (!player || !htmlMessage) return;
+
     client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
   }
 }

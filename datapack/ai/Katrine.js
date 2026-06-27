@@ -1,9 +1,15 @@
 const Merchant = require('./Merchant');
 
 class Katrine extends Merchant {
+  /**
+   * @param {import('./Merchant').MerchantProps} props
+   */
   constructor(props) {
     super(props);
 
+    /**
+     * @type {Array<import('./Merchant').Item>}
+     */
     this.sellList0 = [
       {"sb_adv_defence_power1": 15},
       {"sb_advanced_attack_power1": 15},

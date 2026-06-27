@@ -101,7 +101,7 @@ class Npc extends Character {
     //
     /** @type {unknown[]} */
     this.additionalMakeMultiList = [];
-    /** @type {unknown | null} */
+    /** @type {* | null} */
     this.ai = null;
 
     /** @type {number} */
@@ -139,9 +139,9 @@ class Npc extends Character {
         z: this.z
       }
     }
-    
+
     this.action = 'patrol';
-    
+
     // setTimeout(() => { // lastUpdateTimestamp срабатывает через 100мс после добавление в EntitiesManager иначе npc идет на млрд расстояния
     //   this.action = 'patrol';
     //   this.changeState('move', path);
@@ -195,13 +195,13 @@ class Npc extends Character {
     if (this._currentState) {
       this._currentState.update();
     }
-    
+
     if ((Date.now() - this.lastAttackTimestamp) > 5000) {
       this.emit('endAttack');
     }
 
     if (this.hp > 0 && this.hp < this.maximumHp && !this.isDead) {
-      this.regenerate(); 
+      this.regenerate();
     }
 
     if (this.hp <= 0 && !this.isDead) {

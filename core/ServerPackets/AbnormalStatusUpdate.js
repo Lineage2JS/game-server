@@ -1,6 +1,9 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class AbnormalStatusUpdate {
+  /**
+   * @param {*[]} effects
+   */
   constructor(effects) {
     this._packet = new ServerPacket();
     this._packet

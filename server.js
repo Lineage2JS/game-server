@@ -29,7 +29,9 @@ async function run() {
         console.log("database connected: success");
     });
   } catch(e) {
-    console.log(e.message);
+    const error = /** @type {Error} */ (e);
+
+    console.log(error.message);
 
     return;
   }
@@ -47,10 +49,10 @@ async function run() {
       // console.log('\n');
 
       const isGameServerExists = await database.checkGameServerExists(config.gameserver.id);
-      
+
       if (!isGameServerExists) {
         await database.addGameServer({
-          id: config.gameserver.id, 
+          id: config.gameserver.id,
           host: config.gameserver.host,
           port: config.gameserver.port,
           ageLimit: config.gameserver.ageLimit,
@@ -62,7 +64,12 @@ async function run() {
       }
 
       const gameserver = await database.getGameServerById(config.gameserver.id);
-      
+
+      if (!gameserver) {
+        console.log('Game server not found in database');
+        return;
+      }
+
       await database.updateGameServer(gameserver.id, "status", serverStatus.STATUS_UP);
 
       itemsManager.enable();
@@ -86,6 +93,11 @@ async function run() {
 process.stdin.resume();
 process.on('SIGINT', async () => {
   const gameserver = await database.getGameServerById(config.gameserver.id);
+
+  if (!gameserver) {
+    console.log('Game server not found in database');
+    return;
+  }
 
   await database.updateGameServer(gameserver.id, "status", serverStatus.STATUS_DOWN);
 

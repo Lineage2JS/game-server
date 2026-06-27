@@ -37,7 +37,7 @@ class VisibilityManager {
   _onPlayerEnter(player) {
     this._players.push(player);
   }
-  
+
   /** @returns {void} */
   _update() {
     for (let i = 0; i < this._players.length; i++) {
@@ -56,7 +56,7 @@ class VisibilityManager {
 
           if (npc.state === 'move') {
             const path = this._createMovePath(npc);
-    
+
             client.sendPacket(new serverPackets.MoveToLocation(path, npc.objectId));
           }
         } else {
@@ -81,7 +81,7 @@ class VisibilityManager {
 
           if (bot.state === 'move') {
             const path = this._createMovePath(bot);
-    
+
             client.sendPacket(new serverPackets.MoveToLocation(path, bot.objectId));
           }
         } else {

@@ -9,6 +9,8 @@ class RequestSocialAction extends ClientPacketNew {
     const player = this.getPlayer();
     const actionId = this.readD();
 
+    if (!player) return;
+
     client.sendPacket(new serverPackets.SocialAction(player.objectId, actionId));
   }
 }

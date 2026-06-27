@@ -16,4 +16,33 @@ module.exports = {
   SLOT_BACK: 0x2000,
   SLOT_LR_HAND: 0x4000,
   SLOT_FULL_ARMOR: 0x8000,
-}
+};
+
+const equipmentSlots = module.exports;
+
+/**
+ * @param {string | null} [name]
+ * @returns {number | undefined}
+ */
+module.exports.getSlotIdByName = (name) => {
+  if (!name) return undefined;
+
+  return {
+    'chest': equipmentSlots.SLOT_CHEST,
+    'chest_full': equipmentSlots.SLOT_FULL_ARMOR,
+    'head': equipmentSlots.SLOT_HEAD,
+    'underwear': equipmentSlots.SLOT_UNDERWEAR,
+    'back': equipmentSlots.SLOT_BACK,
+    'neck': equipmentSlots.SLOT_NECK,
+    'legs': equipmentSlots.SLOT_LEGS,
+    'feet': equipmentSlots.SLOT_FEET,
+    'gloves': equipmentSlots.SLOT_GLOVES,
+    'chest,legs': equipmentSlots.SLOT_CHEST, // | L2Item.SLOT_LEGS,
+    'rhand': equipmentSlots.SLOT_R_HAND,
+    'lhand': equipmentSlots.SLOT_L_HAND,
+    'lrhand': equipmentSlots.SLOT_LR_HAND,
+    'rear,lear': equipmentSlots.SLOT_L_EAR, // | L2Item.SLOT_R_EAR,
+    'rfinger,lfinger': equipmentSlots.SLOT_L_FINGER, // | L2Item.SLOT_R_FINGER,
+    'none': equipmentSlots.SLOT_NONE,
+  }[name?.toLowerCase()];
+};

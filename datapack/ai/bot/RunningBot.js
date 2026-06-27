@@ -1,5 +1,7 @@
 const DefaultBot = require('./DefaultBot');
 
+/** @typedef {{ x: number, y: number }} Coordinate */
+
 class RunningBot extends DefaultBot {
   created() { // TODO created?
     const waypoints = [
@@ -11,7 +13,7 @@ class RunningBot extends DefaultBot {
     ];
     let waypointIndex = 0;
 
-    setInterval(function move() {
+    setInterval(() => {
       if (waypointIndex >= waypoints.length) {
         waypointIndex = 0;
       }
@@ -19,11 +21,15 @@ class RunningBot extends DefaultBot {
       const positions = this._getRandomPos(waypoints[waypointIndex]);
 
       waypointIndex++;
-      
+
       this.emit('run', positions[0], positions[1]);
-    }.bind(this), Math.floor(Math.floor(Math.random() * (20000 - 10000 + 1)) + 10000));
+    }, Math.floor(Math.floor(Math.random() * (20000 - 10000 + 1)) + 10000));
   }
 
+  /**
+   * @param {Coordinate[]} coordinates
+   * @returns {[number, number]}
+   */
   _getRandomPos(coordinates) {
     let xp = coordinates.map(i => i.x);
     let yp = coordinates.map(i => i.y);
@@ -31,7 +37,7 @@ class RunningBot extends DefaultBot {
 		let min = { x: Math.min(...xp), y: Math.min(...yp) };
 		let x;
 		let y;
-		
+
 		do {
 			x = Math.floor(min.x + Math.random() * (max.x + 1 - min.x));
 			y = Math.floor(min.y + Math.random() * (max.y + 1 - min.y));
@@ -40,6 +46,13 @@ class RunningBot extends DefaultBot {
 		return [x, y]
 	}
 
+  /**
+   * @param {number[]} xp
+   * @param {number[]} yp
+   * @param {number} x
+   * @param {number} y
+   * @returns {boolean}
+   */
   _inPoly(xp, yp, x, y){
 		let npol = xp.length;
 		let j = npol - 1;

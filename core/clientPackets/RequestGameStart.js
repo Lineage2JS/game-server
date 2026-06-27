@@ -18,7 +18,7 @@ class RequestGameStart extends ClientPacketNew {
 
     if (!character) return;
 
-    player.updateParams(character);
+    player.updateParams(/** @type {import('../Models/Character').CharacterTemplate} */ (character));
 
     const inventoryItems = await database.getCharacterInventoryItems(character.objectId);
     // fix

@@ -51,7 +51,7 @@ class Bot extends Character {
     //
     /** @type {unknown | null} */
     this.pickupItem = null; // хранить objectId? как target?
-    /** @type {{ script: string }} */
+    /** @type {{ name?: string, script: string }} */
     this.ai = {
       script: 'DefaultBot'
     };

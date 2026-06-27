@@ -2,7 +2,7 @@ const baseStats = require('./../../datapack/baseStats.json');
 const eventBusNew = require('./../Events/EventBusNew');
 const EventEmitter = require('events');
 
-/** @typedef {{ objectId: number, login: string, characterName: string, title?: string, level?: number, gender: number, hairStyle: number, hairColor: number, face: number, createdAt: number, classId: number, className: string, raceId: number, str: number, dex: number, con: number, int: number, wit: number, men: number, hp: number, mp: number, pAtk: number, pDef: number, mAtk: number, mDef: number, pSpd: number, mSpd: number, accuracy: number, critical: number, evasion: number, baseRunSpeed: number, baseWalkSpeed: number, baseAttackSpeed?: number, swimSpeed?: number, maximumLoad: number, x: number, y: number, z: number, canCraft: number, maleAttackSpeedMultiplier: number, maleCollisionRadius: number, maleCollisionHeight: number, femaleAttackSpeedMultiplier: number, femaleCollisionRadius: number, femaleCollisionHeight: number, items: number[] }} CharacterTemplate */
+/** @typedef {{ objectId: number, login: string, characterName: string, title?: string, level?: number, gender: number, hairStyle: number, hairColor: number, face: number, createdAt: number, classId: number, className: string, raceId: number, str: number, dex: number, con: number, int: number, wit: number, men: number, hp: number, mp: number, pAtk: number, pDef: number, mAtk: number, mDef: number, pSpd: number, mSpd: number, accuracy: number, critical: number, evasion: number, baseRunSpeed: number, baseWalkSpeed: number, baseAttackSpeed?: number, swimSpeed?: number, maximumLoad: number, x: number, y: number, z: number, canCraft: number, maleAttackSpeedMultiplier: number, maleCollisionRadius: number, maleCollisionHeight: number, femaleAttackSpeedMultiplier: number, femaleCollisionRadius: number, femaleCollisionHeight: number, items?: number[] }} CharacterTemplate */
 
 class Character extends EventEmitter {
   /** @param {CharacterTemplate} template */
@@ -34,8 +34,6 @@ class Character extends EventEmitter {
     this.face = template.face || 0;
     /** @type {number} */
     this.heading = 0;
-    /** @type {boolean} */
-    this.isDead = false;
     /** @type {number} */
     this.accessLevel = 0;
     /** @type {boolean} */
@@ -183,8 +181,8 @@ class Character extends EventEmitter {
     this.back = { objectId: 0, itemId: 0 }
 
     //
-    /** @type {number | null} */
-    this.target = null; // target and aggroTarget?
+    /** @type {number} */
+    this.target = 0; // target and aggroTarget?
     /** @type {number | null} */
     this.createdAt = null;
     /** @type {number | null} */
@@ -193,6 +191,8 @@ class Character extends EventEmitter {
     this._hitHistoryMap = new Map();
     /** @type {number} */
     this._moveType = 0;
+    /** @type {number} */
+    this.waitType = 0;
     //
     /** @type {{ targetX: number | null, targetY: number | null, targetZ: number | null, targetCharacterId: number | null, targetItemId: number | null, targetSkillId: number | null }} */
     this.actionParams = {
@@ -205,7 +205,7 @@ class Character extends EventEmitter {
     }
 
     this.on('attacked', /** @param {{ attacker: Character, damage: number }} data */ (data) => {
-      if (this.isDead) {
+      if ('isDead' in this && this.isDead) {
         return
       }
 
@@ -329,7 +329,7 @@ class Character extends EventEmitter {
   get movementMultiplier() {
     const multiplier = this.runSpeed / this.baseRunSpeed;
     const roundedMultiplier = multiplier.toFixed(1);
-    
+
     return parseFloat(roundedMultiplier);
   };
 
@@ -340,9 +340,18 @@ class Character extends EventEmitter {
   get attackSpeedMultiplier() {
     const multiplier = ((1.1) * this.attackSpeed / this.baseAttackSpeed)
     const roundedMultiplier = multiplier.toFixed(1);
-    
+
     return parseFloat(roundedMultiplier);
   };
+
+  /** @param {Record<string, unknown>} data */
+  updateParams(data) {
+    for(const key in data) {
+      if (this.hasOwnProperty(key)) {
+        Reflect.set(this, key, data[key]);
+      }
+    }
+  }
 }
 
 module.exports = Character;

@@ -24,4 +24,5 @@ class AdminPanelManager {
   }
 }
 
+// singleton
 module.exports = new AdminPanelManager();

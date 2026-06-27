@@ -72,6 +72,8 @@ class RequestBypassToServer extends ClientPacketNew {
         const itemId = itemsManager.getItemIdByName(sellList[i]);
         const item = await itemsManager.createItem(itemId);
 
+        if (!item) continue;
+
         items.push(item);
       }
 
@@ -89,12 +91,16 @@ class RequestBypassToServer extends ClientPacketNew {
     }
 
     if (command === 'admin_other_ride_strider') {
+      if (!player) return;
+
       client.sendPacket(new serverPackets.Ride(player, 1));
 
       return;
     }
 
     if (command === 'admin_other_ride_wyvern') {
+      if (!player) return;
+
       client.sendPacket(new serverPackets.Ride(player, 2));
 
       return;
@@ -136,6 +142,8 @@ class RequestBypassToServer extends ClientPacketNew {
 
       return;
     }
+
+    if (!player) return;
 
     /**
      * @type {import('../Models/Npc') | undefined}

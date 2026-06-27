@@ -1,13 +1,17 @@
 const Citizen = require('./Citizen');
 
 class Carl extends Citizen {
+
+  /**
+   * @param {import('./DefaultNpc').Talker} talker
+   */
   onTalkSelected(talker) {
     if (this.haveMemo(talker, 201) === 0
       && this.getOneTimeQuestFlag(talker, 201) === 0
       && talker.level < 10
       && talker.className === 'Human Fighter'
     ) {
-      
+
       // deleteRadar's
       this.showPage(talker, 'carl_q0201_01.htm');
       this.setMemo(talker, 201); // hfighter_tutorial id
@@ -36,7 +40,7 @@ class Carl extends Citizen {
         setTimeout(() => {
           this.giveItem(talker, 'world_map', 1);
         }, 100);
-        
+
         this.showPage(talker, 'carl_q0201_02.htm');
         // deleteRadar's
         this.showRadar(talker, -71073, 258711, -3099);
@@ -44,13 +48,15 @@ class Carl extends Citizen {
         const quests = talker.getQuests();
         const quest = quests.find(quest => quest.id === 201);
 
+        if (!quest) return;
+
         quest.isCompleted = true;
         //
       } else if (this.ownItemCount(talker, 'fox_fang1') < 4) {
         this.showPage(talker, 'carl_q0201_03.htm');
       }
     }
-    
+
     if (this.haveMemo(talker, 201) === 1
       && this.ownItemCount(talker, 'recommendation_01') === 1) {
       this.showPage(talker, 'carl_q0201_04.htm');

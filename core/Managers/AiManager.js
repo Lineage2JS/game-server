@@ -2,6 +2,7 @@ const EventEmitter = require('events');
 const ai = require('./../../datapack/ai');
 const npcHtmlMessagesManager = require('./NpcHtmlMessagesManager');
 const npcEventBus = require('./../Events/NpcEventBus');
+
 /** @typedef {import('./../Models/Npc')} Npc */
 /** @typedef {import('./../Models/Player')} Player */
 
@@ -55,60 +56,87 @@ class AiManager extends EventEmitter {
   }
 
   /**
-   * @param {string} aiName
+   * @param {keyof typeof ai} aiName
    * @param {Player} talker
    * @returns {void}
    */
   onTalkSelect(aiName, talker) {
-    const carl = new ai.Carl();
-
-    carl.onTalkSelected(talker);
+    this.callAiMethod(aiName, 'onTalkSelected', talker);
   }
 
   /**
-   * @param {string} aiName
+   * @param {keyof typeof ai} aiName
    * @param {Player} talker
    * @returns {void}
    */
   onMyDying(aiName, talker) { // talker = attacker
-    //ai.TutoKeltir.onMyDying(talker);
+    // this.callAiMethod(aiName, 'onMyDying', talker);
   }
 
   /**
-   * @param {string} aiName
+   * @param {keyof typeof ai} aiName
    * @param {Player} talker
    * @param {number} ask
    * @param {number} reply
    * @returns {void}
    */
   menuSelect(aiName, talker, ask, reply) {
-    ai[aiName].onMenuSelected(talker, ask, reply);
+    this.callAiMethod(aiName, 'onMenuSelected', talker, ask, reply);
   }
 
   /**
    * @param {Npc} npc
-   * @param {string} aiName
+   * @param {keyof typeof ai} aiName
    * @param {Player} attacker
    * @returns {void}
    */
   onAttacked(npc, aiName, attacker) {
-    if (aiName === 'Elpy') {
-      const elpy = new ai.Elpy(npc);
-
-      elpy.onAttacked(attacker);
-    }
+    this.callAiMethod(aiName, 'onAttacked', attacker);
   }
 
   /**
-   * @param {string} aiName
+   * @param {keyof typeof ai} aiName
    * @param {Player} talker
    * @returns {void}
    */
   onLearnSkill(aiName, talker) { // scriptName?
-    const minx = new ai.Minx();
+    this.callAiMethod(aiName, 'onLearnSkillRequested', talker);
+  }
 
-    minx.onLearnSkillRequested(talker);
+  /**
+   * @param {keyof typeof ai} aiName
+   * @param {*} [props] ai props
+   * @returns {* | null} AI instance or null if not found
+   */
+  getAiInstance(aiName, props) {
+    return AiManager.getAiInstance(aiName, props);
+  }
+
+  /**
+   * @param {keyof typeof ai} aiName key of ai registry
+   * @param {*} [props] ai props
+   * @returns {* | null} AI instance or null if not found
+   */
+  static getAiInstance(aiName, props) {
+    if (aiName in ai) {
+      return new ai[aiName](props);
+    }
+
+    return null;
+  }
+
+  /**
+   * @param {keyof typeof ai} aiName
+   * @param {string} methodName
+   * @param  {...*} args
+   */
+  callAiMethod(aiName, methodName, ...args) {
+    const aiInstance = this.getAiInstance(aiName);
+
+    // check interface
+    aiInstance && methodName in aiInstance && aiInstance[methodName]?.(...args);
   }
 }
 
+// singleton
 module.exports = new AiManager();

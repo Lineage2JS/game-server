@@ -11,6 +11,7 @@ class ClientPacket {
    */
   constructor(buffer) {
     this._buffer = buffer;
+    /** @type {*[]} */
     this._data = [];
     this._offset = 0;
   }

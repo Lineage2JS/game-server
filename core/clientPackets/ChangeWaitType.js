@@ -9,6 +9,8 @@ class ChangeWaitType extends ClientPacketNew {
     const player = this.getPlayer();
     const type = this.readD();
 
+    if (!player) return;
+
     client.sendPacket(new serverPackets.ChangeWaitType(player, type));
   }
 }

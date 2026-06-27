@@ -1,6 +1,6 @@
 /**
  * @typedef {object} ItemData
- * @property {number} objectId
+ * @property {number} [objectId]
  * @property {number} itemId
  * @property {string} name
  * @property {number} bodyPart

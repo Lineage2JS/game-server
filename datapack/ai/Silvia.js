@@ -1,9 +1,15 @@
 const Merchant = require('./Merchant');
 
 class Silvia extends Merchant {
+  /**
+   * @param {import('./Merchant').MerchantProps} props
+   */
   constructor(props) {
     super(props);
 
+    /**
+     * @type {Array<import('./Merchant').Item>}
+     */
     this.sellList0 = [
       {"necklace_of_magic": 15},
       {"necklace_of_knowledge": 15},

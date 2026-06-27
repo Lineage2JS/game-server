@@ -31,6 +31,8 @@ class AnnouncementsManager {
       const packet = new serverPackets.CreateSay(0, player.characterName, 10, announcement); // TODO ANNOUNCEMENT = 10
       const client = player.getClient();
 
+      if (!client) return;
+
       client.sendPacket(packet);
     });
   }
@@ -41,4 +43,5 @@ class AnnouncementsManager {
   }
 }
 
+// singleton
 module.exports = new AnnouncementsManager();

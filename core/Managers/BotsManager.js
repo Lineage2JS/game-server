@@ -16,9 +16,9 @@ class BotsManager extends EventEmitter {
   /** @returns {Promise<void>} */
   async enable() {
     for(let i = 0; i < 10; i++) {
-      const bot = new Bot({
-        sendPacket() {}
-      });
+      const bot = new Bot(/** @type {import('../Client') & *} */ ({
+        sendPacket() {} // TODO
+      }));
 
       const gender = Math.floor(Math.random() * 2)
       const hairStyle = Math.floor(Math.random() * (gender === 0 ? 4 : 6));
@@ -98,23 +98,23 @@ class BotsManager extends EventEmitter {
       bot.ai.name = 'RunningBot';
       bot.waitType = 0;
       //
-  
+
       bot.on('move', () => {
         this.emit('move', bot);
       });
-  
+
       bot.on('attack', () => {
         this.emit('attack', bot);
       });
-  
+
       bot.on('pickup', (item) => {
         this.emit('pickup', bot, item);
       });
-  
+
       bot.enable();
-  
+
       this._bots.push(bot);
-  
+
       this.emit('spawn', bot);
     }
   }
@@ -165,4 +165,5 @@ class BotsManager extends EventEmitter {
 	}
 }
 
+// singleton
 module.exports = new BotsManager();

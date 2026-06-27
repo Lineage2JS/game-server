@@ -2,16 +2,16 @@ const Item = require('./Item');
 
 class ItemAsset extends Item {
   /**
-   * @param {{ itemId: number, name: string, bodyPart: number, type1: number, type2: number, weight: number, price: number, stackable?: boolean, etcItemType: string }} data
+   * @param {import ('./Item').ItemData & { etcItemType: number }} data
    */
   constructor(data) {
     super(data);
 
-    /** @type {string} */
+    /** @type {number} */
     this._etcItemType = data.etcItemType;
   }
 
-  /** @returns {string} */
+  /** @returns {number} */
   getEtcItemType() {
     return this._etcItemType;
   }

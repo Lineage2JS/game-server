@@ -274,7 +274,7 @@ class Database {
   }
 
   /**
-   * @param {{ id: number, host: string, port: number, ageLimit: number, isPvP: boolean, maxPlayers: number, status: string, type: string }} params 
+   * @param {{ id: number, host: string, port: number, ageLimit: number, isPvP: boolean, maxPlayers: number, status: number, type: number }} params
    */
   async addGameServer(params) {
     await this._client.query(`
@@ -294,7 +294,7 @@ class Database {
 
   /**
    * @param {number} gameServerId
-   * @returns {Promise<unknown | null>}
+   * @returns {Promise<{ id: number, gameserver_id: number, host: string, port: number, age_limit: number, is_pvp: boolean, max_players: number, server_status: number, server_type: number } | null>}
    */
   async getGameServerById(gameServerId) {
     const result = await this._client.query(`
@@ -312,8 +312,7 @@ class Database {
   }
 
   /**
-   * 
-   * @param {number} gameServerId 
+   * @param {number} gameServerId
    * @returns {Promise<boolean>}
    */
   async checkGameServerExists(gameServerId) {
@@ -392,12 +391,12 @@ class Database {
   }
 
   /**
-   * @param {*} taskType
-   * @param {*} taskStatus
-   * @param {*} payload
-   * @param {*} scheduledAt
-   * @param {*} createdAccountId
-   * @param {*} createdType
+   * @param {string} taskType
+   * @param {string} taskStatus
+   * @param {Record<string, any>} payload
+   * @param {number} scheduledAt
+   * @param {string} createdAccountId
+   * @param {string} createdType
    */
   async createScheduledTask(taskType, taskStatus, payload, scheduledAt, createdAccountId, createdType) {
     await this._client.query(`
@@ -414,7 +413,7 @@ class Database {
   }
 
   /**
-   * @returns {Promise<{  id: number, type: string, payload: string, scheduledAt: number, status: string, createdAccountId: string, createdType: string }[]>}
+   * @returns {Promise<{ id: number, type: string, payload: Record<string, any>, scheduledAt: number, status: string, createdAccountId: string, createdType: string }[]>}
    */
   async getScheduledTasks() {
     const result = await this._client.query(`
@@ -449,7 +448,7 @@ class Database {
 
   /**
    * @param {string} type
-   * @param {string} payload
+   * @param {Record<string, any>} payload
    * @returns {Promise<void>}
    */
   async deleteScheduledTask(type, payload) {

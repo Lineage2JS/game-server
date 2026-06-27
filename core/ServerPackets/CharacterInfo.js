@@ -2,7 +2,7 @@ const ServerPacket = require('./ServerPacket.js');
 
 class CharacterInfo {
   /**
-   * @param {import('../Models/Player.js')} player
+   * @param {import('../Models/Character.js')} player
    */
   constructor(player) {
     this._packet = new ServerPacket();
@@ -87,9 +87,9 @@ class CharacterInfo {
       .writeC(0x00)	// invisible = 1  visible =0
       .writeC(0x00)	// 1 on strider   2 on wyfern   0 no mount
       .writeC(0)   // 1 - sellshop
-      
+
       .writeH(0x00)  // cubic count
-  	  //.writeH(0x00);  // cubic 
+  	  //.writeH(0x00);  // cubic
       .writeC(0x00);	// find party members
   }
 

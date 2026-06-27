@@ -7,18 +7,19 @@ const eventBusNew = require('./../Events/EventBusNew');
 /** @typedef {import('./../Models/Player')} Player */
 /** @typedef {import('./../Client')} Client */
 /** @typedef {import('./../ServerPackets/ServerPacket')} ServerPacket */
-/** @typedef {{ type: string, status: string, payload: string, scheduledAt: number, createdAccountId: string, createdType: string }} ScheduledTask */
+/** @typedef {{ id: number, type: string, status: string, payload: Record<string, any>, scheduledAt: number, createdAccountId: string, createdType: string }} ScheduledTask */
 
 class PlayersManager extends EventEmitter {
   constructor() {
     super();
-    
+
     /** @type {Player[]} */
     this._players = [];
 
     this.on('notify', packet => { // nofity = send, broadcast? fix
       this._players.forEach(player => {
         const client = player.getClient();
+        if (!client) return;
 
         client.sendPacket(packet);
       })
@@ -58,7 +59,6 @@ class PlayersManager extends EventEmitter {
 
     player.on('move', (targetX, targetY, targetZ) => {
       const packet = new serverPackets.MoveToLocation(player.objectId, targetX, targetY, targetZ, player.x, player.y, player.z);
-      
       this.broadcast(packet);
       eventBusNew.emit('player:move', player);
     });
@@ -119,6 +119,7 @@ class PlayersManager extends EventEmitter {
   broadcast(packet) {
     this._players.forEach(player => {
       const client = player.getClient();
+      if (!client) return;
 
       client.sendPacket(packet);
     });
@@ -146,13 +147,13 @@ class PlayersManager extends EventEmitter {
    * @returns {Promise<void>}
    */
   async deleteCharacter(playerLogin, characterObjectId) {
-    /** @type {ScheduledTask} */
+    /** @type {Omit<ScheduledTask, 'id'>} */
     const task = {
       type: 'character-deletion',
       status: 'new',
-      payload: JSON.stringify({
+      payload: {
         characterObjectId: characterObjectId
-      }),
+      },
       scheduledAt: Date.now() + 30000,
       createdAccountId: playerLogin,
       createdType: 'user'
@@ -170,4 +171,5 @@ class PlayersManager extends EventEmitter {
   }
 }
 
+// singleton
 module.exports = new PlayersManager();

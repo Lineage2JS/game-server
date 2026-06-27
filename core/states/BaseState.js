@@ -17,7 +17,7 @@ class BaseState {
 
   /** @returns {void} */
   leave() {
-    
+
   }
 }
 

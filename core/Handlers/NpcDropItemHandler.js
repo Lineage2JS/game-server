@@ -61,6 +61,11 @@ class NpcDropItemHandler {
       const itemId = itemsManager.getItemIdByName(dropItem.itemName);
       const itemCount = dropItem.count;
       const createdItem = await itemsManager.createItem(itemId, itemCount);
+
+      if (!createdItem) {
+        continue;
+      }
+
       const angle = Math.random() * 2 * Math.PI;
       const distance = Math.random() * 30;
       const droppedItemX = Math.floor(npc.x + Math.cos(angle) * distance);

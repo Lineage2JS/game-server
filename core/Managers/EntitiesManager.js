@@ -44,10 +44,9 @@ class EntitiesManager {
     setInterval(() => {
       for (let i = 0; i < this._entities.length; i++) {
         const entity = this._entities[i];
-        
-        if (entity.update) {
+
+        'update' in entity && typeof entity.update === 'function' &&
           entity.update();
-        }
       }
     }, 100);
     //
@@ -56,7 +55,7 @@ class EntitiesManager {
       this._entities.push(npc);
 
       const packet = new serverPackets.NpcInfo(npc);
-      
+
       playersManager.emit('notify', packet);
     });
 
@@ -74,7 +73,7 @@ class EntitiesManager {
         }
       }
       const packet = new serverPackets.MoveToLocation(path, npc.objectId);
-      
+
       playersManager.emit('notify', packet);
     });
 
@@ -343,13 +342,13 @@ class EntitiesManager {
 
     aiManager.on('showRadar', (talker, x, y, z) => {
       const packet = new serverPackets.ShowRadar(x, y, z);
-    
+
       playersManager.emit('notify', packet);
     });
 
     aiManager.on('soundEffect', (talker, soundName) => {
       const packet = new serverPackets.PlaySound(soundName);
-      
+
       playersManager.emit('notify', packet);
     });
 
@@ -358,7 +357,7 @@ class EntitiesManager {
       const item = await itemsManager.createItem(itemId);
 
       talker.addItem(item);
-      
+
       const items = talker.getItems();
       const packet = new serverPackets.ItemList(items);
 
@@ -367,7 +366,7 @@ class EntitiesManager {
 
     aiManager.on('deleteItem', (talker, itemName, itemCount) => {
       talker.deleteItemByName(itemName);
-      
+
       const items = talker.getItems();
       const packet = new serverPackets.ItemList(items);
 
@@ -381,6 +380,8 @@ class EntitiesManager {
         const [itemName] = Object.keys(sellList[i]);
         const itemId = itemsManager.getItemIdByName(itemName);
         const item = await itemsManager.createItem(itemId);
+
+        if (!item) continue;
 
         items.push(item);
       }

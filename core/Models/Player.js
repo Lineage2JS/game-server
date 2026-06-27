@@ -12,9 +12,12 @@ const TalkState = require('./../states/TalkState');
 const { calculateDistance } = require('./../../utils/distance');
 const equipmentSlots = require('../../enums/equipmentSlotEnums');
 
+/** @typedef {{} & import('./Character').CharacterTemplate} PlayerData */
+
 class Player extends Character {
-  constructor() {
-    super();
+  /** @param {PlayerData} [props] */
+  constructor(props) {
+    super(props);
 
     /** @type {import('../Client') | null} */
     this._client = null;
@@ -260,7 +263,7 @@ class Player extends Character {
         this.targetY = payload[1];
         this.targetZ = payload[2];
         this.changeState('move');
-        
+
         break;
       case 'attack':
         this.targetCharacterId = payload[0];
@@ -312,7 +315,7 @@ class Player extends Character {
     if (this._currentState) {
       this._currentState.update();
     }
-    
+
     if ((Date.now() - this.lastAttackTimestamp) > 5000) {
       this.emit('endAttack');
     }
@@ -331,11 +334,11 @@ class Player extends Character {
     }
   }
 
-  /** @param {Record<string, unknown>} data */
+  /** @param {Partial<PlayerData>} data */
   updateParams(data) {
     for(const key in data) {
       if (this.hasOwnProperty(key)) {
-        Reflect.set(this, key, data[key]);
+        Reflect.set(this, key, data[/** @type {keyof PlayerData} */ (key)]);
       }
     }
   }

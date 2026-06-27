@@ -1,7 +1,7 @@
 const EventEmmiter = require('events');
 const database = require('./../../database');
 
-/** @typedef {{ type: string, status: string, payload: string, scheduledAt: number, createdAccountId: string, createdType: string }} ScheduledTask */
+/** @typedef {{ id: number, type: string, status: string, payload: Record<string, any>, scheduledAt: number, createdAccountId: string, createdType: string }} ScheduledTask */
 
 class SchedulerManager extends EventEmmiter {
   constructor() {
@@ -12,7 +12,7 @@ class SchedulerManager extends EventEmmiter {
   }
 
   /**
-   * @param {ScheduledTask} task
+   * @param {Omit<ScheduledTask, 'id'>} task
    * @returns {Promise<void>}
    */
   async createTask(task) {
@@ -24,7 +24,7 @@ class SchedulerManager extends EventEmmiter {
     const data = await database.getScheduledTasks();
 
     //
-    this._tasks = /** @type {ScheduledTask[]} */ (data);
+    this._tasks = data;
     //
   }
 
@@ -42,7 +42,7 @@ class SchedulerManager extends EventEmmiter {
       for(let i = 0; i < tasks.length; i++) {
         const task = tasks[i];
 
-        if (new Date(task.scheduledAt) < Date.now()) {
+        if (new Date(task.scheduledAt).getTime() < Date.now()) {
           task.status = 'done';
 
           await database.updateScheduledTask(task);

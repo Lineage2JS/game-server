@@ -2,7 +2,7 @@ const Item = require('./Item');
 
 class ItemWeapon extends Item {
   /**
-   * @param {{ itemId: number, name: string, bodyPart: number, type1: number, type2: number, weight: number, price: number, stackable?: boolean, weaponType: string }} data
+   * @param {import ('./Item').ItemData & { weaponType: string }} data
    */
   constructor(data) {
     super(data);
