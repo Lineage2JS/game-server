@@ -145,10 +145,7 @@ class RequestBypassToServer extends ClientPacketNew {
 
     if (!player) return;
 
-    /**
-     * @type {import('../Models/Npc') | undefined}
-     */
-    const npc = entitiesManager.getEntityByObjectId(player.lastTalkedNpcId);
+    const npc = /** @type {import('../Models/Npc') | undefined} */ (entitiesManager.getEntityByObjectId(player.lastTalkedNpcId));
 
     if (!npc) return;
 
@@ -168,7 +165,7 @@ class RequestBypassToServer extends ClientPacketNew {
       const queryParams = command.split('?')[1];
       const params = queryParams.split('&').map(i => {
         const [key, value] = i.split('=');
-    
+
         return { [key]: Number(value) };
       }).reduce((a, b) => { return {...a, ...b} });
 
@@ -176,7 +173,7 @@ class RequestBypassToServer extends ClientPacketNew {
 
       return;
     }
-    
+
     if (command === 'teleport_request') {
       npc.ai.teleportRequest(player);
 
@@ -196,7 +193,9 @@ class RequestBypassToServer extends ClientPacketNew {
     }
 
     const htmlMessage = npcHtmlMessagesManager.getHtmlMessageByFileName('noquest.htm');
-    
+
+    if (!htmlMessage) return;
+
     client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
     client.sendPacket(new serverPackets.ActionFailed()); // TODO
   }

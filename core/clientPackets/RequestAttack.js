@@ -17,7 +17,7 @@ class RequestAttack extends ClientPacketNew {
     const attackId = this.readC(); // 0 - click, 1 - shift click
     const entity = entitiesManager.getEntityByObjectId(objectId);
 
-    if (!player) return;
+    if (!player || !entity) return;
 
     const activeWeapon = player.getActiveWeapon();
 
@@ -26,13 +26,13 @@ class RequestAttack extends ClientPacketNew {
 
       return;
     }
-    
+
     if (!player.isAttacking && !entity.isDead && entity.canBeAttacked === 1) {
       player.doAction('attack', entity.objectId);
 
       return;
     }
-    
+
     client.sendPacket(new serverPackets.ActionFailed());
   }
 }

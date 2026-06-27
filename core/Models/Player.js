@@ -67,7 +67,7 @@ class Player extends Character {
     this.waitType = 1;
     /** @type {import('../states/BaseState') | null} */
     this._currentState = null;
-    /** @type {import('./Item') | null} */
+    /** @type {import('./ItemWeapon') | null} */
     this._activeWeapon = null;
     //
   }
@@ -123,7 +123,7 @@ class Player extends Character {
     return this._activeWeapon;
   }
 
-  /** @param {import('./Item') | null} item */
+  /** @param {import('./ItemWeapon') | null} item */
   setActiveWeapon(item) { // делать запрос через activeWeapon проверяя this.hand...
     this._activeWeapon = item;
   }
