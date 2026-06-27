@@ -1,20 +1,16 @@
 const ServerPacket = require('./ServerPacket');
 
-class TargetSelected {
+class TargetSelected extends ServerPacket {
   /**
    * @param {number} objectId
    * @param {number} color
    */
   constructor(objectId, color = 0) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0xBF)
       .writeD(objectId)
       .writeH(color);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

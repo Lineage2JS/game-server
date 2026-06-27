@@ -1,12 +1,12 @@
 const ServerPacket = require('./ServerPacket.js');
 
-class PlaySound {
+class PlaySound extends ServerPacket {
   /**
    * @param {string} soundName
    */
   constructor(soundName) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0xB1)
       .writeD(0)
       .writeS(soundName)
@@ -15,10 +15,6 @@ class PlaySound {
       .writeD(0)
       .writeD(0)
       .writeD(0)
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

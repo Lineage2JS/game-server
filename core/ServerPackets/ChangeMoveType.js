@@ -1,20 +1,16 @@
 const ServerPacket = require('./ServerPacket.js');
 
-class ChangeMoveType {
+class ChangeMoveType extends ServerPacket {
   /**
    * @param {number} objectId
    * @param {number} moveType
    */
   constructor(objectId, moveType) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x3E)
       .writeD(objectId)
       .writeD(moveType);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

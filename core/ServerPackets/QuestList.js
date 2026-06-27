@@ -1,25 +1,21 @@
 const ServerPacket = require('./ServerPacket.js');
 
-class QuestList {
+class QuestList extends ServerPacket {
   /**
    * @param {import('../Systems/Quests.js').Quest[]} quests
    */
   constructor(quests = []) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x98)
       .writeH(quests.length);
 
     for (let i = 0; i < quests.length; i++) {
       const quest = quests[i];
 
-      this._packet.writeD(quest.id)
+      this.writeD(quest.id)
         .writeD(quest.numberState);
     }
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

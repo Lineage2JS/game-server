@@ -1,12 +1,12 @@
 const ServerPacket = require('./ServerPacket.js');
 
-class Die {
+class Die extends ServerPacket {
   /**
    * @param {number} objectId
    */
   constructor(objectId) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x0B)
       .writeD(objectId)
       .writeD(1) // to nearest village // TODO
@@ -15,10 +15,6 @@ class Die {
       .writeD(0) // to siege HQ
       .writeD(0) // sweepable (blue glow, spoil)
       .writeD(0) // fixed(stand now) for GM
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

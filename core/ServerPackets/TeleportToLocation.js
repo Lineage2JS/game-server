@@ -1,6 +1,6 @@
 const ServerPacket = require('./ServerPacket.js');
 
-class TeleportToLocation {
+class TeleportToLocation extends ServerPacket {
   /**
    * @param {number} objectId
    * @param {number} x
@@ -8,17 +8,13 @@ class TeleportToLocation {
    * @param {number} z
    */
   constructor(objectId, x, y, z) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x38)
       .writeD(objectId)
       .writeD(x)
       .writeD(y)
       .writeD(z);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

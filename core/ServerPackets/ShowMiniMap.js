@@ -1,18 +1,14 @@
 const ServerPacket = require('./ServerPacket.js');
 
-class ShowMiniMap {
+class ShowMiniMap extends ServerPacket {
   /**
    * @param {number} mapId
    */
   constructor(mapId) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0xB6)
       .writeD(mapId)
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

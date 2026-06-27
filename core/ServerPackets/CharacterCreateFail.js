@@ -1,12 +1,12 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class CharacterCreateFail {
+class CharacterCreateFail extends ServerPacket {
   /**
    * @param {number} reason
    */
   constructor(reason) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x26)
       .writeD(reason);
   }
@@ -17,10 +17,6 @@ class CharacterCreateFail {
       REASON_NAME_ALREADY_EXISTS: 0x02,
       REASON_16_ENG_CHARS: 0x03,
     }
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

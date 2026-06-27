@@ -1,23 +1,19 @@
 const ServerPacket = require('./ServerPacket.js');
 
-class ChangeWaitType {
+class ChangeWaitType extends ServerPacket {
   /**
    * @param {import('../Models/Character.js')} character
    * @param {number} waitType
    */
   constructor(character, waitType) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x3F)
       .writeD(character.objectId)
       .writeD(waitType)
       .writeD(character.x)
       .writeD(character.y)
       .writeD(character.z);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

@@ -1,6 +1,7 @@
 // const XOR = require('./../utils/XOR.js');
 // const xor = new XOR([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]);
 const clientPackets = require('./clientPackets/clientPackets');
+const ServerPacket = require('./ServerPackets/ServerPacket');
 
 /**
  * Реестр клиентских пакетов: opcode -> класс пакета.
@@ -43,7 +44,7 @@ class Client {
   }
 
   /**
-   * @param {{ getBuffer: () => Buffer }} packetInstance
+   * @param {ServerPacket} packetInstance
    * @param {boolean} [encoding=true]
    * @returns {void}
    */
@@ -65,7 +66,7 @@ class Client {
   setProtocolVersion(value) {
     this._protocolVersion = value;
   }
-  
+
   /** @returns {number | null} */
   getProtocolVersion() {
     return this._protocolVersion;
@@ -77,7 +78,7 @@ class Client {
    */
   _getPacketLength(buffer) {
     const length = Buffer.from([0x00, 0x00]);
-    
+
     length.writeInt16LE(buffer.length + 2);
 
     return length;
@@ -92,7 +93,7 @@ class Client {
       ? Buffer.from(data, 'binary')
       : Buffer.from(data);
     const croppedPacket = buffer.subarray(2);
-    
+
     return croppedPacket;
   }
 

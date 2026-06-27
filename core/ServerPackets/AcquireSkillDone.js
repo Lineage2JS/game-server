@@ -1,14 +1,10 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class AcquireSkillDone {
+class AcquireSkillDone extends ServerPacket {
   constructor() {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0xA7);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

@@ -1,18 +1,14 @@
 const ServerPacket = require('./ServerPacket.js');
 
-class AutoAttackStop {
+class AutoAttackStop extends ServerPacket {
   /**
    * @param {number} objectId
    */
   constructor(objectId) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x3C)
       .writeD(objectId);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

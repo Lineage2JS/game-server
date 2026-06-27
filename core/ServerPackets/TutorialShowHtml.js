@@ -1,18 +1,14 @@
 const ServerPacket = require('./ServerPacket.js');
 
-class TutorialShowHtml {
+class TutorialShowHtml extends ServerPacket {
   /**
    * @param {string} htmlMessage
    */
   constructor(htmlMessage) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0xB9)
       .writeS(htmlMessage);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

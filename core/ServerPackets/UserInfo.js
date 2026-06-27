@@ -1,12 +1,12 @@
 const ServerPacket = require('./ServerPacket.js');
 
-class UserInfo {
+class UserInfo extends ServerPacket {
   /**
    * @param {import('../Models/Player.js')} player
    */
   constructor(player) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x04)
       .writeD(player.x)
       .writeD(player.y)
@@ -94,22 +94,22 @@ class UserInfo {
       .writeD(player.walkSpeed) // getFlyingWalkSpeed
       .writeF(player.movementMultiplier)
       .writeF(player.attackSpeedMultiplier);
-      
-      // male
+
+    // male
     if(player.gender === 0) {
-      this._packet
+      this
         .writeF(player.maleCollisionRadius)
         .writeF(player.maleCollisionHeight);
     }
 
     // female
     if(player.gender === 1) {
-      this._packet
+      this
         .writeF(player.femaleCollisionRadius)
         .writeF(player.femaleCollisionHeight);
     }
 
-    this._packet
+    this
       .writeD(player.hairStyle)
       .writeD(player.hairColor)
       .writeD(player.face)
@@ -126,16 +126,12 @@ class UserInfo {
       .writeD(player.pk)
       .writeD(player.pvp)
       .writeH(0x00) // cubic count
-      //.writeH(0x01) // 1-yellow 2-orange 3-yellow star 4-violett 5-blue cube  
-      //.writeH(0x02) // 1-yellow 2-orange 3-yellollow star 4-violett 5-blue cube  w star  4-violett 5-blue cube  
+      //.writeH(0x01) // 1-yellow 2-orange 3-yellow star 4-violett 5-blue cube
+      //.writeH(0x02) // 1-yellow 2-orange 3-yellollow star 4-violett 5-blue cube  w star  4-violett 5-blue cube
       //.writeH(0x03) // 1-yellow 2-orange 3-ye
-      //.writeH(0x04) // 1-yellow 2-orange 3-yellow star 4-violett 5-blue cube  
-      //.writeH(0x05) // 1-yellow 2-orange 3-yellow star 4-violett 5-blue cube  
+      //.writeH(0x04) // 1-yellow 2-orange 3-yellow star 4-violett 5-blue cube
+      //.writeH(0x05) // 1-yellow 2-orange 3-yellow star 4-violett 5-blue cube
       .writeC(0x00); // 1-find party members
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

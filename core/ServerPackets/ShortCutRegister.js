@@ -1,6 +1,6 @@
 const ServerPacket = require('./ServerPacket.js');
 
-class ShortCutRegister {
+class ShortCutRegister extends ServerPacket {
   /**
    * @param {number} slot
    * @param {number} type
@@ -9,22 +9,18 @@ class ShortCutRegister {
    * @param {number} dat2
    */
   constructor(slot, type, typeId, level, dat2) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x56)
       .writeD(type)
       .writeD(slot)
       .writeD(typeId);
 
     if (level > -1) {
-      this._packet.writeD(level);
+      this.writeD(level);
     }
 
-    this._packet.writeD(dat2);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
+    this.writeD(dat2);
   }
 }
 

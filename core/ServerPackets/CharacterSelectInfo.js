@@ -1,20 +1,20 @@
 const ServerPacket = require('./ServerPacket.js');
 
-class CharacterSelectInfo {
+class CharacterSelectInfo extends ServerPacket {
   /**
    * @param {string} login
    * @param {import('../Models/Character.js')[]} characters
    */
   constructor(login, characters) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x1F)
 
     if(characters && characters.length > 0) {
-      this._packet.writeD(characters.length);
+      this.writeD(characters.length);
 
       for(let i = 0; i < characters.length; i++) {
-        this._packet
+        this
           .writeS(characters[i].characterName)
           .writeD(characters[i].objectId)
           .writeS(login)
@@ -51,7 +51,7 @@ class CharacterSelectInfo {
           .writeD(0x00)
           .writeD(0x00)
 
-          .writeD(0x00) 
+          .writeD(0x00)
           .writeD(0x00) // writeD(charInfoPackage.getInventory().getPaperdollObjectId(Inventory.PAPERDOLL_REAR)); 
           .writeD(0x00) // writeD(charInfoPackage.getInventory().getPaperdollObjectId(Inventory.PAPERDOLL_LEAR)); 
           .writeD(0x00) // writeD(charInfoPackage.getInventory().getPaperdollObjectId(Inventory.PAPERDOLL_NECK)); 
@@ -95,12 +95,8 @@ class CharacterSelectInfo {
           .writeD(characters[i].scheduledDeletionAt !== null ? 1 : 0); //writeD(charInfoPackage.getDeleteTimer());  // days left before delete .. if != 0 then char is inactive
       }
     } else {
-      this._packet.writeD(0x00);
+      this.writeD(0x00);
     }
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

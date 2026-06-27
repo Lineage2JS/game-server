@@ -1,12 +1,12 @@
 const ServerPacket = require('./ServerPacket.js');
 
-class NpcInfo {
+class NpcInfo extends ServerPacket {
   /**
    * @param {import('../Models/Npc.js')} npc
    */
   constructor(npc) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x22)
       .writeD(npc.objectId)
       .writeD(1000000 + npc.id)
@@ -46,10 +46,6 @@ class NpcInfo {
       .writeD(0)
       .writeD(0)
       .writeD(0)  // hmm karma ??
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

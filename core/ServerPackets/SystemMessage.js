@@ -10,14 +10,14 @@ const SYSTEM_MESSAGES_ENUMS = {
   WELCOME_TO_LINEAGE_II: 34
 }
 
-class SystemMessage {
+class SystemMessage extends ServerPacket {
   /**
    * @param {number} messageId
    * @param {Array<{type: number, value: any}>} messages
    */
   constructor(messageId, messages = []) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x7A)
       .writeD(messageId)
       .writeD(messages.length);
@@ -45,10 +45,6 @@ class SystemMessage {
     //       break;
     //   }
     // }
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

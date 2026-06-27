@@ -1,14 +1,14 @@
 const ServerPacket = require('./ServerPacket.js');
 
-class Attack {
+class Attack extends ServerPacket {
   /**
    * @param {import('../Models/Player.js')} player
    * @param {number} targetObjectId
    * @param {boolean} soulshot
    */
   constructor(player, targetObjectId, soulshot = false) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x06)
       .writeD(player.objectId)
       .writeD(targetObjectId)
@@ -18,10 +18,6 @@ class Attack {
       .writeD(player.y)
       .writeD(player.z)
       .writeH(0);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

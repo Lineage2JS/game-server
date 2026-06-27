@@ -1,14 +1,10 @@
 const ServerPacket = require('./ServerPacket.js');
 
-class SunSet {
+class SunSet extends ServerPacket {
   constructor() {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x29);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

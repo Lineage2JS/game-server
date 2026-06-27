@@ -1,17 +1,17 @@
 const ServerPacket = require('./ServerPacket.js');
 
-class CharacterTemplates {
+class CharacterTemplates extends ServerPacket {
   /**
    * @param {import('../Models/Character.js').CharacterTemplate[]} characters
    */
   constructor(characters) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x23)
       .writeD(characters.length);
 
     for (let i = 0; i < characters.length; i++) {
-      this._packet
+      this
         .writeD(characters[i].raceId)
         .writeD(characters[i].classId)
         .writeD(0x46)
@@ -33,10 +33,6 @@ class CharacterTemplates {
         .writeD(characters[i].men)
         .writeD(0x0a);
     }
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

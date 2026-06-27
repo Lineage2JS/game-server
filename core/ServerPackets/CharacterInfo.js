@@ -1,12 +1,12 @@
 const ServerPacket = require('./ServerPacket.js');
 
-class CharacterInfo {
+class CharacterInfo extends ServerPacket {
   /**
    * @param {import('../Models/Character.js')} player
    */
   constructor(player) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x03)
       .writeD(player.x)
       .writeD(player.y)
@@ -49,7 +49,7 @@ class CharacterInfo {
 
     // male
     if(player.gender === 0) {
-      this._packet
+      this
         .writeF(player.maleAttackSpeedMultiplier) // TODO местами поменять как в l2jc1
         .writeF((player.pSpd / 500) / 0.555)
         .writeF(player.maleCollisionRadius)
@@ -58,14 +58,14 @@ class CharacterInfo {
 
     // female
     if(player.gender === 1) {
-      this._packet
+      this
         .writeF(player.femaleAttackSpeedMultiplier)
         .writeF((player.pSpd / 500) / 0.555)
         .writeF(player.femaleCollisionRadius)
         .writeF(player.femaleCollisionHeight)
     }
 
-    this._packet
+    this
       .writeD(player.hairStyle)
       .writeD(player.hairColor)
       .writeD(player.face)
@@ -91,10 +91,6 @@ class CharacterInfo {
       .writeH(0x00)  // cubic count
   	  //.writeH(0x00);  // cubic
       .writeC(0x00);	// find party members
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

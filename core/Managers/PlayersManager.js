@@ -1,12 +1,12 @@
 const EventEmitter = require('events');
 const schedulerManager = require('./SchedulerManager');
 const database = require('./../../database');
-const serverPackets = require('./../ServerPackets/serverPackets');
-const eventBusNew = require('./../Events/EventBusNew');
+const serverPackets = require('../ServerPackets/serverPackets');
+const ServerPacket = require('../ServerPackets/ServerPacket');
+const eventBusNew = require('../Events/EventBusNew');
 
 /** @typedef {import('./../Models/Player')} Player */
 /** @typedef {import('./../Client')} Client */
-/** @typedef {import('./../ServerPackets/ServerPacket')} ServerPacket */
 /** @typedef {{ id: number, type: string, status: string, payload: Record<string, any>, scheduledAt: number, createdAccountId: string, createdType: string }} ScheduledTask */
 
 class PlayersManager extends EventEmitter {

@@ -1,18 +1,14 @@
 const ServerPacket = require('./ServerPacket.js');
 
-class RestartResponse {
+class RestartResponse extends ServerPacket {
   /**
    * @param {boolean} allowRestart
    */
   constructor(allowRestart) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x74)
       .writeD(allowRestart ? 0x01 : 0x00);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

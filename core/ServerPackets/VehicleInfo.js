@@ -1,22 +1,18 @@
 const ServerPacket = require('./ServerPacket.js');
 
-class VehicleInfo {
+class VehicleInfo extends ServerPacket {
   /**
    * @param {import('../Models/Character.js')} boat
    */
   constructor(boat) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x6E)
       .writeD(boat.objectId)
       .writeD(boat.x)
       .writeD(boat.y)
       .writeD(boat.z)
       .writeD(boat.heading);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 
