@@ -1,6 +1,10 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class FinishRotating {
+  /**
+   * @param {import('../Models/Character.js')} character
+   * @param {number} degree
+   */
   constructor(character, degree) {
     this._packet = new ServerPacket();
     this._packet

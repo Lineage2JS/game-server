@@ -3,9 +3,14 @@ const ClientPacketNew = require("./ClientPacketNew");
 const database = require('./../../database');
 
 class Logout extends ClientPacketNew {
+  static code = 0x09;
+
   async handle() {
     const client = this.getClient();
     const player = this.getPlayer();
+
+    if (!player) return;
+
     const character = await database.getCharacter(player.objectId);
 
     if (character) { // сохранять точно не тут. В каком-нибудь менеджере.

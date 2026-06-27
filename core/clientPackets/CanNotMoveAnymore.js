@@ -1,6 +1,8 @@
 const ClientPacketNew = require("./ClientPacketNew");
 
 class CanNotMoveAnymore extends ClientPacketNew {
+  static code = 0x36;
+
   async handle() {
     const client = this.getClient();
     const player = this.getPlayer();

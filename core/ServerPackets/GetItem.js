@@ -1,6 +1,10 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class GetItem {
+  /**
+   * @param {import('../Models/Character.js')} character
+   * @param {*} item
+   */
   constructor(character, item) {
     this._packet = new ServerPacket();
     this._packet

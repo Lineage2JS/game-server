@@ -23,6 +23,10 @@ const slot = {
 //
 
 class ItemList {
+  /**
+   * @param {import('../Models/Item.js')[]} items
+   * @param {boolean} showWindow
+   */
   constructor(items, showWindow = false) {
     this._packet = new ServerPacket();
     this._packet
@@ -39,7 +43,7 @@ class ItemList {
         .writeD(item.getItemId())
         .writeD(item.getCount())
         .writeH(item.getType2());
-      
+
       this._packet.writeH(0xff); // TODO
 
       if (item.isEquipped) { // TODO
@@ -47,7 +51,7 @@ class ItemList {
       } else {
         this._packet.writeH(0x00);
       }
-      
+
       this._packet
         .writeD(item.getBodyPart())
         .writeH(0x00) // getEnchantLevel

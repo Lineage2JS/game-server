@@ -1,6 +1,10 @@
 const ServerPacket = require('./ServerPacket.js');
 
 class BuyList {
+  /**
+   * @param {number} adenaCount
+   * @param {import('../Models/Item.js')[]} items
+   */
   constructor(adenaCount, items) {
     this._packet = new ServerPacket();
     this._packet
@@ -19,7 +23,7 @@ class BuyList {
         .writeD(item.getCount())
         .writeH(item.getType2())
         .writeH(0); // TODO ?
-      
+
       if (item.getType1() < 4) { // TODO
         this._packet.writeD(item.getBodyPart())
         .writeH(0) // enchant level
@@ -28,7 +32,7 @@ class BuyList {
       }
 
       this._packet.writeD(item.getPrice())
-    } 
+    }
   }
 
   getBuffer() {

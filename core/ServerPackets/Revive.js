@@ -1,6 +1,9 @@
 const ServerPacket = require('./ServerPacket.js'); 
 
 class Revive {
+  /**
+   * @param {number} objectId
+   */
   constructor(objectId) {
     this._packet = new ServerPacket();
     this._packet

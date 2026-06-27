@@ -1,6 +1,10 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class SocialAction {
+  /**
+   * @param {number} objectId
+   * @param {number} actionId
+   */
   constructor(objectId, actionId) {
     this._packet = new ServerPacket();
     this._packet

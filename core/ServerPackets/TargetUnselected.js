@@ -1,6 +1,9 @@
-const ServerPacket = require('./ServerPacket'); 
+const ServerPacket = require('./ServerPacket');
 
 class TargetUnselected {
+  /**
+   * @param {import('../Models/Player.js')} player
+   */
   constructor(player) {
     this._packet = new ServerPacket();
     this._packet

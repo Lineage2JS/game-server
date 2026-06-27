@@ -1,6 +1,9 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class UserInfo {
+  /**
+   * @param {import('../Models/Player.js')} player
+   */
   constructor(player) {
     this._packet = new ServerPacket();
     this._packet
@@ -8,7 +11,7 @@ class UserInfo {
       .writeD(player.x)
       .writeD(player.y)
       .writeD(player.z)
-      .writeD(player.heading) 
+      .writeD(player.heading)
       .writeD(player.objectId)
       .writeS(player.characterName)
       .writeD(player.raceId)
@@ -29,9 +32,9 @@ class UserInfo {
       .writeD(player.sp)
       .writeD(100)
       .writeD(1000)
-      
+
       .writeD(0x28)
-      
+
       .writeD(player.underwear.objectId)
       .writeD(player.ear.right.objectId)
       .writeD(player.ear.left.objectId)

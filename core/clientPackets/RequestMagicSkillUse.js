@@ -3,6 +3,8 @@ const serverPackets = require('./../ServerPackets/serverPackets');
 const entitiesManager = require('./../Managers/EntitiesManager');
 
 class RequestMagicSkillUse extends ClientPacketNew {
+  static code = 0x2F;
+
   async handle() {
     const client = this.getClient();
     const player = this.getPlayer();

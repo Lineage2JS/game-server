@@ -5,42 +5,65 @@ const AttackState = require('./../states/AttackState');
 const FollowState = require('./../states/FollowState');
 const PickupState = require('./../states/PickupState');
 const DeadState = require('./../states/DeadState');
+const itemNamesMap = require('../../datapack/itemNamesMap.json');
 
 /** @typedef {{ x: number, y: number, z: number }} Point3D */
 /** @typedef {{ x: number, y: number }} Point2D */
+/** @typedef {import('./Character').CharacterTemplate & { name: string, type: string, id: number, level: number, baseAttackRange: number, baseRunSpeed: number, baseWalkSpeed: number, baseDefend: number, baseAttackSpeed: number, baseCritical: number, canBeAttacked: number, aggressive?: number, collisionRadius: number, collisionHeight: number, slotRhand: string, slotLhand: string }} NpcData */
+
+/**
+ * @param {string} itemName
+ * @returns {number} itemId - returns 0 if itemName is not found
+ */
+function getItemIdByName(itemName) {
+  if (!itemName || typeof itemName !== 'string') {
+    return 0;
+  }
+
+  const foundItemId = itemNamesMap[/** @type {keyof typeof itemNamesMap} */(itemName)];
+
+  if (foundItemId) {
+    return foundItemId;
+  }
+
+  return 0;
+}
 
 class Npc extends Character {
-  constructor() {
-    super();
+  /**
+   * @param {NpcData} npcData
+   */
+  constructor(npcData) {
+    super(npcData);
 
-    /** @type {number | null} */
-    this.id = null;
-    /** @type {string | null} */
-    this.name = null;
-    /** @type {string | null} */
-    this.type = null;
-    /** @type {number | null} */
-    this.baseAttackRange = null;
-    /** @type {boolean | null} */
-    this.canBeAttacked = null;
-    /** @type {boolean | null} */
-    this.aggressive = null;
-    /** @type {number | null} */
-    this.rightHand = null;
-    /** @type {number | null} */
-    this.leftHand = null;
+    /** @type {number} */
+    this.id = npcData.id;
+    /** @type {string} */
+    this.name = npcData.name;
+    /** @type {string} */
+    this.type = npcData.type;
+    /** @type {number} */
+    this.baseAttackRange = npcData.baseAttackRange;
+    /** @type {number} */
+    this.canBeAttacked = npcData.canBeAttacked;
+    /** @type {number} */
+    this.aggressive = npcData.aggressive || 0;
+    /** @type {number} */
+    this.rightHand = getItemIdByName(npcData.slotRhand);
+    /** @type {number} */
+    this.leftHand = getItemIdByName(npcData.slotLhand);
     /** @type {number | null} */
     this.armor = null;
     /** @type {string | null} */
     this.class = null;
-    /** @type {number | null} */
-    this.collisionRadius = null;
-    /** @type {number | null} */
-    this.collisionHeight = null;
     /** @type {number} */
-    this.baseRunSpeed = 0;
+    this.collisionRadius = npcData.collisionRadius;
     /** @type {number} */
-    this.baseWalkSpeed = 0;
+    this.collisionHeight = npcData.collisionHeight;
+    /** @type {number} */
+    this.baseRunSpeed = npcData.baseRunSpeed || 0;
+    /** @type {number} */
+    this.baseWalkSpeed = npcData.baseWalkSpeed || 0;
 
     /** @type {{ move: import('../states/BaseState'), idle: import('../states/BaseState'), attack: import('../states/BaseState'), follow: import('../states/BaseState'), pickup: import('../states/BaseState'), dead: import('../states/BaseState') }} */
     this._states = {
@@ -67,7 +90,7 @@ class Npc extends Character {
     this.baseAttackSpeed = 330;
     /** @type {number} */
     this.getMagicalSpeed = 333; // fix
-    
+
     //
     /** @type {Point2D[] | null} */
     this.coordinates = null;

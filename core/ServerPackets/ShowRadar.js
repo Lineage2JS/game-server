@@ -1,6 +1,11 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class ShowRadar {
+  /**
+   * @param {number} x
+   * @param {number} y
+   * @param {number} z
+   */
   constructor(x, y, z) {
     this._packet = new ServerPacket();
     this._packet

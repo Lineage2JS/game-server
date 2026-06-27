@@ -1,6 +1,9 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class ShowMiniMap {
+  /**
+   * @param {number} mapId
+   */
   constructor(mapId) {
     this._packet = new ServerPacket();
     this._packet

@@ -2,9 +2,8 @@ const ServerPacket = require('./ServerPacket.js');
 
 class Ride {
   /**
-   * 
-   * @param {*} character 
-   * @param {*} typePet 
+   * @param {import('../Models/Character.js')} character
+   * @param {number} typePet
    */
   constructor(character, typePet) {
     this._packet = new ServerPacket();

@@ -1,6 +1,11 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class MoveToPawn {
+  /**
+   * @param {import('../Models/Player.js')} player
+   * @param {import('../Models/Character.js')} target
+   * @param {number} distance
+   */
   constructor(player, target, distance) {
     this._packet = new ServerPacket();
     this._packet

@@ -1,5 +1,6 @@
 /**
  * @typedef {object} ItemData
+ * @property {number} objectId
  * @property {number} itemId
  * @property {string} name
  * @property {number} bodyPart
@@ -16,7 +17,7 @@ class Item {
    */
   constructor(data) {
     /** @type {number | null} */
-    this._objectId = null;
+    this._objectId = data.objectId || null;
     /** @type {number} */
     this._itemId = data.itemId;
     /** @type {string} */

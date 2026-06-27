@@ -1,6 +1,10 @@
 const ServerPacket = require('./ServerPacket.js'); 
 
 class MagicSkillLaunched {
+  /**
+   * @param {import('../Models/Character.js')} character
+   * @param {*} skill
+   */
   constructor(character, skill) {
     this._packet = new ServerPacket();
     this._packet

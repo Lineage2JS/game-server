@@ -4,6 +4,8 @@ const database = require('./../../database');
 const config = require('./../../config');
 
 class RequestAuthLogin extends ClientPacketNew {
+  static code = 0x08;
+
   async handle() {
     const client = this.getClient();
     const player = this.getPlayer();
@@ -16,6 +18,8 @@ class RequestAuthLogin extends ClientPacketNew {
       this.readD().toString(16),
       this.readD().toString(16)
     ];
+
+    if (!player) return;
 
     if (client.getProtocolVersion() !== config.main.CLIENT_PROTOCOL_VERSION) {
       return;

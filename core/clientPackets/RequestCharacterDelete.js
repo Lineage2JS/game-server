@@ -4,6 +4,8 @@ const database = require('./../../database');
 const playersManager = require('./../Managers/PlayersManager');
 
 class RequestCharacterDelete extends ClientPacketNew {
+  static code = 0x0C;
+
   async handle() {
     const client = this.getClient();
     const player = this.getPlayer();

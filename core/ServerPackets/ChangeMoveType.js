@@ -1,6 +1,10 @@
 const ServerPacket = require('./ServerPacket.js'); 
 
 class ChangeMoveType {
+  /**
+   * @param {number} objectId
+   * @param {number} moveType
+   */
   constructor(objectId, moveType) {
     this._packet = new ServerPacket();
     this._packet

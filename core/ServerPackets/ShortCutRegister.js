@@ -1,6 +1,13 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class ShortCutRegister {
+  /**
+   * @param {number} slot
+   * @param {number} type
+   * @param {number} typeId
+   * @param {number} level
+   * @param {number} dat2
+   */
   constructor(slot, type, typeId, level, dat2) {
     this._packet = new ServerPacket();
     this._packet
@@ -12,7 +19,7 @@ class ShortCutRegister {
     if (level > -1) {
       this._packet.writeD(level);
     }
-    
+
     this._packet.writeD(dat2);
   }
 

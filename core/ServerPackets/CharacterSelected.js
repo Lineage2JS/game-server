@@ -1,6 +1,9 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class CharacterSelected {
+  /**
+   * @param {import('../Models/Character.js')} character
+   */
   constructor(character) {
     this._packet = new ServerPacket();
     this._packet
@@ -15,8 +18,8 @@ class CharacterSelected {
       .writeD(character.raceId)
       .writeD(character.classId)
       .writeD(0x01)
-      .writeD(character.x)	
-      .writeD(character.y)	
+      .writeD(character.x)
+      .writeD(character.y)
       .writeD(character.z)
       .writeF(character.hp)
       .writeF(character.mp)
@@ -35,7 +38,7 @@ class CharacterSelected {
     for (let i = 0; i < 30; i++) {
       this._packet.writeD(0x00);
     }
-  
+
     this._packet.writeD(0x00); // in-game time
   }
 

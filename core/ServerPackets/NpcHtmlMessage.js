@@ -1,6 +1,9 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class NpcHtmlMessage {
+  /**
+   * @param {string} html
+   */
   constructor(html) {
     this._packet = new ServerPacket();
     this._packet

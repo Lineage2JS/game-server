@@ -1,6 +1,10 @@
-const ServerPacket = require('./ServerPacket'); 
+const ServerPacket = require('./ServerPacket');
 
 class TargetSelected {
+  /**
+   * @param {number} objectId
+   * @param {number} color
+   */
   constructor(objectId, color = 0) {
     this._packet = new ServerPacket();
     this._packet

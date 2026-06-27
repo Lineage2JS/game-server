@@ -1,6 +1,10 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class ChangeWaitType {
+  /**
+   * @param {import('../Models/Character.js')} character
+   * @param {number} waitType
+   */
   constructor(character, waitType) {
     this._packet = new ServerPacket();
     this._packet

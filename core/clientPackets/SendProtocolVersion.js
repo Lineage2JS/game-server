@@ -3,6 +3,8 @@ const ClientPacketNew = require("./ClientPacketNew");
 const config = require('./../../config');
 
 class SendProtocolVersion extends ClientPacketNew {
+  static code = 0x00;
+
   handle() {
     const client = this.getClient();
     const version = this.readD();

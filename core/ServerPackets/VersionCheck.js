@@ -1,6 +1,10 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class VersionCheck {
+  /**
+   * @param {boolean} isCompliesProtocolVersion
+   * @param {number[]} key
+   */
   constructor(isCompliesProtocolVersion, key) {
     this._packet = new ServerPacket();
     this._packet

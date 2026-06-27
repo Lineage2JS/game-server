@@ -3,6 +3,12 @@ const ClientPacket = require("./ClientPacket");
 const playersManager = require('./../Managers/PlayersManager');
 
 class RequestTutorialLinkHtml {
+  static code = 0x7B;
+
+  /**
+   * @param {import('../Client')} client
+   * @param {Buffer} packet
+   */
   constructor(client, packet) {
     this._client = client;
     this._data = new ClientPacket(packet);

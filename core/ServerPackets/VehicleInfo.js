@@ -1,6 +1,9 @@
 const ServerPacket = require('./ServerPacket.js');
 
 class VehicleInfo {
+  /**
+   * @param {import('../Models/Character.js')} boat
+   */
   constructor(boat) {
     this._packet = new ServerPacket();
     this._packet

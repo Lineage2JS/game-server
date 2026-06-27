@@ -8,6 +8,8 @@ const Bot = require('./../Models/Bot');
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
 
 class Action extends ClientPacketNew {
+  static code = 0x04;
+
   handle() {
     const client = this.getClient();
     const player = this.getPlayer();
@@ -31,7 +33,7 @@ class Action extends ClientPacketNew {
         }
       ]));
 
-      if (player.target === null) { // TODO if entity not dead
+      if (player && player.target === null) { // TODO if entity not dead
         client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
 
         player.target = entity.objectId;
@@ -39,7 +41,7 @@ class Action extends ClientPacketNew {
         return;
       }
 
-      if (player.target !== entity.objectId) {
+      if (player && player.target !== entity.objectId) {
         client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
 
         player.target = entity.objectId;
@@ -62,7 +64,7 @@ class Action extends ClientPacketNew {
         }
       ]));
 
-      if (player.target === null) { // TODO if entity not dead
+      if (player && player.target === null) { // TODO if entity not dead
         client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
 
         player.target = entity.objectId;
@@ -70,7 +72,7 @@ class Action extends ClientPacketNew {
         return;
       }
 
-      if (player.target !== entity.objectId) {
+      if (player && player.target !== entity.objectId) {
         client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
 
         player.target = entity.objectId;
@@ -78,13 +80,13 @@ class Action extends ClientPacketNew {
         return;
       }
 
-      if (entity.canBeAttacked === 0) {
+      if (player && entity.canBeAttacked === 0) {
         player.doAction('talk', entity.objectId);
 
         return;
       }
 
-      if (!player.isAttacking && !entity.isDead && entity.canBeAttacked === 1) {
+      if (player && !player.isAttacking && !entity.isDead && entity.canBeAttacked === 1) {
         player.doAction('attack', entity.objectId);
 
         return;
@@ -95,7 +97,7 @@ class Action extends ClientPacketNew {
       return;
     }
 
-    if (entity instanceof DropItem) {
+    if (player && entity instanceof DropItem) {
       player.doAction('pickup', entity.objectId);
 
       return;

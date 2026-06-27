@@ -1,6 +1,9 @@
 const ServerPacket = require('./ServerPacket.js'); 
 
 class RestartResponse {
+  /**
+   * @param {boolean} allowRestart
+   */
   constructor(allowRestart) {
     this._packet = new ServerPacket();
     this._packet

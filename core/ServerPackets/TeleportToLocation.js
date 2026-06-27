@@ -1,6 +1,12 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class TeleportToLocation {
+  /**
+   * @param {number} objectId
+   * @param {number} x
+   * @param {number} y
+   * @param {number} z
+   */
   constructor(objectId, x, y, z) {
     this._packet = new ServerPacket();
     this._packet

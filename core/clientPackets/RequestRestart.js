@@ -3,10 +3,17 @@ const ClientPacketNew = require("./ClientPacketNew");
 const database = require('./../../database');
 
 class RequestRestart extends ClientPacketNew {
+  static code = 0x46;
+
   async handle() {
     const client = this.getClient();
     const player = this.getPlayer();
+
+    if (!player) return;
+
     const character = await database.getCharacter(player.objectId);
+
+    if (!character) return;
 
     character.x = Math.floor(player.x); // fix, update all doc?
     character.y = Math.floor(player.y);

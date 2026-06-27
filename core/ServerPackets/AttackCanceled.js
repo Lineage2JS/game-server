@@ -2,8 +2,7 @@ const ServerPacket = require('./ServerPacket.js');
 
 class AttackCanceled {
   /**
-   * 
-   * @param {import('../Models/Character.js')} character 
+   * @param {import('../Models/Character.js')} character
    */
   constructor(character) {
     this._packet = new ServerPacket();

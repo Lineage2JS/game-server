@@ -2,28 +2,36 @@ const baseStats = require('./../../datapack/baseStats.json');
 const eventBusNew = require('./../Events/EventBusNew');
 const EventEmitter = require('events');
 
+/** @typedef {{ objectId: number, login: string, characterName: string, title?: string, level?: number, gender: number, hairStyle: number, hairColor: number, face: number, createdAt: number, classId: number, className: string, raceId: number, str: number, dex: number, con: number, int: number, wit: number, men: number, hp: number, mp: number, pAtk: number, pDef: number, mAtk: number, mDef: number, pSpd: number, mSpd: number, accuracy: number, critical: number, evasion: number, baseRunSpeed: number, baseWalkSpeed: number, baseAttackSpeed?: number, swimSpeed?: number, maximumLoad: number, x: number, y: number, z: number, canCraft: number, maleAttackSpeedMultiplier: number, maleCollisionRadius: number, maleCollisionHeight: number, femaleAttackSpeedMultiplier: number, femaleCollisionRadius: number, femaleCollisionHeight: number, items: number[] }} CharacterTemplate */
+
 class Character extends EventEmitter {
-  constructor() {
+  /** @param {CharacterTemplate} template */
+  static create(template) {
+    return new Character(template);
+  }
+
+  /** @param {CharacterTemplate} template */
+  constructor(template) {
     super();
 
-    /** @type {number | null} */
-    this.objectId = null; // getObjectId()
-    /** @type {string | null} */
-    this.login = null;
-    /** @type {string | null} */
-    this.characterName = null;
-    /** @type {string} */
-    this.title = "";
     /** @type {number} */
-    this.level = 1;
-    /** @type {number | null} */
-    this.gender = null;
-    /** @type {number | null} */
-    this.hairStyle = null;
-    /** @type {number | null} */
-    this.hairColor = null;
-    /** @type {number | null} */
-    this.face = null;
+    this.objectId = template.objectId; // getObjectId()
+    /** @type {string} */
+    this.login = template.login || '';
+    /** @type {string} */
+    this.characterName = template.characterName || '';
+    /** @type {string} */
+    this.title = template.title || '';
+    /** @type {number} */
+    this.level = template.level || 1;
+    /** @type {number} */
+    this.gender = template.gender || 0;
+    /** @type {number} */
+    this.hairStyle = template.hairStyle || 0;
+    /** @type {number} */
+    this.hairColor = template.hairColor || 0;
+    /** @type {number} */
+    this.face = template.face || 0;
     /** @type {number} */
     this.heading = 0;
     /** @type {boolean} */
@@ -60,86 +68,86 @@ class Character extends EventEmitter {
     /** @type {number} */
     this.karma = 0;
 
-    /** @type {number | null} */
-    this.classId = null;
-    /** @type {string | null} */
-    this.className = null;
-    /** @type {number | null} */
-    this.raceId = null;
+    /** @type {number} */
+    this.classId = template.classId;
+    /** @type {string} */
+    this.className = template.className;
+    /** @type {number} */
+    this.raceId = template.raceId;
 
-    /** @type {number | null} */
-    this.str = null;
-    /** @type {number | null} */
-    this.dex = null;
-    /** @type {number | null} */
-    this.con = null;
-    /** @type {number | null} */
-    this.int = null;
-    /** @type {number | null} */
-    this.wit = null;
-    /** @type {number | null} */
-    this.men = null;
-    /** @type {number | null} */
-    this.hp = null;
-    /** @type {number | null} */
-    this.maximumHp = null;
-    /** @type {number | null} */
-    this.mp = null;
-    /** @type {number | null} */
-    this.maximumMp = null;
+    /** @type {number} */
+    this.str = template.str || 0;
+    /** @type {number} */
+    this.dex = template.dex || 0;
+    /** @type {number} */
+    this.con = template.con || 0;
+    /** @type {number} */
+    this.int = template.int || 0;
+    /** @type {number} */
+    this.wit = template.wit || 0;
+    /** @type {number} */
+    this.men = template.men || 0;
+    /** @type {number} */
+    this.hp = template.hp || 0;
+    /** @type {number} */
+    this.maximumHp = template.hp || 0;
+    /** @type {number} */
+    this.mp = template.mp || 0;
+    /** @type {number} */
+    this.maximumMp = template.mp || 0;
 
-    /** @type {number | null} */
-    this.pAtk = null;
-    /** @type {number | null} */
-    this.pDef = null;
-    /** @type {number | null} */
-    this.mAtk = null;
-    /** @type {number | null} */
-    this.mDef = null;
-    /** @type {number | null} */
-    this.pSpd = null;
-    /** @type {number | null} */
-    this.mSpd = null;
-    /** @type {number | null} */
-    this.accuracy = null;
-    /** @type {number | null} */
-    this.critical = null;
-    /** @type {number | null} */
-    this.evasion = null;
-    /** @type {number | null} */
-    this.baseRunSpeed = null;
-    /** @type {number | null} */
-    this.baseWalkSpeed = null;
-    /** @type {number | null} */
-    this.baseAttackSpeed = null;
-    /** @type {number | null} */
-    this.swimSpeed = null;
-    /** @type {number | null} */
-    this.maximumLoad = null;
+    /** @type {number} */
+    this.pAtk = template.pAtk || 0;
+    /** @type {number} */
+    this.pDef = template.pDef || 0;
+    /** @type {number} */
+    this.mAtk = template.mAtk || 0;
+    /** @type {number} */
+    this.mDef = template.mDef || 0;
+    /** @type {number} */
+    this.pSpd = template.pSpd || 0;
+    /** @type {number} */
+    this.mSpd = template.mSpd || 0;
+    /** @type {number} */
+    this.accuracy = template.accuracy || 0;
+    /** @type {number} */
+    this.critical = template.critical || 0;
+    /** @type {number} */
+    this.evasion = template.evasion || 0;
+    /** @type {number} */
+    this.baseRunSpeed = template.baseRunSpeed || 0;
+    /** @type {number} */
+    this.baseWalkSpeed = template.baseWalkSpeed || 0;
+    /** @type {number} */
+    this.baseAttackSpeed = template.baseAttackSpeed || 0;
+    /** @type {number} */
+    this.swimSpeed = template.swimSpeed || 0;
+    /** @type {number} */
+    this.maximumLoad = template.maximumLoad || 0;
 
-    /** @type {number | null} */
-    this.x = null;
-    /** @type {number | null} */
-    this.y = null;
-    /** @type {number | null} */
-    this.z = null;
+    /** @type {number} */
+    this.x = template.x || 0;
+    /** @type {number} */
+    this.y = template.y || 0;
+    /** @type {number} */
+    this.z = template.z || 0;
 
-    /** @type {boolean | null} */
-    this.canCraft = null;
+    /** @type {number} */
+    this.canCraft = template.canCraft || 0;
 
-    /** @type {number | null} */
-    this.maleAttackSpeedMultiplier = null;
-    /** @type {number | null} */
-    this.maleCollisionRadius = null;
-    /** @type {number | null} */
-    this.maleCollisionHeight = null;
+    /** @type {number} */
+    this.maleAttackSpeedMultiplier = template.maleAttackSpeedMultiplier || 0;
+    /** @type {number} */
+    this.maleCollisionRadius = template.maleCollisionRadius || 0;
+    /** @type {number} */
+    this.maleCollisionHeight = template.maleCollisionHeight || 0;
 
-    /** @type {number | null} */
-    this.femaleAttackSpeedMultiplier = null;
-    /** @type {number | null} */
-    this.femaleCollisionRadius = null;
-    /** @type {number | null} */
-    this.femaleCollisionHeight = null;
+    /** @type {number} */
+    this.femaleAttackSpeedMultiplier = template.femaleAttackSpeedMultiplier || 0;
+    /** @type {number} */
+    this.femaleCollisionRadius = template.femaleCollisionRadius || 0;
+    /** @type {number} */
+    this.femaleCollisionHeight = template.femaleCollisionHeight || 0;
 
     /** @type {{ objectId: number, itemId: number }} */
     this.underwear = { objectId: 0, itemId: 0 } // TODO papperdoll system?
@@ -175,10 +183,12 @@ class Character extends EventEmitter {
     this.back = { objectId: 0, itemId: 0 }
 
     //
-    /** @type {Character | null} */
+    /** @type {number | null} */
     this.target = null; // target and aggroTarget?
     /** @type {number | null} */
     this.createdAt = null;
+    /** @type {number | null} */
+    this.scheduledDeletionAt = null;
     /** @type {Map<number, { character: Character, damage: number }>} */
     this._hitHistoryMap = new Map();
     /** @type {number} */
@@ -333,19 +343,6 @@ class Character extends EventEmitter {
     
     return parseFloat(roundedMultiplier);
   };
-
-  /** @param {Record<string, unknown>} template */
-  static create(template) {
-    const character = new Character();
-
-    for(const key in template) {
-      if (character.hasOwnProperty(key)) {
-        Reflect.set(character, key, template[key]);
-      }
-    }
-
-    return character;
-  }
 }
 
 module.exports = Character;

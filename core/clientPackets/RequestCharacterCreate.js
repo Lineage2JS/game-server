@@ -3,6 +3,7 @@ const ClientPacketNew = require("./ClientPacketNew");
 const Character = require('./../Models/Character');
 const database = require('./../../database');
 const characterTemplates = require('./../../datapack/characterTemplates.json');
+const classIdsEnum = require('./../../enums/classIdsEnum.js');
 const itemsManager = require('./../Managers/ItemsManager');
 const initialParametersManager = require('./../Managers/InitialParametersManager');
 
@@ -72,6 +73,8 @@ function isPointInPolygon(point, polygon) {
 }
 
 class RequestCharacterCreate extends ClientPacketNew {
+  static code = 0x0B;
+
   /**
    * @param {string} name
    * @returns {boolean}
@@ -104,8 +107,8 @@ class RequestCharacterCreate extends ClientPacketNew {
   async handle() {
     const client = this.getClient();
     const player = this.getPlayer();
-    const name = this.readS();
-    const race = this.readD();
+    const characterName = this.readS();
+    const raceId = this.readD();
     const gender = this.readD();
     const classId = this.readD();
     const int = this.readD();
@@ -119,7 +122,7 @@ class RequestCharacterCreate extends ClientPacketNew {
     const face = this.readD();
     const MAXIMUM_LENGTH_CHARACTER_NAME = 16;
 
-    if (!player) return;
+    if (!player?.login) return;
 
     const isManyCharacters = await this.checkAvailableNumberCharacters(player.login);
 
@@ -131,13 +134,13 @@ class RequestCharacterCreate extends ClientPacketNew {
     }
 
     // check character name for length and regular expression
-    if(name.length <= 0 || name.length >= MAXIMUM_LENGTH_CHARACTER_NAME || !this._checkCharacterNameLetters(name)) {
+    if(characterName.length <= 0 || characterName.length >= MAXIMUM_LENGTH_CHARACTER_NAME || !this._checkCharacterNameLetters(characterName)) {
       client.sendPacket(new serverPackets.CharacterCreateFail(serverPackets.CharacterCreateFail.reason.REASON_16_ENG_CHARS))
 
       return;
     }
 
-    const isCharacterNameTaken = await database.isCharacterNameTaken(name);
+    const isCharacterNameTaken = await database.isCharacterNameTaken(characterName);
 
     // check character name for availability
     if (isCharacterNameTaken) {
@@ -155,37 +158,43 @@ class RequestCharacterCreate extends ClientPacketNew {
       }
     });
 
+    if (!characterTemplate) {
+      throw new Error(`Character template not found for classId: ${classId}`);
+    }
+
     // create character
-    const character = Character.create(characterTemplate);
+    const nextObjectId = await database.getNextObjectId();
+    const login = player.login;
+    const createdAt = Date.now();
 
-    character.characterName = name;
-    character.gender = gender;
-    character.objectId = await database.getNextObjectId();
-    character.login = player.login;
-    character.maximumHp = character.hp;
-    character.maximumMp = character.mp;
-    character.hairStyle = hairStyle;
-    character.hairColor = hairColor;
-    character.face = face;
-    character.createdAt = Date.now();
+    const character = Character.create({
+      ...characterTemplate,
+      objectId: nextObjectId,
+      login,
+      characterName,
+      gender,
+      hairStyle,
+      hairColor,
+      face,
+      createdAt,
 
-    // TODO
-    const classIds = new Map();
+      // raceId,
+      // str,
+      // dex,
+      // con,
+      // int,
+      // wit,
+      // men,
+    });
 
-    classIds.set(0, 'humanFighter');
-    classIds.set(10, 'humanMagician');
+    const className = classIdsEnum.getClassNameById(classId);
 
-    classIds.set(18, 'elfFighter');
-    classIds.set(25, 'elfMagician');
-    classIds.set(31, 'darkelfFighter');
-    classIds.set(38, 'darkelfMagician');
-    classIds.set(44, 'orcFighter');
-    classIds.set(49, 'orcShaman');
-    classIds.set(53, 'dwarfApprentice');
-    //
+    if (!className) {
+      throw new Error(`Class name not found for classId: ${classId}`);
+    }
 
     // TODO set start points
-    const startPoints = initialParametersManager.getInitialStartPoint(classIds.get(classId));
+    const startPoints = initialParametersManager.getInitialStartPoint(className);
     const randomPoint = getRandomPointInPolygon(startPoints);
 
     character.x = randomPoint[0];
@@ -196,7 +205,7 @@ class RequestCharacterCreate extends ClientPacketNew {
     const createdCharacter = await database.createCharacter(character);
 
     //fix humanFighter
-    const initialEquipmentIds = initialParametersManager.getInitialEquipmentIds(classIds.get(classId));
+    const initialEquipmentIds = initialParametersManager.getInitialEquipmentIds(className);
 
     if (!initialEquipmentIds) {
       throw new Error(`Initial equipment not found for classId: ${classId}`);
@@ -219,9 +228,9 @@ class RequestCharacterCreate extends ClientPacketNew {
     }
 
     // create base skill for beta release // TODO
-    const magicClasses = ['humanMagician', 'elfMagician', 'darkelfMagician'];
+    const magicClasses = classIdsEnum.getMagicianClassNames();
 
-    if (magicClasses.includes(classIds.get(classId))) {
+    if (magicClasses.includes(className)) {
       const skills = [{ id: 1177, level: 1,}, { id: 1216, level: 1,}];
 
       for(let i = 0; i < skills.length; i++) {

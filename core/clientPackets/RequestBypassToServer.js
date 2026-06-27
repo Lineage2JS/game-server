@@ -7,6 +7,8 @@ const itemsManager = require('./../Managers/ItemsManager');
 const adminPanelManager = require('./../Managers/AdminPanelManager');
 
 class RequestBypassToServer extends ClientPacketNew {
+  static code = 0x21;
+
   async handle() {
     const client = this.getClient();
     const player = this.getPlayer();

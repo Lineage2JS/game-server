@@ -1,6 +1,9 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class AuthLoginFail {
+  /**
+   * @param {number} reason
+   */
   constructor(reason) {
     this._packet = new ServerPacket();
     this._packet

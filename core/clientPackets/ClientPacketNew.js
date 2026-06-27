@@ -6,6 +6,9 @@
 // readS - string
 
 class ClientPacketNew {
+  /** @type {number} */
+  static code = 0;
+
   /**
    * @param {import ('../Client')} client
    * @param {Buffer} buffer

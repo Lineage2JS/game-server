@@ -1,6 +1,9 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class QuestList {
+  /**
+   * @param {import('../Systems/Quests.js').Quest[]} quests
+   */
   constructor(quests = []) {
     this._packet = new ServerPacket();
     this._packet

@@ -1,6 +1,9 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class SkillList {
+  /**
+   * @param {Array<{passive: number, level: number, id: number}>} skills
+   */
   constructor(skills) {
     this._packet = new ServerPacket();
     this._packet

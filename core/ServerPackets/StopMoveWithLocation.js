@@ -1,6 +1,9 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class StopMoveWithLocation {
+  /**
+   * @param {import('../Models/Character.js')} character
+   */
   constructor(character) {
     this._packet = new ServerPacket();
     this._packet

@@ -10,6 +10,7 @@ const FollowState = require('./../states/FollowState');
 const PickupState = require('./../states/PickupState');
 const TalkState = require('./../states/TalkState');
 const { calculateDistance } = require('./../../utils/distance');
+const equipmentSlots = require('../../enums/equipmentSlotEnums');
 
 class Player extends Character {
   constructor() {
@@ -403,7 +404,7 @@ class Player extends Character {
   equipItem(item) {
     const slot = item.getBodyPart();
 
-    if (slot === 0x0080) { // SLOT_R_HAND
+    if (slot === equipmentSlots.SLOT_R_HAND) {
       const itemEquippedLeftAndRight = this.getItemByObjectId(this.hand.leftAndRight.objectId);
 
       if (itemEquippedLeftAndRight) {
@@ -412,7 +413,7 @@ class Player extends Character {
 
       this.hand.leftAndRight.objectId = 0;
       this.hand.leftAndRight.itemId = 0;
-      
+
       const itemEquippedRight = this.getItemByObjectId(this.hand.right.objectId);
 
       if (itemEquippedRight) {
@@ -425,7 +426,7 @@ class Player extends Character {
       this.setActiveWeapon(item);
     }
 
-    if (slot === 0x0100) { // SLOT_L_HAND
+    if (slot === equipmentSlots.SLOT_L_HAND) {
       const itemEquippedLeftAndRight = this.getItemByObjectId(this.hand.leftAndRight.objectId);
 
       if (itemEquippedLeftAndRight) {
@@ -434,7 +435,7 @@ class Player extends Character {
 
       this.hand.leftAndRight.objectId = 0;
       this.hand.leftAndRight.itemId = 0;
-      
+
       const itemEquippedLeft = this.getItemByObjectId(this.hand.left.objectId);
 
       if (itemEquippedLeft) {
@@ -447,7 +448,7 @@ class Player extends Character {
       this.setActiveWeapon(item);
     }
 
-    if (slot === 0x0400) { // SLOT_CHEST
+    if (slot === equipmentSlots.SLOT_CHEST) {
       const itemEquipped = this.getItemByObjectId(this.chest.objectId);
 
       if (itemEquipped) {
@@ -458,7 +459,7 @@ class Player extends Character {
       this.chest.itemId = item.getItemId();
     }
 
-    if (slot === 0x0800) { // SLOT_LEGS
+    if (slot === equipmentSlots.SLOT_LEGS) {
       const itemEquipped = this.getItemByObjectId(this.legs.objectId);
 
       if (itemEquipped) {
@@ -469,7 +470,7 @@ class Player extends Character {
       this.legs.itemId = item.getItemId();
     }
 
-    if (slot === 0x0200) { // SLOT_GLOVES
+    if (slot === equipmentSlots.SLOT_GLOVES) {
       const itemEquipped = this.getItemByObjectId(this.gloves.objectId);
 
       if (itemEquipped) {
@@ -480,7 +481,7 @@ class Player extends Character {
       this.gloves.itemId = item.getItemId();
     }
 
-    if (slot === 0x1000) { // SLOT_FEET
+    if (slot === equipmentSlots.SLOT_FEET) {
       const itemEquipped = this.getItemByObjectId(this.feet.objectId);
 
       if (itemEquipped) {
@@ -491,7 +492,7 @@ class Player extends Character {
       this.feet.itemId = item.getItemId();
     }
 
-    if (slot === 0x0040) { // SLOT_HEAD
+    if (slot === equipmentSlots.SLOT_HEAD) {
       const itemEquipped = this.getItemByObjectId(this.head.objectId);
 
       if (itemEquipped) {
@@ -502,7 +503,7 @@ class Player extends Character {
       this.head.itemId = item.getItemId();
     }
 
-    if (slot === 0x4000) { // SLOT_LR_HAND
+    if (slot === equipmentSlots.SLOT_LR_HAND) {
       const itemEquippedLeft = this.getItemByObjectId(this.hand.left.objectId);
 
       if (itemEquippedLeft) {
@@ -540,33 +541,33 @@ class Player extends Character {
   unEquipItem(item) {
     const slot = item.getBodyPart();
     
-    if (slot === 0x0080) { // SLOT_R_HAND
+    if (slot === equipmentSlots.SLOT_R_HAND) {
       this.hand.right.objectId = 0;
       this.hand.right.itemId = 0;
 
       this.setActiveWeapon(null);
     }
 
-    if (slot === 0x0100) { // SLOT_L_HAND
+    if (slot === equipmentSlots.SLOT_L_HAND) {
       this.hand.left.objectId = 0;
       this.hand.left.itemId = 0;
 
       this.setActiveWeapon(null);
     }
 
-    if (slot === 0x4000) { // SLOT_LR_HAND
+    if (slot === equipmentSlots.SLOT_LR_HAND) {
       this.hand.leftAndRight.objectId = 0;
       this.hand.leftAndRight.itemId = 0;
 
       this.setActiveWeapon(null);
     }
 
-    if (slot === 0x0400) { // SLOT_CHEST
+    if (slot === equipmentSlots.SLOT_CHEST) {
       this.chest.objectId = 0;
       this.chest.itemId = 0;
     }
 
-    if (slot === 0x0800) { // SLOT_LEGS
+    if (slot === equipmentSlots.SLOT_LEGS) {
       this.legs.objectId = 0;
       this.legs.itemId = 0;
     }

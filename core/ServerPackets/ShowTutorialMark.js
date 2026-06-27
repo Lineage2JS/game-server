@@ -1,6 +1,9 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class ShowTutorialMark {
+  /**
+   * @param {number} blink
+   */
   constructor(blink) {
     this._packet = new ServerPacket();
     this._packet

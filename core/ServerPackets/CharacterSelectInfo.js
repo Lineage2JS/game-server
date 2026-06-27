@@ -1,6 +1,10 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
 class CharacterSelectInfo {
+  /**
+   * @param {string} login
+   * @param {import('../Models/Character.js')[]} characters
+   */
   constructor(login, characters) {
     this._packet = new ServerPacket();
     this._packet

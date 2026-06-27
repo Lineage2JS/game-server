@@ -1,4 +1,4 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 const SYSTEM_MESSAGE_TYPES = {
 	TEXT: 0,
 	NUMBER: 1,
@@ -11,6 +11,10 @@ const SYSTEM_MESSAGES_ENUMS = {
 }
 
 class SystemMessage {
+  /**
+   * @param {number} messageId
+   * @param {Array<{type: number, value: any}>} messages
+   */
   constructor(messageId, messages = []) {
     this._packet = new ServerPacket();
     this._packet
