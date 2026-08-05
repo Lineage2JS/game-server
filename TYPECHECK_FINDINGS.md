@@ -4,7 +4,7 @@ Bugs and inconsistencies surfaced by enabling `npm run build` (`tsc --project
 jsconfig.json` over JSDoc-typed `.js`) on the `js-docs` branch. Grouped by how
 risky/urgent they are to fix.
 
-Baseline: 91 errors when JS typecheck was first enabled. Currently: 83.
+Baseline: 91 errors when JS typecheck was first enabled. Currently: 72.
 
 ## Fixed
 
@@ -24,6 +24,13 @@ Baseline: 91 errors when JS typecheck was first enabled. Currently: 83.
 
 [issue-1]: https://github.com/Lineage2JS/game-server/issues/1#issuecomment-4815669559
 
+- **Simple type/guard fixes** — `@types/pg` installed; `FinishRotating.js`
+  extra argument removed and given a `player` guard;
+  `RequestCharacterCreate.js` guards `getInitialStartPoint()` returning
+  `undefined`; `RequestMagicSkillUse.js` and `RequestBuyItem.js` got the
+  missing `player`/`entity`/`npc` guards; `NpcDeathHandler.js`'s hit history
+  is now typed as the `Map` it actually is instead of an array.
+
 ## Real bugs (not just annotations)
 
 - **`MoveToLocation` called with wrong arguments — 4 call sites.**
@@ -40,25 +47,11 @@ Baseline: 91 errors when JS typecheck was first enabled. Currently: 83.
   just caught it. Fix: reorder to
   `new serverPackets.MoveToLocation(npc.objectId, path.target.x, path.target.y, path.target.z, path.origin.x, path.origin.y, path.origin.z)`.
 
-## Simple, safe fixes (types/guards only)
+## Simple, safe fixes remaining (types/guards only)
 
-- **Missing `@types/pg`** — `database/index.js(1,28)`. `npm i -D @types/pg`.
-- **`FinishRotating.js` (client packet) extra argument** —
-  `new serverPackets.FinishRotating(player, degree, 0)` but the packet
-  constructor only takes 2 args. The extra `0` is silently ignored at runtime;
-  just remove it.
-- **`RequestCharacterCreate.js:198`** — `getInitialStartPoint()` can return
-  `undefined`; needs `if (!startPoints) return;` before
-  `getRandomPointInPolygon`.
-- **`RequestMagicSkillUse.js`** — 5 errors, all from missing
-  `if (!player) return;` at the top of `handle()` (the guard pattern already
-  used in every other client packet).
-- **`RequestBuyItem.js`** — needs a guard on `npc` (possibly `undefined`) and
-  a guard/cast on a `number | null` argument.
-- **`NpcDeathHandler.js:37`** — `npc.getHitHistory()` returns a
-  `Map<number, HitEntry>`, but is cast as `HitEntry[]`. Works at runtime by
-  coincidence (`Map.forEach` also yields the value first), but the annotation
-  is wrong — retype as `Map<number, HitEntry>`.
+None left from the initial pass — the rest of the low-hanging fruit has been
+fixed (see above). Remaining errors are either the "needs verification" or
+"architectural" items below.
 
 ## Needs verification before fixing (not pure typing)
 

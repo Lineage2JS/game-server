@@ -195,6 +195,11 @@ class RequestCharacterCreate extends ClientPacketNew {
 
     // TODO set start points
     const startPoints = initialParametersManager.getInitialStartPoint(className);
+
+    if (!startPoints) {
+      throw new Error(`Initial start point not found for classId: ${classId}`);
+    }
+
     const randomPoint = getRandomPointInPolygon(startPoints);
 
     character.x = randomPoint[0];

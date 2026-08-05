@@ -46,7 +46,11 @@ class RequestBuyItem extends ClientPacketNew {
     client.sendPacket(new serverPackets.ItemList(items, true));
 
     // TODO тут можно вызывать eventBus с успешной покупкой
+    if (player.lastTalkedNpcId === null) return;
+
     const npc = npcManager.getNpcByObjectId(player.lastTalkedNpcId);
+
+    if (!npc) return;
 
     npc.ai.talk(player);
   }

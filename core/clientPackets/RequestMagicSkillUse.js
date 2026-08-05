@@ -11,8 +11,13 @@ class RequestMagicSkillUse extends ClientPacketNew {
     const skillId = this.readD();
     const data0 = this.readD();
     const data1 = this.readC(); // TODO ?
+
+    if (!player) return;
+
     const entity = entitiesManager.getEntityByObjectId(player.target);
-    
+
+    if (!entity) return;
+
     if (entity.canBeAttacked === 0) {
       client.sendPacket(new serverPackets.ActionFailed()); // fix?
 

@@ -10,7 +10,9 @@ class FinishRotating extends ClientPacketNew {
     const degree = this.readD();
     const unknown = this.readD();
 
-    client.sendPacket(new serverPackets.FinishRotating(player, degree, 0));
+    if (!player) return;
+
+    client.sendPacket(new serverPackets.FinishRotating(player, degree));
   }
 }
 

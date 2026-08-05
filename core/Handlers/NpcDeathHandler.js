@@ -5,7 +5,7 @@ const expToLevel = require('./../../utils/expToLevel');
 
 /** @typedef {import('./../Models/Npc')} Npc */
 /** @typedef {import('./../Models/Player')} Player */
-/** @typedef {{ character: Player }} HitEntry */
+/** @typedef {{ character: Player, damage: number }} HitEntry */
 /** @typedef {{ character: Npc }} NpcDeathEvent */
 
 class NpcDeathHandler {
@@ -34,7 +34,7 @@ class NpcDeathHandler {
     }, 3000);
 
     // get exp
-    const hitHistory = /** @type {HitEntry[]} */ (npc.getHitHistory());
+    const hitHistory = /** @type {Map<number, HitEntry>} */ (npc.getHitHistory());
 
     /** @param {HitEntry} entry */
     hitHistory.forEach(entry => {
