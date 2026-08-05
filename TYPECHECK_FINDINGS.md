@@ -41,9 +41,14 @@ Baseline: 91 errors when JS typecheck was first enabled. Currently: 72.
   ```
   but the constructor signature is
   `(objectId, targetX, targetY, targetZ, originX, originY, originZ)` — 7
-  numbers. At runtime this passes a `path` object where `objectId` (a number)
-  is expected, so `.writeD(objectId)` calls `Buffer.writeInt32LE(path, ...)`
-  and throws. Pre-existing in `main`, not introduced by this branch — typecheck
+  numbers. Verified on Node v22: this does **not** throw. `Buffer.writeInt32LE`
+  silently coerces the non-number `path` object to `0`, so the packet sent to
+  every client that can see the moving NPC/bot ends up with `objectId=0`,
+  `targetX` set to the NPC/bot's real objectId (misplaced into a coordinate
+  field), and `targetY/targetZ/originX/originY/originZ` all `0` (unsupplied
+  args). No crash, no log line — just a silently corrupted movement packet on
+  every broadcast, which would show up as move/teleport glitches on the
+  client. Pre-existing in `main`, not introduced by this branch — typecheck
   just caught it. Fix: reorder to
   `new serverPackets.MoveToLocation(npc.objectId, path.target.x, path.target.y, path.target.z, path.origin.x, path.origin.y, path.origin.z)`.
 
