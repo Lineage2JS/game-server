@@ -6,7 +6,7 @@ class InitialParametersManager {
   constructor() {
     /** @type {Map<string, number[]>} */
     this._initialEquipment = new Map();
-    /** @type {Map<string, Point>} */
+    /** @type {Map<string, Point[]>} */
     this._initialStartPoint = new Map();
   }
 
@@ -26,7 +26,7 @@ class InitialParametersManager {
 
   /**
    * @param {string} className
-   * @returns {Point | undefined}
+   * @returns {Point[] | undefined}
    */
   getInitialStartPoint(className) {
     return this._initialStartPoint.get(className);
