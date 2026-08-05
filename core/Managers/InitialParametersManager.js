@@ -55,7 +55,7 @@ class InitialParametersManager {
     for(const className in initialStartPoint) {
       const points = initialStartPoint[/** @type {keyof typeof initialStartPoint} */ (className)];
 
-      this._initialStartPoint.set(className, points);
+      this._initialStartPoint.set(className, /** @type {Point[]} */ (points));
     }
   }
 }
