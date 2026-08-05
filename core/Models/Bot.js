@@ -20,8 +20,8 @@ class Bot extends Character {
 
     /** @type {import('../Client')} */
     this._client = client;
-    /** @type {import('./Character') | null} */
-    this.target = null;
+    /** @type {number} */
+    this.target = 0;
     /** @type {number} */
     this.positionUpdateTimestamp = 0;
     /** @type {'move' | 'idle' | 'attack' | 'cast' | 'follow' | 'pickup' | 'talk' | ''} */

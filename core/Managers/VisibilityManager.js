@@ -66,7 +66,7 @@ class VisibilityManager {
 
           // TODO remove target
           if (player.target === npc.objectId) {
-            player.target = null;
+            player.target = 0;
           }
           //
         }
@@ -91,7 +91,7 @@ class VisibilityManager {
 
           // TODO remove target
           if (player.target === bot.objectId) {
-            player.target = null;
+            player.target = 0;
           }
           //
         }

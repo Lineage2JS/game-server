@@ -21,8 +21,8 @@ class Player extends Character {
 
     /** @type {import('../Client') | null} */
     this._client = null;
-    /** @type {import('./Character') | null} */
-    this.target = null;
+    /** @type {number} */
+    this.target = 0;
     /** @type {string} */
     this._stateName = '';
     /** @type {string | null} */
@@ -330,7 +330,7 @@ class Player extends Character {
       this.changeState('idle');
       this.emit('died');
       this.isDead = true;
-      this.target = null;
+      this.target = 0;
     }
   }
 

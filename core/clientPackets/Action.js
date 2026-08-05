@@ -33,7 +33,7 @@ class Action extends ClientPacketNew {
         }
       ]));
 
-      if (player && player.target === null) { // TODO if entity not dead
+      if (player && player.target === 0) { // TODO if entity not dead
         client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
 
         player.target = entity.objectId;
@@ -64,7 +64,7 @@ class Action extends ClientPacketNew {
         }
       ]));
 
-      if (player && player.target === null) { // TODO if entity not dead
+      if (player && player.target === 0) { // TODO if entity not dead
         client.sendPacket(new serverPackets.TargetSelected(entity.objectId));
 
         player.target = entity.objectId;
