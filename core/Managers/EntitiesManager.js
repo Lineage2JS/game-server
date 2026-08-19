@@ -72,7 +72,11 @@ class EntitiesManager {
           z: npc.z
         }
       }
-      const packet = new serverPackets.MoveToLocation(path, npc.objectId);
+      const packet = new serverPackets.MoveToLocation(
+        npc.objectId,
+        path.target.x, path.target.y, path.target.z,
+        path.origin.x, path.origin.y, path.origin.z
+      );
 
       playersManager.emit('notify', packet);
     });
@@ -293,7 +297,11 @@ class EntitiesManager {
         }
       }
       
-      const packet = new serverPackets.MoveToLocation(path, bot.objectId);
+      const packet = new serverPackets.MoveToLocation(
+        bot.objectId,
+        path.target.x, path.target.y, path.target.z,
+        path.origin.x, path.origin.y, path.origin.z
+      );
       
       playersManager.emit('notify', packet);
     });

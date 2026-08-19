@@ -4,7 +4,7 @@ Bugs and inconsistencies surfaced by enabling `npm run build` (`tsc --project
 jsconfig.json` over JSDoc-typed `.js`) on the `js-docs` branch. Grouped by how
 risky/urgent they are to fix.
 
-Baseline: 91 errors when JS typecheck was first enabled. Currently: 72.
+Baseline: 91 errors when JS typecheck was first enabled. Currently: 70.
 
 ## Fixed
 
@@ -30,33 +30,40 @@ Baseline: 91 errors when JS typecheck was first enabled. Currently: 72.
   `undefined`; `RequestMagicSkillUse.js` and `RequestBuyItem.js` got the
   missing `player`/`entity`/`npc` guards; `NpcDeathHandler.js`'s hit history
   is now typed as the `Map` it actually is instead of an array.
-
-## Real bugs (not just annotations)
-
 - **`MoveToLocation` called with wrong arguments — 4 call sites.**
   `EntitiesManager.js:75`, `EntitiesManager.js:296`, `VisibilityManager.js:60`,
-  `VisibilityManager.js:85` all do:
+  `VisibilityManager.js:85` all did:
   ```js
   new serverPackets.MoveToLocation(path, npc.objectId)
   ```
   but the constructor signature is
   `(objectId, targetX, targetY, targetZ, originX, originY, originZ)` — 7
-  numbers. Verified on Node v22: this does **not** throw. `Buffer.writeInt32LE`
-  silently coerces the non-number `path` object to `0`, so the packet sent to
-  every client that can see the moving NPC/bot ends up with `objectId=0`,
+  numbers. Verified on Node v22: this did **not** throw. `Buffer.writeInt32LE`
+  silently coerced the non-number `path` object to `0`, so the packet sent to
+  every client that could see the moving NPC/bot ended up with `objectId=0`,
   `targetX` set to the NPC/bot's real objectId (misplaced into a coordinate
   field), and `targetY/targetZ/originX/originY/originZ` all `0` (unsupplied
   args). No crash, no log line — just a silently corrupted movement packet on
-  every broadcast, which would show up as move/teleport glitches on the
+  every broadcast, which would have shown up as move/teleport glitches on the
   client. Pre-existing in `main`, not introduced by this branch — typecheck
-  just caught it. Fix: reorder to
-  `new serverPackets.MoveToLocation(npc.objectId, path.target.x, path.target.y, path.target.z, path.origin.x, path.origin.y, path.origin.z)`.
+  just caught it. Fixed by reordering to
+  `new serverPackets.MoveToLocation(npc.objectId, path.target.x, path.target.y, path.target.z, path.origin.x, path.origin.y, path.origin.z)`
+  at all 4 call sites. Verified with a hex dump of the resulting buffer.
+
+## Real bugs (not just annotations)
+
+None currently tracked here — the one found (`MoveToLocation`, above) is fixed.
 
 ## Simple, safe fixes remaining (types/guards only)
 
-None left from the initial pass — the rest of the low-hanging fruit has been
-fixed (see above). Remaining errors are either the "needs verification" or
-"architectural" items below.
+- **`VisibilityManager.js:62,91`** — newly revealed after the `MoveToLocation`
+  arg-count fix above (same masking effect as `FinishRotating.js` earlier: a
+  wrong arg count suppresses per-argument type checks). `path.target.x/y/z`
+  come from `Character.actionParams.targetX/Y/Z`, typed `number | null`, and
+  get passed straight into `MoveToLocation`'s `number` params. Not addressed
+  yet — needs a decision on whether a null target here is really reachable
+  (the branch is guarded by `npc.state === 'move'` / `bot.state === 'move'`,
+  which arguably implies a target is always set) before adding a guard.
 
 ## Needs verification before fixing (not pure typing)
 

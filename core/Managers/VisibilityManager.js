@@ -57,7 +57,11 @@ class VisibilityManager {
           if (npc.state === 'move') {
             const path = this._createMovePath(npc);
 
-            client.sendPacket(new serverPackets.MoveToLocation(path, npc.objectId));
+            client.sendPacket(new serverPackets.MoveToLocation(
+              npc.objectId,
+              path.target.x, path.target.y, path.target.z,
+              path.origin.x, path.origin.y, path.origin.z
+            ));
           }
         } else {
           const packet = new serverPackets.DeleteObject(npc.objectId);
@@ -82,7 +86,11 @@ class VisibilityManager {
           if (bot.state === 'move') {
             const path = this._createMovePath(bot);
 
-            client.sendPacket(new serverPackets.MoveToLocation(path, bot.objectId));
+            client.sendPacket(new serverPackets.MoveToLocation(
+              bot.objectId,
+              path.target.x, path.target.y, path.target.z,
+              path.origin.x, path.origin.y, path.origin.z
+            ));
           }
         } else {
           const packet = new serverPackets.DeleteObject(bot.objectId);
