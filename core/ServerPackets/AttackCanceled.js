@@ -1,15 +1,14 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class AttackCanceled {
+class AttackCanceled extends ServerPacket {
+  /**
+   * @param {import('../Models/Character.js')} character
+   */
   constructor(character) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x0A)
       .writeD(character.objectId);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

@@ -1,16 +1,16 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class SetupGauge {
+class SetupGauge extends ServerPacket {
+  /**
+   * @param {number} color
+   * @param {number} time
+   */
   constructor(color, time) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x85)
       .writeD(color)
       .writeD(time)
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

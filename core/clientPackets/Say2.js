@@ -13,12 +13,16 @@ const GM_MESSAGE = 9;
 const ANNOUNCEMENT = 10;
 
 class Say2 extends ClientPacketNew {
+  static code = 0x38;
+
   async handle() {
     const client = this.getClient();
     const player = this.getPlayer();
     const text = this.readS();
     const type = this.readD();
     let target = null;
+
+    if (!player) return;
 
     if (type == TELL) {
       target = this.readS();

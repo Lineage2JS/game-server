@@ -1,9 +1,15 @@
 const Merchant = require('./Merchant');
 
 class Jackson extends Merchant {
+  /**
+   * @param {import('./Merchant').MerchantProps} props
+   */
   constructor(props) {
     super(props);
 
+    /**
+     * @type {Array<import('./Merchant').Item>}
+     */
     this.sellList0 = [
       {"small_sword": 15},
       {"club": 15},
@@ -60,6 +66,9 @@ class Jackson extends Merchant {
       // {"wooden_arrow": 15},
       // {"bone_arrow": 15},
     ];
+    /**
+     * @type {Array<import('./Merchant').Item>}
+     */
     this.sellList1 = [
       {"apprentice's_rod": 15},
       {"buffalo_horn": 15},

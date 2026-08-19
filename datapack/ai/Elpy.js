@@ -1,6 +1,9 @@
 const WarriorFlee = require('./WarriorFlee');
 
 class Elpy extends WarriorFlee {
+  /**
+   * @param {*} npc
+   */
   constructor(npc) {
     super();
 

@@ -1,6 +1,9 @@
 const DefaultNpc = require('./DefaultNpc');
 
 class TutoKeltir extends DefaultNpc {
+  /**
+   * @param {import('./DefaultNpc').Talker} talker
+   */
   onMyDying(talker) {
     const quests = talker.getQuests();
     const quest = quests.find(quest => quest.id === 201);

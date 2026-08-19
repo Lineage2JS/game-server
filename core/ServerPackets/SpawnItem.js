@@ -1,9 +1,12 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class SpawnItem {
+class SpawnItem extends ServerPacket {
+  /**
+   * @param {*} item
+   */
   constructor(item) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x15)
       .writeD(item.objectId)
       .writeD(item.itemId)
@@ -12,10 +15,6 @@ class SpawnItem {
       .writeD(item.z)
       .writeD(0) // stackable
       .writeD(1) // count
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

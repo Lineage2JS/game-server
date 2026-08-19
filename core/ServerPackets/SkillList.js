@@ -1,23 +1,22 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class SkillList {
+class SkillList extends ServerPacket {
+  /**
+   * @param {Array<{passive: number, level: number, id: number}>} skills
+   */
   constructor(skills) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x6D)
       .writeD(skills.length);
 
     for (let i = 0; i < skills.length; i++) {
       const skill = skills[i];
 
-      this._packet.writeD(skill.passive)
+      this.writeD(skill.passive)
         .writeD(skill.level)
         .writeD(skill.id);
     }
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

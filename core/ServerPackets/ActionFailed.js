@@ -1,14 +1,10 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class ActionFailed {
+class ActionFailed extends ServerPacket {
   constructor() {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x35);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

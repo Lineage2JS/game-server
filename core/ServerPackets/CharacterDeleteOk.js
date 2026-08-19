@@ -1,14 +1,10 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class CharacterDeleteOk {
+class CharacterDeleteOk extends ServerPacket {
   constructor() {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x33);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

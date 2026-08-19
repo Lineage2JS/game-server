@@ -3,8 +3,18 @@ const serverPackets = require('./../ServerPackets/serverPackets');
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
 const expToLevel = require('./../../utils/expToLevel');
 
+/** @typedef {import('./../Models/Npc')} Npc */
+/** @typedef {import('./../Models/Player')} Player */
+/** @typedef {{ character: Player, damage: number }} HitEntry */
+/** @typedef {{ character: Npc }} NpcDeathEvent */
+
 class NpcDeathHandler {
+  /**
+   * @param {NpcDeathEvent} data
+   * @returns {void}
+   */
   handle(data) {
+    /** @type {Npc} */
     const npc = data.character;
 
     playersManager.emit('notify', new serverPackets.StatusUpdate(npc.objectId, [
@@ -24,16 +34,18 @@ class NpcDeathHandler {
     }, 3000);
 
     // get exp
-    const hitHistory = npc.getHitHistory();
+    const hitHistory = /** @type {Map<number, HitEntry>} */ (npc.getHitHistory());
 
+    /** @param {HitEntry} entry */
     hitHistory.forEach(entry => {
+      /** @type {Player} */
       const attacker = entry.character;
 
       attacker.exp += 100;
       attacker.emit('updateExp'); // TODO 'updateStatus'
-      
+
       const level = expToLevel(attacker.exp);
-      
+
       if (attacker.level < level) {
         attacker.level = level;
         attacker.emit('updateLevel'); // updateState('levelUp')
@@ -42,7 +54,7 @@ class NpcDeathHandler {
         attacker.emit('regenerate');
       }
     });
-    
+
     //aiManager.onMyDying(npc.ai.name, player);
     //npc.ai.dying()?
   }

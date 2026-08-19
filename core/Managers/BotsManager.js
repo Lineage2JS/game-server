@@ -2,24 +2,29 @@ const EventEmitter = require('events');
 const database = require('./../../database');
 const Bot = require('./../Models/Bot');
 
+/** @typedef {{ x: number, y: number }} Coordinate2D */
+/** @typedef {[number, number]} Position2D */
+
 class BotsManager extends EventEmitter {
   constructor() {
     super();
 
+    /** @type {Bot[]} */
     this._bots = [];
   }
 
+  /** @returns {Promise<void>} */
   async enable() {
     for(let i = 0; i < 10; i++) {
-      const bot = new Bot({
-        sendPacket() {}
-      });
+      const bot = new Bot(/** @type {import('../Client') & *} */ ({
+        sendPacket() {} // TODO
+      }));
 
       const gender = Math.floor(Math.random() * 2)
       const hairStyle = Math.floor(Math.random() * (gender === 0 ? 4 : 6));
-      
+
       const positions = this._getRandomPos([{ x: -84999, y: 243217 }, { x: -84652, y: 242917 }, { x: -84382, y: 243289 }, { x: -84883, y: 243651 }]);
-  
+
       bot.updateParams({
         objectId: await database.getNextObjectId(),
         login: "a",
@@ -93,35 +98,41 @@ class BotsManager extends EventEmitter {
       bot.ai.name = 'RunningBot';
       bot.waitType = 0;
       //
-  
+
       bot.on('move', () => {
         this.emit('move', bot);
       });
-  
+
       bot.on('attack', () => {
         this.emit('attack', bot);
       });
-  
+
       bot.on('pickup', (item) => {
         this.emit('pickup', bot, item);
       });
-  
+
       bot.enable();
-  
+
       this._bots.push(bot);
-  
+
       this.emit('spawn', bot);
     }
   }
 
+  /**
+   * @param {Coordinate2D[]} coordinates
+   * @returns {Position2D}
+   */
   _getRandomPos(coordinates) {
+    /** @type {number[]} */
     let xp = coordinates.map(i => i.x);
+    /** @type {number[]} */
     let yp = coordinates.map(i => i.y);
 		let max = { x: Math.max(...xp), y: Math.max(...yp) };
 		let min = { x: Math.min(...xp), y: Math.min(...yp) };
 		let x;
 		let y;
-		
+
 		do {
 			x = Math.floor(min.x + Math.random() * (max.x + 1 - min.x));
 			y = Math.floor(min.y + Math.random() * (max.y + 1 - min.y));
@@ -130,6 +141,13 @@ class BotsManager extends EventEmitter {
 		return [x, y]
 	}
 
+  /**
+   * @param {number[]} xp
+   * @param {number[]} yp
+   * @param {number} x
+   * @param {number} y
+   * @returns {boolean}
+   */
   _inPoly(xp, yp, x, y){
 		let npol = xp.length;
 		let j = npol - 1;
@@ -147,4 +165,5 @@ class BotsManager extends EventEmitter {
 	}
 }
 
+// singleton
 module.exports = new BotsManager();

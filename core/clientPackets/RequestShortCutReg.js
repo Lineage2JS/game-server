@@ -2,6 +2,8 @@ const ClientPacketNew = require("./ClientPacketNew");
 const serverPackets = require('./../ServerPackets/serverPackets');
 
 class RequestShortCutReg extends ClientPacketNew {
+  static code = 0x33;
+
   handle() {
     const client = this.getClient();
     const player = this.getPlayer();

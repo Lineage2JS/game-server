@@ -4,11 +4,17 @@
   "description": "Lineage 2 Chronicle 1: Harbingers of War – game server emulator (written in JavaScript)",
   "main": "server.js",
   "scripts": {
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "build": "tsc --project jsconfig.json"
   },
   "author": "space2pacman",
   "license": "ISC",
   "dependencies": {
     "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.1",
+    "@types/pg": "^8.20.4",
+    "typescript": "^6.0.3"
   }
 }

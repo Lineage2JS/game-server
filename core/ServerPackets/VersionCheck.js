@@ -1,9 +1,13 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class VersionCheck {
+class VersionCheck extends ServerPacket {
+  /**
+   * @param {boolean} isCompliesProtocolVersion
+   * @param {number[]} key
+   */
   constructor(isCompliesProtocolVersion, key) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x00)
       .writeC(isCompliesProtocolVersion ? 0x01 : 0x00)
       .writeC(key[0])
@@ -14,10 +18,6 @@ class VersionCheck {
       .writeC(key[5])
       .writeC(key[6])
       .writeC(key[7]);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

@@ -4,6 +4,12 @@ const playersManager = require('./../Managers/PlayersManager');
 const tutorialHtmlMessagesManager = require('./../Managers/TutorialHtmlMessagesManager');
 
 class RequestTutorialQuestionMarkPressed {
+  static code = 0x7D;
+
+  /**
+   * @param {import('../Client')} client
+   * @param {Buffer} packet
+   */
   constructor(client, packet) {
     this._client = client;
     this._data = new ClientPacket(packet);

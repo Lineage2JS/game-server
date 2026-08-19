@@ -1,15 +1,14 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class ShowTutorialMark {
+class ShowTutorialMark extends ServerPacket {
+  /**
+   * @param {number} blink
+   */
   constructor(blink) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0xBA)
       .writeD(blink);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

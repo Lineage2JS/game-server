@@ -2,9 +2,18 @@ const { Client } = require('pg');
 
 class Database {
   constructor() {
-    this._client = null;
+    /** @type {Client} */
+    this._client = /** @type {any} */(null);
   }
 
+  /**
+   * @param {string} username
+   * @param {string} password
+   * @param {string} host
+   * @param {number} port
+   * @param {string} dbname
+   * @param {Function} callback
+   */
   async connect(username, password, host, port,  dbname, callback) {
     this._client = new Client({
       user: username,
@@ -13,16 +22,21 @@ class Database {
       port,
       database: dbname,
     });
-    
+
     try {
       await this._client.connect();
 
       callback()
     } catch(e) {
-      throw new Error(`database connected: failed (${e.message})`);
+      const error = /** @type {Error} */(e);
+      throw new Error(`database connected: failed (${error.message})`);
     }
   }
 
+  /**
+    * @param {import('../core/Models/Character')} character
+    * @returns {Promise<{ object_id: number, user_login: string, character_name: string, title: string, level: number}>}
+   */
   async createCharacter(character) {
     const result = await this._client.query(`
       INSERT INTO characters (object_id, user_login, character_name, title, level, gender, hair_style, hair_color, face, heading, access_level, online, online_time, is_gm, exp, sp, pvp, pk, karma, class_id, class_name, race_id, str, dex, con, int, wit, men, current_hp, max_hp, current_mp, max_mp, base_run_speed, base_walk_speed, x, y, z, attack_speed_multiplier, collision_radius, collision_height, created_at)
@@ -69,13 +83,17 @@ class Database {
       character.maleAttackSpeedMultiplier,
       character.maleCollisionRadius,
       character.maleCollisionHeight,
-      new Date(character.createdAt),
+      new Date(/** @type {number} */(character.createdAt)),
     ]);
     const characterData = result.rows[0];
 
     return characterData;
   }
 
+  /**
+   * @param {number} objectId
+   * @param {import('../core/Models/Character')} character
+   */
   async updateCharacter(objectId, character) {
     await this._client.query(`
       UPDATE characters
@@ -83,10 +101,14 @@ class Database {
         x = $2,
         y = $3,
         z = $4
-      WHERE object_id = $1 
+      WHERE object_id = $1
     `, [objectId, character.x, character.y, character.z]);
   }
 
+  /**
+   * @param {string | null} userLogin
+   * @returns {Promise<import('../core/Models/Character')[]>}
+   */
   async getCharactersByLogin(userLogin) { // fix delete
     const result = await this._client.query(`
       SELECT
@@ -146,6 +168,10 @@ class Database {
     return characters;
   }
 
+  /**
+   * @param {number} objectId
+   * @returns {Promise<import('../core/Models/Character') | null>}
+   */
   async getCharacter(objectId) {
     const result = await this._client.query(`
       SELECT
@@ -197,6 +223,10 @@ class Database {
     return character;
   }
 
+  /**
+   * @param {string} characterName
+   * @returns {Promise<boolean>}
+   */
   async isCharacterNameTaken(characterName) {
     const result = await this._client.query(`
       SELECT EXISTS(
@@ -211,6 +241,10 @@ class Database {
     return isNameTaken;
   }
 
+  /**
+   * @param {number} objectId
+   * @returns {Promise<void>}
+   */
   async deleteCharacter(objectId) {
     await this._client.query(`
       DELETE FROM characters
@@ -218,6 +252,9 @@ class Database {
     `, [objectId]);
   }
 
+  /**
+   * @returns {Promise<number>}
+   */
   async getNextObjectId() {
     const result = await this._client.query(`
       SELECT *
@@ -236,12 +273,15 @@ class Database {
     return objectId;
   }
 
+  /**
+   * @param {{ id: number, host: string, port: number, ageLimit: number, isPvP: boolean, maxPlayers: number, status: number, type: number }} params
+   */
   async addGameServer(params) {
     await this._client.query(`
       INSERT INTO gameservers (gameserver_id, host, port, age_limit, is_pvp, max_players, server_status, server_type)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     `, [
-      params.id, 
+      params.id,
       params.host,
       params.port,
       params.ageLimit,
@@ -252,6 +292,10 @@ class Database {
     ]);
   }
 
+  /**
+   * @param {number} gameServerId
+   * @returns {Promise<{ id: number, gameserver_id: number, host: string, port: number, age_limit: number, is_pvp: boolean, max_players: number, server_status: number, server_type: number } | null>}
+   */
   async getGameServerById(gameServerId) {
     const result = await this._client.query(`
       SELECT *
@@ -267,11 +311,15 @@ class Database {
     }
   }
 
+  /**
+   * @param {number} gameServerId
+   * @returns {Promise<boolean>}
+   */
   async checkGameServerExists(gameServerId) {
     const result = await this._client.query(`
       SELECT EXISTS(
-        SELECT 1 
-        FROM gameservers 
+        SELECT 1
+        FROM gameservers
         WHERE gameserver_id = $1
       )
     `, [gameServerId]);
@@ -280,6 +328,12 @@ class Database {
     return isGameServerExisting;
   }
 
+  /**
+   * @param {number} id
+   * @param {string} field
+   * @param {*} value
+   * @returns {Promise<void>}
+   */
   async updateGameServer(id, field, value) {
     await this._client.query(`
       UPDATE gameservers
@@ -288,6 +342,9 @@ class Database {
     `, [value, id]);
   }
 
+  /**
+   * @param {{ objectId: number, itemId: number, itemCount: number, location: string, ownerObjectId: number, equipSlot: number }} item
+   */
   async createItem(item) {
     await this._client.query(`
       INSERT INTO items(object_id, item_id, item_count, location, owner_object_id, equip_slot)
@@ -302,6 +359,10 @@ class Database {
     ]);
   }
 
+  /**
+   * @param {number} objectId
+   * @returns {Promise<{ objectId: number, itemId: number, itemCount: number, equipSlot: string }[]>}
+   */
   async getCharacterInventoryItems(objectId) {
     const result = await this._client.query(`
       SELECT
@@ -318,6 +379,10 @@ class Database {
     return inventoryItems;
   }
 
+  /**
+   * @param {number} objectId
+   * @returns {Promise<void>}
+   */
   async deleteCharacterItems(objectId) {
     await this._client.query(`
       DELETE FROM items
@@ -325,6 +390,14 @@ class Database {
     `, [objectId]);
   }
 
+  /**
+   * @param {string} taskType
+   * @param {string} taskStatus
+   * @param {Record<string, any>} payload
+   * @param {number} scheduledAt
+   * @param {string} createdAccountId
+   * @param {string} createdType
+   */
   async createScheduledTask(taskType, taskStatus, payload, scheduledAt, createdAccountId, createdType) {
     await this._client.query(`
       INSERT INTO scheduled_tasks(type, status, payload, scheduled_at, created_account_id, created_type)
@@ -339,6 +412,9 @@ class Database {
     ]);
   }
 
+  /**
+   * @returns {Promise<{ id: number, type: string, payload: Record<string, any>, scheduledAt: number, status: string, createdAccountId: string, createdType: string }[]>}
+   */
   async getScheduledTasks() {
     const result = await this._client.query(`
       SELECT
@@ -354,9 +430,13 @@ class Database {
     `);
     const scheduledTasks = result.rows;
 
-    return scheduledTasks; 
+    return scheduledTasks;
   }
 
+  /**
+   * @param {{ id: number, status: string }} task
+   * @returns {Promise<void>}
+   */
   async updateScheduledTask(task) {
     await this._client.query(`
       UPDATE scheduled_tasks
@@ -366,6 +446,11 @@ class Database {
     `, [task.id, task.status]);
   }
 
+  /**
+   * @param {string} type
+   * @param {Record<string, any>} payload
+   * @returns {Promise<void>}
+   */
   async deleteScheduledTask(type, payload) {
     await this._client.query(`
       DELETE FROM scheduled_tasks
@@ -374,6 +459,10 @@ class Database {
     `, [type, payload]);
   }
 
+  /**
+   * @param {{ id: number; level: number }} skill
+   * @param {number} characterObjectId
+   */
   async createSkill(skill, characterObjectId) {
     await this._client.query(`
       INSERT INTO skills(skill_id, skill_level, owner_object_id)
@@ -385,6 +474,10 @@ class Database {
     ]);
   }
 
+  /**
+   * @param {number} characterObjectId
+   * @returns {Promise<{ skillId: number, skillLevel: number }[]>}
+   */
   async getCharacterSkills(characterObjectId) {
     const result = await this._client.query(`
       SELECT
@@ -398,6 +491,10 @@ class Database {
     return skills;
   }
 
+  /**
+   * @param {number} objectId
+   * @returns {Promise<void>}
+   */
   async deleteCharacterSkills(objectId) {
     await this._client.query(`
       DELETE FROM skills

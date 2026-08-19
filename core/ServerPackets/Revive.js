@@ -1,15 +1,14 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class Revive {
+class Revive extends ServerPacket {
+  /**
+   * @param {number} objectId
+   */
   constructor(objectId) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x0C)
       .writeD(objectId);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

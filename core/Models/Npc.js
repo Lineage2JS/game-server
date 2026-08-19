@@ -5,26 +5,67 @@ const AttackState = require('./../states/AttackState');
 const FollowState = require('./../states/FollowState');
 const PickupState = require('./../states/PickupState');
 const DeadState = require('./../states/DeadState');
+const itemNamesMap = require('../../datapack/itemNamesMap.json');
+
+/** @typedef {{ x: number, y: number, z: number }} Point3D */
+/** @typedef {{ x: number, y: number }} Point2D */
+/** @typedef {import('./Character').CharacterTemplate & { name: string, type: string, id: number, level: number, baseAttackRange: number, baseRunSpeed: number, baseWalkSpeed: number, baseDefend: number, baseAttackSpeed: number, baseCritical: number, canBeAttacked: number, aggressive?: number, collisionRadius: number, collisionHeight: number, slotRhand: string, slotLhand: string }} NpcData */
+
+/**
+ * @param {string} itemName
+ * @returns {number} itemId - returns 0 if itemName is not found
+ */
+function getItemIdByName(itemName) {
+  if (!itemName || typeof itemName !== 'string') {
+    return 0;
+  }
+
+  const foundItemId = itemNamesMap[/** @type {keyof typeof itemNamesMap} */(itemName)];
+
+  if (foundItemId) {
+    return foundItemId;
+  }
+
+  return 0;
+}
 
 class Npc extends Character {
-  constructor() {
-    super();
+  /**
+   * @param {NpcData} npcData
+   */
+  constructor(npcData) {
+    super(npcData);
 
-    this.id = null;
-    this.name = null;
-    this.type = null;
-    this.baseAttackRange = null;
-    this.canBeAttacked = null;
-    this.aggressive = null;
-    this.rightHand = null;
-    this.leftHand = null;
+    /** @type {number} */
+    this.id = npcData.id;
+    /** @type {string} */
+    this.name = npcData.name;
+    /** @type {string} */
+    this.type = npcData.type;
+    /** @type {number} */
+    this.baseAttackRange = npcData.baseAttackRange;
+    /** @type {number} */
+    this.canBeAttacked = npcData.canBeAttacked;
+    /** @type {number} */
+    this.aggressive = npcData.aggressive || 0;
+    /** @type {number} */
+    this.rightHand = getItemIdByName(npcData.slotRhand);
+    /** @type {number} */
+    this.leftHand = getItemIdByName(npcData.slotLhand);
+    /** @type {number | null} */
     this.armor = null;
+    /** @type {string | null} */
     this.class = null;
-    this.collisionRadius = null;
-    this.collisionHeight = null;
-    this.baseRunSpeed = 0;
-    this.baseWalkSpeed = 0;
+    /** @type {number} */
+    this.collisionRadius = npcData.collisionRadius;
+    /** @type {number} */
+    this.collisionHeight = npcData.collisionHeight;
+    /** @type {number} */
+    this.baseRunSpeed = npcData.baseRunSpeed || 0;
+    /** @type {number} */
+    this.baseWalkSpeed = npcData.baseWalkSpeed || 0;
 
+    /** @type {{ move: import('../states/BaseState'), idle: import('../states/BaseState'), attack: import('../states/BaseState'), follow: import('../states/BaseState'), pickup: import('../states/BaseState'), dead: import('../states/BaseState') }} */
     this._states = {
       'move': new MoveState(this),
       'idle': new IdleState(this),
@@ -34,27 +75,42 @@ class Npc extends Character {
       'dead': new DeadState(this),
     }
 
+    /** @type {'move' | 'idle' | 'attack' | 'follow' | 'pickup' | 'dead' | ''} */
     this.state = '';
+    /** @type {'move' | 'attack' | 'pickup' | 'patrol' | ''} */
     this.action = '';
+    /** @type {boolean} */
     this.isAttacking = false;
+    /** @type {boolean} */
     this.isMoving = false;
+    /** @type {boolean} */
     this.isRunning = false;
 
+    /** @type {number} */
     this.baseAttackSpeed = 330;
+    /** @type {number} */
     this.getMagicalSpeed = 333; // fix
-    
+
     //
+    /** @type {Point2D[] | null} */
     this.coordinates = null;
 
+    /** @type {number} */
     this.lastAttackTimestamp = 0;
 
     //
+    /** @type {unknown[]} */
     this.additionalMakeMultiList = [];
+    /** @type {* | null} */
     this.ai = null;
 
+    /** @type {number} */
     this.positionUpdateTimestamp = 0;
+    /** @type {number} */
     this.lastRegenerateTimestamp = 0;
+    /** @type {number} */
     this.lastUpdateTimestamp = 0;
+    /** @type {import('../states/BaseState') | ''} */
     this._currentState = '';
     //
   }
@@ -64,6 +120,10 @@ class Npc extends Character {
   }
 
   enable() {
+    if (!this.coordinates) {
+      return;
+    }
+
     //
     const positions = this._getRandomPos(this.coordinates);
 
@@ -79,15 +139,19 @@ class Npc extends Character {
         z: this.z
       }
     }
-    
+
     this.action = 'patrol';
-    
+
     // setTimeout(() => { // lastUpdateTimestamp срабатывает через 100мс после добавление в EntitiesManager иначе npc идет на млрд расстояния
     //   this.action = 'patrol';
     //   this.changeState('move', path);
     // }, 15000);
   }
 
+  /**
+   * @param {'move' | 'attack' | 'pickup'} action
+   * @param {unknown} payload
+   */
   doAction(action, payload) {
     this.action = action;
 
@@ -108,6 +172,10 @@ class Npc extends Character {
     }
   }
 
+  /**
+   * @param {'move' | 'idle' | 'attack' | 'follow' | 'pickup' | 'dead'} stateName
+    * @param {unknown} [payload]
+   */
   changeState(stateName, payload) {
     if (this._currentState) {
       this._currentState.leave();
@@ -127,25 +195,17 @@ class Npc extends Character {
     if (this._currentState) {
       this._currentState.update();
     }
-    
+
     if ((Date.now() - this.lastAttackTimestamp) > 5000) {
       this.emit('endAttack');
     }
 
     if (this.hp > 0 && this.hp < this.maximumHp && !this.isDead) {
-      this.regenerate(); 
+      this.regenerate();
     }
 
     if (this.hp <= 0 && !this.isDead) {
       this.changeState('dead');
-    }
-  }
-
-  updateParams(data) {
-    for(const key in data) {
-      if (this.hasOwnProperty(key)) {
-        this[key] = data[key];
-      }
     }
   }
 
@@ -159,6 +219,7 @@ class Npc extends Character {
   }
 
   // create math utils
+  /** @param {Point2D[]} coordinates */
   _getRandomPos(coordinates) {
     let xp = coordinates.map(i => i.x);
     let yp = coordinates.map(i => i.y);
@@ -175,6 +236,13 @@ class Npc extends Character {
 		return [x, y]
 	}
 
+  /**
+   * @param {number[]} xp
+   * @param {number[]} yp
+   * @param {number} x
+   * @param {number} y
+   * @returns {boolean}
+   */
   _inPoly(xp, yp, x, y){
 		let npol = xp.length;
 		let j = npol - 1;

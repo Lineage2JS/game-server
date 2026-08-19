@@ -6,6 +6,13 @@
 // readS - string
 
 class ClientPacketNew {
+  /** @type {number} */
+  static code = 0;
+
+  /**
+   * @param {import ('../Client')} client
+   * @param {Buffer} buffer
+   */
   constructor(client, buffer) {
     this._client = client;
     this._player = client.getPlayer();
@@ -57,6 +64,10 @@ class ClientPacketNew {
     return value;
   }
 
+  /**
+   * @param {number} length
+   * @returns {Buffer}
+   */
   readB(length) {
     const value = this._buffer.slice(this._offset, this._offset + length);
 
@@ -67,7 +78,7 @@ class ClientPacketNew {
 
   readS() {
     let i;
-    
+
     for (i = this._offset; i < this._buffer.length; i += 2) {
       if (this._buffer.readUInt16LE(i) === 0x00) {
         break;
@@ -76,7 +87,7 @@ class ClientPacketNew {
 
     const value = this._buffer.toString("ucs2", this._offset, i);
     const bytesRead = i - this._offset + 2; // +2 for null terminator
-    
+
     this._offset += bytesRead;
 
     return value;

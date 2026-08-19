@@ -1,19 +1,36 @@
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
 const eventBusNew = require('./../Events/EventBusNew');
 
+/** @typedef {import('./../Models/Player')} Player */
+/** @typedef {import('./../Models/Npc')} Npc */
+/** @typedef {import('./../Models/Bot')} Bot */
+/** @typedef {import('./../Models/DropItem')} DropItem */
+/** @typedef {Player | Npc | Bot | DropItem} Entity */
+
 class EntitiesManager {
   constructor() {
+    /** @type {Entity[]} */
     this._entities = [];
   }
 
+  /**
+   * @param {Entity} entity
+   * @returns {void}
+   */
   addEntity(entity) {
     this._entities.push(entity);
   }
 
+  /**
+   * @param {number | null | undefined} objectId
+   * @returns {Entity | undefined}
+   */
   getEntityByObjectId(objectId) {
+    if (typeof objectId !== 'number') return;
     return this._entities.find(entity => entity.objectId === objectId);
   }
 
+  /** @returns {Promise<void>} */
   async enable() { // fix, load
     const npcManager = require('./NpcManager');
     const playersManager = require('./PlayersManager');
@@ -27,10 +44,9 @@ class EntitiesManager {
     setInterval(() => {
       for (let i = 0; i < this._entities.length; i++) {
         const entity = this._entities[i];
-        
-        if (entity.update) {
+
+        'update' in entity && typeof entity.update === 'function' &&
           entity.update();
-        }
       }
     }, 100);
     //
@@ -39,7 +55,7 @@ class EntitiesManager {
       this._entities.push(npc);
 
       const packet = new serverPackets.NpcInfo(npc);
-      
+
       playersManager.emit('notify', packet);
     });
 
@@ -56,8 +72,12 @@ class EntitiesManager {
           z: npc.z
         }
       }
-      const packet = new serverPackets.MoveToLocation(path, npc.objectId);
-      
+      const packet = new serverPackets.MoveToLocation(
+        npc.objectId,
+        path.target.x, path.target.y, path.target.z,
+        path.origin.x, path.origin.y, path.origin.z
+      );
+
       playersManager.emit('notify', packet);
     });
 
@@ -277,7 +297,11 @@ class EntitiesManager {
         }
       }
       
-      const packet = new serverPackets.MoveToLocation(path, bot.objectId);
+      const packet = new serverPackets.MoveToLocation(
+        bot.objectId,
+        path.target.x, path.target.y, path.target.z,
+        path.origin.x, path.origin.y, path.origin.z
+      );
       
       playersManager.emit('notify', packet);
     });
@@ -326,13 +350,13 @@ class EntitiesManager {
 
     aiManager.on('showRadar', (talker, x, y, z) => {
       const packet = new serverPackets.ShowRadar(x, y, z);
-    
+
       playersManager.emit('notify', packet);
     });
 
     aiManager.on('soundEffect', (talker, soundName) => {
       const packet = new serverPackets.PlaySound(soundName);
-      
+
       playersManager.emit('notify', packet);
     });
 
@@ -341,7 +365,7 @@ class EntitiesManager {
       const item = await itemsManager.createItem(itemId);
 
       talker.addItem(item);
-      
+
       const items = talker.getItems();
       const packet = new serverPackets.ItemList(items);
 
@@ -350,7 +374,7 @@ class EntitiesManager {
 
     aiManager.on('deleteItem', (talker, itemName, itemCount) => {
       talker.deleteItemByName(itemName);
-      
+
       const items = talker.getItems();
       const packet = new serverPackets.ItemList(items);
 
@@ -364,6 +388,8 @@ class EntitiesManager {
         const [itemName] = Object.keys(sellList[i]);
         const itemId = itemsManager.getItemIdByName(itemName);
         const item = await itemsManager.createItem(itemId);
+
+        if (!item) continue;
 
         items.push(item);
       }
@@ -405,6 +431,10 @@ class EntitiesManager {
     });
   }
 
+  /**
+   * @param {Player} player
+   * @returns {void}
+   */
   _onPlayerEnter(player) {
     this._entities.push(player);
   }

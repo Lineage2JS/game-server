@@ -1,10 +1,12 @@
 const BaseState = require("./BaseState");
 
 class IdleState extends BaseState {
+  /** @returns {void} */
   enter() {
-    
+
   }
 
+  /** @returns {void} */
   update() {
     if (this.character.action === 'attack') {
       this.character.changeState('attack');
@@ -23,8 +25,9 @@ class IdleState extends BaseState {
     }
   }
 
+  /** @returns {void} */
   leave() {
-    
+
   }
 }
 

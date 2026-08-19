@@ -5,16 +5,23 @@ const entitiesManager = require('./../Managers/EntitiesManager');
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
 const serverPackets = require('./../ServerPackets/serverPackets');
 const skillsManager = require('./../Managers/SkillsManager');
+const { calculateDistance } = require('./../../utils/distance');
 //
 
 class CastState extends BaseState {
+  /** @returns {void} */
   enter() {
+    /** @type {import('../Models/Character') | null} */
     this.entity = entitiesManager.getEntityByObjectId(this.character.targetCharacterId);
+    /** @type {import('../Models/Skill')} */
     this.skill = skillsManager.getSkill(this.character.targetSkillId);
+    /** @type {number} */
     this.skillId = this.skill.getSkillId();
+    /** @type {boolean} */
     this.canDamage = false;
   }
 
+  /** @returns {void} */
   update() {
     // if (this.character.target === this.character.objectId) {
     //   return;
@@ -25,7 +32,7 @@ class CastState extends BaseState {
     if (!this.character.target) {
       this.character.clearAction();
       this.character.changeState('idle');
-      
+
       return;
     }
 
@@ -47,10 +54,10 @@ class CastState extends BaseState {
           // this.entity.target = this.character.objectId;
           // //entity.payloadAttack = this.character.objectId;
           // this.entity.changeState('attack', this.character.objectId);
-          
+
           this.character.clearAction();
           this.character.changeState('idle');
-          
+
           return;
         }
 
@@ -66,7 +73,7 @@ class CastState extends BaseState {
           } else {
             this.character.hp += 20;
           }
-          
+
           this.character.emit('regenerate');
           //
         }
@@ -75,9 +82,7 @@ class CastState extends BaseState {
       return;
     }
 
-    const dx = this.entity.x - this.character.x;
-    const dy = this.entity.y - this.character.y;
-    const distance = Math.sqrt(dx * dx + dy * dy);
+    const distance = calculateDistance(this.entity, this.character);
 
     if (distance > 629) { // 29 - attack range + collision radius
       this.character.changeState('follow');
@@ -88,7 +93,7 @@ class CastState extends BaseState {
     if (this.character.mp < 20) { // TODO magic number
       return;
     }
-    
+
     this.canDamage = true;
     this.character.castTimestamp = Date.now();
     this.character.emit('cast', this.skillId);
@@ -110,6 +115,7 @@ class CastState extends BaseState {
     //   this.applySkillEffect(); // ПРИМЕНЯЕМ ЭФФЕКТ
   }
 
+  /** @returns {void} */
   leave() {
 
   }

@@ -1,14 +1,10 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class AttackinCoolTime {
+class AttackinCoolTime extends ServerPacket {
   constructor() {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x0E);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

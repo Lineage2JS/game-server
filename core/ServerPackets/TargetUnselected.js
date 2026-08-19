@@ -1,19 +1,18 @@
-const ServerPacket = require('./ServerPacket'); 
+const ServerPacket = require('./ServerPacket');
 
-class TargetUnselected {
+class TargetUnselected extends ServerPacket {
+  /**
+   * @param {import('../Models/Player.js')} player
+   */
   constructor(player) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x3A)
       .writeD(player.objectId)
       .writeD(player.x)
       .writeD(player.y)
       .writeD(player.z)
       .writeD(player.target);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

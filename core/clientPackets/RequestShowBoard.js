@@ -3,6 +3,8 @@ const ClientPacketNew = require("./ClientPacketNew");
 const communityBoardManager = require('./../Managers/CommunityBoardManager');
 
 class RequestShowBoard extends ClientPacketNew {
+  static code = 0x57;
+
   async handle() {
     const client = this.getClient();
     const unknown = this.readD(); // TODO

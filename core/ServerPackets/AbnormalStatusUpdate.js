@@ -1,24 +1,24 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class AbnormalStatusUpdate {
+class AbnormalStatusUpdate extends ServerPacket {
+  /**
+   * @param {*[]} effects
+   */
   constructor(effects) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+
+    this
       .writeC(0x97)
       .writeH(effects.length);
 
     for (let i = 0; i < effects.length; i++) {
       const effect = effects[i];
 
-      this._packet
+      this
         .writeD(effect.skillId)
         .writeH(effect.level)
         .writeD(effect.duration);
     }
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

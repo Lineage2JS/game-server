@@ -2,15 +2,29 @@ const BaseState = require("./BaseState");
 
 //
 const entitiesManager = require('./../Managers/EntitiesManager');
+const { calculateDistance } = require('./../../utils/distance');
 //
 
+/**
+ * @param {number} x1
+ * @param {number} y1
+ * @param {number} x2
+ * @param {number} y2
+ * @param {number} distance
+ * @returns {{ x: number, y: number }}
+ */
 function moveCloser(x1, y1, x2, y2, distance) {
   // Вычисляем разницу между координатами
   let dx = x2 - x1;
   let dy = y2 - y1;
 
   // Вычисляем расстояние между точками
-  let dist = Math.sqrt(dx * dx + dy * dy);
+  let dist = calculateDistance({ x: x1, y: y1 }, { x: x2, y: y2 });
+
+  // cannot divide by zero, return something reasonable
+  if (dist === 0) {
+    return { x: x2, y: y2 };
+  }
 
   // Нормализуем вектор разницы
   let nx = dx / dist;
@@ -24,15 +38,23 @@ function moveCloser(x1, y1, x2, y2, distance) {
 }
 
 class FollowState extends BaseState {
+  /** @returns {Promise<void>} */
   async enter() {
+    /** @type {number | null} */
     this.originX = null;
+    /** @type {number | null} */
     this.originY = null;
+    /** @type {number | null} */
     this.originZ = null;
+    /** @type {number | null} */
     this.targetX = null;
+    /** @type {number | null} */
     this.targetY = null;
+    /** @type {number | null} */
     this.targetZ = null;
   }
 
+  /** @returns {void} */
   update() {
     const entity = entitiesManager.getEntityByObjectId(this.character.targetCharacterId);
 
@@ -66,15 +88,16 @@ class FollowState extends BaseState {
 
     if (arrived) {
       this.character.changeState('idle');
-      
+
       return;
     }
 
     this.character.emit('move', this.targetX, this.targetY, this.targetZ);
   }
 
+  /** @returns {void} */
   leave() {
-    
+
   }
 }
 

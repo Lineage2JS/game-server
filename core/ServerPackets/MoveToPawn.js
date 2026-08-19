@@ -1,9 +1,14 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class MoveToPawn {
+class MoveToPawn extends ServerPacket {
+  /**
+   * @param {import('../Models/Player.js')} player
+   * @param {import('../Models/Character.js')} target
+   * @param {number} distance
+   */
   constructor(player, target, distance) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x75)
       .writeD(player.objectId)
       .writeD(target.objectId)
@@ -14,10 +19,6 @@ class MoveToPawn {
       .writeD(target.x)
       .writeD(target.y)
       .writeD(target.z)
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

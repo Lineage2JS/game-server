@@ -2,6 +2,8 @@ const serverPackets = require('./../ServerPackets/serverPackets');
 const ClientPacketNew = require("./ClientPacketNew");
 
 class RequestAcquireSkillInfo extends ClientPacketNew {
+  static code = 0x6B;
+
   async handle() {
     const client = this.getClient();
     const skillId = this.readD();

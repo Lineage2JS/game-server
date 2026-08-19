@@ -3,11 +3,18 @@ const ClientPacketNew = require("./ClientPacketNew");
 const ItemWeapon = require('./../Models/ItemWeapon');
 
 class RequestUseItem extends ClientPacketNew {
+  static code = 0x14;
+
   async handle() {
     const client = this.getClient();
     const player = this.getPlayer();
     const objectId = this.readD();
+
+    if (!player) return;
+
     const item = player.getItemByObjectId(objectId);
+
+    if (!item) return;
 
     // if (item.itemName === 'soulshot_none') {
     //   player.deleteItemByName(item.itemName);

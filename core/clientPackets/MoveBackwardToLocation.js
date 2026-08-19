@@ -1,7 +1,10 @@
 const ClientPacketNew = require("./ClientPacketNew");
 const serverPackets = require('./../ServerPackets/serverPackets');
+const { inRange } = require('./../../utils/distance');
 
 class MoveBackwardToLocation extends ClientPacketNew {
+  static code = 0x01;
+
   async handle() {
     const client = this.getClient();
     const player = this.getPlayer();
@@ -11,11 +14,10 @@ class MoveBackwardToLocation extends ClientPacketNew {
     const originX = this.readD();
     const originY = this.readD();
     const originZ = this.readD();
-    const dx = originX - targetX;
-    const dy = originY - targetY;
-    const dist = Math.sqrt(dx * dx + dy * dy);
 
-    if (dist < 25) { // TODO fix magic number
+    if (!player) return;
+
+    if (inRange({ x: originX, y: originY }, { x: targetX, y: targetY }, 25)) { // TODO fix magic number
       client.sendPacket(new serverPackets.ActionFailed());
 
       return;

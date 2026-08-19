@@ -1,26 +1,25 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class AcquireSkillList {
+class AcquireSkillList extends ServerPacket {
+  /**
+   * @param {any[]} skills
+   */
   constructor(skills) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0xA3)
       .writeD(skills.length);
-    
+
     for (let i = 0; i < skills.length; i++) {
       const skill = skills[i];
 
-      this._packet
+      this
         .writeD(skill.id)
         .writeD(skill.nextLevel)
         .writeD(skill.maxLevel)
         .writeD(skill.spCost)
         .writeD(skill.requirements);
     }
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

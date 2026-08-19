@@ -3,11 +3,15 @@ class EventBusNew {
     this.listeners = new Map();
   }
 
+  /**
+   * @param {string} event
+   * @param {((data: any) => void)} handler
+   */
   on(event, handler) {
     if (!this.listeners.has(event)) {
       this.listeners.set(event, []);
     }
-    
+
     this.listeners.get(event).push(handler);
   }
 
@@ -22,6 +26,10 @@ class EventBusNew {
   //   }
   // }
 
+  /**
+   * @param {string} event
+   * @param {Record<string, any>} data
+   */
   emit(event, data) {
     if (this.listeners.has(event)) {
       const handlers = this.listeners.get(event);
@@ -30,7 +38,7 @@ class EventBusNew {
         handler(data);
       }
     }
-  }  
+  }
 }
 
 module.exports = new EventBusNew();
@@ -54,11 +62,11 @@ module.exports = new EventBusNew();
 
 // NPC_SPAWN: 'npc:spawn',
 //   NPC_DIE: 'npc:die',
-  
+
 //   // Бой
 //   COMBAT_DAMAGE: 'combat:damage',
 //   COMBAT_CRITICAL: 'combat:critical',
-  
+
 //   // Инвентарь
 //   INVENTORY_ADD: 'inventory:add',
 //   INVENTORY_REMOVE: 'inventory:remove',

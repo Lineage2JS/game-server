@@ -1,18 +1,17 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class StopMoveWithLocation {
+class StopMoveWithLocation extends ServerPacket {
+  /**
+   * @param {import('../Models/Character.js')} character
+   */
   constructor(character) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x5F)
       .writeD(character.objectId)
       .writeD(character.x)
       .writeD(character.y)
       .writeD(character.z);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

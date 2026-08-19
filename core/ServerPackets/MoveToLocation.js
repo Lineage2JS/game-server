@@ -1,9 +1,18 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class MoveToLocation {
+class MoveToLocation extends ServerPacket {
+  /**
+   * @param {number} objectId
+   * @param {number} targetX
+   * @param {number} targetY
+   * @param {number} targetZ
+   * @param {number} originX
+   * @param {number} originY
+   * @param {number} originZ
+   */
   constructor(objectId, targetX, targetY, targetZ, originX, originY, originZ) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x01)
       .writeD(objectId)
       .writeD(targetX)
@@ -12,10 +21,6 @@ class MoveToLocation {
       .writeD(originX)
       .writeD(originY)
       .writeD(originZ)
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

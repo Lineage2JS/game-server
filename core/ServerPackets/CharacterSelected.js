@@ -1,9 +1,12 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class CharacterSelected {
+class CharacterSelected extends ServerPacket {
+  /**
+   * @param {import('../Models/Character.js')} character
+   */
   constructor(character) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x21)
       .writeS(character.characterName)
       .writeD(character.objectId)
@@ -15,8 +18,8 @@ class CharacterSelected {
       .writeD(character.raceId)
       .writeD(character.classId)
       .writeD(0x01)
-      .writeD(character.x)	
-      .writeD(character.y)	
+      .writeD(character.x)
+      .writeD(character.y)
       .writeD(character.z)
       .writeF(character.hp)
       .writeF(character.mp)
@@ -33,14 +36,10 @@ class CharacterSelected {
       .writeD(character.wit);
 
     for (let i = 0; i < 30; i++) {
-      this._packet.writeD(0x00);
+      this.writeD(0x00);
     }
-  
-    this._packet.writeD(0x00); // in-game time
-  }
 
-  getBuffer() {
-    return this._packet.getBuffer();
+    this.writeD(0x00); // in-game time
   }
 }
 

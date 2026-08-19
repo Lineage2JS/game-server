@@ -1,9 +1,12 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class CharacterInfo {
+class CharacterInfo extends ServerPacket {
+  /**
+   * @param {import('../Models/Character.js')} player
+   */
   constructor(player) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x03)
       .writeD(player.x)
       .writeD(player.y)
@@ -14,7 +17,7 @@ class CharacterInfo {
       .writeD(player.raceId)
       .writeD(player.gender)
       .writeD(player.classId)
-      
+
       .writeD(0x00)
 
       .writeD(0)
@@ -31,7 +34,7 @@ class CharacterInfo {
       .writeD(0x00)
       .writeD(0)
       .writeD(0)
-      
+
       .writeD(0)
       .writeD(player.karma)
 
@@ -46,7 +49,7 @@ class CharacterInfo {
 
     // male
     if(player.gender === 0) {
-      this._packet
+      this
         .writeF(player.maleAttackSpeedMultiplier) // TODO местами поменять как в l2jc1
         .writeF((player.pSpd / 500) / 0.555)
         .writeF(player.maleCollisionRadius)
@@ -55,14 +58,14 @@ class CharacterInfo {
 
     // female
     if(player.gender === 1) {
-      this._packet
+      this
         .writeF(player.femaleAttackSpeedMultiplier)
         .writeF((player.pSpd / 500) / 0.555)
         .writeF(player.femaleCollisionRadius)
         .writeF(player.femaleCollisionHeight)
     }
 
-    this._packet
+    this
       .writeD(player.hairStyle)
       .writeD(player.hairColor)
       .writeD(player.face)
@@ -84,14 +87,10 @@ class CharacterInfo {
       .writeC(0x00)	// invisible = 1  visible =0
       .writeC(0x00)	// 1 on strider   2 on wyfern   0 no mount
       .writeC(0)   // 1 - sellshop
-      
-      .writeH(0x00)  // cubic count
-  	  //.writeH(0x00);  // cubic 
-      .writeC(0x00);	// find party members
-  }
 
-  getBuffer() {
-    return this._packet.getBuffer();
+      .writeH(0x00)  // cubic count
+  	  //.writeH(0x00);  // cubic
+      .writeC(0x00);	// find party members
   }
 }
 

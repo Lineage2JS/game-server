@@ -1,17 +1,25 @@
 const EventEmmiter = require('events');
 const database = require('./../../database');
 
+/** @typedef {{ id: number, type: string, status: string, payload: Record<string, any>, scheduledAt: number, createdAccountId: string, createdType: string }} ScheduledTask */
+
 class SchedulerManager extends EventEmmiter {
   constructor() {
     super();
 
+    /** @type {ScheduledTask[]} */
     this._tasks = [];
   }
 
+  /**
+   * @param {Omit<ScheduledTask, 'id'>} task
+   * @returns {Promise<void>}
+   */
   async createTask(task) {
     await database.createScheduledTask(task.type, task.status, task.payload, task.scheduledAt, task.createdAccountId, task.createdType);
   }
 
+  /** @returns {Promise<void>} */
   async reloadTasks() {
     const data = await database.getScheduledTasks();
 
@@ -20,11 +28,13 @@ class SchedulerManager extends EventEmmiter {
     //
   }
 
+  /** @returns {Promise<void>} */
   async enable() {
     await this.reloadTasks();
     this._run();
   }
 
+  /** @returns {Promise<void>} */
   async _run() {
     const tasks = this._tasks //.filter(task => task.status === 'new');
 
@@ -32,7 +42,7 @@ class SchedulerManager extends EventEmmiter {
       for(let i = 0; i < tasks.length; i++) {
         const task = tasks[i];
 
-        if (new Date(task.scheduledAt) < Date.now()) {
+        if (new Date(task.scheduledAt).getTime() < Date.now()) {
           task.status = 'done';
 
           await database.updateScheduledTask(task);

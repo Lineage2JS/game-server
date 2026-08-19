@@ -5790,7 +5790,7 @@
     }
   },
   {
-    "territory": "",
+    "territory": null,
     "npcMakers": {
       "npcs": []
     }
@@ -5888,7 +5888,7 @@
     }
   },
   {
-    "territory": "",
+    "territory": null,
     "npcMakers": {
       "npcs": []
     }
@@ -5940,7 +5940,7 @@
     }
   },
   {
-    "territory": "",
+    "territory": null,
     "npcMakers": {
       "npcs": []
     }

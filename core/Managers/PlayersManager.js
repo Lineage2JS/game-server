@@ -1,18 +1,25 @@
 const EventEmitter = require('events');
 const schedulerManager = require('./SchedulerManager');
 const database = require('./../../database');
-const serverPackets = require('./../ServerPackets/serverPackets');
-const eventBusNew = require('./../Events/EventBusNew');
+const serverPackets = require('../ServerPackets/serverPackets');
+const ServerPacket = require('../ServerPackets/ServerPacket');
+const eventBusNew = require('../Events/EventBusNew');
+
+/** @typedef {import('./../Models/Player')} Player */
+/** @typedef {import('./../Client')} Client */
+/** @typedef {{ id: number, type: string, status: string, payload: Record<string, any>, scheduledAt: number, createdAccountId: string, createdType: string }} ScheduledTask */
 
 class PlayersManager extends EventEmitter {
   constructor() {
     super();
-    
+
+    /** @type {Player[]} */
     this._players = [];
 
     this.on('notify', packet => { // nofity = send, broadcast? fix
       this._players.forEach(player => {
         const client = player.getClient();
+        if (!client) return;
 
         client.sendPacket(packet);
       })
@@ -38,16 +45,20 @@ class PlayersManager extends EventEmitter {
     //
   }
 
+  /** @returns {Player[]} */
   getAllPlayers() {
     return this._players;
   }
 
+  /**
+   * @param {Player} player
+   * @returns {void}
+   */
   add(player) {
     this._players.push(player);
 
     player.on('move', (targetX, targetY, targetZ) => {
       const packet = new serverPackets.MoveToLocation(player.objectId, targetX, targetY, targetZ, player.x, player.y, player.z);
-      
       this.broadcast(packet);
       eventBusNew.emit('player:move', player);
     });
@@ -101,14 +112,23 @@ class PlayersManager extends EventEmitter {
     });
   }
 
+  /**
+   * @param {ServerPacket} packet
+   * @returns {void}
+   */
   broadcast(packet) {
     this._players.forEach(player => {
       const client = player.getClient();
+      if (!client) return;
 
       client.sendPacket(packet);
     });
   }
 
+  /**
+   * @param {Client} client
+   * @returns {Player | undefined}
+   */
   getPlayerByClient(client) {
     const player = this._players.find((player) => {
       if (player.getClient() === client) {
@@ -121,13 +141,19 @@ class PlayersManager extends EventEmitter {
     return player;
   }
 
+  /**
+   * @param {string} playerLogin
+   * @param {number} characterObjectId
+   * @returns {Promise<void>}
+   */
   async deleteCharacter(playerLogin, characterObjectId) {
+    /** @type {Omit<ScheduledTask, 'id'>} */
     const task = {
       type: 'character-deletion',
       status: 'new',
-      payload: JSON.stringify({
+      payload: {
         characterObjectId: characterObjectId
-      }),
+      },
       scheduledAt: Date.now() + 30000,
       createdAccountId: playerLogin,
       createdType: 'user'
@@ -136,9 +162,14 @@ class PlayersManager extends EventEmitter {
     await schedulerManager.createTask(task);
   }
 
+  /**
+   * @param {number} characterObjectId
+   * @returns {Promise<void>}
+   */
   async restoreCharacter(characterObjectId) { // fix взаимодействие через scheduler?
     await database.deleteScheduledTask('character-deletion', {"characterObjectId": characterObjectId});
   }
 }
 
+// singleton
 module.exports = new PlayersManager();

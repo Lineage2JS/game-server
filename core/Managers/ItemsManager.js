@@ -6,6 +6,10 @@ const ItemArmor = require('./../Models/ItemArmor');
 const ItemWeapon = require('./../Models/ItemWeapon');
 const itemsList = require('./../../datapack/itemsList.json');
 const itemNamesMap = require('./../../datapack/itemNamesMap.json');
+const equipmentSlots = require('../../enums/equipmentSlotEnums');
+
+/** @typedef {ItemAsset | ItemAccessary | ItemEtc | ItemArmor | ItemWeapon} ItemTemplate */
+/** @typedef {{ id: number, name: string, item_type: string, etcitem_type?: string | null, consume_type?: string | null, armor_type?: string | null, weapon_type?: string | null, slot_bit_type?: string | null, weight: number, default_price: number }} ItemData */
 
 const TYPE_ARROW = 0;
 const TYPE_MATERIAL = 1;
@@ -29,53 +33,27 @@ const TYPE2_QUEST = 3;
 const TYPE2_MONEY = 4;
 const TYPE2_OTHER = 5;
 
-const SLOT_NONE = 0x0000;
-const SLOT_UNDERWEAR = 0x0001;
-const SLOT_R_EAR = 0x0002;
-const SLOT_L_EAR = 0x0004;
-const SLOT_NECK = 0x0008;
-const SLOT_R_FINGER = 0x0010;
-const SLOT_L_FINGER = 0x0020;
-const SLOT_HEAD = 0x0040;
-const SLOT_R_HAND = 0x0080;
-const SLOT_L_HAND = 0x0100;
-const SLOT_GLOVES = 0x0200;
-const SLOT_CHEST = 0x0400;
-const SLOT_LEGS = 0x0800;
-const SLOT_FEET = 0x1000;
-const SLOT_BACK = 0x2000;
-const SLOT_LR_HAND = 0x4000;
-const SLOT_FULL_ARMOR = 0x8000;
-const slots = {
-  "chest": SLOT_CHEST,
-  "chest_full": SLOT_FULL_ARMOR, 
-  "head": SLOT_HEAD,
-  "underwear": SLOT_UNDERWEAR,
-  "back": SLOT_BACK,
-  "neck": SLOT_NECK,
-  "legs": SLOT_LEGS,
-  "feet": SLOT_FEET,
-  "gloves": SLOT_GLOVES,
-  "chest,legs": SLOT_CHEST, // | L2Item.SLOT_LEGS,
-  "rhand": SLOT_R_HAND,
-  "lhand": SLOT_L_HAND,
-  "lrhand": SLOT_LR_HAND,
-  "rear,lear": SLOT_L_EAR, // | L2Item.SLOT_R_EAR,
-  "rfinger,lfinger": SLOT_L_FINGER, // | L2Item.SLOT_R_FINGER,
-  "none": SLOT_NONE
-}
-
 class ItemsManager {
   constructor() {
+    /** @type {Map<number, ItemTemplate>} */
     this._itemsTable = new Map();
   }
 
+  /** @returns {void} */
   enable() {
     this._loadItemTemplates();
   }
 
+  /**
+   * @param {number} itemId
+   * @param {number} [count=1]
+   * @returns {Promise<ItemTemplate | undefined>}
+   */
   async createItem(itemId, count = 1) {
     const itemTemplate = this._getItemTemplate(itemId);
+    if (!itemTemplate) {
+      return undefined;
+    }
     const objectId = await database.getNextObjectId();
 
     if (itemTemplate instanceof ItemAsset) {
@@ -97,10 +75,21 @@ class ItemsManager {
     if (itemTemplate instanceof ItemWeapon) {
       return this._createItemWeapon(itemTemplate, objectId);
     }
+
+    return undefined;
   }
 
+  /**
+   * @param {number} itemId
+   * @param {number} objectId
+   * @param {number} [count=1]
+   * @returns {ItemTemplate | undefined}
+   */
   getItem(itemId, objectId, count = 1) {
     const itemTemplate = this._getItemTemplate(itemId);
+    if (!itemTemplate) {
+      return undefined;
+    }
 
     if (itemTemplate instanceof ItemAsset) {
       return this._createItemAsset(itemTemplate, objectId, count);
@@ -121,12 +110,24 @@ class ItemsManager {
     if (itemTemplate instanceof ItemWeapon) {
       return this._createItemWeapon(itemTemplate, objectId);
     }
+
+    return undefined;
   }
 
+  /**
+   * @param {string} itemName
+   * @returns {number}
+   */
   getItemIdByName(itemName) {
-    return itemNamesMap[itemName];
+    return itemNamesMap[/** @type {keyof typeof itemNamesMap} */ (itemName)];
   }
 
+  /**
+   * @param {ItemAsset} itemTemplate
+   * @param {number} objectId
+   * @param {number} count
+   * @returns {ItemAsset}
+   */
   _createItemAsset(itemTemplate, objectId, count) {
     const data = {
       itemId: itemTemplate.getItemId(),
@@ -147,6 +148,11 @@ class ItemsManager {
     return itemAsset;
   }
 
+  /**
+   * @param {ItemAccessary} itemTemplate
+   * @param {number} objectId
+   * @returns {ItemAccessary}
+   */
   _createItemAccessary(itemTemplate, objectId) {
     const data = {
       itemId: itemTemplate.getItemId(),
@@ -164,6 +170,11 @@ class ItemsManager {
     return itemAccessary;
   }
 
+  /**
+   * @param {ItemEtc} itemTemplate
+   * @param {number} objectId
+   * @returns {ItemEtc}
+   */
   _createItemEtc(itemTemplate, objectId) {
     const data = {
       itemId: itemTemplate.getItemId(),
@@ -183,6 +194,11 @@ class ItemsManager {
     return itemEtc;
   }
 
+  /**
+   * @param {ItemArmor} itemTemplate
+   * @param {number} objectId
+   * @returns {ItemArmor}
+   */
   _createItemArmor(itemTemplate, objectId) {
     const data = {
       itemId: itemTemplate.getItemId(),
@@ -201,6 +217,11 @@ class ItemsManager {
     return itemArmor;
   }
 
+  /**
+   * @param {ItemWeapon} itemTemplate
+   * @param {number} objectId
+   * @returns {ItemWeapon}
+   */
   _createItemWeapon(itemTemplate, objectId) {
     const data = {
       itemId: itemTemplate.getItemId(),
@@ -219,8 +240,9 @@ class ItemsManager {
     return itemWeapon;
   }
 
+  /** @returns {void} */
   _loadItemTemplates() {
-    for(const itemData of itemsList) {
+    for(const itemData of /** @type {ItemData[]} */ (itemsList)) {
       //questitem
 
       if (itemData.item_type === "asset") {
@@ -245,6 +267,10 @@ class ItemsManager {
     }
   }
 
+  /**
+   * @param {ItemData} itemData
+   * @returns {void}
+   */
   _createItemAssetTemplate(itemData) {
     const data = {
       itemId: itemData.id,
@@ -252,7 +278,7 @@ class ItemsManager {
       etcItemType: TYPE_MONEY,
       type1: TYPE1_ITEM_QUESTITEM_ADENA,
       type2: TYPE2_MONEY,
-      bodyPart: SLOT_NONE,
+      bodyPart: equipmentSlots.SLOT_NONE,
       weight: itemData.weight,
       price: itemData.default_price,
       stackable: true,
@@ -262,13 +288,17 @@ class ItemsManager {
     this._addItem(itemAsset.getItemId(), itemAsset);
   }
 
+  /**
+   * @param {ItemData} itemData
+   * @returns {void}
+   */
   _createItemAccessaryTemplate(itemData) {
     const data = {
       itemId: itemData.id,
       name: itemData.name,
       type1: TYPE1_WEAPON_RING_EARRING_NECKLACE,
       type2: TYPE2_ACCESSORY,
-      bodyPart: SLOT_NECK, // TODO NECK, EAR, FINGER
+      bodyPart: equipmentSlots.SLOT_NECK, // TODO NECK, EAR, FINGER
       weight: itemData.weight,
       price: itemData.default_price,
     }
@@ -277,10 +307,14 @@ class ItemsManager {
     this._addItem(itemAccessary.getItemId(), itemAccessary);
   }
 
+  /**
+   * @param {ItemData} itemData
+   * @returns {void}
+   */
   _createItemEtcTemplate(itemData) {
     let type2 = TYPE2_OTHER;
     let etcItemType = TYPE_OTHER
-    let bodyPart = SLOT_NONE;
+    let bodyPart = equipmentSlots.SLOT_NONE;
     let stackable = false;
 
     switch(itemData.etcitem_type) {
@@ -292,7 +326,7 @@ class ItemsManager {
       case 'arrow':
         type2 = TYPE2_OTHER;
         etcItemType = TYPE_ARROW;
-        bodyPart = SLOT_L_HAND;
+        bodyPart = equipmentSlots.SLOT_L_HAND;
 
         break;
       case 'castle_guard':
@@ -349,12 +383,19 @@ class ItemsManager {
     this._addItem(itemEtc.getItemId(), itemEtc);
   }
 
+  /**
+   * @param {ItemData} itemData
+   * @returns {void}
+   */
   _createItemArmorTemplate(itemData) {
-    const slot = slots[itemData.slot_bit_type];
+    const slot = equipmentSlots.getSlotIdByName(itemData.slot_bit_type);
+
+    if (!slot) return;
+
     const data = {
       itemId: itemData.id,
       name: itemData.name,
-      armorType: itemData.armor_type === null ? "none" : itemData.armor_type,
+      armorType: itemData.armor_type ? itemData.armor_type : "none",
       type1: TYPE1_SHIELD_ARMOR,
       type2: TYPE2_SHIELD_ARMOR,
       bodyPart: slot,
@@ -366,27 +407,43 @@ class ItemsManager {
     this._addItem(itemArmor.getItemId(), itemArmor);
   }
 
+  /**
+   * @param {ItemData} itemData
+   * @returns {void}
+   */
   _createItemWeaponTemplate(itemData) {
-    const slot = slots[itemData.slot_bit_type];
+    const slot = equipmentSlots.getSlotIdByName(itemData.slot_bit_type);
+
+    if (!slot) return;
+
     const data = {
       itemId: itemData.id,
       name: itemData.name,
-      weaponType: itemData.weapon_type,
+      weaponType: itemData.weapon_type ? itemData.weapon_type : "none",
       type1: TYPE1_WEAPON_RING_EARRING_NECKLACE,
       type2: TYPE2_WEAPON,
       bodyPart: slot,
       weight: itemData.weight,
       price: itemData.default_price,
-    }        
+    };
     const itemWeapon = new ItemWeapon(data);
 
     this._addItem(itemWeapon.getItemId(), itemWeapon);
   }
 
+  /**
+   * @param {number} itemId
+   * @param {ItemTemplate} item
+   * @returns {void}
+   */
   _addItem(itemId, item) {
     this._itemsTable.set(itemId, item);
   }
 
+  /**
+   * @param {number} itemId
+   * @returns {ItemTemplate | undefined}
+   */
   _getItemTemplate(itemId) {
     return this._itemsTable.get(itemId);
   }

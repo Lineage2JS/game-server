@@ -1,9 +1,12 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class SpecialCamera {
+class SpecialCamera extends ServerPacket {
+  /**
+   * @param {number} objectId
+   */
   constructor(objectId) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0xE0)
       .writeD(objectId)
       .writeD(50)
@@ -16,10 +19,6 @@ class SpecialCamera {
       .writeD(1)
       .writeD(1)
       .writeD(1)
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

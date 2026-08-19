@@ -1,9 +1,13 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class MagicSkillUse {
+class MagicSkillUse extends ServerPacket {
+  /**
+   * @param {import('../Models/Character.js')} character
+   * @param {*} skill
+   */
   constructor(character, skill) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0x5A)
       .writeD(character.objectId)
       .writeD(character.target)
@@ -15,10 +19,6 @@ class MagicSkillUse {
       .writeD(character.y)
       .writeD(character.z)
       .writeH(0x00);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

@@ -1,9 +1,16 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class EarthQuake {
+class EarthQuake extends ServerPacket {
+  /**
+   * @param {number} x
+   * @param {number} y
+   * @param {number} z
+   * @param {number} intensity
+   * @param {number} duration
+   */
   constructor(x, y, z, intensity, duration) {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0xDD)
       .writeD(x)
       .writeD(y)
@@ -11,10 +18,6 @@ class EarthQuake {
       .writeD(intensity)
       .writeD(duration)
       .writeD(0x00) // Unknow
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

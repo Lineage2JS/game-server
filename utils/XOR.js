@@ -1,9 +1,16 @@
 class XOR {
+  /** @param {number[] | Buffer} key */
   constructor(key) {
+    /** @type {Buffer} */
     this.decryptKey = Buffer.from(key);
+    /** @type {Buffer} */
     this.encryptKey = Buffer.from(key);
   }
 
+  /**
+   * @param {Buffer} data
+   * @returns {Buffer}
+   */
   decrypt(data) {
     let temp = 0;
     let count = 0;
@@ -36,6 +43,10 @@ class XOR {
     return data;
   }
 
+  /**
+   * @param {Buffer} data
+   * @returns {Buffer}
+   */
   encrypt(data) {
     let temp = 0;
     let count = 0;

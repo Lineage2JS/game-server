@@ -1,14 +1,10 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket.js');
 
-class TutorialCloseHtml {
+class TutorialCloseHtml extends ServerPacket {
   constructor() {
-    this._packet = new ServerPacket();
-    this._packet
+    super();
+    this
       .writeC(0xBC);
-  }
-
-  getBuffer() {
-    return this._packet.getBuffer();
   }
 }
 

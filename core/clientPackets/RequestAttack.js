@@ -5,6 +5,8 @@ const Player = require('./../Models/Player');
 const Npc = require('./../Models/Npc');
 
 class RequestAttack extends ClientPacketNew {
+  static code = 0x0A;
+
   handle() {
     const client = this.getClient();
     const player = this.getPlayer();
@@ -14,6 +16,9 @@ class RequestAttack extends ClientPacketNew {
     const z = this.readD();
     const attackId = this.readC(); // 0 - click, 1 - shift click
     const entity = entitiesManager.getEntityByObjectId(objectId);
+
+    if (!player || !entity) return;
+
     const activeWeapon = player.getActiveWeapon();
 
     if (activeWeapon && activeWeapon.getWeaponType() === "bow") { // TODO temp for beta
@@ -21,13 +26,13 @@ class RequestAttack extends ClientPacketNew {
 
       return;
     }
-    
+
     if (!player.isAttacking && !entity.isDead && entity.canBeAttacked === 1) {
       player.doAction('attack', entity.objectId);
 
       return;
     }
-    
+
     client.sendPacket(new serverPackets.ActionFailed());
   }
 }

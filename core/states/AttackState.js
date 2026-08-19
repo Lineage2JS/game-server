@@ -1,12 +1,17 @@
 const BaseState = require("./BaseState");
 const entitiesManager = require('./../Managers/EntitiesManager');
+const { calculateDistance } = require('./../../utils/distance');
 
 class AttackState extends BaseState {
+  /** @returns {void} */
   enter() {
+    /** @type {import('../Models/Character') | null} */
     this.entity = entitiesManager.getEntityByObjectId(this.character.targetCharacterId);
+    /** @type {boolean} */
     this.canDamage = false;
   }
 
+  /** @returns {void} */
   update() {
     if (!this.entity) { // fix
       return;
@@ -22,20 +27,18 @@ class AttackState extends BaseState {
 
     if (this.character.timeSinceLastAttack > this.character.attackDelay) {
       this.canDamage = true;
-  
-      const dx = this.entity.x - this.character.x;
-      const dy = this.entity.y - this.character.y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      const distance = calculateDistance(this.entity, this.character);
 
       if (distance > 40) { // 29 - attack range + collision radius TODO magic number
         this.character.changeState('follow');
-  
+
         return;
       }
 
       this.character.lastAttackTimestamp = Date.now();
       this.character.emit('attack', this.entity.objectId);
-      
+
       // if entity instanceof Npc
       // if (this.entity.action === 'patrol') {
       //   this.entity.lastAttackTimestamp = Date.now() - (((500000 / this.entity.baseAttackSpeed) - (500000 / this.character.attackSpeed)) + ((500000 / this.character.attackSpeed) / 2));
@@ -56,8 +59,9 @@ class AttackState extends BaseState {
     }
   }
 
+  /** @returns {void} */
   leave() {
-    
+
   }
 }
 

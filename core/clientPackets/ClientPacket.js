@@ -6,8 +6,12 @@
 // readS - string
 
 class ClientPacket {
+  /**
+   * @param {Buffer} buffer
+   */
   constructor(buffer) {
     this._buffer = buffer;
+    /** @type {*[]} */
     this._data = [];
     this._offset = 0;
   }
@@ -52,6 +56,10 @@ class ClientPacket {
     return this;
   }
 
+  /**
+   * @param {number} length
+   * @returns {this}
+   */
   readB(length) {
     this._data.push(
       this._buffer.slice(this._offset, this._offset + length)
@@ -64,7 +72,7 @@ class ClientPacket {
 
   readS() {
     let i;
-    
+
     for (i = this._offset; i < this._buffer.length; i += 2) {
       if (this._buffer.readUInt16LE(i) === 0x00) {
         break;
@@ -74,9 +82,9 @@ class ClientPacket {
     this._data.push(
       this._buffer.toString("ucs2", this._offset, i)
     );
-    
+
     const bytesRead = i - this._offset + 2; // +2 for null terminator
-    
+
     this._offset += bytesRead;
 
     return this;
