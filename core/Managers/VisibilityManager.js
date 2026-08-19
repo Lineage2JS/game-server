@@ -57,11 +57,13 @@ class VisibilityManager {
           if (npc.state === 'move') {
             const path = this._createMovePath(npc);
 
-            client.sendPacket(new serverPackets.MoveToLocation(
-              npc.objectId,
-              path.target.x, path.target.y, path.target.z,
-              path.origin.x, path.origin.y, path.origin.z
-            ));
+            if (path.target.x != null && path.target.y != null && path.target.z != null && path.origin.x != null && path.origin.y != null && path.origin.z != null) {
+              client.sendPacket(new serverPackets.MoveToLocation(
+                npc.objectId,
+                path.target.x, path.target.y, path.target.z,
+                path.origin.x, path.origin.y, path.origin.z
+              ));
+            }
           }
         } else {
           const packet = new serverPackets.DeleteObject(npc.objectId);
@@ -86,11 +88,13 @@ class VisibilityManager {
           if (bot.state === 'move') {
             const path = this._createMovePath(bot);
 
-            client.sendPacket(new serverPackets.MoveToLocation(
-              bot.objectId,
-              path.target.x, path.target.y, path.target.z,
-              path.origin.x, path.origin.y, path.origin.z
-            ));
+            if (path.target.x != null && path.target.y != null && path.target.z != null && path.origin.x != null && path.origin.y != null && path.origin.z != null) {
+              client.sendPacket(new serverPackets.MoveToLocation(
+                bot.objectId,
+                path.target.x, path.target.y, path.target.z,
+                path.origin.x, path.origin.y, path.origin.z
+              ));
+            }
           }
         } else {
           const packet = new serverPackets.DeleteObject(bot.objectId);
