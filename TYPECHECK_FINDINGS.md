@@ -4,7 +4,7 @@ Bugs and inconsistencies surfaced by enabling `npm run build` (`tsc --project
 jsconfig.json` over JSDoc-typed `.js`) on the `js-docs` branch. Grouped by how
 risky/urgent they are to fix.
 
-Baseline: 91 errors when JS typecheck was first enabled. Currently: 70.
+Baseline: 91 errors when JS typecheck was first enabled. Currently: 68.
 
 ## Fixed
 
@@ -49,23 +49,47 @@ Baseline: 91 errors when JS typecheck was first enabled. Currently: 70.
   just caught it. Fixed by reordering to
   `new serverPackets.MoveToLocation(npc.objectId, path.target.x, path.target.y, path.target.z, path.origin.x, path.origin.y, path.origin.z)`
   at all 4 call sites. Verified with a hex dump of the resulting buffer.
+- **`VisibilityManager.js` nullable target/origin.** `path.target.x/y/z` and
+  `path.origin.x/y/z` are `number | null | undefined`, but were passed
+  straight into `MoveToLocation`'s non-null `number` params. Added a guard
+  that skips the broadcast entirely when any coordinate is missing, instead
+  of sending a packet with a fake value. See the "Real bugs" entry below for
+  why this is null in practice.
 
 ## Real bugs (not just annotations)
 
-None currently tracked here — the one found (`MoveToLocation`, above) is fixed.
+- **`Npc`/`Bot` movement never actually sets a target — `doAction`/
+  `changeState` silently drop the move payload.** Traced while deciding
+  whether `VisibilityManager.js`'s nullable `path.target.x/y/z` (see "Fixed"
+  below) could really be null: it always is, for NPCs and bots.
+  `MoveState.enter()` (`core/states/MoveState.js`) reads
+  `this.character.targetX/Y/Z` — it never looks at whatever payload was
+  passed into `changeState`. `Player.doAction('move', x, y, z)`
+  (`Player.js:262-265`) correctly sets `this.targetX/Y/Z` *before* calling
+  `changeState('move')`, so players work. But:
+  - `Npc.doAction('move', payload)` (`Npc.js`) just calls
+    `this.changeState('move', payload)`, and `Npc.changeState()` never
+    reads `payload` — `state.enter()` is called with no arguments.
+  - `Bot.doAction('move', payload)` (`Bot.js`) stores
+    `state.payload = payload` (comment: `// remove`), but no state
+    (including `MoveState`) ever reads `this.payload` — dead code.
+  - The only live NPC move trigger, `DefaultNpc.addFleeDesire()`
+    (`datapack/ai/DefaultNpc.js:162`), calls `changeState('move', path)`
+    directly, bypassing `doAction` entirely — same result.
+  - `Npc.doAction('move', ...)` itself has no other call sites in the
+    codebase currently — dead code path.
+
+  Net effect: NPC/bot `targetX/Y/Z` are never set, so `MoveState` always
+  runs with a `null` target for them. Fix is to mirror `Player.doAction`:
+  unpack `payload.target.x/y/z` into `this.targetX/Y/Z` before calling
+  `changeState('move', ...)` in both `Npc.js` and `Bot.js`, and likely
+  `DefaultNpc.addFleeDesire()` too. Real gameplay-behavior fix (NPC
+  patrol / bot movement), not just typing — needs its own small commits
+  per file, not done here.
 
 ## Simple, safe fixes remaining (types/guards only)
 
-- **`VisibilityManager.js:62,91`** — newly revealed after the `MoveToLocation`
-  arg-count fix above (same masking effect as `FinishRotating.js` earlier: a
-  wrong arg count suppresses per-argument type checks). `path.target.x/y/z`
-  come from `Character.actionParams.targetX/Y/Z`, typed `number | null`, and
-  get passed straight into `MoveToLocation`'s `number` params. Not addressed
-  yet — needs a decision on whether a null target here is really reachable
-  (the branch is guarded by `npc.state === 'move'` / `bot.state === 'move'`,
-  which arguably implies a target is always set) before adding a guard.
-
-## Needs verification before fixing (not pure typing)
+None currently tracked here.
 
 - **`Player.js:420,442,528`** — `Item` not assignable to `ItemWeapon` (3
   spots handling the active weapon). Probably just needs a cast, but should
