@@ -30,8 +30,6 @@ async function run() {
     });
   } catch(e) {
     console.log(e.message);
-
-    return;
   }
 
   try {
@@ -78,8 +76,8 @@ async function run() {
 
       eventSubscribers.subscribe();
     });
-  } catch {
-
+  } catch(e) {
+    console.error(e);
   }
 }
 
