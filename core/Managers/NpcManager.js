@@ -13,7 +13,7 @@ class NpcManager extends EventEmitter {
 
   spawn(npc) {
     this._npcs.push(npc);
-    console.log(this._npcs.length)
+    process.stdout.write(`\r${this._npcs.length}`);
     this.emit('spawn', npc);
   }
 
@@ -106,7 +106,7 @@ class NpcManager extends EventEmitter {
       } 
     }
 
-    console.log('spawn end')
+    console.log('\nspawn end')
   }
 
   async spawnNpc(id, coordinates) {
