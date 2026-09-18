@@ -15,7 +15,7 @@ const config = require('./config');
 const serverStatus = require('./enums/serverStatus');
 const serverTypes = require('./enums/serverTypes');
 const server = new Server();
-const isDebug = process.argv.includes('--debug');
+const isDebugMode = process.argv.includes('--debug-mode');
 
 async function run() {
   try {
@@ -92,8 +92,8 @@ process.on('SIGINT', async () => {
   process.exit(0);
 });
 
-if (isDebug) {
-  const debug = require('./core/Debug');
+if (isDebugMode) {
+  const debug = require('./core/debug');
 }
 
 run();
