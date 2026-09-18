@@ -17,7 +17,9 @@ const serverTypes = require('./enums/serverTypes');
 const server = new Server();
 const isDebugMode = process.argv.includes('--debug-mode');
 
-async function run() {
+async function init() {
+  console.log('starting game server...');
+
   try {
     await database.connect(
       config.database.username,
@@ -30,51 +32,43 @@ async function run() {
     });
   } catch(e) {
     console.log(e.message);
+
+    return;
   }
 
   try {
-    server.start(config.gameserver.host, config.gameserver.port, async () => {
-      // console.log('\n');
-      // console.log('########################################');
-      // console.log('# lineage2js                           #');
-      // console.log('# game server                          #');
-      // console.log('# Chronicle ....... %s                 #', 'C1');
-      // console.log('# Protocol ........ %d                #', 419);
-      // console.log('# Version. ........ %s              #', '0.0.1');
-      // console.log('########################################');
-      // console.log('\n');
-
-      const isGameServerExists = await database.checkGameServerExists(config.gameserver.id);
+    const isGameServerExists = await database.checkGameServerExists(config.gameserver.id);
       
-      if (!isGameServerExists) {
-        await database.addGameServer({
-          id: config.gameserver.id, 
-          host: config.gameserver.host,
-          port: config.gameserver.port,
-          ageLimit: config.gameserver.ageLimit,
-          isPvP: config.gameserver.isPvP,
-          maxPlayers: config.gameserver.maxPlayers,
-          status: serverStatus.STATUS_DOWN,
-          type: serverTypes.SERVER_NORMAL
-        });
-      }
+    if (!isGameServerExists) {
+      await database.addGameServer({
+        id: config.gameserver.id, 
+        host: config.gameserver.host,
+        port: config.gameserver.port,
+        ageLimit: config.gameserver.ageLimit,
+        isPvP: config.gameserver.isPvP,
+        maxPlayers: config.gameserver.maxPlayers,
+        status: serverStatus.STATUS_DOWN,
+        type: serverTypes.SERVER_NORMAL
+      });
+    }
 
-      const gameserver = await database.getGameServerById(config.gameserver.id);
+    const gameserver = await database.getGameServerById(config.gameserver.id);
       
-      await database.updateGameServer(gameserver.id, "status", serverStatus.STATUS_UP);
+    await database.updateGameServer(gameserver.id, "status", serverStatus.STATUS_UP);
+    itemsManager.enable();
+    initialParametersManager.enable();
+    announcementsManager.enable();
+    skillsManager.enable();
+    entitiesManager.enable();
+    await npcManager.enable();
+    //await botsManager.enable();
+    visibilityManager.enable();
+    npcHtmlMessagesManager.enable();
+    await schedulerManager.enable();
+    eventSubscribers.subscribe();
 
-      itemsManager.enable();
-      initialParametersManager.enable();
-      announcementsManager.enable();
-      skillsManager.enable();
-      entitiesManager.enable();
-      await npcManager.enable();
-      //await botsManager.enable();
-      visibilityManager.enable();
-      npcHtmlMessagesManager.enable();
-      await schedulerManager.enable();
-
-      eventSubscribers.subscribe();
+    server.start(config.gameserver.host, config.gameserver.port, () => {
+      console.log(`game server listening on ${config.gameserver.host}:${config.gameserver.port}`);
     });
   } catch(e) {
     console.error(e);
@@ -86,12 +80,11 @@ process.on('SIGINT', async () => {
   const gameserver = await database.getGameServerById(config.gameserver.id);
 
   await database.updateGameServer(gameserver.id, "status", serverStatus.STATUS_DOWN);
-
   process.exit(0);
 });
 
 if (isDebugMode) {
-  const debug = require('./core/debug');
+  require('./core/debug');
 }
 
-run();
+init();
