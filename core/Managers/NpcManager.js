@@ -13,7 +13,7 @@ class NpcManager extends EventEmitter {
 
   spawn(npc) {
     this._npcs.push(npc);
-    process.stdout.write(`\r${this._npcs.length}`);
+    process.stdout.write(`\r[NPS] ${this._npcs.length}`);
     this.emit('spawn', npc);
   }
 
