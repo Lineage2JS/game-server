@@ -32,13 +32,13 @@ class Client {
 
     this._socket.write(packet);
   }
-
-  setProtocolVersion(value) {
-    this._protocolVersion = value;
-  }
   
   getProtocolVersion() {
     return this._protocolVersion;
+  }
+
+  setProtocolVersion(value) {
+    this._protocolVersion = value;
   }
 
   _getPacketLength(buffer) {
