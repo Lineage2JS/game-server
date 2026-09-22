@@ -16,7 +16,7 @@ class Server {
     this._server.listen(port, host);
   }
 
-  _onListening(callback) {    
+  _onListening(callback) {
     callback();
   }
 
