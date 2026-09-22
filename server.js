@@ -15,7 +15,7 @@ const config = require('./config');
 const serverStatus = require('./enums/serverStatus');
 const serverTypes = require('./enums/serverTypes');
 const server = new Server();
-const isDebugMode = process.argv.includes('--debug-mode');
+const isDebugMode = process.argv.includes('--debug-mode') && process.env.NODE_ENV !== 'production';
 
 async function init() {
   console.log('starting game server...');
