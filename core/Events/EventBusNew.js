@@ -37,6 +37,7 @@ module.exports = new EventBusNew();
 
 // Сейчас есть
 // player:enter
+// player:exit
 // player:move
 // npc:died
 // npc:item:drop

@@ -25,17 +25,6 @@ class PlayersManager extends EventEmitter {
         await database.deleteCharacterSkills(task.payload.characterObjectId);
       }
     });
-
-    //
-    eventBusNew.on('player:enter', (player) => {
-      player.mSpd = 333; // TODO?
-      const client = player.getClient();
-
-      client.sendPacket(new serverPackets.UserInfo(player));
-      client.sendPacket(new serverPackets.SunRise()); // TimeManager?
-      client.sendPacket(new serverPackets.SystemMessage(34)); // fix
-    });
-    //
   }
 
   getAllPlayers() {
@@ -99,6 +88,14 @@ class PlayersManager extends EventEmitter {
     player.on('cast', (skillId) => {
       this.emit('cast', player, skillId);
     });
+  }
+
+  removePlayer(player) {
+    const index = this._players.findIndex(playerItem => playerItem === player);
+
+    if (index != -1) {
+      this._players.splice(index, 1);
+    }
   }
 
   broadcast(packet) {
