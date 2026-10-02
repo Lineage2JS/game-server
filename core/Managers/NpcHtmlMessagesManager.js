@@ -3,19 +3,19 @@ const path = require('path');
 
 class NpcHtmlMessagesManager {
   constructor() {
-    this._messages = {};
-  }
-
-  getHtmlMessageByFileName(fileName) {
-    return this._messages[fileName];
+    this._htmlMessages = {};
   }
 
   enable() {
     const dir = path.join(process.cwd(), 'datapack/html/npc');
 
     fs.readdirSync(dir).forEach(file => {
-      this._messages[file] = fs.readFileSync(path.join(dir, file), 'utf8');
+      this._htmlMessages[file] = fs.readFileSync(path.join(dir, file), 'utf8');
     });
+  }
+
+  getHtmlMessageByFileName(fileName) {
+    return this._htmlMessages[fileName];
   }
 }
 

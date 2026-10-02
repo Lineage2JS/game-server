@@ -2,17 +2,20 @@ const fs = require('fs');
 const path = require('path');
 
 class CommunityBoardManager {
-  getHtmlMessageByFileName(fileName) {
-    const htmlMessage = this._getFileContentByFileName(fileName);
+  constructor() {
+    this._htmlMessages = {};
+  }
+  
+  enable() {
+    const dir = path.join(process.cwd(), 'datapack/html/community');
 
-    return htmlMessage;
+    fs.readdirSync(dir).forEach(file => {
+      this._htmlMessages[file] = fs.readFileSync(path.join(dir, file), 'utf8');
+    });
   }
 
-  _getFileContentByFileName(fileName) {
-    const dir = path.join(process.cwd(), 'datapack/html/community');
-    const content = fs.readFileSync(path.join(dir, `${fileName}.htm`), 'utf8');
-
-    return content;
+  getHtmlMessageByFileName(fileName) {
+    return this._htmlMessages[fileName];
   }
 }
 
