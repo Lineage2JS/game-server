@@ -9,14 +9,14 @@ class PlayersManager extends EventEmitter {
     super();
     
     this._players = [];
+  }
 
-    this.on('notify', packet => { // nofity = send, broadcast? fix
-      this._players.forEach(player => {
-        const client = player.getClient();
+  broadcastPacket(packet) {
+    this._players.forEach(player => {
+      const client = player.getClient();
 
-        client.sendPacket(packet);
-      })
-    });
+      client.sendPacket(packet);
+    })
   }
 
   getAllPlayers() {
@@ -29,7 +29,7 @@ class PlayersManager extends EventEmitter {
     player.on('move', (targetX, targetY, targetZ) => {
       const packet = new serverPackets.MoveToLocation(player.objectId, targetX, targetY, targetZ, player.x, player.y, player.z);
       
-      this.broadcast(packet);
+      this.broadcastPacket(packet);
       eventBusNew.emit('player:move', player);
     });
 
@@ -88,14 +88,6 @@ class PlayersManager extends EventEmitter {
     if (index != -1) {
       this._players.splice(index, 1);
     }
-  }
-
-  broadcast(packet) {
-    this._players.forEach(player => {
-      const client = player.getClient();
-
-      client.sendPacket(packet);
-    });
   }
 
   getPlayerByClient(client) {

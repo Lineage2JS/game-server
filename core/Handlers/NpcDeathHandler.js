@@ -7,7 +7,7 @@ class NpcDeathHandler {
   handle(data) {
     const npc = data.character;
 
-    playersManager.emit('notify', new serverPackets.StatusUpdate(npc.objectId, [
+    playersManager.broadcastPacket(new serverPackets.StatusUpdate(npc.objectId, [
       {
         id: characterStatusEnums.CUR_HP,
         value: 0,
@@ -17,10 +17,10 @@ class NpcDeathHandler {
         value: npc.maximumHp,
       }
     ]));
-    playersManager.emit('notify', new serverPackets.Die(npc.objectId));
+    playersManager.broadcastPacket(new serverPackets.Die(npc.objectId));
 
     setTimeout(() => {
-      playersManager.emit('notify', new serverPackets.DeleteObject(npc.objectId));
+      playersManager.broadcastPacket(new serverPackets.DeleteObject(npc.objectId));
     }, 3000);
 
     // get exp

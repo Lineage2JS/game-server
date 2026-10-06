@@ -40,7 +40,7 @@ class EntitiesManager {
 
       const packet = new serverPackets.NpcInfo(npc);
       
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     npcManager.on('move', async npc => {
@@ -58,26 +58,26 @@ class EntitiesManager {
       }
       const packet = new serverPackets.MoveToLocation(path, npc.objectId);
       
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     npcManager.on('attack', (npc, objectId) => {
       const entity = this.getEntityByObjectId(objectId);    
       const packet = new serverPackets.Attack(npc, npc.target);
       
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     npcManager.on('changeMove', npc => {
       const packet = new serverPackets.ChangeMoveType(npc.objectId, 1); // running
       
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     npcManager.on('stop', npc => {
       const packet = new serverPackets.StopMove(npc.objectId, npc.x, npc.y, npc.z);
 
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     npcManager.on('damaged', (npc) => {
@@ -92,7 +92,7 @@ class EntitiesManager {
         }
       ]);
 
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     eventBusNew.on('player:enter', this._onPlayerEnter.bind(this));
@@ -105,7 +105,7 @@ class EntitiesManager {
         }
       ]);
       
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     playersManager.on('updateLevel', player => {
@@ -116,8 +116,8 @@ class EntitiesManager {
         }
       ]);
       
-      playersManager.emit('notify', packet);
-      playersManager.emit('notify', new serverPackets.SocialAction(player.objectId, 15)); // fix
+      playersManager.broadcastPacket(packet);
+      playersManager.broadcastPacket(new serverPackets.SocialAction(player.objectId, 15)); // fix
     });
 
     playersManager.on('pickup', (player, objectId) => {
@@ -126,19 +126,19 @@ class EntitiesManager {
       {
         const packet = new serverPackets.GetItem(player, dropItem); // fix Может подписатся на event окончание доставки пактеа?
       
-        playersManager.emit('notify', packet);
+        playersManager.broadcastPacket(packet);
 
         player.addItem(dropItem.getItem());
       }
 
       {
-        playersManager.emit('notify', new serverPackets.ItemList(player.getItems()));
+        playersManager.broadcastPacket(new serverPackets.ItemList(player.getItems()));
       }
 
       {
         const packet = new serverPackets.DeleteObject(dropItem.objectId);
       
-        playersManager.emit('notify', packet);
+        playersManager.broadcastPacket(packet);
       }
     });
 
@@ -162,7 +162,7 @@ class EntitiesManager {
         }
       ]);
     
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     playersManager.on('damaged', (player) => {
@@ -177,11 +177,11 @@ class EntitiesManager {
         }
       ]);
     
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     playersManager.on('died', (player) => {
-      playersManager.emit('notify', new serverPackets.StatusUpdate(player.objectId, [
+      playersManager.broadcastPacket(new serverPackets.StatusUpdate(player.objectId, [
         {
           id: characterStatusEnums.CUR_HP,
           value: 0,
@@ -191,7 +191,7 @@ class EntitiesManager {
           value: player.maximumHp,
         }
       ]));
-      playersManager.emit('notify', new serverPackets.Die(player.objectId));
+      playersManager.broadcastPacket(new serverPackets.Die(player.objectId));
     });
 
     playersManager.on('dropItem', async (player, objectId, x, y, z) => {
@@ -203,8 +203,8 @@ class EntitiesManager {
 
       this._entities.push(droppedItem);
 
-      playersManager.emit('notify', new serverPackets.ItemList(player.getItems()));
-      playersManager.emit('notify', new serverPackets.DropItem(player, {
+      playersManager.broadcastPacket(new serverPackets.ItemList(player.getItems()));
+      playersManager.broadcastPacket(new serverPackets.DropItem(player, {
         objectId: droppedItem.objectId,
         itemId: droppedItem.itemId,
         x: droppedItem.x,
@@ -216,19 +216,19 @@ class EntitiesManager {
     playersManager.on('attack', async (player, targetObjectId) => {
       const packet = new serverPackets.Attack(player, targetObjectId, false);
 
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     playersManager.on('startAttack', async (player) => {
       const packet = new serverPackets.AutoAttackStart(player.objectId);
 
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     playersManager.on('endAttack', async (player) => {
       const packet = new serverPackets.AutoAttackStop(player.objectId);
 
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     playersManager.on('cast', async (player, skillId) => {
@@ -239,7 +239,7 @@ class EntitiesManager {
         reuseDelay: 6000 //13
       });
 
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
 
       {
         const packet = new serverPackets.MagicSkillLaunched(player, {
@@ -247,10 +247,10 @@ class EntitiesManager {
           level: 1
         });
 
-        playersManager.emit('notify', packet);
+        playersManager.broadcastPacket(packet);
       }
 
-      playersManager.emit('notify', new serverPackets.SetupGauge(0, 4000));
+      playersManager.broadcastPacket(new serverPackets.SetupGauge(0, 4000));
     });
 
     botsManager.on('spawn', bot => {
@@ -260,7 +260,7 @@ class EntitiesManager {
     botsManager.on('attack', bot => {
       const packet = new serverPackets.Attack(bot, bot.target);
       
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     botsManager.on('move', bot => {
@@ -279,20 +279,20 @@ class EntitiesManager {
       
       const packet = new serverPackets.MoveToLocation(path, bot.objectId);
       
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     botsManager.on('pickup', (bot, item) => {
       {
         const packet = new serverPackets.GetItem(bot, item); // fix Может подписатся на event окончание доставки пактеа?
       
-        playersManager.emit('notify', packet);
+        playersManager.broadcastPacket(packet);
       }
 
       {
         const packet = new serverPackets.DeleteObject(item.objectId);
       
-        playersManager.emit('notify', packet);
+        playersManager.broadcastPacket(packet);
       }
     });
 
@@ -300,13 +300,13 @@ class EntitiesManager {
       {
         const packet = new serverPackets.NpcHtmlMessage(html);
       
-        playersManager.emit('notify', packet);
+        playersManager.broadcastPacket(packet);
       }
 
       {
         const packet = new serverPackets.ActionFailed(); // fix?
       
-        playersManager.emit('notify', packet);
+        playersManager.broadcastPacket(packet);
       }
     });
 
@@ -315,25 +315,25 @@ class EntitiesManager {
 
       const packet = new serverPackets.QuestList(talker.getQuests());
     
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     aiManager.on('showQuestionMark', (talker, questionMarkId) => {
       const packet = new serverPackets.ShowTutorialMark(questionMarkId);
     
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     aiManager.on('showRadar', (talker, x, y, z) => {
       const packet = new serverPackets.ShowRadar(x, y, z);
     
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     aiManager.on('soundEffect', (talker, soundName) => {
       const packet = new serverPackets.PlaySound(soundName);
       
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     aiManager.on('giveItem', async (talker, itemName, itemCount) => {
@@ -345,7 +345,7 @@ class EntitiesManager {
       const items = talker.getItems();
       const packet = new serverPackets.ItemList(items);
 
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     aiManager.on('deleteItem', (talker, itemName, itemCount) => {
@@ -354,7 +354,7 @@ class EntitiesManager {
       const items = talker.getItems();
       const packet = new serverPackets.ItemList(items);
 
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     aiManager.on('sell', async (talker, sellList, shopName, fnBuy) => {
@@ -370,7 +370,7 @@ class EntitiesManager {
 
       const packet = new serverPackets.BuyList(talker.getAdenaCount(), items);
 
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     aiManager.on('showSkillList', async (talker) => {
@@ -384,7 +384,7 @@ class EntitiesManager {
         }
       ]);
 
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
 
     aiManager.on('teleport', async (talker, position) => {
@@ -401,7 +401,7 @@ class EntitiesManager {
       const message = `<html><head><body>Region where teleporting is possible<br><br>${teleportLinks}</body></html>`;
       const packet = new serverPackets.NpcHtmlMessage(message);
 
-      playersManager.emit('notify', packet);
+      playersManager.broadcastPacket(packet);
     });
   }
 

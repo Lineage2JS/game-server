@@ -52,7 +52,7 @@ class NpcDropItemHandler {
       const droppedItem = await dropItemsManager.createDropItem(createdItem, droppedItemX, droppedItemY, npc.z + 300);
 
       entitiesManager.addEntity(droppedItem);
-      playersManager.emit('notify', new serverPackets.DropItem(npc, {
+      playersManager.broadcastPacket(new serverPackets.DropItem(npc, {
         objectId: droppedItem.objectId,
         itemId: droppedItem.itemId,
         itemCount: droppedItem.itemCount,
