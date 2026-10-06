@@ -6,6 +6,7 @@ class SchedulerManager extends EventEmmiter {
     super();
 
     this._tasks = [];
+    this.on('completed', this._onCompleted);
   }
 
   async createTask(task) {
@@ -13,11 +14,7 @@ class SchedulerManager extends EventEmmiter {
   }
 
   async reloadTasks() {
-    const data = await database.getScheduledTasks();
-
-    //
-    this._tasks = data;
-    //
+    this._tasks = await database.getScheduledTasks();
   }
 
   async enable() {
@@ -45,6 +42,14 @@ class SchedulerManager extends EventEmmiter {
     await this.reloadTasks();
 
     setTimeout(this._run.bind(this), 1000);
+  }
+
+  async _onCompleted(task) {
+    if (task.type === 'character-deletion') {
+      await database.deleteCharacter(task.payload.characterObjectId);
+      await database.deleteCharacterItems(task.payload.characterObjectId);
+      await database.deleteCharacterSkills(task.payload.characterObjectId);
+    }
   }
 }
 
