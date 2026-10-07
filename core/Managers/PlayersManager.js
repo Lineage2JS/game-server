@@ -23,7 +23,7 @@ class PlayersManager extends EventEmitter {
     return this._players;
   }
 
-  add(player) {
+  addPlayer(player) {
     this._players.push(player);
 
     player.on('move', (targetX, targetY, targetZ) => {

@@ -30,8 +30,7 @@ class Server {
 
     client.setPlayer(player);
     player.setClient(client);
-
-    playersManager.add(player);
+    playersManager.addPlayer(player);
   }
 }
 
