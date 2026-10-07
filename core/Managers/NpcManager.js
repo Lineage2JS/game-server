@@ -3,17 +3,18 @@ const Npc = require('./../Models/Npc');
 const database = require('./../../database');
 const npcsList = require('./../../datapack/npcsList.json');
 const spawnList = require('./../../datapack/spawnList.json');
+const ai = require('./../../datapack/ai');
 
 class NpcManager extends EventEmitter {
   constructor() {
     super();    
 
-    this._npcs = [];
+    this._npcs = new Map();
   }
 
   spawn(npc) {
-    this._npcs.push(npc);
-    process.stdout.write(`\r[NPS] ${this._npcs.length}`);
+    this._npcs.set(npc.objectId, npc);
+    process.stdout.write(`\r[NPS] ${this._npcs.size}`);
     this.emit('spawn', npc);
   }
 
@@ -30,139 +31,23 @@ class NpcManager extends EventEmitter {
         const npcData = npcsList.find(data => data.name === npcItem.name);
 
         for(let k = 0; k < npcItem.total; k++) {
-          const npc = new Npc();
-
-          npc.on('move', () => {
-            this.emit('move', npc);
-          });
-
-          npc.on('attack', (objectId) => {
-            this.emit('attack', npc, objectId);
-          });
-
-          npc.on('stop', () => {
-            this.emit('stop', npc);
-          });
-
-          npc.on('changeMove', () => {
-            this.emit('changeMove', npc);
-          });
-
-          npc.on('damaged', () => {
-            this.emit('damaged', npc);
-          });
-
-          npc.on('died', () => {
-            this.emit('died', npc);
-            this.remove(npc);
-            
-            setTimeout(() => {
-              this.spawnNpc(npc.id, spawnData['territory']['coordinates']);
-            }, 2000);
-          });
-
-          npc.updateParams(npcData);
-
-          npc.baseAttackSpeed = 330; // fix remove брать из датапака
+          const npc = await this._createNpc(npcData, npcItem, spawnData);
           
-          npc.objectId = await database.getNextObjectId();
-          
-          let positions;
-
-          if (npcItem.pos === 'anywhere') {
-            positions = this._getRandomPos(spawnData['territory']['coordinates']);
-          }
-
-          if (Array.isArray(npcItem.pos)) {
-            npc.x = npcItem.pos[0];
-            npc.y = npcItem.pos[1];
-            npc.z = npcItem.pos[2];
-            npc.heading = npcItem.pos[3];
-          } else {
-            npc.x = positions[0];
-            npc.y = positions[1];
-            npc.z = (spawnData['territory']['coordinates'][0]['zMin'] + spawnData['territory']['coordinates'][0]['zMax']) / 2;
-          }
-
-          npc.maximumHp = npc.hp; // fix
-          npc.characterName = npcData.name;
-          //
-          const ai = require('./../../datapack/ai');
-          const AiInstance = ai[npcData.ai.name];
-
-          if (AiInstance) {
-            npc.ai = new AiInstance(npcData.ai.props);
-          }
-          
-          //
-          this.spawn(npc);
-
+          // enable npc
           if (npc.type === 'warrior') {
-            npc.coordinates = spawnData['territory']['coordinates'];
-
             npc.enable(); // fix. По AI ждать 5 сек
           }
+          
+          this.spawn(npc);
         }
       } 
     }
 
-    console.log('\nspawn end')
-  }
-
-  async spawnNpc(id, coordinates) {
-    const npcData = npcsList.find(npcItem => npcItem.id === id);
-    const npc = new Npc();
-
-    npc.updateParams(npcData);
-
-    npc.on('move', () => {
-      this.emit('move', npc);
-    });
-
-    npc.on('attack', (objectId) => {
-      this.emit('attack', npc, objectId);
-    });
-
-    npc.on('stop', () => {
-      this.emit('stop', npc);
-    });
-
-    npc.on('changeMove', () => {
-      this.emit('changeMove', npc);
-    });
-
-    npc.on('damaged', () => {
-      this.emit('damaged', npc);
-    });
-
-    npc.on('died', () => {
-      this.emit('died', npc);
-      this.remove(npc);
-      
-      setTimeout(() => {
-        this.spawnNpc(npc.id, coordinates);
-      }, 2000);
-    });
-
-    npc.objectId = await database.getNextObjectId();
-        
-    const positions = this._getRandomPos(spawnList[0]['territory']['coordinates']); // fix
-
-    npc.coordinates = coordinates;
-
-    npc.x = positions[0];
-    npc.y = positions[1];
-    npc.z = (coordinates[0]['zMin'] + coordinates[0]['zMax']) / 2;;
-    npc.maximumHp = npc.hp; // fix
-
-    this.spawn(npc);
-    npc.enable();
+    console.log('\nspawn end');
   }
 
   remove(npc) { // fix так же удалять из EntitiesManager
-    const npcRemove = this._npcs.indexOf(npc);
-
-    this._npcs.splice(npcRemove, 1);
+    return this._npcs.delete(npc.objectId);
   }
   
   getSpawnedNpcs() {
@@ -170,15 +55,72 @@ class NpcManager extends EventEmitter {
   }
 
   getNpcByObjectId(objectId) {
-    const npc = this._npcs.find(npc => npc.objectId === objectId);
+    return this._npcs.get(objectId);
+  }
+
+  async _createNpc(npcData, npcItem, spawnData) {
+    const npc = new Npc();
+
+    npc.updateParams(npcData);
+    npc.objectId = await database.getNextObjectId();
+    npc.maximumHp = npc.hp;
+    npc.characterName = npcData.name;
+    this._bindNpcEvents(npc);
+
+    // setup positions
+    let positions;
+
+    if (npcItem.pos === 'anywhere') {
+      positions = this._getRandomPos(spawnData['territory']['coordinates']);
+    }
+
+    if (Array.isArray(npcItem.pos)) {
+      npc.x = npcItem.pos[0];
+      npc.y = npcItem.pos[1];
+      npc.z = npcItem.pos[2];
+      npc.heading = npcItem.pos[3];
+    } else {
+      npc.x = positions[0];
+      npc.y = positions[1];
+      npc.z = (spawnData['territory']['coordinates'][0]['zMin'] + spawnData['territory']['coordinates'][0]['zMax']) / 2;
+    }
+
+    // setup AI
+    const AiInstance = ai[npcData.ai.name];
+
+    if (AiInstance) {
+      npc.ai = new AiInstance(npcData.ai.props);
+    }
+    
+    npc.coordinates = spawnData['territory']['coordinates'];
 
     return npc;
   }
 
-  getNpcById(id) {
-    const npc = this._npcs.find(npc => npc.id === id);
-
-    return npc;
+  _bindNpcEvents(npc) {
+    npc.on('move', () => {
+      this.emit('move', npc);
+    });
+    npc.on('attack', (objectId) => {
+      this.emit('attack', npc, objectId);
+    });
+    npc.on('stop', () => {
+      this.emit('stop', npc);
+    });
+    npc.on('changeMove', () => {
+      this.emit('changeMove', npc);
+    });
+    npc.on('damaged', () => {
+      this.emit('damaged', npc);
+    });
+    npc.on('died', () => {
+      this.emit('died', npc);
+      this.remove(npc);
+      
+      // setTimeout(() => {
+      //   this.spawnNpc(npc.id, coordinates);
+      // }, 2000);
+    });
   }
 
   _getRandomPos(coordinates) {
