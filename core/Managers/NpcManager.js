@@ -14,8 +14,8 @@ class NpcManager extends EventEmitter {
 
   spawn(npc) {
     this._npcs.set(npc.objectId, npc);
-    process.stdout.write(`\r[NPS] ${this._npcs.size}`);
     this.emit('spawn', npc);
+    process.stdout.write(`\r[NPS] ${this._npcs.size}`);
   }
 
   async enable() {
@@ -27,29 +27,29 @@ class NpcManager extends EventEmitter {
       const spawnData = spawnList[i];
 
       for(let j = 0; j < spawnData['npcMakers']['npcs'].length; j++) {
-        const npcItem = spawnData['npcMakers']['npcs'][j];
-        const npcData = npcsList.find(data => data.name === npcItem.name);
+        const spawnItem = spawnData['npcMakers']['npcs'][j];
+        const npcData = npcsList.find(data => data.name === spawnItem.name);
 
-        for(let k = 0; k < npcItem.total; k++) {
-          const npc = await this._createNpc(npcData, npcItem, spawnData);
+        for(let k = 0; k < spawnItem.total; k++) {
+          const npc = await this._createNpc(npcData, spawnItem, spawnData);
           
-          // enable npc
-          if (npc.type === 'warrior') {
-            npc.enable(); // fix. По AI ждать 5 сек
-          }
-          
+          this.enableNpc(npc);
           this.spawn(npc);
         }
       } 
     }
-
-    console.log('\nspawn end');
   }
 
-  remove(npc) { // fix так же удалять из EntitiesManager
+  removeNpc(npc) { // fix так же удалять из EntitiesManager
     return this._npcs.delete(npc.objectId);
   }
   
+  enableNpc(npc) {
+    if (npc.type === 'warrior') {
+      npc.enable();
+    }
+  }
+
   getSpawnedNpcs() {
     return this._npcs;
   }
@@ -58,7 +58,7 @@ class NpcManager extends EventEmitter {
     return this._npcs.get(objectId);
   }
 
-  async _createNpc(npcData, npcItem, spawnData) {
+  async _createNpc(npcData, spawnItem, spawnData) {
     const npc = new Npc();
 
     npc.updateParams(npcData);
@@ -66,33 +66,8 @@ class NpcManager extends EventEmitter {
     npc.maximumHp = npc.hp;
     npc.characterName = npcData.name;
     this._bindNpcEvents(npc);
-
-    // setup positions
-    let positions;
-
-    if (npcItem.pos === 'anywhere') {
-      positions = this._getRandomPos(spawnData['territory']['coordinates']);
-    }
-
-    if (Array.isArray(npcItem.pos)) {
-      npc.x = npcItem.pos[0];
-      npc.y = npcItem.pos[1];
-      npc.z = npcItem.pos[2];
-      npc.heading = npcItem.pos[3];
-    } else {
-      npc.x = positions[0];
-      npc.y = positions[1];
-      npc.z = (spawnData['territory']['coordinates'][0]['zMin'] + spawnData['territory']['coordinates'][0]['zMax']) / 2;
-    }
-
-    // setup AI
-    const AiInstance = ai[npcData.ai.name];
-
-    if (AiInstance) {
-      npc.ai = new AiInstance(npcData.ai.props);
-    }
-    
-    npc.coordinates = spawnData['territory']['coordinates'];
+    this._setupPositions(npc, spawnItem, spawnData);
+    this._setupAi(npc, npcData);
 
     return npc;
   }
@@ -115,12 +90,41 @@ class NpcManager extends EventEmitter {
     });
     npc.on('died', () => {
       this.emit('died', npc);
-      this.remove(npc);
+      this.removeNpc(npc);
       
       // setTimeout(() => {
       //   this.spawnNpc(npc.id, coordinates);
       // }, 2000);
     });
+  }
+
+  _setupPositions(npc, spawnItem, spawnData) {
+    let positions;
+
+    if (spawnItem.pos === 'anywhere') {
+      positions = this._getRandomPos(spawnData['territory']['coordinates']);
+    }
+
+    if (Array.isArray(spawnItem.pos)) {
+      npc.x = spawnItem.pos[0];
+      npc.y = spawnItem.pos[1];
+      npc.z = spawnItem.pos[2];
+      npc.heading = spawnItem.pos[3];
+    } else {
+      npc.x = positions[0];
+      npc.y = positions[1];
+      npc.z = (spawnData['territory']['coordinates'][0]['zMin'] + spawnData['territory']['coordinates'][0]['zMax']) / 2;
+    }
+
+    npc.coordinates = spawnData['territory']['coordinates']; // setup Coordinates?
+  }
+
+  _setupAi(npc, npcData) {
+    const AiInstance = ai[npcData.ai.name];
+
+    if (AiInstance) {
+      npc.ai = new AiInstance(npcData.ai.props);
+    }
   }
 
   _getRandomPos(coordinates) {
