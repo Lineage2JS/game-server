@@ -1,7 +1,7 @@
 const EventEmitter = require('events');
 const Npc = require('./../Models/Npc');
+const npcTable = require('./../tables/NpcTable');
 const database = require('./../../database');
-const npcsList = require('./../../datapack/npcsList.json');
 const spawnList = require('./../../datapack/spawnList.json');
 const ai = require('./../../datapack/ai');
 
@@ -28,7 +28,7 @@ class NpcManager extends EventEmitter {
 
       for(let j = 0; j < spawnData['npcMakers']['npcs'].length; j++) {
         const spawnItem = spawnData['npcMakers']['npcs'][j];
-        const npcData = npcsList.find(data => data.name === spawnItem.name);
+        const npcData = npcTable.getNpcByName(spawnItem.name);
 
         for(let k = 0; k < spawnItem.total; k++) {
           const npc = await this._createNpc(npcData, spawnItem, spawnData);
@@ -38,6 +38,8 @@ class NpcManager extends EventEmitter {
         }
       } 
     }
+
+    process.stdout.write(`\n`);
   }
 
   removeNpc(npc) { // fix так же удалять из EntitiesManager
