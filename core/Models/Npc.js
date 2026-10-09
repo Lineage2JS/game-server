@@ -44,8 +44,6 @@ class Npc extends Character {
     this.getMagicalSpeed = 333; // fix
     
     //
-    this.coordinates = null;
-
     this.lastAttackTimestamp = 0;
 
     //
@@ -56,6 +54,7 @@ class Npc extends Character {
     this.lastRegenerateTimestamp = 0;
     this.lastUpdateTimestamp = 0;
     this._currentState = '';
+    this._spawnPoints = null;
     //
   }
 
@@ -65,7 +64,7 @@ class Npc extends Character {
 
   enable() {
     //
-    const positions = this._getRandomPos(this.coordinates);
+    const positions = this._getRandomPos(this._spawnPoints);
 
     const path = {
       target: {
@@ -149,6 +148,10 @@ class Npc extends Character {
     }
   }
 
+  setSpawnPoints(spawnPoints) {
+    this._spawnPoints = spawnPoints;
+  }
+
   regenerate() {
     if ((Date.now() - this.lastRegenerateTimestamp) > 3000) {
       this.hp += 1;
@@ -159,9 +162,9 @@ class Npc extends Character {
   }
 
   // create math utils
-  _getRandomPos(coordinates) {
-    let xp = coordinates.map(i => i.x);
-    let yp = coordinates.map(i => i.y);
+  _getRandomPos(points) {
+    let xp = points.map(i => i.x);
+    let yp = points.map(i => i.y);
 		let max = { x: Math.max(...xp), y: Math.max(...yp) };
 		let min = { x: Math.min(...xp), y: Math.min(...yp) };
 		let x;

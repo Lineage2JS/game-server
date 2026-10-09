@@ -1,8 +1,8 @@
 [
   {
-    "territory": {
+    "spawnZone": {
       "id": "NPC_t17_25_030917_01",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -90916,
           "y": 248332,
@@ -29,26 +29,28 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "rayon",
-          "pos": [
-            -90821,
-            248447,
-            -3571,
-            55000
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "rayon",
+        "pos": [
+          -90821,
+          248447,
+          -3571,
+          55000
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "bow_guard_03",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -87950,
           "y": 250540,
@@ -75,37 +77,39 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "bowman",
-          "pos": [
-            -87847,
-            250564,
-            -3616,
-            4096
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "bowman",
-          "pos": [
-            -87406,
-            250079,
-            -3600,
-            8192
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "bowman",
+        "pos": [
+          -87847,
+          250564,
+          -3616,
+          4096
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "bowman",
+        "pos": [
+          -87406,
+          250079,
+          -3600,
+          8192
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "bow_guard_04",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -75316,
           "y": 254476,
@@ -132,26 +136,28 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "bowman",
-          "pos": [
-            -75242,
-            254590,
-            -3310,
-            45056
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "bowman",
+        "pos": [
+          -75242,
+          254590,
+          -3310,
+          45056
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "bow_guard_05",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -76548,
           "y": 252428,
@@ -178,26 +184,28 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "bowman",
-          "pos": [
-            -76467,
-            252542,
-            -3326,
-            53248
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "bowman",
+        "pos": [
+          -76467,
+          252542,
+          -3326,
+          53248
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "bow_guard_06",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -77444,
           "y": 250908,
@@ -224,26 +232,28 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "bowman",
-          "pos": [
-            -77330,
-            251015,
-            -3420,
-            36864
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "bowman",
+        "pos": [
+          -77330,
+          251015,
+          -3420,
+          36864
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "bow_guard_07",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -78244,
           "y": 250540,
@@ -270,26 +280,28 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "bowman",
-          "pos": [
-            -78143,
-            250653,
-            -3546,
-            45056
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "bowman",
+        "pos": [
+          -78143,
+          250653,
+          -3546,
+          45056
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "17_25_030704_01",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -71647,
           "y": 258283,
@@ -316,70 +328,72 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "roien",
-          "pos": [
-            -71073,
-            258711,
-            -3098,
-            41800
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "carl",
-          "pos": [
-            -71126,
-            258428,
-            -3104,
-            32768
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "guts",
-          "pos": [
-            -71350,
-            258616,
-            -3104,
-            49152
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "langu",
-          "pos": [
-            -71572,
-            258357,
-            -3107,
-            0
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "maslin",
-          "pos": [
-            -71345,
-            258165,
-            -3104,
-            16384
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "roien",
+        "pos": [
+          -71073,
+          258711,
+          -3098,
+          41800
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "carl",
+        "pos": [
+          -71126,
+          258428,
+          -3104,
+          32768
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "guts",
+        "pos": [
+          -71350,
+          258616,
+          -3104,
+          49152
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "langu",
+        "pos": [
+          -71572,
+          258357,
+          -3107,
+          0
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "maslin",
+        "pos": [
+          -71345,
+          258165,
+          -3104,
+          16384
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "17_25_030704_02",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -84164,
           "y": 243116,
@@ -406,26 +420,28 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "guide_human_cnacelot",
-          "pos": [
-            -84081,
-            243227,
-            -3723,
-            9000
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "guide_human_cnacelot",
+        "pos": [
+          -84081,
+          243227,
+          -3723,
+          9000
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "17_25_NPC_030514_01",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -85375,
           "y": 244469,
@@ -452,26 +468,28 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "rylith",
-          "pos": [
-            -85301,
-            244587,
-            -3725,
-            24576
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "rylith",
+        "pos": [
+          -85301,
+          244587,
+          -3725,
+          24576
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "17_25_NPC_030514_02",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -84612,
           "y": 245340,
@@ -498,26 +516,28 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "quilt",
-          "pos": [
-            -84516,
-            245449,
-            -3714,
-            40960
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "quilt",
+        "pos": [
+          -84516,
+          245449,
+          -3714,
+          40960
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "17_25_1129_NPC01",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -86252,
           "y": 240924,
@@ -544,37 +564,39 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "ken",
-          "pos": [
-            -86322,
-            241215,
-            -3727,
-            42500
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "hank",
-          "pos": [
-            -85964,
-            240947,
-            -3727,
-            42500
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "ken",
+        "pos": [
+          -86322,
+          241215,
+          -3727,
+          42500
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "hank",
+        "pos": [
+          -85964,
+          240947,
+          -3727,
+          42500
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "17_25_1129_NPC02",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -86370,
           "y": 244372,
@@ -601,37 +623,39 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "chip",
-          "pos": [
-            -86328,
-            244448,
-            -3724,
-            25500
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "johnson",
-          "pos": [
-            -86114,
-            244682,
-            -3727,
-            25500
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "chip",
+        "pos": [
+          -86328,
+          244448,
+          -3724,
+          25500
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "johnson",
+        "pos": [
+          -86114,
+          244682,
+          -3727,
+          25500
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "17_25_1129_NPC03",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -82660,
           "y": 244764,
@@ -658,37 +682,39 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "arnold",
-          "pos": [
-            -82319,
-            244709,
-            -3727,
-            9000
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "abel",
-          "pos": [
-            -82659,
-            244992,
-            -3717,
-            9000
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "arnold",
+        "pos": [
+          -82319,
+          244709,
+          -3727,
+          9000
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "abel",
+        "pos": [
+          -82659,
+          244992,
+          -3717,
+          9000
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "17_25_1129_NPC04",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -82536,
           "y": 241136,
@@ -715,37 +741,39 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "lee",
-          "pos": [
-            -82515,
-            241221,
-            -3728,
-            58500
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "gilbert",
-          "pos": [
-            -82236,
-            241573,
-            -3728,
-            58500
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "lee",
+        "pos": [
+          -82515,
+          241221,
+          -3728,
+          58500
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "gilbert",
+        "pos": [
+          -82236,
+          241573,
+          -3728,
+          58500
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "17_25_1129_NPC05",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -83322,
           "y": 242436,
@@ -772,59 +800,61 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "bitz",
-          "pos": [
-            -83326,
-            242964,
-            -3718,
-            55344
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "gwyn",
-          "pos": [
-            -83020,
-            242553,
-            -3718,
-            11200
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "pin",
-          "pos": [
-            -82809,
-            242751,
-            -3718,
-            36864
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "minx",
-          "pos": [
-            -83175,
-            243065,
-            -3718,
-            45956
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "bitz",
+        "pos": [
+          -83326,
+          242964,
+          -3718,
+          55344
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "gwyn",
+        "pos": [
+          -83020,
+          242553,
+          -3718,
+          11200
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "pin",
+        "pos": [
+          -82809,
+          242751,
+          -3718,
+          36864
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "minx",
+        "pos": [
+          -83175,
+          243065,
+          -3718,
+          45956
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "17_25_1104_NPC01",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -92692,
           "y": 253996,
@@ -851,26 +881,28 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "matheo",
-          "pos": [
-            -92622,
-            254108,
-            -3304,
-            0
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "matheo",
+        "pos": [
+          -92622,
+          254108,
+          -3304,
+          0
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "17_25_1104_NPC02",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -91098,
           "y": 247984,
@@ -897,48 +929,50 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "gallin",
-          "pos": [
-            -91035,
-            248049,
-            -3558,
-            6000
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "guflang",
-          "pos": [
-            -90544,
-            248065,
-            -3564,
-            22500
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "doff",
-          "pos": [
-            -90391,
-            248166,
-            -3564,
-            22500
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "gallin",
+        "pos": [
+          -91035,
+          248049,
+          -3558,
+          6000
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "guflang",
+        "pos": [
+          -90544,
+          248065,
+          -3564,
+          22500
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "doff",
+        "pos": [
+          -90391,
+          248166,
+          -3564,
+          22500
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "17_25_1104_NPC03",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -97204,
           "y": 258860,
@@ -965,26 +999,28 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "philly",
-          "pos": [
-            -97131,
-            258946,
-            -3622,
-            0
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "philly",
+        "pos": [
+          -97131,
+          258946,
+          -3622,
+          0
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "17_25_1104_NPC04",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -88419,
           "y": 241816,
@@ -1011,169 +1047,171 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "silvia",
-          "pos": [
-            -83789,
-            240799,
-            -3717,
-            32768
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "wilph",
-          "pos": [
-            -81512,
-            243424,
-            -3720,
-            38000
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "rant",
-          "pos": [
-            -81895,
-            243917,
-            -3721,
-            41500
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "rollfnan",
-          "pos": [
-            -81840,
-            243534,
-            -3721,
-            5000
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "blacksmith_alltran",
-          "pos": [
-            -85026,
-            242689,
-            -3729,
-            57344
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "rapunzel",
-          "pos": [
-            -84108,
-            244604,
-            -3729,
-            40960
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "yohan",
-          "pos": [
-            -84981,
-            244764,
-            -3726,
-            24576
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "harry",
-          "pos": [
-            -84965,
-            245222,
-            -3726,
-            57000
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "potter",
-          "pos": [
-            -85186,
-            245001,
-            -3726,
-            57000
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "baul",
-          "pos": [
-            -84729,
-            245001,
-            -3726,
-            24576
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "daring",
-          "pos": [
-            -84436,
-            242793,
-            -3729,
-            42000
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "cristel",
-          "pos": [
-            -82041,
-            242718,
-            -3725,
-            20480
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "elias",
-          "pos": [
-            -84057,
-            242832,
-            -3729,
-            59000
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "voni",
-          "pos": [
-            -83163,
-            243560,
-            -3728,
-            20480
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "silvia",
+        "pos": [
+          -83789,
+          240799,
+          -3717,
+          32768
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "wilph",
+        "pos": [
+          -81512,
+          243424,
+          -3720,
+          38000
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "rant",
+        "pos": [
+          -81895,
+          243917,
+          -3721,
+          41500
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "rollfnan",
+        "pos": [
+          -81840,
+          243534,
+          -3721,
+          5000
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "blacksmith_alltran",
+        "pos": [
+          -85026,
+          242689,
+          -3729,
+          57344
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "rapunzel",
+        "pos": [
+          -84108,
+          244604,
+          -3729,
+          40960
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "yohan",
+        "pos": [
+          -84981,
+          244764,
+          -3726,
+          24576
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "harry",
+        "pos": [
+          -84965,
+          245222,
+          -3726,
+          57000
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "potter",
+        "pos": [
+          -85186,
+          245001,
+          -3726,
+          57000
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "baul",
+        "pos": [
+          -84729,
+          245001,
+          -3726,
+          24576
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "daring",
+        "pos": [
+          -84436,
+          242793,
+          -3729,
+          42000
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "cristel",
+        "pos": [
+          -82041,
+          242718,
+          -3725,
+          20480
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "elias",
+        "pos": [
+          -84057,
+          242832,
+          -3729,
+          59000
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "voni",
+        "pos": [
+          -83163,
+          243560,
+          -3728,
+          20480
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "17_25_1104_NPC05",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -79060,
           "y": 240236,
@@ -1200,26 +1238,28 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "rockswell",
-          "pos": [
-            -78939,
-            240305,
-            -3443,
-            28672
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "rockswell",
+        "pos": [
+          -78939,
+          240305,
+          -3443,
+          28672
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "17_25_1104_NPC06",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -86662,
           "y": 242738,
@@ -1246,37 +1286,39 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "lector",
-          "pos": [
-            -86385,
-            243267,
-            -3717,
-            52000
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "jackson",
-          "pos": [
-            -86733,
-            242918,
-            -3717,
-            61440
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "lector",
+        "pos": [
+          -86385,
+          243267,
+          -3717,
+          52000
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "jackson",
+        "pos": [
+          -86733,
+          242918,
+          -3717,
+          61440
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "17_25_1112_NPC01",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -84308,
           "y": 240300,
@@ -1303,26 +1345,28 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "katrine",
-          "pos": [
-            -84204,
-            240403,
-            -3717,
-            14000
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "katrine",
+        "pos": [
+          -84204,
+          240403,
+          -3717,
+          14000
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "17_25_1130_NPC01",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -90879,
           "y": 248415,
@@ -1349,26 +1393,28 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "ria",
-          "pos": [
-            -90638,
-            248586,
-            -3564,
-            55500
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "ria",
+        "pos": [
+          -90638,
+          248586,
+          -3564,
+          55500
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "dg_teleport_NPC01",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -113636,
           "y": 235420,
@@ -1395,26 +1441,28 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "gatekeeper_ciffon",
-          "pos": [
-            -113490,
-            235526,
-            -3646,
-            57800
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "gatekeeper_ciffon",
+        "pos": [
+          -113490,
+          235526,
+          -3646,
+          57800
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "dg_teleport_NPC02",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": 49288,
           "y": 248388,
@@ -1441,26 +1489,28 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "gatekeeper_tiramisu",
-          "pos": [
-            49328,
-            248416,
-            -5952,
-            24576
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "gatekeeper_tiramisu",
+        "pos": [
+          49328,
+          248416,
+          -5952,
+          24576
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_001",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -77220,
           "y": 253656,
@@ -1499,27 +1549,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "tuto_keltir",
-          "pos": "anywhere",
-          "total": 15,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elpy",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "tuto_keltir",
+        "pos": "anywhere",
+        "total": 15,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elpy",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_002",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -73328,
           "y": 253440,
@@ -1546,27 +1598,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "tuto_keltir",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elpy",
-          "pos": "anywhere",
-          "total": 1,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "tuto_keltir",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elpy",
+        "pos": "anywhere",
+        "total": 1,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_003",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -76472,
           "y": 253732,
@@ -1593,27 +1647,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "tuto_keltir",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elpy",
-          "pos": "anywhere",
-          "total": 1,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "tuto_keltir",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elpy",
+        "pos": "anywhere",
+        "total": 1,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_003_01",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -71020,
           "y": 254768,
@@ -1640,27 +1696,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "tuto_keltir",
-          "pos": "anywhere",
-          "total": 6,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elpy",
-          "pos": "anywhere",
-          "total": 1,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "tuto_keltir",
+        "pos": "anywhere",
+        "total": 6,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elpy",
+        "pos": "anywhere",
+        "total": 1,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_004",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -83700,
           "y": 246444,
@@ -1699,33 +1757,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "elpy",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        },
-        {
-          "name": "young_keltir",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        },
-        {
-          "name": "keltir",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "elpy",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      },
+      {
+        "name": "young_keltir",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      },
+      {
+        "name": "keltir",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_005",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -82900,
           "y": 246312,
@@ -1752,33 +1812,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "young_keltir",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "keltir",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elder_keltir",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "young_keltir",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "keltir",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elder_keltir",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_006",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -82192,
           "y": 248184,
@@ -1811,27 +1873,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "keltir",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elder_keltir",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "keltir",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elder_keltir",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_007",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -82956,
           "y": 248876,
@@ -1858,33 +1922,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "keltir",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elder_keltir",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "wolf",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "keltir",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elder_keltir",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "wolf",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_008",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -87752,
           "y": 250932,
@@ -1917,33 +1983,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "tuto_keltir",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        },
-        {
-          "name": "young_keltir",
-          "pos": "anywhere",
-          "total": 8,
-          "respawn": "15sec"
-        },
-        {
-          "name": "keltir",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "tuto_keltir",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      },
+      {
+        "name": "young_keltir",
+        "pos": "anywhere",
+        "total": 8,
+        "respawn": "15sec"
+      },
+      {
+        "name": "keltir",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_009",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -87172,
           "y": 251152,
@@ -1970,21 +2038,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "tuto_keltir",
-          "pos": "anywhere",
-          "total": 6,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "tuto_keltir",
+        "pos": "anywhere",
+        "total": 6,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_010",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -84948,
           "y": 251924,
@@ -2011,33 +2081,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "young_keltir",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "keltir",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elder_keltir",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "young_keltir",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "keltir",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elder_keltir",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_011",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -87000,
           "y": 253860,
@@ -2070,33 +2142,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "keltir",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elder_keltir",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        },
-        {
-          "name": "wolf",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "keltir",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elder_keltir",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      },
+      {
+        "name": "wolf",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_012",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -84356,
           "y": 237484,
@@ -2135,39 +2209,41 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "elpy",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        },
-        {
-          "name": "young_keltir",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        },
-        {
-          "name": "keltir",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elder_keltir",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "elpy",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      },
+      {
+        "name": "young_keltir",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      },
+      {
+        "name": "keltir",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elder_keltir",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_013",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -91296,
           "y": 240092,
@@ -2194,39 +2270,41 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "young_keltir",
-          "pos": "anywhere",
-          "total": 7,
-          "respawn": "15sec"
-        },
-        {
-          "name": "keltir",
-          "pos": "anywhere",
-          "total": 7,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elder_keltir",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        },
-        {
-          "name": "wolf",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "young_keltir",
+        "pos": "anywhere",
+        "total": 7,
+        "respawn": "15sec"
+      },
+      {
+        "name": "keltir",
+        "pos": "anywhere",
+        "total": 7,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elder_keltir",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      },
+      {
+        "name": "wolf",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_014",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -89144,
           "y": 239976,
@@ -2259,27 +2337,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "keltir",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elder_keltir",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "keltir",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elder_keltir",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_015",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -87608,
           "y": 238556,
@@ -2306,27 +2386,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "keltir",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elder_keltir",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "keltir",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elder_keltir",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_016",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -95004,
           "y": 236492,
@@ -2365,33 +2447,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "elder_keltir",
-          "pos": "anywhere",
-          "total": 6,
-          "respawn": "15sec"
-        },
-        {
-          "name": "wolf",
-          "pos": "anywhere",
-          "total": 16,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elder_wolf",
-          "pos": "anywhere",
-          "total": 11,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "elder_keltir",
+        "pos": "anywhere",
+        "total": 6,
+        "respawn": "15sec"
+      },
+      {
+        "name": "wolf",
+        "pos": "anywhere",
+        "total": 16,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elder_wolf",
+        "pos": "anywhere",
+        "total": 11,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_017",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -95140,
           "y": 238540,
@@ -2424,27 +2508,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "elder_keltir",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "wolf",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "elder_keltir",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "wolf",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_018",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -97544,
           "y": 239120,
@@ -2471,27 +2557,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "wolf",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elder_wolf",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "wolf",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elder_wolf",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_019",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -94056,
           "y": 242340,
@@ -2542,21 +2630,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_020",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -94060,
           "y": 244136,
@@ -2583,27 +2673,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "wolf",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elder_wolf",
-          "pos": "anywhere",
-          "total": 1,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "wolf",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elder_wolf",
+        "pos": "anywhere",
+        "total": 1,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_021",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -96740,
           "y": 245752,
@@ -2636,21 +2728,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "giant_toad",
-          "pos": "anywhere",
-          "total": 6,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "giant_toad",
+        "pos": "anywhere",
+        "total": 6,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_022",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -98112,
           "y": 243928,
@@ -2683,21 +2777,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "giant_toad",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "giant_toad",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_023",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -98164,
           "y": 246724,
@@ -2730,21 +2826,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "giant_toad",
-          "pos": "anywhere",
-          "total": 6,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "giant_toad",
+        "pos": "anywhere",
+        "total": 6,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_024",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -94560,
           "y": 249524,
@@ -2777,21 +2875,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "giant_toad",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "giant_toad",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_025",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -92984,
           "y": 251944,
@@ -2818,21 +2918,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "giant_toad",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "giant_toad",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_026",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -98116,
           "y": 247212,
@@ -2871,33 +2973,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "wolf",
-          "pos": "anywhere",
-          "total": 12,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elder_wolf",
-          "pos": "anywhere",
-          "total": 13,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc",
-          "pos": "anywhere",
-          "total": 6,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "wolf",
+        "pos": "anywhere",
+        "total": 12,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elder_wolf",
+        "pos": "anywhere",
+        "total": 13,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc",
+        "pos": "anywhere",
+        "total": 6,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_027",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -97128,
           "y": 249420,
@@ -2930,27 +3034,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "wolf",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elder_wolf",
-          "pos": "anywhere",
-          "total": 1,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "wolf",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elder_wolf",
+        "pos": "anywhere",
+        "total": 1,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_028",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -97996,
           "y": 251792,
@@ -2983,27 +3089,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "elder_wolf",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "elder_wolf",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_029",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -95076,
           "y": 253112,
@@ -3030,27 +3138,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "wolf",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elder_wolf",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "wolf",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elder_wolf",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_030",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -90492,
           "y": 252264,
@@ -3089,27 +3199,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "elder_keltir",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        },
-        {
-          "name": "wolf",
-          "pos": "anywhere",
-          "total": 10,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "elder_keltir",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      },
+      {
+        "name": "wolf",
+        "pos": "anywhere",
+        "total": 10,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_031",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -92648,
           "y": 253168,
@@ -3160,21 +3272,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_032",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -90976,
           "y": 254652,
@@ -3201,21 +3315,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "wolf",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "wolf",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_033",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -92180,
           "y": 234096,
@@ -3254,27 +3370,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "elder_keltir",
-          "pos": "anywhere",
-          "total": 6,
-          "respawn": "15sec"
-        },
-        {
-          "name": "wolf",
-          "pos": "anywhere",
-          "total": 10,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "elder_keltir",
+        "pos": "anywhere",
+        "total": 6,
+        "respawn": "15sec"
+      },
+      {
+        "name": "wolf",
+        "pos": "anywhere",
+        "total": 10,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_034",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -92404,
           "y": 234736,
@@ -3307,21 +3425,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "elder_wolf",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "elder_wolf",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_035",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -98084,
           "y": 229784,
@@ -3348,33 +3468,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "wolf",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elder_wolf",
-          "pos": "anywhere",
-          "total": 9,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc",
-          "pos": "anywhere",
-          "total": 9,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "wolf",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elder_wolf",
+        "pos": "anywhere",
+        "total": 9,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc",
+        "pos": "anywhere",
+        "total": 9,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_036",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -97696,
           "y": 234860,
@@ -3401,27 +3523,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "wolf",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "elder_wolf",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "wolf",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "elder_wolf",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t17_25_037",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -97836,
           "y": 230204,
@@ -3454,33 +3578,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "elder_wolf",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_grunt",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "elder_wolf",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_grunt",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_001",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -99516,
           "y": 245948,
@@ -3519,39 +3645,41 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc",
-          "pos": "anywhere",
-          "total": 8,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_grunt",
-          "pos": "anywhere",
-          "total": 9,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_archer",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        },
-        {
-          "name": "goblin_scout",
-          "pos": "anywhere",
-          "total": 8,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc",
+        "pos": "anywhere",
+        "total": 8,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_grunt",
+        "pos": "anywhere",
+        "total": 9,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_archer",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      },
+      {
+        "name": "goblin_scout",
+        "pos": "anywhere",
+        "total": 8,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_002",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -103468,
           "y": 252516,
@@ -3578,27 +3706,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "werewolf",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "werewolf_hunter",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "werewolf",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "werewolf_hunter",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_003",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -100576,
           "y": 253600,
@@ -3625,27 +3755,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "werewolf",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "werewolf_hunter",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "werewolf",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "werewolf_hunter",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_004",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -100956,
           "y": 250632,
@@ -3672,33 +3804,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc_grunt",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "goblin_scout",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "werewolf",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc_grunt",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "goblin_scout",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "werewolf",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_005",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -103772,
           "y": 250392,
@@ -3749,21 +3883,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "werewolf_chieftain",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "werewolf_chieftain",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_006",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -104392,
           "y": 249020,
@@ -3790,27 +3926,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc_grunt",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "werewolf",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc_grunt",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "werewolf",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_007",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -103492,
           "y": 244096,
@@ -3843,39 +3981,41 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_grunt",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_archer",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "goblin_scout",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_grunt",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_archer",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "goblin_scout",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_008",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -103420,
           "y": 244052,
@@ -3908,21 +4048,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "giant_toad",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "giant_toad",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_009",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -101904,
           "y": 246464,
@@ -3949,21 +4091,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "giant_toad",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "giant_toad",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25-010",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -99612,
           "y": 245480,
@@ -3996,21 +4140,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "giant_toad",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "giant_toad",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_011",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -105612,
           "y": 244232,
@@ -4055,39 +4201,41 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc_archer",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "goblin_scout",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        },
-        {
-          "name": "werewolf",
-          "pos": "anywhere",
-          "total": 7,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_fighter",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc_archer",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "goblin_scout",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      },
+      {
+        "name": "werewolf",
+        "pos": "anywhere",
+        "total": 7,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_fighter",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_012",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -108568,
           "y": 250796,
@@ -4120,39 +4268,41 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc_grunt",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "werewolf",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_fighter",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "werewolf_hunter",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc_grunt",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "werewolf",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_fighter",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "werewolf_hunter",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_013",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -116268,
           "y": 250028,
@@ -4185,39 +4335,41 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc_archer",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_fighter",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        },
-        {
-          "name": "werewolf_hunter",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_fighter_sub_leader",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc_archer",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_fighter",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      },
+      {
+        "name": "werewolf_hunter",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_fighter_sub_leader",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_014",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -117932,
           "y": 243508,
@@ -4244,39 +4396,41 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "werewolf",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_fighter_leader",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        },
-        {
-          "name": "werewolf_hunter",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_fighter_sub_leader",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "werewolf",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_fighter_leader",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      },
+      {
+        "name": "werewolf_hunter",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_fighter_sub_leader",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_015",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -116252,
           "y": 248256,
@@ -4303,21 +4457,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "werewolf_hunter",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "werewolf_hunter",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_016",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -116928,
           "y": 244152,
@@ -4344,21 +4500,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "werewolf_chieftain",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "werewolf_chieftain",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_017",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -113484,
           "y": 244152,
@@ -4385,21 +4543,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "giant_spider",
-          "pos": "anywhere",
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "giant_spider",
+        "pos": "anywhere",
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_018",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -106300,
           "y": 236204,
@@ -4444,39 +4604,41 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc",
-          "pos": "anywhere",
-          "total": 10,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_grunt",
-          "pos": "anywhere",
-          "total": 10,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_archer",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        },
-        {
-          "name": "werewolf",
-          "pos": "anywhere",
-          "total": 8,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc",
+        "pos": "anywhere",
+        "total": 10,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_grunt",
+        "pos": "anywhere",
+        "total": 10,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_archer",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      },
+      {
+        "name": "werewolf",
+        "pos": "anywhere",
+        "total": 8,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_019",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -102148,
           "y": 238928,
@@ -4503,27 +4665,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc_grunt",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_fighter",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc_grunt",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_fighter",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_020",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -104316,
           "y": 237916,
@@ -4550,33 +4714,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc_grunt",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        },
-        {
-          "name": "werewolf",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        },
-        {
-          "name": "werewolf_hunter",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc_grunt",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      },
+      {
+        "name": "werewolf",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      },
+      {
+        "name": "werewolf_hunter",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_021",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -108324,
           "y": 237836,
@@ -4603,33 +4769,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc_grunt",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "werewolf",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_fighter",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc_grunt",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "werewolf",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_fighter",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_022",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -110632,
           "y": 237904,
@@ -4656,27 +4824,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc_grunt",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        },
-        {
-          "name": "werewolf",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc_grunt",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      },
+      {
+        "name": "werewolf",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_023",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -99180,
           "y": 231444,
@@ -4709,33 +4879,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_grunt",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_archer",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_grunt",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_archer",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_024",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -100412,
           "y": 229464,
@@ -4762,33 +4934,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_grunt",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_archer",
-          "pos": "anywhere",
-          "total": 1,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_grunt",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_archer",
+        "pos": "anywhere",
+        "total": 1,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_025",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -105772,
           "y": 235780,
@@ -4815,33 +4989,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc_grunt",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_archer",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "werewolf",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc_grunt",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_archer",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "werewolf",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_026",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -104604,
           "y": 229520,
@@ -4874,39 +5050,41 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc_archer",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        },
-        {
-          "name": "goblin_scout",
-          "pos": "anywhere",
-          "total": 6,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_fighter",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_fighter_sub_leader",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc_archer",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      },
+      {
+        "name": "goblin_scout",
+        "pos": "anywhere",
+        "total": 6,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_fighter",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_fighter_sub_leader",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_027",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -109732,
           "y": 229480,
@@ -4939,39 +5117,41 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "werewolf_hunter",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_fighter_sub_leader",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        },
-        {
-          "name": "werewolf_chieftain",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_fighter_leader",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "werewolf_hunter",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_fighter_sub_leader",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      },
+      {
+        "name": "werewolf_chieftain",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_fighter_leader",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_028",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -102756,
           "y": 229908,
@@ -5010,27 +5190,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "werewolf_hunter",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_fighter_leader",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "werewolf_hunter",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_fighter_leader",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_029",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -103588,
           "y": 235136,
@@ -5057,27 +5239,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "werewolf_hunter",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_fighter_leader",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "werewolf_hunter",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_fighter_leader",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_030",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -103332,
           "y": 241752,
@@ -5110,21 +5294,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "giant_toad",
-          "pos": "anywhere",
-          "total": 6,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "giant_toad",
+        "pos": "anywhere",
+        "total": 6,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_031",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -118732,
           "y": 239608,
@@ -5157,39 +5343,41 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "werewolf",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_fighter",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        },
-        {
-          "name": "werewolf_hunter",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        },
-        {
-          "name": "orc_fighter_sub_leader",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "werewolf",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_fighter",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      },
+      {
+        "name": "werewolf_hunter",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      },
+      {
+        "name": "orc_fighter_sub_leader",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_032",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -118672,
           "y": 239872,
@@ -5222,21 +5410,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "werewolf_hunter",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "werewolf_hunter",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_033",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -120404,
           "y": 234320,
@@ -5269,33 +5459,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc_fighter_leader",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        },
-        {
-          "name": "werewolf_chieftain",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        },
-        {
-          "name": "stone_golem",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc_fighter_leader",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      },
+      {
+        "name": "werewolf_chieftain",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      },
+      {
+        "name": "stone_golem",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_034",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -120016,
           "y": 234756,
@@ -5322,21 +5514,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "stone_golem",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "stone_golem",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_035",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -119576,
           "y": 229492,
@@ -5363,33 +5557,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc_fighter_leader",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        },
-        {
-          "name": "stone_golem",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        },
-        {
-          "name": "crasher",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc_fighter_leader",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      },
+      {
+        "name": "stone_golem",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      },
+      {
+        "name": "crasher",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_036",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -119860,
           "y": 232356,
@@ -5416,21 +5612,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "poker",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "poker",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_25_011",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -102472,
           "y": 212568,
@@ -5463,27 +5661,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "crasher",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "blader",
-          "pos": "anywhere",
-          "total": 1,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "crasher",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "blader",
+        "pos": "anywhere",
+        "total": 1,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "bow_guard_01",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -100587,
           "y": 237258,
@@ -5510,48 +5710,50 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "bowman",
-          "pos": [
-            -100536,
-            237822,
-            -3572,
-            24576
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "bowman",
-          "pos": [
-            -100531,
-            237302,
-            -3568,
-            40960
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "bowman",
-          "pos": [
-            -99843,
-            237523,
-            -3568,
-            0
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "bowman",
+        "pos": [
+          -100536,
+          237822,
+          -3572,
+          24576
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "bowman",
+        "pos": [
+          -100531,
+          237302,
+          -3568,
+          40960
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "bowman",
+        "pos": [
+          -99843,
+          237523,
+          -3568,
+          0
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "bow_guard_02",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -109974,
           "y": 255526,
@@ -5578,37 +5780,39 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "bowman",
-          "pos": [
-            -109715,
-            256200,
-            -3520,
-            36864
-          ],
-          "total": 1,
-          "respawn": "1min"
-        },
-        {
-          "name": "bowman",
-          "pos": [
-            -109935,
-            255573,
-            -3520,
-            57344
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "bowman",
+        "pos": [
+          -109715,
+          256200,
+          -3520,
+          36864
+        ],
+        "total": 1,
+        "respawn": "1min"
+      },
+      {
+        "name": "bowman",
+        "pos": [
+          -109935,
+          255573,
+          -3520,
+          57344
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "NPC_t16_25_030917_01",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -112317,
           "y": 244198,
@@ -5635,26 +5839,28 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "ramus",
-          "pos": [
-            -112206,
-            244303,
-            -3450,
-            16384
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "ramus",
+        "pos": [
+          -112206,
+          244303,
+          -3450,
+          16384
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "NPC_t16_25_030917_02",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -118719,
           "y": 233139,
@@ -5681,26 +5887,28 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "summoner_almors",
-          "pos": [
-            -118618,
-            233239,
-            -2910,
-            32768
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "summoner_almors",
+        "pos": [
+          -118618,
+          233239,
+          -2910,
+          32768
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "16_25_New_NPC01",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -106564,
           "y": 233292,
@@ -5727,26 +5935,28 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "lemoniell",
-          "pos": [
-            -106485,
-            233377,
-            -3629,
-            12288
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "lemoniell",
+        "pos": [
+          -106485,
+          233377,
+          -3629,
+          12288
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "16_25_1104_NPC02",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -100452,
           "y": 237932,
@@ -5773,32 +5983,39 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "sir_collin_windawood",
-          "pos": [
-            -100332,
-            238019,
-            -3573,
-            36864
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "sir_collin_windawood",
+        "pos": [
+          -100332,
+          238019,
+          -3573,
+          36864
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": "",
-    "npcMakers": {
-      "npcs": []
+    "spawnZone": {
+      "id": null,
+      "spawnPoints": null
+    },
+    "spawnGroups": [],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "16_24_New_NPC01",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -115156,
           "y": 222060,
@@ -5825,26 +6042,28 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "marius",
-          "pos": [
-            -115080,
-            222168,
-            -2930,
-            42000
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "marius",
+        "pos": [
+          -115080,
+          222168,
+          -2930,
+          42000
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "16_24_New_NPC02",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -104340,
           "y": 221980,
@@ -5871,32 +6090,39 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "mesella",
-          "pos": [
-            -104240,
-            222064,
-            -3437,
-            16384
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "mesella",
+        "pos": [
+          -104240,
+          222064,
+          -3437,
+          16384
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": "",
-    "npcMakers": {
-      "npcs": []
+    "spawnZone": {
+      "id": null,
+      "spawnPoints": null
+    },
+    "spawnGroups": [],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "16_24_NPC_030514",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -114788,
           "y": 222204,
@@ -5923,32 +6149,39 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "edmond",
-          "pos": [
-            -114685,
-            222291,
-            -2925,
-            44000
-          ],
-          "total": 1,
-          "respawn": "1min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "edmond",
+        "pos": [
+          -114685,
+          222291,
+          -2925,
+          44000
+        ],
+        "total": 1,
+        "respawn": "1min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": "",
-    "npcMakers": {
-      "npcs": []
+    "spawnZone": {
+      "id": null,
+      "spawnPoints": null
+    },
+    "spawnGroups": [],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_24_001",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -108496,
           "y": 223400,
@@ -5981,39 +6214,41 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc_fighter_leader",
-          "pos": "anywhere",
-          "total": 8,
-          "respawn": "15sec"
-        },
-        {
-          "name": "werewolf_chieftain",
-          "pos": "anywhere",
-          "total": 9,
-          "respawn": "15sec"
-        },
-        {
-          "name": "stone_golem",
-          "pos": "anywhere",
-          "total": 8,
-          "respawn": "15sec"
-        },
-        {
-          "name": "crasher",
-          "pos": "anywhere",
-          "total": 9,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc_fighter_leader",
+        "pos": "anywhere",
+        "total": 8,
+        "respawn": "15sec"
+      },
+      {
+        "name": "werewolf_chieftain",
+        "pos": "anywhere",
+        "total": 9,
+        "respawn": "15sec"
+      },
+      {
+        "name": "stone_golem",
+        "pos": "anywhere",
+        "total": 8,
+        "respawn": "15sec"
+      },
+      {
+        "name": "crasher",
+        "pos": "anywhere",
+        "total": 9,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_24_002",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -107680,
           "y": 226640,
@@ -6046,27 +6281,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "werewolf_chieftain",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "stone_golem",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "werewolf_chieftain",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "stone_golem",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_24_003",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -102852,
           "y": 225716,
@@ -6099,27 +6336,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "orc_fighter_sub_leader",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "stone_golem",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "orc_fighter_sub_leader",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "stone_golem",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_24_004",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -103472,
           "y": 224552,
@@ -6146,27 +6385,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "stone_golem",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "crasher",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "stone_golem",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "crasher",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_24_005",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -105388,
           "y": 223784,
@@ -6211,21 +6452,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "giant_spider",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "giant_spider",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_24_006",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -106368,
           "y": 215296,
@@ -6258,33 +6501,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "stone_golem",
-          "pos": "anywhere",
-          "total": 6,
-          "respawn": "15sec"
-        },
-        {
-          "name": "crasher",
-          "pos": "anywhere",
-          "total": 6,
-          "respawn": "15sec"
-        },
-        {
-          "name": "giant_spider",
-          "pos": "anywhere",
-          "total": 6,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "stone_golem",
+        "pos": "anywhere",
+        "total": 6,
+        "respawn": "15sec"
+      },
+      {
+        "name": "crasher",
+        "pos": "anywhere",
+        "total": 6,
+        "respawn": "15sec"
+      },
+      {
+        "name": "giant_spider",
+        "pos": "anywhere",
+        "total": 6,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_24_007",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -105076,
           "y": 218364,
@@ -6311,21 +6556,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "stone_golem",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "stone_golem",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_24_008",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -105760,
           "y": 215932,
@@ -6352,21 +6599,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "crasher",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "crasher",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_24_009",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -102428,
           "y": 212248,
@@ -6405,33 +6654,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "crasher",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        },
-        {
-          "name": "poker",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        },
-        {
-          "name": "blader",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "crasher",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      },
+      {
+        "name": "poker",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      },
+      {
+        "name": "blader",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_24_010",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -100256,
           "y": 214112,
@@ -6458,27 +6709,29 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "stone_golem",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        },
-        {
-          "name": "poker",
-          "pos": "anywhere",
-          "total": 1,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "stone_golem",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      },
+      {
+        "name": "poker",
+        "pos": "anywhere",
+        "total": 1,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_24_012",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -109796,
           "y": 213896,
@@ -6511,33 +6764,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "crasher",
-          "pos": "anywhere",
-          "total": 8,
-          "respawn": "15sec"
-        },
-        {
-          "name": "poker",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        },
-        {
-          "name": "blader",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "crasher",
+        "pos": "anywhere",
+        "total": 8,
+        "respawn": "15sec"
+      },
+      {
+        "name": "poker",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      },
+      {
+        "name": "blader",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_24_013",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -110232,
           "y": 214692,
@@ -6564,21 +6819,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "blader",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "blader",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_24_014",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -115920,
           "y": 218912,
@@ -6611,33 +6868,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "crasher",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        },
-        {
-          "name": "giant_spider",
-          "pos": "anywhere",
-          "total": 3,
-          "respawn": "15sec"
-        },
-        {
-          "name": "poker",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "crasher",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      },
+      {
+        "name": "giant_spider",
+        "pos": "anywhere",
+        "total": 3,
+        "respawn": "15sec"
+      },
+      {
+        "name": "poker",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_24_015",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -116904,
           "y": 222640,
@@ -6670,33 +6929,35 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "stone_golem",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        },
-        {
-          "name": "crasher",
-          "pos": "anywhere",
-          "total": 5,
-          "respawn": "15sec"
-        },
-        {
-          "name": "poker",
-          "pos": "anywhere",
-          "total": 4,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "stone_golem",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      },
+      {
+        "name": "crasher",
+        "pos": "anywhere",
+        "total": 5,
+        "respawn": "15sec"
+      },
+      {
+        "name": "poker",
+        "pos": "anywhere",
+        "total": 4,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "t16_24_016",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -118588,
           "y": 226428,
@@ -6723,21 +6984,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "giant_spider",
-          "pos": "anywhere",
-          "total": 2,
-          "respawn": "15sec"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "giant_spider",
+        "pos": "anywhere",
+        "total": 2,
+        "respawn": "15sec"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "quest_030919_16_24_001",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -119608,
           "y": 222624,
@@ -6770,21 +7033,23 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "ol_mahum_betrayer",
-          "pos": "anywhere",
-          "total": 1,
-          "respawn": "3min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "ol_mahum_betrayer",
+        "pos": "anywhere",
+        "total": 1,
+        "respawn": "3min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   },
   {
-    "territory": {
+    "spawnZone": {
       "id": "quest_030919_16_24_003",
-      "coordinates": [
+      "spawnPoints": [
         {
           "x": -118719,
           "y": 233139,
@@ -6811,15 +7076,17 @@
         }
       ]
     },
-    "npcMakers": {
-      "npcs": [
-        {
-          "name": "pako_the_cat",
-          "pos": "anywhere",
-          "total": 1,
-          "respawn": "3min"
-        }
-      ]
+    "spawnGroups": [
+      {
+        "name": "pako_the_cat",
+        "pos": "anywhere",
+        "total": 1,
+        "respawn": "3min"
+      }
+    ],
+    "spawnParams": {
+      "initialSpawn": "",
+      "maximumNpc": 0
     }
   }
 ]
