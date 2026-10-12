@@ -4,7 +4,7 @@ const dropItemsManager = require('./../Managers/DropItemsManager');
 const entitiesManager = require('./../Managers/EntitiesManager');
 const serverPackets = require('./../ServerPackets/serverPackets');
 
-class NpcDropItemHandler {
+class NpcDropHandler {
   async handle(data) {
     const npc = data.character;
 
@@ -64,4 +64,4 @@ class NpcDropItemHandler {
   }
 }
 
-module.exports = NpcDropItemHandler;
+module.exports = NpcDropHandler;

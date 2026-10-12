@@ -40,7 +40,6 @@ module.exports = new EventBusNew();
 // player:exit
 // player:move
 // npc:died
-// npc:item:drop
 
 // const Events = {
 //   // Игрок
