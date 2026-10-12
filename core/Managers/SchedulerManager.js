@@ -9,6 +9,19 @@ class SchedulerManager extends EventEmmiter {
     this.on('completed', this._onCompleted);
   }
 
+  async schedule({ type, delay, payload, createdBy }) {
+    const task = {
+      type,
+      status: 'new',
+      payload,
+      scheduledAt: Date.now() + delay,
+      createdBy,
+      createdType: 'user'
+    }
+
+    await this.createTask(task);
+  }
+
   async createTask(task) {
     await database.createScheduledTask(task.type, task.status, task.payload, task.scheduledAt, task.createdBy, task.createdType);
   }

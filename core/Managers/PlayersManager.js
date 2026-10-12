@@ -103,18 +103,14 @@ class PlayersManager extends EventEmitter {
   }
 
   async deleteCharacter(playerLogin, characterObjectId) {
-    const task = {
+    await schedulerManager.schedule({
       type: 'character-deletion',
-      status: 'new',
+      delay: 30000,
       payload: JSON.stringify({
         characterObjectId: characterObjectId
       }),
-      scheduledAt: Date.now() + 30000,
-      createdBy: playerLogin,
-      createdType: 'user'
-    }
-
-    await schedulerManager.createTask(task);
+      createdBy: playerLogin
+    });
   }
 
   async restoreCharacter(characterObjectId) { // fix взаимодействие через scheduler?
