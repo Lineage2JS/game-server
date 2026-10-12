@@ -110,7 +110,7 @@ class PlayersManager extends EventEmitter {
         characterObjectId: characterObjectId
       }),
       scheduledAt: Date.now() + 30000,
-      createdAccountId: playerLogin,
+      createdBy: playerLogin,
       createdType: 'user'
     }
 

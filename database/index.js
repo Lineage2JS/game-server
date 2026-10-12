@@ -136,7 +136,7 @@ class Database {
       LEFT JOIN scheduled_tasks scheduled_task ON
         scheduled_task.created_type = 'user'
         AND scheduled_task.type = 'character-deletion'
-        AND scheduled_task.created_account_id = $1
+        AND scheduled_task.created_by = $1
         AND (scheduled_task.payload::json->>'characterObjectId')::INTEGER = object_id
       WHERE user_login = $1
       ORDER BY created_at ASC
@@ -325,16 +325,16 @@ class Database {
     `, [objectId]);
   }
 
-  async createScheduledTask(taskType, taskStatus, payload, scheduledAt, createdAccountId, createdType) {
+  async createScheduledTask(taskType, taskStatus, payload, scheduledAt, createdBy, createdType) {
     await this._client.query(`
-      INSERT INTO scheduled_tasks(type, status, payload, scheduled_at, created_account_id, created_type)
+      INSERT INTO scheduled_tasks(type, status, payload, scheduled_at, created_by, created_type)
       VALUES($1, $2, $3, $4, $5, $6)
     `, [
       taskType,
       taskStatus,
       payload,
       new Date(scheduledAt),
-      createdAccountId,
+      createdBy,
       createdType,
     ]);
   }
@@ -347,7 +347,7 @@ class Database {
         payload,
         scheduled_at AS "scheduledAt",
         status,
-        created_account_id AS "createdAccountId",
+        created_by AS "createdBy",
         created_type AS "createdType"
       FROM scheduled_tasks
       WHERE status = 'new'

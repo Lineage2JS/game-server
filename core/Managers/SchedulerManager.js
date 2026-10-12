@@ -10,7 +10,7 @@ class SchedulerManager extends EventEmmiter {
   }
 
   async createTask(task) {
-    await database.createScheduledTask(task.type, task.status, task.payload, task.scheduledAt, task.createdAccountId, task.createdType);
+    await database.createScheduledTask(task.type, task.status, task.payload, task.scheduledAt, task.createdBy, task.createdType);
   }
 
   async reloadTasks() {
