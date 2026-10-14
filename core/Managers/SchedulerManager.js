@@ -1,16 +1,14 @@
-const EventEmmiter = require('events');
 const database = require('./../../database');
+const eventBusNew = require('./../Events/EventBusNew');
 
-class SchedulerManager extends EventEmmiter {
+class SchedulerManager {
   constructor() {
-    super();
-
-    this._tasks = [];
-    this.on('completed', this._onCompleted);
+    this._globalTasks = [];
+    this._sessionTasks = [];
   }
 
-  async schedule({ type, delay, payload, createdBy }) {
-    const task = {
+  async scheduleGlobal({ type, delay, payload, createdBy }) {
+    const globalTask = {
       type,
       status: 'new',
       payload,
@@ -19,50 +17,72 @@ class SchedulerManager extends EventEmmiter {
       createdType: 'user'
     }
 
-    await this.createTask(task);
+    await this._createGlobalTask(globalTask);
   }
 
-  async createTask(task) {
-    await database.createScheduledTask(task.type, task.status, task.payload, task.scheduledAt, task.createdBy, task.createdType);
-  }
+  async scheduleSession({ type, delay, payload, createdBy }) {
+    const sessionTask = {
+      type,
+      status: 'new',
+      payload,
+      scheduledAt: Date.now() + delay,
+      createdBy,
+      createdType: 'user'
+    }
 
-  async reloadTasks() {
-    this._tasks = await database.getScheduledTasks();
+    this._sessionTasks.push(sessionTask);
   }
 
   async enable() {
-    await this.reloadTasks();
-    this._run();
+    await this._loadGlobalTasks();
+    this._processGlobalTasks();
+    this._processSessionTasks();
   }
 
-  async _run() {
-    const tasks = this._tasks //.filter(task => task.status === 'new');
+  async _createGlobalTask(task) {
+    await database.createScheduledTask(task.type, task.status, task.payload, task.scheduledAt, task.createdBy, task.createdType);
+  }
 
-    if (tasks.length > 0) {
-      for(let i = 0; i < tasks.length; i++) {
-        const task = tasks[i];
+  async _loadGlobalTasks() {
+    this._globalTasks = await database.getScheduledTasks();
+  }
 
-        if (new Date(task.scheduledAt) < Date.now()) {
-          task.status = 'done';
+  async _processGlobalTasks() {
+    const globalTasks = this._globalTasks //.filter(task => task.status === 'new');
 
-          await database.updateScheduledTask(task);
+    if (globalTasks.length > 0) {
+      for(let i = 0; i < globalTasks.length; i++) {
+        const globalTask = globalTasks[i];
 
-          this.emit('completed', task);
+        if (new Date(globalTask.scheduledAt) < Date.now()) {
+          globalTask.status = 'done';
+
+          await database.updateScheduledTask(globalTask);
+          eventBusNew.emit('scheduler:task:completed', globalTask);
         }
       }
     }
 
-    await this.reloadTasks();
-
-    setTimeout(this._run.bind(this), 1000);
+    await this._loadGlobalTasks();
+    setTimeout(this._processGlobalTasks.bind(this), 1000);
   }
 
-  async _onCompleted(task) {
-    if (task.type === 'character-deletion') {
-      await database.deleteCharacter(task.payload.characterObjectId);
-      await database.deleteCharacterItems(task.payload.characterObjectId);
-      await database.deleteCharacterSkills(task.payload.characterObjectId);
+  _processSessionTasks() {
+    const sessionTasks = this._sessionTasks //.filter(task => task.status === 'new');
+
+    if (sessionTasks.length > 0) {
+      for(let i = 0; i < sessionTasks.length; i++) {
+        const sessionTask = sessionTasks[i];
+
+        if (new Date(sessionTask.scheduledAt) < Date.now()) {
+          sessionTask.status = 'done';
+
+          eventBusNew.emit('scheduler:task:completed', sessionTask);
+        }
+      }
     }
+
+    setTimeout(this._processSessionTasks.bind(this), 1000);
   }
 }
 

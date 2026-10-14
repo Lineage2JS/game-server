@@ -103,7 +103,7 @@ class PlayersManager extends EventEmitter {
   }
 
   async deleteCharacter(playerLogin, characterObjectId) {
-    await schedulerManager.schedule({
+    await schedulerManager.scheduleGlobal({
       type: 'character-deletion',
       delay: 30000,
       payload: JSON.stringify({

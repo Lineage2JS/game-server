@@ -5,6 +5,7 @@ const NpcDropHandler = require('./../Handlers/NpcDropHandler');
 const NpcAttackHandler = require('./../Handlers/NpcAttackHandler');
 const PlayerEnterHandler = require('./../Handlers/PlayerEnterHandler');
 const PlayerExitHandler = require('./../Handlers/PlayerExitHandler');
+const SchedulerTaskCompletedHandler = require('./../Handlers/SchedulerTaskCompletedHandler');
 
 class EventSubscribers {
   subscribe() {
@@ -14,6 +15,7 @@ class EventSubscribers {
     const npcAttackHandler = new NpcAttackHandler();
     const playerEnterHandler = new PlayerEnterHandler();
     const playerExitHandler = new PlayerExitHandler();
+    const schedulerTaskCompletedHandler = new SchedulerTaskCompletedHandler();
 
     eventBusNew.on('npc:died', (data) => npcDeathHandler.handle(data));
     eventBusNew.on('npc:died', (data) => npcRespawnHandler.handle(data));
@@ -21,6 +23,7 @@ class EventSubscribers {
     eventBusNew.on('npc:attacked', (data) => npcAttackHandler.handle(data));
     eventBusNew.on('player:enter', (data) => playerEnterHandler.handle(data));
     eventBusNew.on('player:exit', (data) => playerExitHandler.handle(data));
+    eventBusNew.on('scheduler:task:completed', (data) => schedulerTaskCompletedHandler.handle(data));
   }
 }
 
