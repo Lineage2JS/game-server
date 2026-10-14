@@ -18,8 +18,8 @@ class EventSubscribers {
     const schedulerTaskCompletedHandler = new SchedulerTaskCompletedHandler();
 
     eventBusNew.on('npc:died', (data) => npcDeathHandler.handle(data));
-    eventBusNew.on('npc:died', (data) => npcRespawnHandler.handle(data));
     eventBusNew.on('npc:died', (data) => npcDropHandler.handle(data));
+    eventBusNew.on('npc:respawn', (data) => npcRespawnHandler.handle(data));
     eventBusNew.on('npc:attacked', (data) => npcAttackHandler.handle(data));
     eventBusNew.on('player:enter', (data) => playerEnterHandler.handle(data));
     eventBusNew.on('player:exit', (data) => playerExitHandler.handle(data));

@@ -4,26 +4,28 @@ const spawnTable = require('./../tables/SpawnTable');
 
 class NpcRespawnHandler {
   async handle(data) {
-    const npc = data.character;
-    const spawnList = spawnTable.getSpawnList();
+    const npcSpawnId = data;
 
-    npcManager.on('spawn', (npc) => {
-      console.log(npc.x, npc.y);
-    })
+    console.log(npcSpawnId)
+    // const spawnList = spawnTable.getSpawnList();
 
-    for (const [spawnId, spawnData] of spawnList) {
-      const spawnGroups = spawnData.spawnGroups;
+    // npcManager.on('spawn', (npc) => {
+    //   console.log(npc.characterName, npc.x, npc.y);
+    // })
+
+    // for (const [spawnId, spawnData] of spawnList) {
+    //   const spawnGroups = spawnData.spawnGroups;
       
-      for(let i = 0; i < spawnGroups.length; i++) {
-        const spawnGroup = spawnGroups[i];
+    //   for(let i = 0; i < spawnGroups.length; i++) {
+    //     const spawnGroup = spawnGroups[i];
 
-        if (npc.characterName === spawnGroup.name) {
-          const npcData = npcTable.getNpcByName(npc.characterName);
+    //     if (npc.characterName === spawnGroup.name) {
+    //       const npcData = npcTable.getNpcByName(npc.characterName);
           
-          await npcManager.spawnNpc(npcData, spawnGroup, spawnData);
-        }
-      }
-    }
+    //       await npcManager.spawnNpc(npcData, spawnGroup, spawnData);
+    //     }
+    //   }
+    // }
   }
 }
 

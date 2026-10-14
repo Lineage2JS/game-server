@@ -54,7 +54,7 @@ class SchedulerManager {
       for(let i = 0; i < globalTasks.length; i++) {
         const globalTask = globalTasks[i];
 
-        if (new Date(globalTask.scheduledAt) < Date.now()) {
+        if (globalTask.status === 'new' && Date.now() > new Date(globalTask.scheduledAt)) {
           globalTask.status = 'done';
 
           await database.updateScheduledTask(globalTask);
@@ -74,7 +74,7 @@ class SchedulerManager {
       for(let i = 0; i < sessionTasks.length; i++) {
         const sessionTask = sessionTasks[i];
 
-        if (new Date(sessionTask.scheduledAt) < Date.now()) {
+        if (sessionTask.status === 'new' && Date.now() > new Date(sessionTask.scheduledAt)) {
           sessionTask.status = 'done';
 
           eventBusNew.emit('scheduler:task:completed', sessionTask);
