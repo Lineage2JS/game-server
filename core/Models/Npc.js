@@ -54,7 +54,7 @@ class Npc extends Character {
     this.lastRegenerateTimestamp = 0;
     this.lastUpdateTimestamp = 0;
     this._currentState = '';
-    this._spawnPoints = null;
+    this._spawnId = null;
     //
   }
 
@@ -64,20 +64,20 @@ class Npc extends Character {
 
   enable() {
     //
-    const positions = this._getRandomPos(this._spawnPoints);
+    // const positions = this._getRandomPos(this._spawnPoints);
 
-    const path = {
-      target: {
-        x: positions[0],
-        y: positions[1],
-        z: this.z
-      },
-      origin: {
-        x: this.x,
-        y: this.y,
-        z: this.z
-      }
-    }
+    // const path = {
+    //   target: {
+    //     x: positions[0],
+    //     y: positions[1],
+    //     z: this.z
+    //   },
+    //   origin: {
+    //     x: this.x,
+    //     y: this.y,
+    //     z: this.z
+    //   }
+    // }
     
     this.action = 'patrol';
     
@@ -148,8 +148,12 @@ class Npc extends Character {
     }
   }
 
-  setSpawnPoints(spawnPoints) {
-    this._spawnPoints = spawnPoints;
+  setSpawnId(spawnId) {
+    this._spawnId = spawnId;
+  }
+
+  getSpawnId() {
+    return this._spawnId;
   }
 
   regenerate() {

@@ -20,24 +20,20 @@ class NpcManager extends EventEmitter {
     const spawnList = spawnTable.getSpawnList();
 
     for (const [spawnId, spawnData] of spawnList) {
-      const spawnGroups = spawnData.spawnGroups;
+      const { spawnGroup, spawnPoints } = spawnData;
+      const npcData = npcTable.getNpcByName(spawnGroup.name);
 
-      for(let i = 0; i < spawnGroups.length; i++) {
-        const spawnGroup = spawnGroups[i];
-        const npcData = npcTable.getNpcByName(spawnGroup.name);
-
-        for(let j = 0; j < spawnGroup.total; j++) {
-          await this.spawnNpc(npcData, spawnGroup, spawnData);
-          this._showSpawnedNpcCount();
-        }
-      }
+      for(let j = 0; j < spawnGroup.total; j++) {
+        await this.spawnNpc(npcData, spawnId, spawnGroup, spawnPoints);
+        this._showSpawnedNpcCount();
+      } 
     }
 
     process.stdout.write(`\n`);
   }
 
-  async spawnNpc(npcData, spawnGroup, spawnData) {
-    const npc = await this._createNpc(npcData, spawnGroup, spawnData);
+  async spawnNpc(npcData, spawnId, spawnGroup, spawnPoints) {
+    const npc = await this._createNpc(npcData, spawnId, spawnGroup, spawnPoints);
     
     this.addNpc(npc);
     this.enableNpc(npc);
@@ -66,16 +62,16 @@ class NpcManager extends EventEmitter {
     return this._npcs.get(objectId);
   }
 
-  async _createNpc(npcData, spawnGroup, spawnData) {
+  async _createNpc(npcData, spawnId, spawnGroup, spawnPoints) {
     const npc = new Npc();
 
     npc.updateParams(npcData);
     npc.objectId = await database.getNextObjectId();
     npc.maximumHp = npc.hp;
     npc.characterName = npcData.name;
+    npc.setSpawnId(spawnId);
     this._bindNpcEvents(npc);
-    this._setupPositions(npc, spawnGroup, spawnData.spawnZone.spawnPoints);
-    this._setupSpawnParams(npc, spawnData);
+    this._setupPositions(npc, spawnGroup, spawnPoints);
     this._setupAi(npc, npcData);
 
     return npc;
@@ -124,10 +120,6 @@ class NpcManager extends EventEmitter {
       npc.z = z;
       npc.heading = heading;
     }
-  }
-
-  _setupSpawnParams(npc, spawnData) {
-    npc.setSpawnPoints(spawnData.spawnZone.spawnPoints);
   }
 
   _setupAi(npc, npcData) {
