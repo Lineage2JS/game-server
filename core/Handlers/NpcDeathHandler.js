@@ -51,9 +51,9 @@ class NpcDeathHandler {
       type: 'npc-respawn',
       delay: 5000,
       payload: JSON.stringify({
-        npcSpawnId: 123 // TODO!!!
+        npcSpawnId: npc.getSpawnId()
       }),
-      createdBy: '' // ?
+      createdBy: '' // TODO ?
     })
   }
 }

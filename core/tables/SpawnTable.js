@@ -10,6 +10,10 @@ class SpawnTable {
     return this._spawnList;
   }
 
+  getSpawnById(spawnId) {
+    return this._spawnList.get(spawnId);
+  }
+
   _init() {
     spawnList.forEach(spawnItem => {
       spawnItem.spawnGroups.forEach((spawnGroup, index) => {
