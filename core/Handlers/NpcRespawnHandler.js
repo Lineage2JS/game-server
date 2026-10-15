@@ -6,11 +6,6 @@ class NpcRespawnHandler {
   async handle(data) {
     const spawnId = data;
     const spawnData = spawnTable.getSpawnById(spawnId);
-
-    npcManager.on('spawn', (npc) => {
-      console.log(npc.characterName, npc.x, npc.y);
-    })
-
     const { spawnGroup, spawnPoints } = spawnData;
     const npcData = npcTable.getNpcByName(spawnGroup.name);
         
