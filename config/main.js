@@ -5,4 +5,4 @@ module.exports = {
   },
   CLIENT_PROTOCOL_VERSION: 419,
   SERVER_PROTOCOL_VERSION: 30810,
-}
+};
