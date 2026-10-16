@@ -6,6 +6,7 @@ const playersManager = require('./Managers/PlayersManager');
 class Server {
   constructor() {
     this._server = null;
+    this._isReady = false;
   }
 
   start(host, port, callback) {
@@ -16,7 +17,13 @@ class Server {
     this._server.listen(port, host);
   }
 
+  isReady() {
+    return this._isReady;
+  }
+
   _onListening(callback) {
+    this._isReady = true;
+    
     callback();
   }
 
@@ -34,4 +41,4 @@ class Server {
   }
 }
 
-module.exports = Server;
+module.exports = new Server();

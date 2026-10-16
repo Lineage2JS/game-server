@@ -1,4 +1,4 @@
-const Server = require('./core/Server');
+const server = require('./core/Server');
 const npcManager = require('./core/Managers/NpcManager');
 const itemsManager = require('./core/Managers/ItemsManager');
 const initialParametersManager = require('./core/Managers/InitialParametersManager');
@@ -17,7 +17,6 @@ const database = require('./database');
 const config = require('./config');
 const serverStatus = require('./enums/serverStatus');
 const serverTypes = require('./enums/serverTypes');
-const server = new Server();
 const isDebugMode = process.argv.includes('--debug-mode');
 
 async function init() {
@@ -90,7 +89,17 @@ process.on('SIGINT', async () => {
 });
 
 if (isDebugMode) {
-  require('./core/debug');
+  const isDropCoin = process.argv.includes('--drop-coin');
+
+  if (isDropCoin) {
+    require('./core/debug/dropcoin');
+  }
+
+  const isNpcLog = process.argv.includes('--npc-log');
+  
+  if (isNpcLog) {
+    require('./core/debug/npclog');
+  }
 }
 
 init();

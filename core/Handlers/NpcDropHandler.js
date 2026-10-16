@@ -38,7 +38,7 @@ class NpcDropHandler {
       });
     });
 
-    console.log(npc.id, dropItems);
+    console.log(`[drop] ${npc.name}, ${JSON.stringify(dropItems)}`);
 
     for (let i = 0; i < dropItems.length; i++) {
       const dropItem = dropItems[i];

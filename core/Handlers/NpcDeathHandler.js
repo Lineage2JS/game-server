@@ -1,4 +1,5 @@
 const playersManager = require('./../Managers/PlayersManager');
+const npcManager = require('./../Managers/NpcManager');
 const schedulerManager = require('./../Managers/SchedulerManager');
 const serverPackets = require('./../ServerPackets/serverPackets');
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
@@ -54,7 +55,9 @@ class NpcDeathHandler {
         npcSpawnId: npc.getSpawnId()
       }),
       createdBy: '' // TODO ?
-    })
+    });
+
+    npcManager.removeNpc(npc);
   }
 }
 

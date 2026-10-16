@@ -1,6 +1,7 @@
 const eventBus = require('./../Events/EventBusNew');
 const serverPackets = require('./../ServerPackets/serverPackets');
 const database = require('./../../database');
+const ID_ADENA = 57;
 
 eventBus.on('player:move', async (player) => {
   const client = player.getClient();
@@ -8,7 +9,7 @@ eventBus.on('player:move', async (player) => {
   
   client.sendPacket(new serverPackets.DropItem(player, {
     objectId: objectId,
-    itemId: 57, // Adena
+    itemId: ID_ADENA,
     x: player.x,
     y: player.y,
     z: player.z

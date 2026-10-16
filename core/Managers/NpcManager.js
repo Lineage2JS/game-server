@@ -95,7 +95,6 @@ class NpcManager extends EventEmitter {
     });
     npc.on('died', () => {
       this.emit('died', npc);
-      this.removeNpc(npc);
     });
   }
 
