@@ -1,12 +1,9 @@
 const announcements = require('./../../datapack/announcements.json');
-const eventBusNew = require('./../Events/EventBusNew');
 const serverPackets = require('./../ServerPackets/serverPackets');
 
 class AnnouncementsManager {
   constructor() {
     this._announcements = [];
-
-    eventBusNew.on('player:enter', this._onPlayerEnter.bind(this));
   }
 
   enable() {
@@ -17,7 +14,7 @@ class AnnouncementsManager {
     return this._announcements;
   }
 
-  _onPlayerEnter(player) {
+  sendAnnouncementsToPlayer(player) {
     this._announcements.forEach(announcement => {
       const packet = new serverPackets.CreateSay(0, player.characterName, 10, announcement); // TODO ANNOUNCEMENT = 10
       const client = player.getClient();
