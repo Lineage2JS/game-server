@@ -66,7 +66,7 @@ class UserInfo {
       .writeD(player.back.itemId)
       .writeD(player.hand.leftAndRight.itemId)
 
-      .writeD(player.pAtk)
+      .writeD(player.getPAtk())
       .writeD(player.attackSpeed)
       .writeD(player.pDef)
       .writeD(player.evasion)

@@ -5,10 +5,15 @@ class ItemWeapon extends Item {
     super(data);
 
     this._weaponType = data.weaponType;
+    this._physicalDamage = data.physicalDamage;
   }
 
   getWeaponType() {
     return this._weaponType;
+  }
+
+  getPhysicalDamage() {
+    return this._physicalDamage;
   }
 }
 

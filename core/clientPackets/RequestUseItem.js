@@ -40,6 +40,7 @@ class RequestUseItem extends ClientPacketNew {
       player.equipItem(item);
     }
 
+    player.updatePAtk();
     client.sendPacket(new serverPackets.UserInfo(player));
     client.sendPacket(new serverPackets.ItemList(player.getItems()));
   }

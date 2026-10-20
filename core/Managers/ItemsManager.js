@@ -211,6 +211,7 @@ class ItemsManager {
       bodyPart: itemTemplate.getBodyPart(),
       weight: itemTemplate.getWeight(),
       price: itemTemplate.getPrice(),
+      physicalDamage: itemTemplate.getPhysicalDamage(),
     }
     const itemWeapon = new ItemWeapon(data);
 
@@ -377,6 +378,7 @@ class ItemsManager {
       bodyPart: slot,
       weight: itemData.weight,
       price: itemData.default_price,
+      physicalDamage: itemData.physical_damage,
     }        
     const itemWeapon = new ItemWeapon(data);
 

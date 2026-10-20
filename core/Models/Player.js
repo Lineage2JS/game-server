@@ -118,7 +118,7 @@ class Player extends Character {
 
     const currentAdenaCount = item.getCount();
 
-    if (currentAdenaCount > adenaCount) {
+    if (adenaCount < currentAdenaCount) {
       item.setCount(currentAdenaCount - adenaCount);
     }
   }

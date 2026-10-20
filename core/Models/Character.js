@@ -1,5 +1,6 @@
 const baseStats = require('./../../datapack/baseStats.json');
 const eventBusNew = require('./../Events/EventBusNew');
+const statsCalc = require('./../calcs/StatsCalc');
 const EventEmitter = require('events');
 
 class Character extends EventEmitter {
@@ -170,6 +171,14 @@ class Character extends EventEmitter {
 
   set targetSkillId(value) {
     this.actionParams.targetSkillId = value;
+  }
+
+  updatePAtk() {
+    this.pAtk = statsCalc.calcPAtk(this);
+  }
+
+  getPAtk() {
+    return this.pAtk;
   }
 
   takeDamage(damage) {    
