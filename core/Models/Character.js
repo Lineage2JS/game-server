@@ -181,6 +181,10 @@ class Character extends EventEmitter {
     return this.pAtk;
   }
 
+  getPDef() {
+    return this.pDef;
+  }
+
   takeDamage(damage) {    
     this.hp = this.hp - damage;
 

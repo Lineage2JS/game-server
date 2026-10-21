@@ -9,6 +9,7 @@ const CastState = require('./../states/CastState');
 const FollowState = require('./../states/FollowState');
 const PickupState = require('./../states/PickupState');
 const TalkState = require('./../states/TalkState');
+const damageCalc = require('./../calcs/DamageCalc');
 
 class Player extends Character {
   constructor() {
@@ -329,7 +330,7 @@ class Player extends Character {
   attack(entity) {
     entity.emit('attacked', {
       attacker: this,
-      damage: 10 // TODO
+      damage: damageCalc.calcDamage(this, entity) // TODO
     });
   }
 
