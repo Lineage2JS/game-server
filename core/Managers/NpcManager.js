@@ -66,6 +66,7 @@ class NpcManager extends EventEmitter {
     const npc = new Npc();
 
     npc.updateParams(npcData);
+    npc.setPDef(npcData.baseDefend);
     npc.objectId = await database.getNextObjectId();
     npc.maximumHp = npc.hp;
     npc.characterName = npcData.name;

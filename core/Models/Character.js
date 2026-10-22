@@ -185,6 +185,10 @@ class Character extends EventEmitter {
     return this.pDef;
   }
 
+  setPDef(value) {
+    this.pDef = Math.floor(value);
+  }
+
   takeDamage(damage) {    
     this.hp = this.hp - damage;
 
