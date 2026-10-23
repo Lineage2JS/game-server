@@ -8,7 +8,7 @@ class SendBypassBuildCmd extends ClientPacketNew {
     const command = this.readS();
 
     if (command === 'admin') {
-      const htmlMessage = adminPanelManager.getHtmlMessageByFileName('panel');
+      const htmlMessage = adminPanelManager.getHtmlMessageByFileName('panel.htm');
 
       client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
     }

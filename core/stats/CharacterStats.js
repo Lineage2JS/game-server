@@ -1,5 +1,9 @@
-class CharacterStats {
+const BaseStats = require('./BaseStats');
+
+class CharacterStats extends BaseStats {
   constructor() {
+    super();
+    
     this._pAtk = null;
     this._pDef = null;
   }

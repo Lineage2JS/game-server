@@ -21,7 +21,7 @@ class RequestTutorialQuestionMarkPressed {
     const player = playersManager.getPlayerByClient(this._client);
 
     if (this.number === 12) {
-      this._client.sendPacket(new serverPackets.TutorialShowHtml(tutorialHtmlMessagesManager.getHtmlMessageByFileName('tutorial_012')));
+      this._client.sendPacket(new serverPackets.TutorialShowHtml(tutorialHtmlMessagesManager.getHtmlMessageByFileName('tutorial_012.htm')));
     }
   }
 }

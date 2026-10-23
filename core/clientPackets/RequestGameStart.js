@@ -11,8 +11,6 @@ class RequestGameStart extends ClientPacketNew {
     const characters = await database.getCharactersByLogin(player.login);
     const character = characters[characterSlot];
 
-    //player.updateParams(character);
-
     player.x = character.x;
     player.y = character.y;
     player.z = character.z;
@@ -24,7 +22,7 @@ class RequestGameStart extends ClientPacketNew {
     player.classId = character.classId;
     player.level = character.level;
     player.exp = character.exp;
-    player.str = character.str;
+    player.getStats().setStr(character.str);
     player.dex = character.dex;
     player.con = character.con;
     player.int = character.int;

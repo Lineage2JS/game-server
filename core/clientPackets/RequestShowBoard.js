@@ -6,7 +6,7 @@ class RequestShowBoard extends ClientPacketNew {
   async handle() {
     const client = this.getClient();
     const unknown = this.readD(); // TODO
-    const htmlMessage = communityBoardManager.getHtmlMessageByFileName('main');
+    const htmlMessage = communityBoardManager.getHtmlMessageByFileName('main.htm');
 
     client.sendPacket(new serverPackets.ShowBoard(htmlMessage));
   }

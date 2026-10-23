@@ -16,7 +16,7 @@ class UserInfo {
       .writeD(player.classId)
       .writeD(player.level)
       .writeD(player.exp)
-      .writeD(player.str)
+      .writeD(player.getStats().getStr())
       .writeD(player.dex)
       .writeD(player.con)
       .writeD(player.int)

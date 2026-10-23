@@ -13,7 +13,7 @@ class RequestBypassToServer extends ClientPacketNew {
     const command = this.readS();
 
     if (command === 'admin_show_panel') {
-      const htmlMessage = adminPanelManager.getHtmlMessageByFileName('panel');
+      const htmlMessage = adminPanelManager.getHtmlMessageByFileName('panel.htm');
 
       client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
 
@@ -21,7 +21,7 @@ class RequestBypassToServer extends ClientPacketNew {
     }
     
     if (command === 'admin_show_teleports') {
-      const htmlMessage = adminPanelManager.getHtmlMessageByFileName('teleports');
+      const htmlMessage = adminPanelManager.getHtmlMessageByFileName('teleports.htm');
 
       client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
 
@@ -41,7 +41,7 @@ class RequestBypassToServer extends ClientPacketNew {
     }
 
     if (command === 'admin_show_items') {
-      const htmlMessage = adminPanelManager.getHtmlMessageByFileName('items');
+      const htmlMessage = adminPanelManager.getHtmlMessageByFileName('items.htm');
 
       client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
 
@@ -49,7 +49,7 @@ class RequestBypassToServer extends ClientPacketNew {
     }
 
     if (command === 'admin_show_bots') {
-      const htmlMessage = adminPanelManager.getHtmlMessageByFileName('bots');
+      const htmlMessage = adminPanelManager.getHtmlMessageByFileName('bots.htm');
 
       client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
 
@@ -77,7 +77,7 @@ class RequestBypassToServer extends ClientPacketNew {
     }
 
     if (command === 'admin_show_other') {
-      const htmlMessage = adminPanelManager.getHtmlMessageByFileName('other');
+      const htmlMessage = adminPanelManager.getHtmlMessageByFileName('other.htm');
 
       client.sendPacket(new serverPackets.NpcHtmlMessage(htmlMessage));
 
