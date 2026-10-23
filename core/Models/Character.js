@@ -39,12 +39,6 @@ class Character extends EventEmitter {
     this.className = null;
     this.raceId = null;
     
-    this.str = null;
-    this.dex = null;
-    this.con = null;
-    this.int = null;
-    this.wit = null;
-    this.men = null;
     this.hp = null;
     this.maximumHp = null;
     this.mp = null;
@@ -239,11 +233,11 @@ class Character extends EventEmitter {
   }
 
   get runSpeed() {
-    return Math.round(this.baseRunSpeed * baseStats.DEX[this.dex]);
+    return Math.round(this.baseRunSpeed * baseStats.DEX[this.getStats().getDex()]);
   }
 
   get walkSpeed() {
-    return Math.round(this.baseWalkSpeed * baseStats.DEX[this.dex]);
+    return Math.round(this.baseWalkSpeed * baseStats.DEX[this.getStats().getDex()]);
   }
 
   get movementMultiplier() {
@@ -254,7 +248,7 @@ class Character extends EventEmitter {
   };
 
   get attackSpeed() {
-    return Math.round(this.baseAttackSpeed * baseStats.DEX[this.dex]);
+    return Math.round(this.baseAttackSpeed * baseStats.DEX[this.getStats().getDex()]);
   }
 
   get attackSpeedMultiplier() {

@@ -23,11 +23,11 @@ class RequestGameStart extends ClientPacketNew {
     player.level = character.level;
     player.exp = character.exp;
     player.getStats().setStr(character.str);
-    player.dex = character.dex;
-    player.con = character.con;
-    player.int = character.int;
-    player.wit = character.wit;
-    player.men = character.men;
+    player.getStats().setDex(character.dex);
+    player.getStats().setCon(character.con);
+    player.getStats().setInt(character.int);
+    player.getStats().setWit(character.wit);
+    player.getStats().setMen(character.men);
     player.maximumHp = character.maximumHp;
     player.hp = character.hp;
     player.maximumMp = character.maximumMp

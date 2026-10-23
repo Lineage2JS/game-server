@@ -1,6 +1,6 @@
 const BaseStats = require('./BaseStats');
 
-class CharacterStats extends BaseStats {
+class CharacterStats extends BaseStats { // TODO CombatStats?
   constructor() {
     super();
     
