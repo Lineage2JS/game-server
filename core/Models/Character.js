@@ -1,6 +1,7 @@
 const baseStats = require('./../../datapack/baseStats.json');
 const eventBusNew = require('./../Events/EventBusNew');
 const statsCalc = require('./../calcs/StatsCalc');
+const CharacterStats = require('./../stats/CharacterStats');
 const EventEmitter = require('events');
 
 class Character extends EventEmitter {
@@ -100,6 +101,9 @@ class Character extends EventEmitter {
     this.back = { objectId: 0, itemId: 0 }
 
     //
+    this._stats = new CharacterStats();
+
+    //
     this.target = null; // target and aggroTarget?
     this.createdAt = null;
     this._hitHistoryMap = new Map();
@@ -174,6 +178,8 @@ class Character extends EventEmitter {
   }
 
   updatePAtk() {
+    // const pAtk = statsCalc.calcPAtk(this);
+    // this.getStats().setPAtk(pAtk);
     this.pAtk = statsCalc.calcPAtk(this);
   }
 
@@ -187,6 +193,10 @@ class Character extends EventEmitter {
 
   setPDef(value) {
     this.pDef = Math.floor(value);
+  }
+
+  getStats() {
+    return this._stats;
   }
 
   takeDamage(damage) {    
