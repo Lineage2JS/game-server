@@ -140,14 +140,6 @@ class Npc extends Character {
     }
   }
 
-  updateParams(data) {
-    for(const key in data) {
-      if (this.hasOwnProperty(key)) {
-        this[key] = data[key];
-      }
-    }
-  }
-
   setSpawnId(spawnId) {
     this._spawnId = spawnId;
   }
