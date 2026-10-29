@@ -1,5 +1,4 @@
 const baseStats = require('./../../datapack/baseStats.json');
-const eventBusNew = require('./../Events/EventBusNew');
 const statsCalc = require('./../calcs/StatsCalc');
 const BaseStats = require('./../stats/BaseStats');
 const CombatStats = require('./../stats/CombatStats');
@@ -110,16 +109,6 @@ class Character extends EventEmitter {
       targetItemId: null,
       targetSkillId: null,
     }
-
-    this.on('attacked', (data) => {
-      if (this.isDead) {
-        return
-      }
-
-      this.takeDamage(data.damage);
-      this.recordHit(data.attacker, data.damage);
-      eventBusNew.emit('npc:attacked', { npc: this, attacker: data.attacker, damage: data.damage });
-    });
   }
 
   get targetX() {

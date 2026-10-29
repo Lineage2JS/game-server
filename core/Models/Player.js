@@ -9,7 +9,7 @@ const CastState = require('./../states/CastState');
 const FollowState = require('./../states/FollowState');
 const PickupState = require('./../states/PickupState');
 const TalkState = require('./../states/TalkState');
-const damageCalc = require('./../calcs/DamageCalc');
+const eventBusNew = require('./../Events/EventBusNew');
 
 class Player extends Character {
   constructor() {
@@ -327,10 +327,10 @@ class Player extends Character {
     return false;
   }
 
-  attack(entity) {
-    entity.emit('attacked', {
+  attack(target) {
+    eventBusNew.emit('player:attack', {
       attacker: this,
-      damage: damageCalc.calcDamage(this, entity) // TODO
+      target,
     });
   }
 
