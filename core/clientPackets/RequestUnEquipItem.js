@@ -65,6 +65,7 @@ class RequestUnEquipItem extends ClientPacketNew {
     }
 
     player.updatePAtk();
+    player.updatePSpd();
     client.sendPacket(new serverPackets.UserInfo(player));
     client.sendPacket(new serverPackets.ItemList(player.getItems()));
   }

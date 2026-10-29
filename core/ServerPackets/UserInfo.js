@@ -67,7 +67,7 @@ class UserInfo {
       .writeD(player.hand.leftAndRight.itemId)
 
       .writeD(player.getCombatStats().getPAtk())
-      .writeD(player.attackSpeed)
+      .writeD(player.getCombatStats().getPSpd())
       .writeD(player.getCombatStats().getPDef())
       .writeD(player.evasion)
       .writeD(player.accuracy)

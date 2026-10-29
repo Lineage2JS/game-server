@@ -40,6 +40,7 @@ class RequestGameStart extends ClientPacketNew {
 
     player.baseRunSpeed = character.baseRunSpeed;
     player.baseWalkSpeed = character.baseWalkSpeed;
+    player.baseAttackSpeed = 300; // TODO
 
     player.className = character.className;
     player.karma = character.karma;

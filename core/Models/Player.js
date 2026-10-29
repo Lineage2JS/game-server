@@ -41,7 +41,7 @@ class Player extends Character {
     this.lastMoveTimestamp = 0;
     this.castTimestamp = 0;
     this.lastRegenerateTimestamp = 0;
-    this.baseAttackSpeed = 300; // TODO
+    this.baseAttackSpeed = 0;
     
     this.moveType = 1;
     this.waitType = 1;
@@ -55,7 +55,7 @@ class Player extends Character {
   }
 
   get attackDelay() {
-    return 500000 / this.attackSpeed;
+    return 500000 / this.getCombatStats().getPSpd(); // TODO example 1000 / (330 / 500) = 1515ms
   }
 
   get isAttacking() {

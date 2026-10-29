@@ -182,6 +182,12 @@ class Character extends EventEmitter {
     this.getCombatStats().setMSpd(mSpd);
   }
 
+  updatePSpd() {
+    const pSpd = statsCalc.calcPSpd(this);
+
+    this.getCombatStats().setPSpd(pSpd);
+  }
+
   getBaseStats() {
     return this._baseStats;
   }
@@ -244,12 +250,8 @@ class Character extends EventEmitter {
     return parseFloat(roundedMultiplier);
   };
 
-  get attackSpeed() {
-    return Math.round(this.baseAttackSpeed * baseStats.DEX[this.getBaseStats().getDex()]);
-  }
-
   get attackSpeedMultiplier() {
-    const multiplier = ((1.1) * this.attackSpeed / this.baseAttackSpeed)
+    const multiplier = ((1.1) * this.getCombatStats().getPSpd() / this.baseAttackSpeed)
     const roundedMultiplier = multiplier.toFixed(1);
     
     return parseFloat(roundedMultiplier);

@@ -7,6 +7,7 @@ class PlayerEnterHandler {
     
     player.updatePAtk();
     player.updateMSpd();
+    player.updatePSpd();
     client.sendPacket(new serverPackets.UserInfo(player));
     client.sendPacket(new serverPackets.SunRise()); // TimeManager?
     client.sendPacket(new serverPackets.SystemMessage(34)); // fix

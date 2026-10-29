@@ -34,6 +34,22 @@ class StatsCalc {
 
     return Math.floor(mSpd);
   }
+
+  calcPSpd(character) {
+    const item = character.getItemByObjectId(character.hand.right.objectId);
+    let weaponPSpd;
+
+    if (!item) {
+      weaponPSpd = 300; // TODO get base attack speed?
+    } else {
+      weaponPSpd = item.getAttackSpeed();
+    }
+
+    const dexModifier = baseStats.DEX[character.getBaseStats().getDex()];
+    const pSpd = (weaponPSpd * dexModifier);
+
+    return Math.floor(pSpd);
+  }
 }
 
 module.exports = new StatsCalc();

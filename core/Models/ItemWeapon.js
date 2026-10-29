@@ -6,7 +6,7 @@ class ItemWeapon extends Item {
 
     this._weaponType = data.weaponType;
     this._physicalDamage = data.physicalDamage;
-    this._attackSpeed - data.attackSpeed;
+    this._attackSpeed = data.attackSpeed;
   }
 
   getWeaponType() {
