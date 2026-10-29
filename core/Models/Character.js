@@ -45,12 +45,9 @@ class Character extends EventEmitter {
     this.mp = null;
     this.maximumMp = null;
 
-    this.pAtk = null;
-    this.pDef = null;
     this.mAtk = null;
     this.mDef = null;
     this.pSpd = null;
-    this.mSpd = null;
     this.accuracy = null;
     this.critical = null;
     this.evasion = null;
@@ -174,21 +171,15 @@ class Character extends EventEmitter {
   }
 
   updatePAtk() {
-    // const pAtk = statsCalc.calcPAtk(this);
-    // this.getCombatStats().setPAtk(pAtk);
-    this.pAtk = statsCalc.calcPAtk(this);
+    const pAtk = statsCalc.calcPAtk(this);
+    
+    this.getCombatStats().setPAtk(pAtk);
   }
 
-  getPAtk() {
-    return this.pAtk;
-  }
+  updateMSpd() {
+    const mSpd = statsCalc.calcMSpd(this);
 
-  getPDef() {
-    return this.pDef;
-  }
-
-  setPDef(value) {
-    this.pDef = Math.floor(value);
+    this.getCombatStats().setMSpd(mSpd);
   }
 
   getBaseStats() {

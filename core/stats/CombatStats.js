@@ -2,6 +2,7 @@ class CombatStats {
   constructor() {    
     this._pAtk = null;
     this._pDef = null;
+    this._mSpd = null;
   }
   
   getPAtk() {
@@ -18,6 +19,14 @@ class CombatStats {
 
   setPDef(value) {
     this._pDef = Math.floor(value);
+  }
+
+  getMSpd() {
+    return this._mSpd;
+  }
+
+  setMSpd(value) {
+    this._mSpd = Math.floor(value);;
   }
 }
 

@@ -3,10 +3,10 @@ const announcementsManager = require('./../Managers/AnnouncementsManager');
 
 class PlayerEnterHandler {
   handle(player) {
-    player.mSpd = 333; // TODO?
     const client = player.getClient();
     
     player.updatePAtk();
+    player.updateMSpd();
     client.sendPacket(new serverPackets.UserInfo(player));
     client.sendPacket(new serverPackets.SunRise()); // TimeManager?
     client.sendPacket(new serverPackets.SystemMessage(34)); // fix

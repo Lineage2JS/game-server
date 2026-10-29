@@ -66,15 +66,15 @@ class UserInfo {
       .writeD(player.back.itemId)
       .writeD(player.hand.leftAndRight.itemId)
 
-      .writeD(player.getPAtk())
+      .writeD(player.getCombatStats().getPAtk())
       .writeD(player.attackSpeed)
-      .writeD(player.pDef)
+      .writeD(player.getCombatStats().getPDef())
       .writeD(player.evasion)
       .writeD(player.accuracy)
       .writeD(player.critical)
 
       .writeD(player.mAtk)
-      .writeD(player.mSpd)
+      .writeD(player.getCombatStats().getMSpd())
       .writeD(player.pSpd) // TODO дубль?
       .writeD(player.mDef)
 

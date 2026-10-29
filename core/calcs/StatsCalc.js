@@ -15,7 +15,7 @@ class StatsCalc {
 
     const weaponPAtk = item.getPhysicalDamage();
     const levelModifier = (character.level + 89) / 100;
-    const strModifier = baseStats.STR[character.str];
+    const strModifier = baseStats.STR[character.getBaseStats().getStr()];
     const masteryModifier = 1;
     const armorBonus = 1;
     const mDefBonus = 1;
@@ -26,6 +26,13 @@ class StatsCalc {
     const pAtk = (weaponPAtk * levelModifier * strModifier * masteryModifier * armorBonus  * mDefBonus * buffsType1) + weaponMastery + buffsType2 + weaponBonus;
 
     return Math.floor(pAtk);
+  }
+
+  calcMSpd(character) {
+    const witModifier = baseStats.WIT[character.getBaseStats().getWit()];
+    const mSpd = (333 * witModifier);
+
+    return Math.floor(mSpd);
   }
 }
 
