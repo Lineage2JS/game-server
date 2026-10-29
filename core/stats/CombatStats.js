@@ -1,9 +1,5 @@
-const BaseStats = require('./BaseStats');
-
-class CharacterStats extends BaseStats { // TODO CombatStats?
-  constructor() {
-    super();
-    
+class CombatStats {
+  constructor() {    
     this._pAtk = null;
     this._pDef = null;
   }
@@ -25,4 +21,4 @@ class CharacterStats extends BaseStats { // TODO CombatStats?
   }
 }
 
-module.exports = CharacterStats;
+module.exports = CombatStats;

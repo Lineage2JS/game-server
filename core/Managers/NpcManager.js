@@ -71,17 +71,19 @@ class NpcManager extends EventEmitter {
     npc.level = npcData.level;
     npc.exp = npcData.exp;
     npc.canBeAttacked = npcData.canBeAttacked;
-    npc.additionalMakeMultiList = npcData.additionalMakeMultiList
-    npc.baseAttackRange = npcData.baseAttackRange
-    npc.baseWalkSpeed = npcData.baseWalkSpeed;
-    npc.baseRunSpeed = npcData.baseRunSpeed;
+    npc.additionalMakeMultiList = npcData.additionalMakeMultiList;
     npc.hp = npcData.hp;
     npc.mp = npcData.mp;
+    npc.ai = npcData.ai;
+
+    npc.baseAttackRange = npcData.baseAttackRange;
+    npc.baseWalkSpeed = npcData.baseWalkSpeed;
+    npc.baseRunSpeed = npcData.baseRunSpeed;
     npc.baseAttackSpeed = npcData.baseAttackSpeed;
     npc.collisionRadius = npcData.collisionRadius;
     npc.collisionHeight = npcData.collisionHeight;
-    npc.ai = npcData.ai;
-    npc.getStats().setPDef(npcData.baseDefend);
+    
+    npc.getCombatStats().setPDef(npcData.baseDefend);
     npc.objectId = await database.getNextObjectId();
     npc.maximumHp = npc.hp;
     npc.characterName = npcData.name;

@@ -1,7 +1,8 @@
 const baseStats = require('./../../datapack/baseStats.json');
 const eventBusNew = require('./../Events/EventBusNew');
 const statsCalc = require('./../calcs/StatsCalc');
-const CharacterStats = require('./../stats/CharacterStats');
+const BaseStats = require('./../stats/BaseStats');
+const CombatStats = require('./../stats/CombatStats');
 const EventEmitter = require('events');
 
 class Character extends EventEmitter {
@@ -95,7 +96,8 @@ class Character extends EventEmitter {
     this.back = { objectId: 0, itemId: 0 }
 
     //
-    this._stats = new CharacterStats();
+    this._baseStats = new BaseStats();
+    this._combatStats = new CombatStats();
 
     //
     this.target = null; // target and aggroTarget?
@@ -173,7 +175,7 @@ class Character extends EventEmitter {
 
   updatePAtk() {
     // const pAtk = statsCalc.calcPAtk(this);
-    // this.getStats().setPAtk(pAtk);
+    // this.getCombatStats().setPAtk(pAtk);
     this.pAtk = statsCalc.calcPAtk(this);
   }
 
@@ -189,8 +191,12 @@ class Character extends EventEmitter {
     this.pDef = Math.floor(value);
   }
 
-  getStats() {
-    return this._stats;
+  getBaseStats() {
+    return this._baseStats;
+  }
+
+  getCombatStats() {
+    return this._combatStats;
   }
 
   takeDamage(damage) {    
@@ -233,11 +239,11 @@ class Character extends EventEmitter {
   }
 
   get runSpeed() {
-    return Math.round(this.baseRunSpeed * baseStats.DEX[this.getStats().getDex()]);
+    return Math.round(this.baseRunSpeed * baseStats.DEX[this.getBaseStats().getDex()]);
   }
 
   get walkSpeed() {
-    return Math.round(this.baseWalkSpeed * baseStats.DEX[this.getStats().getDex()]);
+    return Math.round(this.baseWalkSpeed * baseStats.DEX[this.getBaseStats().getDex()]);
   }
 
   get movementMultiplier() {
@@ -248,7 +254,7 @@ class Character extends EventEmitter {
   };
 
   get attackSpeed() {
-    return Math.round(this.baseAttackSpeed * baseStats.DEX[this.getStats().getDex()]);
+    return Math.round(this.baseAttackSpeed * baseStats.DEX[this.getBaseStats().getDex()]);
   }
 
   get attackSpeedMultiplier() {
