@@ -74,7 +74,6 @@ class NpcManager extends EventEmitter {
     npc.additionalMakeMultiList = npcData.additionalMakeMultiList;
     npc.hp = npcData.hp;
     npc.mp = npcData.mp;
-    npc.ai = npcData.ai;
 
     npc.baseAttackRange = npcData.baseAttackRange;
     npc.baseWalkSpeed = npcData.baseWalkSpeed;
@@ -139,7 +138,9 @@ class NpcManager extends EventEmitter {
     const AiInstance = ai[npcData.ai.name];
 
     if (AiInstance) {
-      npc.ai = new AiInstance(npcData.ai.props);
+      const ai = new AiInstance(npcData.ai.props);
+
+      npc.setAi(ai);
     }
   }
 

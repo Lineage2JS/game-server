@@ -14,7 +14,7 @@ class TalkState extends BaseState {
       return
     }
 
-    entity.ai.talk(this.character);
+    entity.getAi().talk(this.character);
   }
 
   update() {

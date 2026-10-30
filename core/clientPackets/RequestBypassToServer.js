@@ -130,13 +130,13 @@ class RequestBypassToServer extends ClientPacketNew {
     const npc = entitiesManager.getEntityByObjectId(player.lastTalkedNpcId);
 
     if (command === 'talk_select') {
-      npc.ai.talkSelect(player);
+      npc.getAi().talkSelect(player);
 
       return;
     }
 
     if (command === 'learn_skill') {
-      //npc.ai.onLearnSkillRequested(player);
+      //npc.getAi().onLearnSkillRequested(player);
 
       return;
     }
@@ -149,13 +149,13 @@ class RequestBypassToServer extends ClientPacketNew {
         return { [key]: Number(value) };
       }).reduce((a, b) => { return {...a, ...b} });
 
-      npc.ai.menuSelect(player, params.ask, params.reply);
+      npc.getAi().menuSelect(player, params.ask, params.reply);
 
       return;
     }
     
     if (command === 'teleport_request') {
-      npc.ai.teleportRequest(player);
+      npc.getAi().teleportRequest(player);
 
       return;
     }

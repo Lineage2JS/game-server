@@ -1,7 +1,6 @@
 const playersManager = require('./../Managers/PlayersManager');
 const npcManager = require('./../Managers/NpcManager');
 const schedulerManager = require('./../Managers/SchedulerManager');
-const aiManager = require('./../Managers/AiManager');
 const serverPackets = require('./../ServerPackets/serverPackets');
 const characterStatusEnums = require('./../../enums/characterStatusEnums');
 const expToLevel = require('./../../utils/expToLevel');
@@ -45,10 +44,8 @@ class NpcDeathHandler {
         attacker.emit('regenerate');
       }
 
-      aiManager.onMyDying(npc.ai.name, attacker);
+      npc.getAi().onMyDying(attacker);
     });
-    
-    //npc.ai.dying()?
 
     schedulerManager.scheduleSession({
       type: 'npc-respawn',

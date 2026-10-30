@@ -56,12 +56,6 @@ class AiManager extends EventEmitter {
     carl.onTalkSelected(talker);
   }
 
-  onMyDying(aiName, talker) { // talker = attacker
-    const tk = new ai.TutoKeltir();
-
-    tk.onMyDying(talker);
-  }
-
   menuSelect(aiName, talker, ask, reply) {
     ai[aiName].onMenuSelected(talker, ask, reply);
   }
