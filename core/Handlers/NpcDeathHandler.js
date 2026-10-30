@@ -44,7 +44,9 @@ class NpcDeathHandler {
         attacker.emit('regenerate');
       }
 
-      npc.getAi().onMyDying(attacker);
+      if (npc.getAi() && npc.getAi().onMyDying) { // TODO remove
+        npc.getAi().onMyDying(attacker);
+      }
     });
 
     schedulerManager.scheduleSession({
