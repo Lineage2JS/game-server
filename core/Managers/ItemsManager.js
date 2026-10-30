@@ -4,6 +4,7 @@ const ItemAccessary = require('./../Models/ItemAccessary');
 const ItemEtc = require('./../Models/ItemEtc');
 const ItemArmor = require('./../Models/ItemArmor');
 const ItemWeapon = require('./../Models/ItemWeapon');
+const ItemQuest = require('./../Models/ItemQuest');
 const itemsList = require('./../../datapack/itemsList.json');
 const itemNamesMap = require('./../../datapack/itemNamesMap.json');
 
@@ -97,6 +98,10 @@ class ItemsManager {
     if (itemTemplate instanceof ItemWeapon) {
       return this._createItemWeapon(itemTemplate, objectId);
     }
+
+    if (itemTemplate instanceof ItemQuest) {
+      return this._createItemQuest(itemTemplate, objectId);
+    }
   }
 
   getItem(itemId, objectId, count = 1) {
@@ -120,6 +125,10 @@ class ItemsManager {
 
     if (itemTemplate instanceof ItemWeapon) {
       return this._createItemWeapon(itemTemplate, objectId);
+    }
+
+    if (itemTemplate instanceof ItemQuest) {
+      return this._createItemQuest(itemTemplate, objectId);
     }
   }
 
@@ -221,10 +230,26 @@ class ItemsManager {
     return itemWeapon;
   }
 
+  _createItemQuest(itemTemplate, objectId) {
+    const data = {
+      itemId: itemTemplate.getItemId(),
+      name: itemTemplate.getName(),
+      type1: itemTemplate.getType1(),
+      type2: itemTemplate.getType2(),
+      bodyPart: itemTemplate.getBodyPart(),
+      weight: itemTemplate.getWeight(),
+      price: itemTemplate.getPrice(),
+      stackable: itemTemplate.getStackable(),
+    }
+    const itemQuest = new ItemQuest(data);
+
+    itemQuest.setObjectId(objectId);
+
+    return itemQuest;
+  }
+
   _loadItemTemplates() {
     for(const itemData of itemsList) {
-      //questitem
-
       if (itemData.item_type === "asset") {
         this._createItemAssetTemplate(itemData);
       }
@@ -243,6 +268,10 @@ class ItemsManager {
 
       if (itemData.item_type === "weapon") {
         this._createItemWeaponTemplate(itemData);
+      }
+
+      if (itemData.item_type === "questitem") {
+        this._createItemQuestTemplate(itemData);
       }
     }
   }
@@ -385,6 +414,31 @@ class ItemsManager {
     const itemWeapon = new ItemWeapon(data);
 
     this._addItem(itemWeapon.getItemId(), itemWeapon);
+  }
+
+  _createItemQuestTemplate(itemData) {
+    let stackable = false;
+
+    if (itemData.consume_type === 'consume_type_stackable') {
+      stackable = true;
+    } else {
+      stackable = false;
+    }
+
+    const data = {
+      itemId: itemData.id,
+      name: itemData.name,
+      etcItemType: TYPE_QUEST,
+      type1: TYPE1_ITEM_QUESTITEM_ADENA,
+      type2: TYPE2_QUEST,
+      bodyPart: SLOT_NONE,
+      weight: itemData.weight,
+      price: itemData.default_price,
+      stackable,
+    }
+    const itemQuest = new ItemQuest(data);
+
+    this._addItem(itemQuest.getItemId(), itemQuest);
   }
 
   _addItem(itemId, item) {

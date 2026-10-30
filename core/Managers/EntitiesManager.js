@@ -349,10 +349,17 @@ class EntitiesManager {
     });
 
     aiManager.on('deleteItem', (talker, itemName, itemCount) => {
-      talker.deleteItemByName(itemName);
+      const items = talker.getInventory().getItems();
+      const foundItem = items.find(item => item.getName() === itemName);
+
+      if (!foundItem) {
+        return;
+      }
+
+      talker.deleteItemByObjectId(foundItem.getObjectId(), foundItem.getCount());
       
-      const items = talker.getItems();
-      const packet = new serverPackets.ItemList(items);
+      const updatedItems = talker.getItems();
+      const packet = new serverPackets.ItemList(updatedItems);
 
       playersManager.broadcastPacket(packet);
     });

@@ -49,6 +49,7 @@ class Npc extends Character {
     //
     this.additionalMakeMultiList = [];
     this.ai = null;
+    this._ai = null;
 
     this.positionUpdateTimestamp = 0;
     this.lastRegenerateTimestamp = 0;
@@ -60,6 +61,14 @@ class Npc extends Character {
 
   get isDead() {
     return this.state === 'dead';
+  }
+
+  getAi() {
+    return this._ai;
+  }
+
+  setAi(ai) {
+    this._ai = ai;
   }
 
   enable() {

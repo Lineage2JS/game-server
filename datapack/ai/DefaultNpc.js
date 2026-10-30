@@ -30,8 +30,8 @@ class DefaultNpc {
 
   ownItemCount(talker, itemName) {
     const items = talker.getItems();
-    const item = items.find(item => item.itemName === itemName);
-
+    const item = items.find(item => item.getName() === itemName);
+    
     if (item) {
       return item.getCount();
     } else {

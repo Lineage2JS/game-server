@@ -98,6 +98,10 @@ class Player extends Character {
     this._activeWeapon = item;
   }
 
+  getInventory() {
+    return this._inventory;
+  }
+
   getAdenaCount() {
     const items = this._inventory.getItems();
     const item = items.find(item => item.getItemId() === 57); // TODO const ?
@@ -144,17 +148,6 @@ class Player extends Character {
       return foundItem;
     } else {
       return null;
-    }
-  }
-
-  deleteItemByName(itemName) { // TODO deleteItem, удалять по ID и сделать 1 метод вместо 2-х? или только по ObjectId
-    const items = this._inventory.getItems();
-    const foundItem = items.find(item => item.itemName === itemName);
-
-    if (foundItem) {
-      const index = items.indexOf(foundItem);
-
-      items.splice(index, 1);
     }
   }
 
