@@ -102,21 +102,6 @@ class Player extends Character {
     return this._inventory;
   }
 
-  reduceAdena(adenaCount) {
-    const items = this._inventory.getItems();
-    const item = items.find(item => item.getItemId() === 57);
-
-    if (!item) {
-      return;
-    }
-
-    const currentAdenaCount = item.getCount();
-
-    if (adenaCount < currentAdenaCount) {
-      item.setCount(currentAdenaCount - adenaCount);
-    }
-  }
-
   setActiveSoulShot() {
     this._activeSoulShot = true;
   }

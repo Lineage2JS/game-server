@@ -32,7 +32,7 @@ class RequestBuyItem extends ClientPacketNew {
     //   }
     // }
 
-    player.reduceAdena(item.getPrice());
+    player.getInventory().reduceAdena(item.getPrice());
     player.addItem(item);
 
     const items = player.getItems();
