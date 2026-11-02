@@ -20,7 +20,7 @@ class RequestBuyItem extends ClientPacketNew {
 
     const item = await itemsManager.createItem(itemId);
 
-    if (player.getAdenaCount() < item.getPrice()) {
+    if (player.getInventory().getAdenaCount() < item.getPrice()) {
       client.sendPacket(new serverPackets.SystemMessage(279))
 
       return;

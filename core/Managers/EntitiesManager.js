@@ -375,7 +375,7 @@ class EntitiesManager {
         items.push(item);
       }
 
-      const packet = new serverPackets.BuyList(talker.getAdenaCount(), items);
+      const packet = new serverPackets.BuyList(talker.getInventory().getAdenaCount(), items);
 
       playersManager.broadcastPacket(packet);
     });
