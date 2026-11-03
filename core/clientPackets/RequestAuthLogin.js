@@ -7,7 +7,7 @@ class RequestAuthLogin extends ClientPacketNew {
   async handle() {
     const client = this.getClient();
     const player = this.getPlayer();
-    const login = this.readS();
+    const accountName = this.readS();
     const sessionKey1 = [
       this.readD().toString(16),
       this.readD().toString(16)
@@ -21,13 +21,11 @@ class RequestAuthLogin extends ClientPacketNew {
       return;
     }
 
-    const characters = await database.getCharactersByLogin(login); // TODO в логин я могу передать все что угодно, by player?
+    const characters = await database.getCharactersByLogin(accountName); // TODO в логин я могу передать все что угодно, by player?
 
-    player.updateParams({ // TODO тут какая-то неразбериха, логин из пакета берем, зачем-то обновляем.
-      login: login
-    });
-
-    client.sendPacket(new serverPackets.CharacterSelectInfo(player.login, characters));
+    player.login = accountName // TODO to delete
+    player.setAccountName(accountName);
+    client.sendPacket(new serverPackets.CharacterSelectInfo(player.getAccountName(), characters));
   }
 }
 

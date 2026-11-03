@@ -8,7 +8,7 @@ class RequestGameStart extends ClientPacketNew {
     const client = this.getClient();
     const player = this.getPlayer();
     const characterSlot = this.readD();
-    const characters = await database.getCharactersByLogin(player.login);
+    const characters = await database.getCharactersByLogin(player.getAccountName());
     const character = characters[characterSlot];
 
     player.x = character.x;
