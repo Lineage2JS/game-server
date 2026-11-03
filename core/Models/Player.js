@@ -256,12 +256,10 @@ class Player extends Character {
     }
   }
 
-  updateParams(data) {
-    for(const key in data) {
-      if (this.hasOwnProperty(key)) {
-        this[key] = data[key];
-      }
-    }
+  setPosition({ x, y, z }) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
   }
 
   moveTo(targetX, targetY, targetZ) {

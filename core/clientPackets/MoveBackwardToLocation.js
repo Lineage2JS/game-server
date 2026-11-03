@@ -21,11 +21,7 @@ class MoveBackwardToLocation extends ClientPacketNew {
       return;
     }
 
-    player.updateParams({
-      x: originX,
-      y: originY,
-      z: originZ
-    });
+    player.setPosition({ x: originX, y: originY, z: originZ });
     player.doAction('move', targetX, targetY, targetZ);
   }
 }
