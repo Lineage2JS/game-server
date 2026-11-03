@@ -8,12 +8,12 @@ class RequestCharacterRestore extends ClientPacketNew {
     const client = this.getClient();
     const player = this.getPlayer();
     const characterSlot = this.readD();
-    const characters = await database.getCharactersByLogin(player.login);
+    const characters = await database.getCharactersByLogin(player.getAccountName());
     const character = characters[characterSlot];
 
     await playersManager.restoreCharacter(character.objectId);
 
-    client.sendPacket(new serverPackets.CharacterSelectInfo(player.login, await database.getCharactersByLogin(player.login)));
+    client.sendPacket(new serverPackets.CharacterSelectInfo(player.getAccountName(), await database.getCharactersByLogin(player.getAccountName())));
   }
 }
 
