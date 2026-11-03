@@ -17,10 +17,10 @@ class RequestRestart extends ClientPacketNew {
     await database.updateCharacter(character.objectId, character);
 
     const allowRestart = true; // fix
-    const characters = await database.getCharactersByLogin(player.login);
+    const characters = await database.getCharactersByLogin(player.getAccountName());
 
     client.sendPacket(new serverPackets.RestartResponse(allowRestart));
-    client.sendPacket(new serverPackets.CharacterSelectInfo(player.login, characters));
+    client.sendPacket(new serverPackets.CharacterSelectInfo(player.getAccountName(), characters));
   }
 }
 

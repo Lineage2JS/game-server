@@ -22,8 +22,7 @@ class RequestAuthLogin extends ClientPacketNew {
     }
 
     const characters = await database.getCharactersByLogin(accountName); // TODO в логин я могу передать все что угодно, by player?
-
-    player.login = accountName // TODO to delete
+    
     player.setAccountName(accountName);
     client.sendPacket(new serverPackets.CharacterSelectInfo(player.getAccountName(), characters));
   }
