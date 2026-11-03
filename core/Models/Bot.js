@@ -9,6 +9,7 @@ const TalkState = require('./../states/TalkState');
 //
 const npcManager = require('./../Managers/NpcManager');
 //
+const { getRandomPointInPolygon } = require('./../../utils/geometry');
 
 class Bot extends Character {
   constructor(client) {
@@ -56,7 +57,11 @@ class Bot extends Character {
   }
 
   enable() {
-    // const positions = this._getRandomPos();
+    // const positions = this.getRandomPointInPolygon(); // TODO empty args
+    // let max = { x: -80000, y: 270000 };
+    // let min = { x: -60000, y: 250000 };
+    // let xp = [-71988, -71390, -72283, -72895];
+    // let yp = [256706, 257435, 258192, 257464];
 
     // let path = {
     //   target: {
@@ -167,40 +172,6 @@ class Bot extends Character {
       }
     }
   }
-
-  // create math utils
-  _getRandomPos() {
-    let max = { x: -80000, y: 270000 };
-    let min = { x: -60000, y: 250000 };
-    let xp = [-71988, -71390, -72283, -72895];
-    let yp = [256706, 257435, 258192, 257464];
-    let x;
-    let y;
-      
-    do {
-      x = Math.floor(min.x + Math.random() * (max.x + 1 - min.x));
-      y = Math.floor(min.y + Math.random() * (max.y + 1 - min.y));
-    } while(!this._inPoly(xp, yp, x, y))
-
-    return [x, y]
-  }
-
-  _inPoly(xp, yp, x, y){
-    let npol = xp.length;
-    let j = npol - 1;
-    let c = false;
-
-    for (let i = 0; i < npol; i++){
-      if ((((yp[i]<=y) && (y<yp[j])) || ((yp[j]<=y) && (y<yp[i]))) &&
-        (x > (xp[j] - xp[i]) * (y - yp[i]) / (yp[j] - yp[i]) + xp[i])) {
-        c = !c
-      }
-      j = i;
-    }
-
-    return c;
-  }
-  //
 }
 
 module.exports = Bot;

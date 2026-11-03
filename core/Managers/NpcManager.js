@@ -4,6 +4,7 @@ const npcTable = require('./../tables/NpcTable');
 const spawnTable = require('./../tables/SpawnTable');
 const database = require('./../../database');
 const ai = require('./../../datapack/ai');
+const { getRandomPointInPolygon } = require('./../../utils/geometry');
 
 class NpcManager extends EventEmitter {
   constructor() {
@@ -117,7 +118,7 @@ class NpcManager extends EventEmitter {
 
   _setupPositions(npc, spawnGroup, spawnPoints) {
     if (spawnGroup.pos === 'anywhere') {
-      const [x, y] = this._getRandomPos(spawnPoints);
+      const [x, y] = getRandomPointInPolygon(spawnPoints);
 
       npc.x = x;
       npc.y = y;
@@ -147,38 +148,6 @@ class NpcManager extends EventEmitter {
   _showSpawnedNpcCount() {
     process.stdout.write(`\r[NPS] ${this._npcs.size}`);
   }
-
-  _getRandomPos(points) {
-    const xp = points.map(i => i.x);
-    const yp = points.map(i => i.y);
-		const max = { x: Math.max(...xp), y: Math.max(...yp) };
-		const min = { x: Math.min(...xp), y: Math.min(...yp) };
-		let x;
-		let y;
-			
-		do {
-			x = Math.floor(min.x + Math.random() * (max.x + 1 - min.x));
-			y = Math.floor(min.y + Math.random() * (max.y + 1 - min.y));
-		} while(!this._inPoly(xp, yp, x, y))
-
-		return [x, y];
-	}
-
-  _inPoly(xp, yp, x, y){
-		let npol = xp.length;
-		let j = npol - 1;
-		let c = false;
-
-		for (let i = 0; i < npol; i++){
-			if ((((yp[i]<=y) && (y<yp[j])) || ((yp[j]<=y) && (y<yp[i]))) &&
-				(x > (xp[j] - xp[i]) * (y - yp[i]) / (yp[j] - yp[i]) + xp[i])) {
-				c = !c
-			}
-			j = i;
-		}
-
-		return c;
-	}
 }
 
 module.exports = new NpcManager();
