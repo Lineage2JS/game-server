@@ -142,6 +142,12 @@ class RequestCharacterCreate extends ClientPacketNew {
     character.hairColor = hairColor;
     character.face = face;
     character.createdAt = Date.now();
+    character.getBaseStats().setStr(str);
+    character.getBaseStats().setDex(dex);
+    character.getBaseStats().setCon(con);
+    character.getBaseStats().setInt(int);
+    character.getBaseStats().setWit(wit);
+    character.getBaseStats().setMen(men);
 
     // TODO
     const classIds = new Map();
