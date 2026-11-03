@@ -67,9 +67,9 @@ class RequestCharacterCreate extends ClientPacketNew {
     }
   }
 
-  async checkAvailableNumberCharacters(login) {
+  async checkAvailableNumberCharacters(accountName) {
     const MAXIMUM_NUMBER_OF_CHARACTERS = 7;
-    const characters = await database.getCharactersByLogin(login);
+    const characters = await database.getCharactersByLogin(accountName);
 
     if (characters.length >= MAXIMUM_NUMBER_OF_CHARACTERS) {
       return true;
@@ -95,7 +95,7 @@ class RequestCharacterCreate extends ClientPacketNew {
     const hairColor = this.readD();
     const face = this.readD();
     const MAXIMUM_LENGTH_CHARACTER_NAME = 16;
-    const isManyCharacters = await this.checkAvailableNumberCharacters(player.login);
+    const isManyCharacters = await this.checkAvailableNumberCharacters(player.getAccountName());
     
     // check how many characters are on the account
     if (isManyCharacters) {
@@ -135,7 +135,7 @@ class RequestCharacterCreate extends ClientPacketNew {
     character.characterName = name;
     character.gender = gender;
     character.objectId = await database.getNextObjectId();
-    character.login = player.login;
+    character.setAccountName(player.getAccountName());
     character.maximumHp = character.hp;
     character.maximumMp = character.mp;
     character.hairStyle = hairStyle;
@@ -207,10 +207,10 @@ class RequestCharacterCreate extends ClientPacketNew {
     }
 
     // get all characters on user account
-    const characters = await database.getCharactersByLogin(player.login);
+    const characters = await database.getCharactersByLogin(player.getAccountName());
     
     client.sendPacket(new serverPackets.CharacterCreateSuccess());
-    client.sendPacket(new serverPackets.CharacterSelectInfo(player.login, characters));
+    client.sendPacket(new serverPackets.CharacterSelectInfo(player.getAccountName(), characters));
   }
 }
 

@@ -30,7 +30,7 @@ class Database {
       RETURNING *
     `, [
       character.objectId,
-      character.login,
+      character.getAccountName(),
       character.characterName,
       character.title,
       character.level,
