@@ -132,7 +132,7 @@ class RequestCharacterCreate extends ClientPacketNew {
     // create character
     const character = Character.create(characterTemplate);
 
-    character.characterName = name;
+    character.setCharacterName(name);
     character.gender = gender;
     character.objectId = await database.getNextObjectId();
     character.setAccountName(player.getAccountName());

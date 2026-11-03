@@ -3,6 +3,6 @@ const server = require('./../Server');
 
 npcManager.on('spawn', (npc) => {
   if (server.isReady()) {
-    console.log(`[spawn] ${npc.characterName} ${npc.x} ${npc.y}`);
+    console.log(`[spawn] ${npc.getCharacterName()} ${npc.x} ${npc.y}`);
   }
 });

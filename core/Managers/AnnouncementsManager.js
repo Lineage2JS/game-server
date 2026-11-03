@@ -16,7 +16,7 @@ class AnnouncementsManager {
 
   sendAnnouncementsToPlayer(player) {
     this._announcements.forEach(announcement => {
-      const packet = new serverPackets.CreateSay(0, player.characterName, 10, announcement); // TODO ANNOUNCEMENT = 10
+      const packet = new serverPackets.CreateSay(0, player.getCharacterName(), 10, announcement); // TODO ANNOUNCEMENT = 10
       const client = player.getClient();
 
       client.sendPacket(packet);

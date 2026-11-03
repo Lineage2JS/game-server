@@ -25,7 +25,7 @@ class Say2 extends ClientPacketNew {
     }
 
     if (type == ALL || type == SHOUT || type == TRADE) { // TODO for beta release
-      client.sendPacket(new serverPackets.CreateSay(player.objectId, player.characterName, type, text)); 
+      client.sendPacket(new serverPackets.CreateSay(player.objectId, player.getCharacterName(), type, text)); 
     } else {
       client.sendPacket(new serverPackets.ActionFailed());
 

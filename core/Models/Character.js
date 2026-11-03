@@ -10,6 +10,7 @@ class Character extends EventEmitter {
     
     this.objectId = null; // getObjectId()
     this._accountName = null;
+    this._characterName = null;
     this.characterName = null;
     this.title = "";
     this.level = 1;
@@ -165,6 +166,14 @@ class Character extends EventEmitter {
 
   setAccountName(value) {
     this._accountName = value;
+  }
+
+  getCharacterName() {
+    return this._characterName;
+  }
+  
+  setCharacterName(value) {
+    this._characterName = value
   }
 
   updatePAtk() {

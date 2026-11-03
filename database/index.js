@@ -31,7 +31,7 @@ class Database {
     `, [
       character.objectId,
       character.getAccountName(),
-      character.characterName,
+      character.getCharacterName(),
       character.title,
       character.level,
       character.gender,

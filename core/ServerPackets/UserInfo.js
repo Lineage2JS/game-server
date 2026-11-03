@@ -10,7 +10,7 @@ class UserInfo {
       .writeD(player.z)
       .writeD(player.heading) 
       .writeD(player.objectId)
-      .writeS(player.characterName)
+      .writeS(player.getCharacterName())
       .writeD(player.raceId)
       .writeD(player.gender)
       .writeD(player.classId)
