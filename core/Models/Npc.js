@@ -51,7 +51,6 @@ class Npc extends Character {
     this.additionalMakeMultiList = [];
     this._ai = null;
 
-    this.positionUpdateTimestamp = 0;
     this.lastRegenerateTimestamp = 0;
     this.lastUpdateTimestamp = 0;
     this._currentState = '';

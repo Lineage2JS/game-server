@@ -17,7 +17,6 @@ class Bot extends Character {
 
     this._client = client;
     this.target = null;
-    this.positionUpdateTimestamp = 0;
     this.state = '';
     this.action = '';
     this.isMoving = false;
@@ -162,14 +161,6 @@ class Bot extends Character {
 
     if (this._currentState) {
       this._currentState.update();
-    }
-  }
-
-  updateParams(data) {
-    for(const key in data) {
-      if (this.hasOwnProperty(key)) {
-        this[key] = data[key];
-      }
     }
   }
 }
