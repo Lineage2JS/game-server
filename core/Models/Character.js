@@ -2,6 +2,7 @@ const baseStats = require('./../../datapack/baseStats.json');
 const statsCalc = require('./../calcs/StatsCalc');
 const BaseStats = require('./../stats/BaseStats');
 const CombatStats = require('./../stats/CombatStats');
+const SocialStats = require('./../stats/SocialStats');
 const AppearanceStats = require('./../stats/AppearanceStats');
 const EventEmitter = require('events');
 
@@ -27,10 +28,6 @@ class Character extends EventEmitter {
     this.privateStoreType = 0;
     this.exp = 0;
     this.sp = 0;
-
-    this.pvp = 0;
-    this.pk = 0;
-    this.karma = 0;
 
     this.classId = null;
     this.className = null;
@@ -91,6 +88,7 @@ class Character extends EventEmitter {
     //
     this._baseStats = new BaseStats();
     this._combatStats = new CombatStats();
+    this._socialStats = new SocialStats();
     this._appearanceStats = new AppearanceStats();
 
     //
@@ -197,6 +195,10 @@ class Character extends EventEmitter {
 
   getCombatStats() {
     return this._combatStats;
+  }
+
+  getSocialStats() {
+    return this._socialStats;
   }
 
   getAppearanceStats() {

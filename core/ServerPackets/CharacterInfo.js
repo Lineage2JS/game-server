@@ -33,7 +33,7 @@ class CharacterInfo {
       .writeD(0)
       
       .writeD(0)
-      .writeD(player.karma)
+      .writeD(player.getSocialStats().getKarma())
 
       .writeD(player.baseRunSpeed)
       .writeD(player.baseWalkSpeed)

@@ -79,7 +79,7 @@ class UserInfo {
       .writeD(player.mDef)
 
       .writeD(0)
-      .writeD(player.karma)
+      .writeD(player.getSocialStats().getKarma())
 
       .writeD(player.baseRunSpeed)
       .writeD(player.baseWalkSpeed)
@@ -120,8 +120,8 @@ class UserInfo {
       .writeC(0x00)
       .writeC(player.privateStoreType)
       .writeC(player.canCraft)
-      .writeD(player.pk)
-      .writeD(player.pvp)
+      .writeD(player.getSocialStats().getPk())
+      .writeD(player.getSocialStats().getPvp())
       .writeH(0x00) // cubic count
       //.writeH(0x01) // 1-yellow 2-orange 3-yellow star 4-violett 5-blue cube  
       //.writeH(0x02) // 1-yellow 2-orange 3-yellollow star 4-violett 5-blue cube  w star  4-violett 5-blue cube  

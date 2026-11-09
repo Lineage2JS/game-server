@@ -43,9 +43,9 @@ class RequestGameStart extends ClientPacketNew {
     player.baseAttackSpeed = 300; // TODO
 
     player.className = character.className;
-    player.karma = character.karma;
-    player.pk = character.pk;
-    player.pvp = character.pvp;
+    player.getSocialStats().setPvp(character.pvp);
+    player.getSocialStats().setPk(character.pk);
+    player.getSocialStats().setKarma(character.karma);
     player.gm = character.gm;
     player.online = character.online;
     player.accessLevel = character.accessLevel;
