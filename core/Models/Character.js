@@ -2,6 +2,7 @@ const baseStats = require('./../../datapack/baseStats.json');
 const statsCalc = require('./../calcs/StatsCalc');
 const BaseStats = require('./../stats/BaseStats');
 const CombatStats = require('./../stats/CombatStats');
+const AppearanceStats = require('./../stats/AppearanceStats');
 const EventEmitter = require('events');
 
 class Character extends EventEmitter {
@@ -14,9 +15,6 @@ class Character extends EventEmitter {
     this.title = "";
     this.level = 1;
     this.gender = null;
-    this.hairStyle = null;
-    this.hairColor = null;
-    this.face = null;
     this.heading = 0;
     this.accessLevel = 0;
     this.online = false;
@@ -94,6 +92,7 @@ class Character extends EventEmitter {
     //
     this._baseStats = new BaseStats();
     this._combatStats = new CombatStats();
+    this._appearanceStats = new AppearanceStats();
 
     //
     this.target = null; // target and aggroTarget?
@@ -199,6 +198,10 @@ class Character extends EventEmitter {
 
   getCombatStats() {
     return this._combatStats;
+  }
+
+  getAppearanceStats() {
+    return this._appearanceStats;
   }
 
   takeDamage(damage) {    

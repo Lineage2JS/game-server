@@ -50,9 +50,9 @@ class RequestGameStart extends ClientPacketNew {
     player.online = character.online;
     player.accessLevel = character.accessLevel;
     player.title = character.title;
-    player.hairStyle = character.hairStyle;
-    player.hairColor = character.hairColor;
-    player.face = character.face;
+    player.getAppearanceStats().setHairStyle(character.hairStyle);
+    player.getAppearanceStats().setHairColor(character.hairColor);
+    player.getAppearanceStats().setFace(character.face);
 
     const inventoryItems = await database.getCharacterInventoryItems(character.objectId);
     // fix

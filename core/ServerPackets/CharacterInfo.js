@@ -63,9 +63,9 @@ class CharacterInfo {
     }
 
     this._packet
-      .writeD(player.hairStyle)
-      .writeD(player.hairColor)
-      .writeD(player.face)
+      .writeD(player.getAppearanceStats().getHairStyle())
+      .writeD(player.getAppearanceStats().getHairColor())
+      .writeD(player.getAppearanceStats().getFace())
 
       .writeS(player.title)
       .writeD(player.clanId) // pledge id
