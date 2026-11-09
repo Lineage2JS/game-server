@@ -16,15 +16,12 @@ class Character extends EventEmitter {
     this.title = "";
     this.level = 1;
     this.heading = 0;
-    this.accessLevel = 0;
-    this.online = false;
-    this.onlineTime = 0;
     this.clanId = 0;
     this.clanLeader = 0;
     this.clanCrestId = 0;
     this.allianceId = 0;
     this.allianceCrestId = 0;
-    this.gm = 0;
+    
     this.privateStoreType = 0;
     this.exp = 0;
     this.sp = 0;
