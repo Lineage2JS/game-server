@@ -88,7 +88,7 @@ class EntitiesManager {
         },
         {
           id: characterStatusEnums.MAX_HP,
-          value: npc.maximumHp,
+          value: npc.maxHp,
         }
       ]);
 
@@ -150,7 +150,7 @@ class EntitiesManager {
         },
         {
           id: characterStatusEnums.MAX_HP,
-          value: player.maximumHp,
+          value: player.maxHp,
         },
         {
           id: characterStatusEnums.CUR_MP,
@@ -158,7 +158,7 @@ class EntitiesManager {
         },
         {
           id: characterStatusEnums.MAX_MP,
-          value: player.maximumMp,
+          value: player.maxMp,
         }
       ]);
     
@@ -173,7 +173,7 @@ class EntitiesManager {
         },
         {
           id: characterStatusEnums.MAX_HP,
-          value: player.maximumHp,
+          value: player.maxHp,
         }
       ]);
     
@@ -188,7 +188,7 @@ class EntitiesManager {
         },
         {
           id: characterStatusEnums.MAX_HP,
-          value: player.maximumHp,
+          value: player.maxHp,
         }
       ]));
       playersManager.broadcastPacket(new serverPackets.Die(player.objectId));

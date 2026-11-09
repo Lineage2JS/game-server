@@ -136,8 +136,8 @@ class RequestCharacterCreate extends ClientPacketNew {
     character.getAppearanceStats().setGender(gender);
     character.objectId = await database.getNextObjectId();
     character.setAccountName(player.getAccountName());
-    character.maximumHp = character.hp;
-    character.maximumMp = character.mp;
+    character.maxHp = character.hp;
+    character.maxMp = character.mp;
     character.getAppearanceStats().setHairStyle(hairStyle);
     character.getAppearanceStats().setHairColor(hairColor);
     character.getAppearanceStats().setFace(face);

@@ -31,9 +31,9 @@ class Character extends EventEmitter {
     this.raceId = null;
     
     this.hp = null;
-    this.maximumHp = null;
+    this.maxHp = null;
     this.mp = null;
-    this.maximumMp = null;
+    this.maxMp = null;
 
     this.mAtk = null;
     this.mDef = null;

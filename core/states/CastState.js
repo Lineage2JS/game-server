@@ -59,10 +59,10 @@ class CastState extends BaseState {
           this.character.changeState('idle');
 
           // TODO temporaty
-          const diffHp = this.character.maximumHp - this.character.hp;
+          const diffHp = this.character.maxHp - this.character.hp;
 
           if (diffHp < 20) {
-            this.character.hp = this.character.maximumHp;
+            this.character.hp = this.character.maxHp;
           } else {
             this.character.hp += 20;
           }
@@ -101,7 +101,7 @@ class CastState extends BaseState {
       },
       {
         id: characterStatusEnums.MAX_MP,
-        value: this.character.maximumMp,
+        value: this.character.maxMp,
       }
     ]));
 

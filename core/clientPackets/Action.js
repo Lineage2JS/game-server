@@ -27,7 +27,7 @@ class Action extends ClientPacketNew {
         },
         {
           id: characterStatusEnums.MAX_HP,
-          value: entity.maximumHp,
+          value: entity.maxHp,
         }
       ]));
 
@@ -58,7 +58,7 @@ class Action extends ClientPacketNew {
         },
         {
           id: characterStatusEnums.MAX_HP,
-          value: entity.maximumHp,
+          value: entity.maxHp,
         }
       ]));
 

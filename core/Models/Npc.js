@@ -139,7 +139,7 @@ class Npc extends Character {
       this.emit('endAttack');
     }
 
-    if (this.hp > 0 && this.hp < this.maximumHp && !this.isDead) {
+    if (this.hp > 0 && this.hp < this.maxHp && !this.isDead) {
       this.regenerate(); 
     }
 

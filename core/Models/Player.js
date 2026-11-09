@@ -246,7 +246,7 @@ class Player extends Character {
       this.emit('endAttack');
     }
 
-    if (this.hp < this.maximumHp || this.mp < this.maximumMp) {
+    if (this.hp < this.maxHp || this.mp < this.maxMp) {
       this.regenerate(); 
     }
 
@@ -305,11 +305,11 @@ class Player extends Character {
 
   regenerate() {
     if ((Date.now() - this.lastRegenerateTimestamp) > 3000) {
-      if (this.hp < this.maximumHp) {
+      if (this.hp < this.maxHp) {
         this.hp += 1;
       }
       
-      if (this.mp < this.maximumMp) {
+      if (this.mp < this.maxMp) {
         this.mp += 1;
       }
       

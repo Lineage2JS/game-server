@@ -16,7 +16,7 @@ class NpcDeathHandler {
       },
       {
         id: characterStatusEnums.MAX_HP,
-        value: npc.maximumHp,
+        value: npc.maxHp,
       }
     ]));
     playersManager.broadcastPacket(new serverPackets.Die(npc.objectId));
@@ -39,8 +39,8 @@ class NpcDeathHandler {
       if (attacker.level < level) {
         attacker.level = level;
         attacker.emit('updateLevel'); // updateState('levelUp')
-        attacker.hp = attacker.maximumHp;
-        attacker.mp = attacker.maximumMp;
+        attacker.hp = attacker.maxHp;
+        attacker.mp = attacker.maxMp;
         attacker.emit('regenerate');
       }
 

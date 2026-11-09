@@ -85,7 +85,7 @@ class NpcManager extends EventEmitter {
     
     npc.getCombatStats().setPDef(npcData.baseDefend);
     npc.objectId = await database.getNextObjectId();
-    npc.maximumHp = npc.hp;
+    npc.maxHp = npc.hp;
     npc.setCharacterName(npcData.name);
     npc.setSpawnId(spawnId);
     this._bindNpcEvents(npc);
