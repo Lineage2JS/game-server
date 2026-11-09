@@ -14,7 +14,6 @@ class Character extends EventEmitter {
     this._characterName = null;
     this.title = "";
     this.level = 1;
-    this.gender = null;
     this.heading = 0;
     this.accessLevel = 0;
     this.online = false;

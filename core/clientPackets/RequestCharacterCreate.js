@@ -133,7 +133,7 @@ class RequestCharacterCreate extends ClientPacketNew {
     const character = Character.create(characterTemplate);
 
     character.setCharacterName(name);
-    character.gender = gender;
+    character.getAppearanceStats().setGender(gender);
     character.objectId = await database.getNextObjectId();
     character.setAccountName(player.getAccountName());
     character.maximumHp = character.hp;

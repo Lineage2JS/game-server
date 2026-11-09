@@ -12,7 +12,7 @@ class UserInfo {
       .writeD(player.objectId)
       .writeS(player.getCharacterName())
       .writeD(player.raceId)
-      .writeD(player.gender)
+      .writeD(player.getAppearanceStats().getGender())
       .writeD(player.classId)
       .writeD(player.level)
       .writeD(player.exp)
@@ -93,14 +93,14 @@ class UserInfo {
       .writeF(player.attackSpeedMultiplier);
       
       // male
-    if(player.gender === 0) {
+    if(player.getAppearanceStats().getGender() === 0) {
       this._packet
         .writeF(player.maleCollisionRadius)
         .writeF(player.maleCollisionHeight);
     }
 
     // female
-    if(player.gender === 1) {
+    if(player.getAppearanceStats().getGender() === 1) {
       this._packet
         .writeF(player.femaleCollisionRadius)
         .writeF(player.femaleCollisionHeight);

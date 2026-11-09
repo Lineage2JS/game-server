@@ -12,7 +12,7 @@ class CharacterInfo {
       .writeD(player.objectId)
       .writeS(player.getCharacterName())
       .writeD(player.raceId)
-      .writeD(player.gender)
+      .writeD(player.getAppearanceStats().getGender())
       .writeD(player.classId)
       
       .writeD(0x00)
@@ -45,7 +45,7 @@ class CharacterInfo {
       .writeD(player.baseWalkSpeed) // getFlyingWalkSpeed
 
     // male
-    if(player.gender === 0) {
+    if(player.getAppearanceStats().getGender() === 0) { // TODO Enum GENDER_MALE
       this._packet
         .writeF(player.maleAttackSpeedMultiplier) // TODO местами поменять как в l2jc1
         .writeF((player.pSpd / 500) / 0.555)
@@ -54,7 +54,7 @@ class CharacterInfo {
     }
 
     // female
-    if(player.gender === 1) {
+    if(player.getAppearanceStats().getGender() === 1) {
       this._packet
         .writeF(player.femaleAttackSpeedMultiplier)
         .writeF((player.pSpd / 500) / 0.555)
