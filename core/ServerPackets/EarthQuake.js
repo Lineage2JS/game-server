@@ -1,4 +1,4 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket'); 
 
 class EarthQuake {
   constructor(x, y, z, intensity, duration) {

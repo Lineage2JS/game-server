@@ -1,4 +1,4 @@
-const ServerPacket = require('./ServerPacket.js');
+const ServerPacket = require('./ServerPacket');
 const equipmentSlotEnums = require('./../../enums/equipmentSlotEnums');
 
 //

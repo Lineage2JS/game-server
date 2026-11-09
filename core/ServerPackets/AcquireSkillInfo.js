@@ -1,4 +1,4 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket'); 
 
 class AcquireSkillInfo {
   constructor(skillId, skillLevel, spCost, requirements) {

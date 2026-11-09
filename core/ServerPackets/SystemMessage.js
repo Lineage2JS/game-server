@@ -1,4 +1,4 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket'); 
 const SYSTEM_MESSAGE_TYPES = {
 	TEXT: 0,
 	NUMBER: 1,

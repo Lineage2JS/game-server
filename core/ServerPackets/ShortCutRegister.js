@@ -1,4 +1,4 @@
-const ServerPacket = require('./ServerPacket.js'); 
+const ServerPacket = require('./ServerPacket'); 
 
 class ShortCutRegister {
   constructor(slot, type, typeId, level, dat2) {
