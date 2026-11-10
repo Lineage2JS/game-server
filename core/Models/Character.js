@@ -14,9 +14,9 @@ class Character extends EventEmitter {
     this.objectId = null; // getObjectId()
     this._accountName = null;
     this._characterName = null;
+    this._heading = 0;
     this.title = "";
     this.level = 1;
-    this.heading = 0;
     this.clanId = 0;
     this.clanLeader = 0;
     this.clanCrestId = 0;
@@ -171,6 +171,14 @@ class Character extends EventEmitter {
     const pSpd = statsCalc.calcPSpd(this);
 
     this.getCombatStats().setPSpd(pSpd);
+  }
+
+  getHeading() {
+    return this._heading;
+  }
+
+  setHeading(value) {
+    this._heading = value;
   }
 
   getBaseStats() {

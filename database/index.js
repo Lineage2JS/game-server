@@ -38,7 +38,7 @@ class Database {
       character.getAppearanceStats().getHairStyle(),
       character.getAppearanceStats().getHairColor(),
       character.getAppearanceStats().getFace(),
-      character.heading,
+      character.getHeading(),
       character.accessLevel,
       character.online,
       character.onlineTime,

@@ -131,7 +131,7 @@ class NpcManager extends EventEmitter {
       npc.x = x;
       npc.y = y;
       npc.z = z;
-      npc.heading = heading;
+      npc.setHeading(heading);
     }
   }
 

@@ -14,7 +14,7 @@ class RequestGameStart extends ClientPacketNew {
     player.x = character.x;
     player.y = character.y;
     player.z = character.z;
-    player.heading = character.heading;
+    player.setHeading(character.heading);
     player.objectId = character.objectId;
     player.setCharacterName(character.characterName);
     player.raceId = character.raceId

@@ -8,7 +8,7 @@ class CharacterInfo {
       .writeD(player.x)
       .writeD(player.y)
       .writeD(player.z)
-      .writeD(player.heading)
+      .writeD(player.getHeading())
       .writeD(player.objectId)
       .writeS(player.getCharacterName())
       .writeD(player.raceId)
