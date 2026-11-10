@@ -46,16 +46,12 @@ class Character extends EventEmitter {
     this.baseWalkSpeed = null;
     this.swimSpeed = null;
     this.maximumLoad = null;
+    this.canCraft = null;
     
     this.x = null;
     this.y = null;
     this.z = null;
     
-    this.canCraft = null;
-    
-    this.maleAttackSpeedMultiplier = null;
-    this.femaleAttackSpeedMultiplier = null;
-
     this.underwear = { objectId: 0, itemId: 0 } // TODO papperdoll system?
     this.ear = {
       left: { objectId: 0, itemId: 0 },

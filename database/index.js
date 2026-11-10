@@ -66,7 +66,7 @@ class Database {
       character.x,
       character.y,
       character.z,
-      character.maleAttackSpeedMultiplier,
+      character.getCombatStats().getMaleAttackSpeedMultiplier(),
       character.getCollisionStats().getMaleCollisionRadius(),
       character.getCollisionStats().getMaleCollisionHeight(),
       new Date(character.createdAt),

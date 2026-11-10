@@ -47,7 +47,7 @@ class CharacterInfo {
     // male
     if(player.getAppearanceStats().getGender() === 0) { // TODO Enum GENDER_MALE
       this._packet
-        .writeF(player.maleAttackSpeedMultiplier) // TODO местами поменять как в l2jc1
+        .writeF(player.getCombatStats().getMaleAttackSpeedMultiplier())
         .writeF((player.pSpd / 500) / 0.555)
         .writeF(player.getCollisionStats().getMaleCollisionRadius())
         .writeF(player.getCollisionStats().getMaleCollisionHeight())
@@ -56,7 +56,7 @@ class CharacterInfo {
     // female
     if(player.getAppearanceStats().getGender() === 1) {
       this._packet
-        .writeF(player.femaleAttackSpeedMultiplier)
+        .writeF(player.getCombatStats().getFemaleAttackSpeedMultiplier())
         .writeF((player.pSpd / 500) / 0.555)
         .writeF(player.getCollisionStats().getFemaleCollisionRadius())
         .writeF(player.getCollisionStats().getFemaleCollisionHeight())

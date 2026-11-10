@@ -4,6 +4,8 @@ class CombatStats {
     this._pDef = null;
     this._mSpd = null;
     this._pSpd = null;
+    this._maleAttackSpeedMultiplier = null;
+    this._femaleAttackSpeedMultiplier = null;
   }
   
   getPAtk() {
@@ -36,6 +38,22 @@ class CombatStats {
 
   setPSpd(value) {
     this._pSpd = Math.floor(value);
+  }
+
+  getMaleAttackSpeedMultiplier() {
+    return this._maleAttackSpeedMultiplier;
+  }
+
+  setMaleAttackSpeedMultiplier(value) {
+    this._maleAttackSpeedMultiplier = value;
+  }
+
+  getFemaleAttackSpeedMultiplier() {
+    return this._femaleAttackSpeedMultiplier;
+  }
+
+  setFemaleAttackSpeedMultiplier(value) {
+    this._femaleAttackSpeedMultiplier = value;
   }
 }
 

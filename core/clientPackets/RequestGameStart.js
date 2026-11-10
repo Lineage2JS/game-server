@@ -34,7 +34,7 @@ class RequestGameStart extends ClientPacketNew {
     player.mp = character.mp;
     player.sp = character.sp;
 
-    player.maleAttackSpeedMultiplier = character.maleAttackSpeedMultiplier;
+    player.getCombatStats().setMaleAttackSpeedMultiplier(character.maleAttackSpeedMultiplier);
     player.getCollisionStats().setMaleCollisionRadius(character.maleCollisionRadius);
     player.getCollisionStats().setMaleCollisionHeight(character.maleCollisionHeight);
 
