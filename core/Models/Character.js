@@ -4,6 +4,7 @@ const BaseStats = require('./../stats/BaseStats');
 const CombatStats = require('./../stats/CombatStats');
 const SocialStats = require('./../stats/SocialStats');
 const AppearanceStats = require('./../stats/AppearanceStats');
+const CollisionStats = require('./../stats/CollisionStats');
 const EventEmitter = require('events');
 
 class Character extends EventEmitter {
@@ -53,12 +54,7 @@ class Character extends EventEmitter {
     this.canCraft = null;
     
     this.maleAttackSpeedMultiplier = null;
-    this.maleCollisionRadius = null;
-    this.maleCollisionHeight = null;
-    
     this.femaleAttackSpeedMultiplier = null;
-    this.femaleCollisionRadius = null;
-    this.femaleCollisionHeight = null;
 
     this.underwear = { objectId: 0, itemId: 0 } // TODO papperdoll system?
     this.ear = {
@@ -87,6 +83,7 @@ class Character extends EventEmitter {
     this._combatStats = new CombatStats();
     this._socialStats = new SocialStats();
     this._appearanceStats = new AppearanceStats();
+    this._collisionStats = new CollisionStats();
 
     //
     this.target = null; // target and aggroTarget?
@@ -200,6 +197,10 @@ class Character extends EventEmitter {
 
   getAppearanceStats() {
     return this._appearanceStats;
+  }
+
+  getCollisionStats() {
+    return this._collisionStats;
   }
 
   takeDamage(damage) {    

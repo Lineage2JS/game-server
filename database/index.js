@@ -67,8 +67,8 @@ class Database {
       character.y,
       character.z,
       character.maleAttackSpeedMultiplier,
-      character.maleCollisionRadius,
-      character.maleCollisionHeight,
+      character.getCollisionStats().getMaleCollisionRadius(),
+      character.getCollisionStats().getMaleCollisionHeight(),
       new Date(character.createdAt),
     ]);
     const characterData = result.rows[0];

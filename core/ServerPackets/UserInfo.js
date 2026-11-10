@@ -95,15 +95,15 @@ class UserInfo {
       // male
     if(player.getAppearanceStats().getGender() === 0) {
       this._packet
-        .writeF(player.maleCollisionRadius)
-        .writeF(player.maleCollisionHeight);
+        .writeF(player.getCollisionStats().getMaleCollisionRadius())
+        .writeF(player.getCollisionStats().getMaleCollisionHeight());
     }
 
     // female
     if(player.getAppearanceStats().getGender() === 1) {
       this._packet
-        .writeF(player.femaleCollisionRadius)
-        .writeF(player.femaleCollisionHeight);
+        .writeF(player.getCollisionStats().getFemaleCollisionRadius())
+        .writeF(player.getCollisionStats().getFemaleCollisionHeight());
     }
 
     this._packet

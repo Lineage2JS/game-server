@@ -49,8 +49,8 @@ class CharacterInfo {
       this._packet
         .writeF(player.maleAttackSpeedMultiplier) // TODO местами поменять как в l2jc1
         .writeF((player.pSpd / 500) / 0.555)
-        .writeF(player.maleCollisionRadius)
-        .writeF(player.maleCollisionHeight)
+        .writeF(player.getCollisionStats().getMaleCollisionRadius())
+        .writeF(player.getCollisionStats().getMaleCollisionHeight())
     }
 
     // female
@@ -58,8 +58,8 @@ class CharacterInfo {
       this._packet
         .writeF(player.femaleAttackSpeedMultiplier)
         .writeF((player.pSpd / 500) / 0.555)
-        .writeF(player.femaleCollisionRadius)
-        .writeF(player.femaleCollisionHeight)
+        .writeF(player.getCollisionStats().getFemaleCollisionRadius())
+        .writeF(player.getCollisionStats().getFemaleCollisionHeight())
     }
 
     this._packet
