@@ -69,14 +69,14 @@ class UserInfo {
       .writeD(player.getCombatStats().getPAtk())
       .writeD(player.getCombatStats().getPSpd())
       .writeD(player.getCombatStats().getPDef())
-      .writeD(player.evasion)
-      .writeD(player.accuracy)
-      .writeD(player.critical)
+      .writeD(player.getCombatStats().getEvasion())
+      .writeD(player.getCombatStats().getAccuracy())
+      .writeD(player.getCombatStats().getCritical())
 
-      .writeD(player.mAtk)
+      .writeD(player.getCombatStats().getMAtk())
       .writeD(player.getCombatStats().getMSpd())
-      .writeD(player.pSpd) // TODO дубль?
-      .writeD(player.mDef)
+      .writeD(player.getCombatStats().getPSpd()) // TODO дубль?
+      .writeD(player.getCombatStats().getMDef())
 
       .writeD(0)
       .writeD(player.getSocialStats().getKarma())

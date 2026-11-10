@@ -36,12 +36,6 @@ class Character extends EventEmitter {
     this.mp = null;
     this.maxMp = null;
 
-    this.mAtk = null;
-    this.mDef = null;
-    this.pSpd = null;
-    this.accuracy = null;
-    this.critical = null;
-    this.evasion = null;
     this.baseRunSpeed = null;
     this.baseWalkSpeed = null;
     this.swimSpeed = null;

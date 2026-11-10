@@ -47,8 +47,8 @@ class CharacterInfo {
     // male
     if(player.getAppearanceStats().getGender() === 0) { // TODO Enum GENDER_MALE
       this._packet
-        .writeF(player.getCombatStats().getMaleAttackSpeedMultiplier())
-        .writeF((player.pSpd / 500) / 0.555)
+        .writeF(player.getCombatStats().getMaleAttackSpeedMultiplier()) // getMovementMultiplier()
+        .writeF((player.pSpd / 500) / 0.555) // getAttackSpeedMultiplier
         .writeF(player.getCollisionStats().getMaleCollisionRadius())
         .writeF(player.getCollisionStats().getMaleCollisionHeight())
     }
