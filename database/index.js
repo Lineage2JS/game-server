@@ -44,7 +44,7 @@ class Database {
       character.onlineTime,
       character.gm,
       character.getProgressStats().getExp(),
-      character.sp,
+      character.getProgressStats().getSp(),
       character.getSocialStats().getPvp(),
       character.getSocialStats().getPk(),
       character.getSocialStats().getKarma(),

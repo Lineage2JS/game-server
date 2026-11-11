@@ -26,7 +26,7 @@ class UserInfo {
       .writeD(player.hp)
       .writeD(player.maxMp)
       .writeD(player.mp)
-      .writeD(player.sp)
+      .writeD(player.getProgressStats().getSp())
       .writeD(100)
       .writeD(1000)
       

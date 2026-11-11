@@ -25,7 +25,6 @@ class Character extends EventEmitter {
     this.allianceCrestId = 0;
     
     this.privateStoreType = 0;
-    this.sp = 0;
 
     this.classId = null;
     this.className = null;
