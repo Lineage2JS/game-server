@@ -5,6 +5,7 @@ const CombatStats = require('./../stats/CombatStats');
 const SocialStats = require('./../stats/SocialStats');
 const AppearanceStats = require('./../stats/AppearanceStats');
 const CollisionStats = require('./../stats/CollisionStats');
+const ProgressStats = require('./../stats/ProgressStats');
 const EventEmitter = require('events');
 
 class Character extends EventEmitter {
@@ -24,7 +25,6 @@ class Character extends EventEmitter {
     this.allianceCrestId = 0;
     
     this.privateStoreType = 0;
-    this.exp = 0;
     this.sp = 0;
 
     this.classId = null;
@@ -74,6 +74,7 @@ class Character extends EventEmitter {
     this._socialStats = new SocialStats();
     this._appearanceStats = new AppearanceStats();
     this._collisionStats = new CollisionStats();
+    this._progressStats = new ProgressStats();
 
     //
     this.target = null; // target and aggroTarget?
@@ -199,6 +200,10 @@ class Character extends EventEmitter {
 
   getCollisionStats() {
     return this._collisionStats;
+  }
+
+  getProgressStats() {
+    return this._progressStats;
   }
 
   takeDamage(damage) {    

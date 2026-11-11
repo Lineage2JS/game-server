@@ -31,10 +31,10 @@ class NpcDeathHandler {
     hitHistory.forEach(entry => {
       const attacker = entry.character;
 
-      attacker.exp += 100;
+      attacker.getProgressStats().setExp(attacker.getProgressStats().getExp() + 100);
       attacker.emit('updateExp'); // TODO 'updateStatus'
       
-      const level = expToLevel(attacker.exp);
+      const level = expToLevel(attacker.getProgressStats().getExp());
       
       if (attacker.level < level) {
         attacker.level = level;

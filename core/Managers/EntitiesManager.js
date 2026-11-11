@@ -101,7 +101,7 @@ class EntitiesManager {
       const packet = new serverPackets.StatusUpdate(player.objectId, [
         {
           id: characterStatusEnums.EXP,
-          value: player.exp
+          value: player.getProgressStats().getExp()
         }
       ]);
       

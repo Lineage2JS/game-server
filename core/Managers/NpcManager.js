@@ -70,7 +70,7 @@ class NpcManager extends EventEmitter {
     npc.id = npcData.id;
     npc.name = npcData.name;
     npc.level = npcData.level;
-    npc.exp = npcData.exp;
+    npc.getProgressStats().setExp(npcData.exp);
     npc.canBeAttacked = npcData.canBeAttacked;
     npc.additionalMakeMultiList = npcData.additionalMakeMultiList;
     npc.hp = npcData.hp;
