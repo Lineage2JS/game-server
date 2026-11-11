@@ -13,7 +13,7 @@ class CharacterInfo {
       .writeS(player.getCharacterName())
       .writeD(player.raceId)
       .writeD(player.getAppearanceStats().getGender())
-      .writeD(player.classId)
+      .writeD(player.getAppearanceStats().getClassId())
       
       .writeD(0x00)
 

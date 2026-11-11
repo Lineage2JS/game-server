@@ -20,10 +20,6 @@ class Player extends Character {
     this._stateName = '';
     this.action = '';
     this.isDead = false;
-    this.accessLevel = 0;
-    this.online = false;
-    this.onlineTime = 0;
-    this.gm = 0;
 
     this._states = {
       'move': new MoveState(this),

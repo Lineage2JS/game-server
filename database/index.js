@@ -48,7 +48,7 @@ class Database {
       character.getSocialStats().getPvp(),
       character.getSocialStats().getPk(),
       character.getSocialStats().getKarma(),
-      character.classId,
+      character.getAppearanceStats().getClassId(),
       character.className,
       character.raceId,
       character.getBaseStats().getStr(),

@@ -24,9 +24,13 @@ class Character extends EventEmitter {
     this.allianceId = 0;
     this.allianceCrestId = 0;
     
+    this.accessLevel = 0;
+    this.online = false;
+    this.onlineTime = 0;
+    this.gm = 0;
+    
     this.privateStoreType = 0;
 
-    this.classId = null;
     this.className = null;
     this.raceId = null;
     

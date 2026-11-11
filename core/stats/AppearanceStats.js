@@ -4,6 +4,7 @@ class AppearanceStats {
     this._hairColor = null;
     this._face = null;
     this._gender = null;
+    this._classId = null;
   }
 
   getHairStyle() {
@@ -36,6 +37,14 @@ class AppearanceStats {
 
   setGender(value) {
     this._gender = value;
+  }
+
+  getClassId() {
+    return this._classId;
+  }
+
+  setClassId(value) {
+    this._classId = value;
   }
 }
 

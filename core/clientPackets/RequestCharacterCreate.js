@@ -141,6 +141,7 @@ class RequestCharacterCreate extends ClientPacketNew {
     character.getAppearanceStats().setHairStyle(hairStyle);
     character.getAppearanceStats().setHairColor(hairColor);
     character.getAppearanceStats().setFace(face);
+    character.getAppearanceStats().setClassId(classId);
     character.createdAt = Date.now();
     character.getBaseStats().setStr(str);
     character.getBaseStats().setDex(dex);
@@ -148,6 +149,9 @@ class RequestCharacterCreate extends ClientPacketNew {
     character.getBaseStats().setInt(int);
     character.getBaseStats().setWit(wit);
     character.getBaseStats().setMen(men);
+    character.getCombatStats().setMaleAttackSpeedMultiplier(characterTemplate.maleAttackSpeedMultiplier);
+    character.getCollisionStats().setMaleCollisionRadius(characterTemplate.maleCollisionRadius);
+    character.getCollisionStats().setMaleCollisionHeight(characterTemplate.maleCollisionHeight);
 
     // TODO
     const classIds = new Map();

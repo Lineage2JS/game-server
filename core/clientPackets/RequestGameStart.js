@@ -19,7 +19,7 @@ class RequestGameStart extends ClientPacketNew {
     player.setCharacterName(character.characterName);
     player.raceId = character.raceId
     player.getAppearanceStats().setGender(character.gender);
-    player.classId = character.classId;
+    player.getAppearanceStats().setClassId(character.classId);
     player.level = character.level;
     player.getProgressStats().setExp(character.exp);
     player.getBaseStats().setStr(character.str);
