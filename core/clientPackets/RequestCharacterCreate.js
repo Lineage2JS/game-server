@@ -152,6 +152,8 @@ class RequestCharacterCreate extends ClientPacketNew {
     character.getCombatStats().setMaleAttackSpeedMultiplier(characterTemplate.maleAttackSpeedMultiplier);
     character.getCollisionStats().setMaleCollisionRadius(characterTemplate.maleCollisionRadius);
     character.getCollisionStats().setMaleCollisionHeight(characterTemplate.maleCollisionHeight);
+    character.getAccessStats().setAccessLevel(0);
+    character.getAccessStats().setGm(0);
 
     // TODO
     const classIds = new Map();

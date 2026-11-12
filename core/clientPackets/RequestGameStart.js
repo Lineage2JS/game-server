@@ -17,6 +17,7 @@ class RequestGameStart extends ClientPacketNew {
     player.setHeading(character.heading);
     player.objectId = character.objectId;
     player.setCharacterName(character.characterName);
+    player.title = character.title;
     player.raceId = character.raceId
     player.getAppearanceStats().setGender(character.gender);
     player.getAppearanceStats().setClassId(character.classId);
@@ -46,10 +47,9 @@ class RequestGameStart extends ClientPacketNew {
     player.getSocialStats().setPvp(character.pvp);
     player.getSocialStats().setPk(character.pk);
     player.getSocialStats().setKarma(character.karma);
-    player.gm = character.gm;
     player.online = character.online;
-    player.accessLevel = character.accessLevel;
-    player.title = character.title;
+    player.getAccessStats().setAccessLevel(character.accessLevel);
+    player.getAccessStats().setGm(character.gm);
     player.getAppearanceStats().setHairStyle(character.hairStyle);
     player.getAppearanceStats().setHairColor(character.hairColor);
     player.getAppearanceStats().setFace(character.face);
