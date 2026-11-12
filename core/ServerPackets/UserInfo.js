@@ -11,7 +11,7 @@ class UserInfo {
       .writeD(player.getHeading()) 
       .writeD(player.objectId)
       .writeS(player.getCharacterName())
-      .writeD(player.raceId)
+      .writeD(player.getAppearanceStats().getRaceId())
       .writeD(player.getAppearanceStats().getGender())
       .writeD(player.getAppearanceStats().getClassId())
       .writeD(player.level)

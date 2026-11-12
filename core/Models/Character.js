@@ -31,7 +31,6 @@ class Character extends EventEmitter {
     this.privateStoreType = 0;
 
     this.className = null;
-    this.raceId = null;
     
     this.hp = null;
     this.maxHp = null;

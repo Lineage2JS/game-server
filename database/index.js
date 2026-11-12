@@ -50,7 +50,7 @@ class Database {
       character.getSocialStats().getKarma(),
       character.getAppearanceStats().getClassId(),
       character.className,
-      character.raceId,
+      character.getAppearanceStats().getRaceId(),
       character.getBaseStats().getStr(),
       character.getBaseStats().getDex(),
       character.getBaseStats().getCon(),

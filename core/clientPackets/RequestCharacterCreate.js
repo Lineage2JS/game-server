@@ -82,7 +82,7 @@ class RequestCharacterCreate extends ClientPacketNew {
     const client = this.getClient();
     const player = this.getPlayer();
     const name = this.readS();
-    const race = this.readD();
+    const raceId = this.readD();
     const gender = this.readD();
     const classId = this.readD();
     const int = this.readD();
@@ -142,6 +142,7 @@ class RequestCharacterCreate extends ClientPacketNew {
     character.getAppearanceStats().setHairColor(hairColor);
     character.getAppearanceStats().setFace(face);
     character.getAppearanceStats().setClassId(classId);
+    character.getAppearanceStats().setRaceId(raceId);
     character.createdAt = Date.now();
     character.getBaseStats().setStr(str);
     character.getBaseStats().setDex(dex);
