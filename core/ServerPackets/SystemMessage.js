@@ -6,9 +6,6 @@ const SYSTEM_MESSAGE_TYPES = {
 	ITEM_NAME: 3,
 	SKILL_NAME: 4
 }
-const SYSTEM_MESSAGES_ENUMS = {
-  WELCOME_TO_LINEAGE_II: 34
-}
 
 class SystemMessage {
   constructor(messageId, messages = []) {

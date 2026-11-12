@@ -1,5 +1,6 @@
 const serverPackets = require('../ServerPackets/serverPackets');
 const announcementsManager = require('./../Managers/AnnouncementsManager');
+const enums = require('./../enums');
 
 class PlayerEnterHandler {
   handle(player) {
@@ -10,7 +11,7 @@ class PlayerEnterHandler {
     player.updatePSpd();
     client.sendPacket(new serverPackets.UserInfo(player));
     client.sendPacket(new serverPackets.SunRise()); // TimeManager?
-    client.sendPacket(new serverPackets.SystemMessage(34)); // fix
+    client.sendPacket(new serverPackets.SystemMessage(enums.SystemMessage.WELCOME_TO_LINEAGE_II));
     announcementsManager.sendAnnouncementsToPlayer(player);
   }
 }
