@@ -1,11 +1,12 @@
 const Citizen = require('./Citizen');
+const enums = require('./../../core/enums');
 
 class Carl extends Citizen {
   onTalkSelected(talker) {
     if (this.haveMemo(talker, 201) === 0
       && this.getOneTimeQuestFlag(talker, 201) === 0
       && talker.level < 10
-      && talker.className === 'Human Fighter'
+      && talker.getAppearanceStats().getClassId() === enums.ClassId.HUMAN_FIGHTER
     ) {
       
       // deleteRadar's
@@ -16,7 +17,7 @@ class Carl extends Citizen {
       this.showRadar(talker, -73403, 255947, -3126);
 
       return;
-    } else if (talker.className !== 'Human Fighter') {
+    } else if (talker.getAppearanceStats().getClassId() !== enums.ClassId.HUMAN_FIGHTER) {
       this.showPage(talker, 'carl_q0201_06.htm');
 
       return;

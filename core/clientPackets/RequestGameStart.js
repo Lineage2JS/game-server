@@ -43,7 +43,6 @@ class RequestGameStart extends ClientPacketNew {
     player.baseWalkSpeed = character.baseWalkSpeed;
     player.baseAttackSpeed = 300; // TODO
 
-    player.className = character.className;
     player.getSocialStats().setPvp(character.pvp);
     player.getSocialStats().setPk(character.pk);
     player.getSocialStats().setKarma(character.karma);

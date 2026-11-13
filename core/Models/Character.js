@@ -29,8 +29,6 @@ class Character extends EventEmitter {
     this.onlineTime = 0;
     
     this.privateStoreType = 0;
-
-    this.className = null;
     
     this.hp = null;
     this.maxHp = null;

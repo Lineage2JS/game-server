@@ -25,8 +25,8 @@ class Database {
 
   async createCharacter(character) {
     const result = await this._client.query(`
-      INSERT INTO characters (object_id, user_login, character_name, title, level, gender, hair_style, hair_color, face, heading, access_level, online, online_time, is_gm, exp, sp, pvp, pk, karma, class_id, class_name, race_id, str, dex, con, int, wit, men, current_hp, max_hp, current_mp, max_mp, base_run_speed, base_walk_speed, x, y, z, attack_speed_multiplier, collision_radius, collision_height, created_at)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41)
+      INSERT INTO characters (object_id, user_login, character_name, title, level, gender, hair_style, hair_color, face, heading, access_level, online, online_time, is_gm, exp, sp, pvp, pk, karma, class_id, race_id, str, dex, con, int, wit, men, current_hp, max_hp, current_mp, max_mp, base_run_speed, base_walk_speed, x, y, z, attack_speed_multiplier, collision_radius, collision_height, created_at)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40)
       RETURNING *
     `, [
       character.objectId,
@@ -49,7 +49,6 @@ class Database {
       character.getSocialStats().getPk(),
       character.getSocialStats().getKarma(),
       character.getAppearanceStats().getClassId(),
-      character.className,
       character.getAppearanceStats().getRaceId(),
       character.getBaseStats().getStr(),
       character.getBaseStats().getDex(),
@@ -110,7 +109,6 @@ class Database {
       pk,
       karma,
       class_id AS "classId",
-      class_name AS "className",
       race_id AS "raceId",
       str,
       dex,
@@ -169,7 +167,6 @@ class Database {
       pk,
       karma,
       class_id AS "classId",
-      class_name AS "className",
       race_id AS "raceId",
       str,
       dex,
