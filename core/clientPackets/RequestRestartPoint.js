@@ -1,7 +1,7 @@
 const serverPackets = require('./../ServerPackets/serverPackets');
 const ClientPacket = require("./ClientPacket");
 const playersManager = require('./../Managers/PlayersManager');
-const characterStatusEnums = require('./../../enums/characterStatusEnums');
+const enums = require('./../enums');
 
 //
 function getRandomPointInPolygon(points) {
@@ -96,11 +96,11 @@ class RequestRestartPoint {
 
     this._client.sendPacket(new serverPackets.StatusUpdate(player.objectId, [
       {
-        id: characterStatusEnums.CUR_HP,
+        id: enums.CharacterStatus.CUR_HP,
         value: player.hp,
       },
       {
-        id: characterStatusEnums.MAX_HP,
+        id: enums.CharacterStatus.MAX_HP,
         value: player.maxHp,
       }
     ]));

@@ -2,7 +2,7 @@ const playersManager = require('./../Managers/PlayersManager');
 const npcManager = require('./../Managers/NpcManager');
 const schedulerManager = require('./../Managers/SchedulerManager');
 const serverPackets = require('./../ServerPackets/serverPackets');
-const characterStatusEnums = require('./../../enums/characterStatusEnums');
+const enums = require('./../enums');
 const expToLevel = require('./../../utils/expToLevel');
 
 class NpcDeathHandler {
@@ -11,11 +11,11 @@ class NpcDeathHandler {
 
     playersManager.broadcastPacket(new serverPackets.StatusUpdate(npc.objectId, [
       {
-        id: characterStatusEnums.CUR_HP,
+        id: enums.CharacterStatus.CUR_HP,
         value: 0,
       },
       {
-        id: characterStatusEnums.MAX_HP,
+        id: enums.CharacterStatus.MAX_HP,
         value: npc.maxHp,
       }
     ]));

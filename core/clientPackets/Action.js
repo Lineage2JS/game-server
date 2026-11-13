@@ -5,7 +5,7 @@ const Player = require('./../Models/Player');
 const Npc = require('./../Models/Npc');
 const DropItem = require('./../Models/DropItem');
 const Bot = require('./../Models/Bot');
-const characterStatusEnums = require('./../../enums/characterStatusEnums');
+const enums = require('./../enums');
 
 class Action extends ClientPacketNew {
   handle() {
@@ -22,11 +22,11 @@ class Action extends ClientPacketNew {
       // TODO\
       client.sendPacket(new serverPackets.StatusUpdate(entity.objectId, [
         {
-          id: characterStatusEnums.CUR_HP,
+          id: enums.CharacterStatus.CUR_HP,
           value: entity.hp,
         },
         {
-          id: characterStatusEnums.MAX_HP,
+          id: enums.CharacterStatus.MAX_HP,
           value: entity.maxHp,
         }
       ]));
@@ -53,11 +53,11 @@ class Action extends ClientPacketNew {
     if (entity instanceof Npc) {
       client.sendPacket(new serverPackets.StatusUpdate(entity.objectId, [
         {
-          id: characterStatusEnums.CUR_HP,
+          id: enums.CharacterStatus.CUR_HP,
           value: entity.hp,
         },
         {
-          id: characterStatusEnums.MAX_HP,
+          id: enums.CharacterStatus.MAX_HP,
           value: entity.maxHp,
         }
       ]));

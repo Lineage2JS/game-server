@@ -1,4 +1,4 @@
-const characterStatusEnums = require('./../../enums/characterStatusEnums');
+const enums = require('./../enums');
 const eventBusNew = require('./../Events/EventBusNew');
 
 class EntitiesManager {
@@ -83,11 +83,11 @@ class EntitiesManager {
     npcManager.on('damaged', (npc) => {
       const packet = new serverPackets.StatusUpdate(npc.objectId, [
         {
-          id: characterStatusEnums.CUR_HP,
+          id: enums.CharacterStatus.CUR_HP,
           value: npc.hp,
         },
         {
-          id: characterStatusEnums.MAX_HP,
+          id: enums.CharacterStatus.MAX_HP,
           value: npc.maxHp,
         }
       ]);
@@ -100,7 +100,7 @@ class EntitiesManager {
     playersManager.on('updateExp', player => {
       const packet = new serverPackets.StatusUpdate(player.objectId, [
         {
-          id: characterStatusEnums.EXP,
+          id: enums.CharacterStatus.EXP,
           value: player.getProgressStats().getExp()
         }
       ]);
@@ -111,7 +111,7 @@ class EntitiesManager {
     playersManager.on('updateLevel', player => {
       const packet = new serverPackets.StatusUpdate(player.objectId, [
         {
-          id: characterStatusEnums.LEVEL,
+          id: enums.CharacterStatus.LEVEL,
           value: player.level,
         }
       ]);
@@ -145,19 +145,19 @@ class EntitiesManager {
     playersManager.on('regenerate', (player) => {
       const packet = new serverPackets.StatusUpdate(player.objectId, [
         {
-          id: characterStatusEnums.CUR_HP,
+          id: enums.CharacterStatus.CUR_HP,
           value: player.hp,
         },
         {
-          id: characterStatusEnums.MAX_HP,
+          id: enums.CharacterStatus.MAX_HP,
           value: player.maxHp,
         },
         {
-          id: characterStatusEnums.CUR_MP,
+          id: enums.CharacterStatus.CUR_MP,
           value: player.mp,
         },
         {
-          id: characterStatusEnums.MAX_MP,
+          id: enums.CharacterStatus.MAX_MP,
           value: player.maxMp,
         }
       ]);
@@ -168,11 +168,11 @@ class EntitiesManager {
     playersManager.on('damaged', (player) => {
       const packet = new serverPackets.StatusUpdate(player.objectId, [
         {
-          id: characterStatusEnums.CUR_HP,
+          id: enums.CharacterStatus.CUR_HP,
           value: player.hp,
         },
         {
-          id: characterStatusEnums.MAX_HP,
+          id: enums.CharacterStatus.MAX_HP,
           value: player.maxHp,
         }
       ]);
@@ -183,11 +183,11 @@ class EntitiesManager {
     playersManager.on('died', (player) => {
       playersManager.broadcastPacket(new serverPackets.StatusUpdate(player.objectId, [
         {
-          id: characterStatusEnums.CUR_HP,
+          id: enums.CharacterStatus.CUR_HP,
           value: 0,
         },
         {
-          id: characterStatusEnums.MAX_HP,
+          id: enums.CharacterStatus.MAX_HP,
           value: player.maxHp,
         }
       ]));

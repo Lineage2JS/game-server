@@ -2,7 +2,7 @@ const BaseState = require("./BaseState");
 
 //
 const entitiesManager = require('./../Managers/EntitiesManager');
-const characterStatusEnums = require('./../../enums/characterStatusEnums');
+const enums = require('./../enums');
 const serverPackets = require('./../ServerPackets/serverPackets');
 const skillsManager = require('./../Managers/SkillsManager');
 //
@@ -96,11 +96,11 @@ class CastState extends BaseState {
 
     this.character.getClient().sendPacket(new serverPackets.StatusUpdate(this.character.objectId, [
       {
-        id: characterStatusEnums.CUR_MP,
+        id: enums.CharacterStatus.CUR_MP,
         value: this.character.mp,
       },
       {
-        id: characterStatusEnums.MAX_MP,
+        id: enums.CharacterStatus.MAX_MP,
         value: this.character.maxMp,
       }
     ]));

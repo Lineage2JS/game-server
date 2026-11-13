@@ -1,26 +1,4 @@
 const ServerPacket = require('./ServerPacket');
-const equipmentSlotEnums = require('./../../enums/equipmentSlotEnums');
-
-//
-const slot = {
-		"chest": equipmentSlotEnums.SLOT_CHEST,
-		"chest_full": equipmentSlotEnums.SLOT_FULL_ARMOR, 
-		"head": equipmentSlotEnums.SLOT_HEAD,
-		"underwear": equipmentSlotEnums.SLOT_UNDERWEAR,
-		"back": equipmentSlotEnums.SLOT_BACK,
-		"neck": equipmentSlotEnums.SLOT_NECK,
-		"legs": equipmentSlotEnums.SLOT_LEGS,
-		"feet": equipmentSlotEnums.SLOT_FEET,
-		"gloves": equipmentSlotEnums.SLOT_GLOVES,
-		"chest,legs": equipmentSlotEnums.SLOT_CHEST, // | L2Item.SLOT_LEGS,
-		"rhand": equipmentSlotEnums.SLOT_R_HAND,
-		"lhand": equipmentSlotEnums.SLOT_L_HAND,
-		"lrhand": equipmentSlotEnums.SLOT_LR_HAND,
-		"rear,lear": equipmentSlotEnums.SLOT_L_EAR, // | L2Item.SLOT_R_EAR,
-		"rfinger,lfinger": equipmentSlotEnums.SLOT_L_FINGER, // | L2Item.SLOT_R_FINGER,
-		"none": equipmentSlotEnums.SLOT_NONE
-	}
-//
 
 class ItemList {
   constructor(items, showWindow = false) {
