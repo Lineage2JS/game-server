@@ -15,8 +15,7 @@ const schedulerManager = require('./core/Managers/SchedulerManager');
 const eventSubscribers = require('./core/Events/EventSubscribers');
 const database = require('./database');
 const config = require('./config');
-const serverStatus = require('./enums/serverStatus');
-const serverTypes = require('./enums/serverTypes');
+const enums = require('./core/enums');
 const isDebugMode = process.argv.includes('--debug-mode');
 
 async function init() {
@@ -49,14 +48,14 @@ async function init() {
         ageLimit: config.gameserver.ageLimit,
         isPvP: config.gameserver.isPvP,
         maxPlayers: config.gameserver.maxPlayers,
-        status: serverStatus.STATUS_DOWN,
-        type: serverTypes.SERVER_NORMAL
+        status: enums.ServerStatus.STATUS_DOWN,
+        type: enums.ServerType.SERVER_NORMAL
       });
     }
 
     const gameserver = await database.getGameServerById(config.gameserver.id);
       
-    await database.updateGameServer(gameserver.id, "status", serverStatus.STATUS_UP);
+    await database.updateGameServer(gameserver.id, "status", enums.ServerStatus.STATUS_UP);
     itemsManager.enable();
     initialParametersManager.enable();
     announcementsManager.enable();
@@ -84,7 +83,7 @@ process.stdin.resume();
 process.on('SIGINT', async () => {
   const gameserver = await database.getGameServerById(config.gameserver.id);
 
-  await database.updateGameServer(gameserver.id, "status", serverStatus.STATUS_DOWN);
+  await database.updateGameServer(gameserver.id, "status", enums.ServerStatus.STATUS_DOWN);
   process.exit(0);
 });
 
